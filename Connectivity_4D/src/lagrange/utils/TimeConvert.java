@@ -16,7 +16,7 @@ public class TimeConvert {
 
 	public static final long SECS_IN_DAY = 24 * 60 * 60;
 	public static final long MILLIS_IN_DAY = 24 * 60 * 60 * 1000;
-	private static final long HYCOM_OFFSET = -2177521200000l;
+	public static final long HYCOM_OFFSET = -2177539200000l;
 	
 	/**
 	 * Converts time measurements into milliseconds.

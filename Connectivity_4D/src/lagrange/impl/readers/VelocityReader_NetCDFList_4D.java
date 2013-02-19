@@ -2,11 +2,16 @@ package lagrange.impl.readers;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.TreeMap;
+import java.util.Date;
 
 import lagrange.VelocityReader;
 import lagrange.utils.FilenamePatternFilter;
@@ -28,6 +33,8 @@ import ucar.nc2.Variable;
 
 public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 
+	Calendar c = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+	SimpleDateFormat formatUTC = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ssZ");
 	private double u, v, w;
 	private Map<Long, NetcdfFile> uFiles = new TreeMap<Long, NetcdfFile>();
 	private Map<Long, NetcdfFile> vFiles = new TreeMap<Long, NetcdfFile>();
@@ -61,10 +68,7 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 	private double[][] bounds = new double[4][2];
 	//private boolean negOceanCoord = false;
 	// private boolean negPolyCoord = true;
-	private long timeOffset = -2177521200000l; // Difference between
-												// HYCOM's base time
-												// (1900) and Java's
-												// base time (1970)
+	private long timeOffset = TimeConvert.HYCOM_OFFSET;
 	
 	private boolean nearNoData = false;
 
@@ -90,6 +94,7 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 	}
 	
 	public void initialize(String dir) throws IOException {
+		formatUTC.setTimeZone(TimeZone.getTimeZone("UTC"));
 		this.dir = dir;
 		File f = new File(dir);
 		if (!f.isDirectory()) {
@@ -151,6 +156,10 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 		vKeys = new ArrayList<Long>(vFiles.keySet());
 		wKeys = new ArrayList<Long>(wFiles.keySet());
 		
+		for (int i = 0; i < wFiles.size(); i++){
+			System.out.println(i + "\t" + uKeys.get(i)+"\t" + vKeys.get(i) + "\t" + wKeys.get(i));
+		}
+		
 		uFile = uFiles.get(uKeys.get(0));
 		vFile = vFiles.get(vKeys.get(0));
 		wFile = wFiles.get(wKeys.get(0));
@@ -173,6 +182,7 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 		
 		if(positiveDown){VectorMath.negate(zvec);}
 		
+		setXLookup(lonName);
 		setYLookup(latName);
 		setZLookup(zName);
 		
@@ -218,7 +228,7 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 		wVar = wFile.findVariable(wName);
 
 		setTLookup(tName);
-		setXLookup(lonName);
+		//setXLookup(lonName);
 		//setYLookup(latName);
 		//setZLookup(zName);
 		
@@ -264,9 +274,19 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 	@Override
 	public void close() {
 		try {
-			if(uFile!=null){uFile.close();}
-			if(vFile!=null){vFile.close();}
-			if(wFile!=null){wFile.close();}
+			Iterator<Long> uit = uKeys.iterator();
+			Iterator<Long> vit = vKeys.iterator();
+			Iterator<Long> wit = wKeys.iterator();
+			
+			while(uit.hasNext()){
+				uFiles.get(uit.next()).close();
+			}
+			while(vit.hasNext()){
+				vFiles.get(vit.next()).close();
+			}
+			while(wit.hasNext()){
+				wFiles.get(wit.next()).close();
+			}
 		} catch (IOException e) {
 			System.out
 					.println("WARNING:  Error while closing velocity files from VelocityReader.  Attempting to continue.");
@@ -421,15 +441,16 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 		try {
 			int js, is, ks, ts;
 
-			float stime = (float) TimeConvert.convertFromMillis(freqUnits, time
-					- timeOffset);
+			//float stime = (float) TimeConvert.convertFromMillis(freqUnits, time
+			//		- timeOffset);
 
 			// Searching for the cell indices nearest to the given location
 
 			is = yloc.lookup(lat);
 			js = xloc.lookup(lon);
 			ks = zloc.lookup(z);
-			ts = tloc.lookup(stime);
+			//ts = tloc.lookup(stime);
+			ts = 0; // No point in looking up time since we've already done so.
 
 			// Completely outside the horizontal bounds - return null as opposed
 			// to NODATA
