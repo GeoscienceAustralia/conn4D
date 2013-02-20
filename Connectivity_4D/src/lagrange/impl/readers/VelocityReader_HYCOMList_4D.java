@@ -157,11 +157,6 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 		vKeys = new ArrayList<Long>(vFiles.keySet());
 		wKeys = new ArrayList<Long>(wFiles.keySet());
 
-		for (int i = 0; i < wFiles.size(); i++) {
-			System.out.println(i + "\t" + uKeys.get(i) + "\t" + vKeys.get(i)
-					+ "\t" + wKeys.get(i));
-		}
-
 		// Populate uFile, vFile and wFile with the first entry so that they
 		// are not null
 
@@ -188,6 +183,16 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 			zloc.setNegate(true);
 		}
 		bounds[0][0] = uKeys.get(0);
+		NetcdfFile lastfile = uFiles.get(uKeys.get(uKeys.size()-1));
+		Variable t = lastfile.findVariable(tName);
+		double last;
+		try {
+			last = t.read(new int[]{t.getShape(0)-1},new int[]{1}).getDouble(0);
+			bounds[0][1] = TimeConvert.HYCOMToMillis((long) last);  
+		} catch (InvalidRangeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private boolean checkTime(long time) {
@@ -904,8 +909,6 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 					+ uFile.getVariables().toString() + "\n");
 		}
 		tloc = new IndexLookup_Nearest(tVar);
-		bounds[0][0] = TimeConvert.HYCOMToMillis((long) tloc.getMinVal());
-		bounds[0][1] = TimeConvert.HYCOMToMillis((long) tloc.getMaxVal());
 	}
 
 	/**

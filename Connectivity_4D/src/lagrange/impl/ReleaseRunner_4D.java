@@ -12,9 +12,9 @@ import lagrange.ReleaseRunner;
  * @author Johnathan Kool
  */
 
-public class ReleaseRunner_3D implements ReleaseRunner {
+public class ReleaseRunner_4D implements ReleaseRunner {
 
-	private ReleaseFactory_3D relFactory;
+	private ReleaseFactory_4D relFactory;
 
 	/**
 	 * Single-argument constructor.
@@ -23,8 +23,8 @@ public class ReleaseRunner_3D implements ReleaseRunner {
 	 *            : Location-specific configuration parameters (filename)
 	 */
 
-	public ReleaseRunner_3D(String config) {
-		relFactory = new ReleaseFactory_3D(config);
+	public ReleaseRunner_4D(String config) {
+		relFactory = new ReleaseFactory_4D(config);
 	}
 
 	/**

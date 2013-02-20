@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestVelocityReader_NetCDF_3D {
+public class TestVelocityReader_NetCDF_4D {
 
 	VelocityReader_NetCDF_4D v3 = new VelocityReader_NetCDF_4D();
 

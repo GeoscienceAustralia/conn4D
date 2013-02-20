@@ -1,19 +1,16 @@
 package lagrange.test.readers;
 
-import static org.junit.Assert.*;
-
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
 
 import lagrange.impl.readers.VelocityReader_HYCOMList_4D;
-import lagrange.utils.TimeConvert;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestVelocityReader_NetCDFList {
+public class TestVelocityReader_HYCOMList_4D {
 
 	String dir = "V:/HYCOM";
 	VelocityReader_HYCOMList_4D ncl;
@@ -36,7 +33,7 @@ public class TestVelocityReader_NetCDFList {
 	}
 	
 	public static void main(String[] args){
-		TestVelocityReader_NetCDFList tvr = new TestVelocityReader_NetCDFList();
+		TestVelocityReader_HYCOMList_4D tvr = new TestVelocityReader_HYCOMList_4D();
 		tvr.setUp();
 		tvr.test();
 	}

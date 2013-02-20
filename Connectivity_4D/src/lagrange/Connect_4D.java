@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-import lagrange.impl.ReleaseRunner_3D;
+import lagrange.impl.ReleaseRunner_4D;
 import lagrange.impl.readers.ReleaseFileReader_Shapefile;
 import lagrange.impl.readers.ReleaseFileReader_Text;
 import lagrange.input.GlobalParameters;
@@ -25,7 +25,7 @@ import lagrange.utils.TimeConvert;
 public class Connect_4D {
 	private static GlobalParameters gp = new GlobalParameters();
 	private static ReleaseFileReader rf;
-	private static ReleaseRunner_3D rr;
+	private static ReleaseRunner_4D rr;
 	private static String prmfile = "default.prm";
 	private static String cfgfile = "default.cfg";
 	private static DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -46,7 +46,7 @@ public class Connect_4D {
 
 		// Initialize the release runner using the local configuration.
 
-		rr = new ReleaseRunner_3D(cfgfile);
+		rr = new ReleaseRunner_4D(cfgfile);
 	}
 	
 	public void run(){

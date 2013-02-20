@@ -23,6 +23,7 @@ import lagrange.impl.movement.Diffusion_Simple_3D;
 import lagrange.impl.movement.Advection_RK4_3D;
 import lagrange.impl.readers.Boundary_NetCDF_Grid;
 import lagrange.impl.readers.Shapefile;
+import lagrange.impl.readers.VelocityReader_HYCOMList_4D;
 import lagrange.impl.readers.VelocityReader_NetCDFDir_4D;
 import lagrange.impl.readers.VelocityReader_NetCDF_4D;
 import lagrange.impl.writers.DistanceWriter_Text;
@@ -41,7 +42,7 @@ import foghat.MatrixUtilities;
  * 
  */
 
-public class ReleaseFactory_3D {
+public class ReleaseFactory_4D {
 
 	private LocalParameters lp;
 
@@ -62,10 +63,10 @@ public class ReleaseFactory_3D {
 	private long time;
 	private long counter = -1;
 
-	public ReleaseFactory_3D() {
+	public ReleaseFactory_4D() {
 	}
 
-	public ReleaseFactory_3D(String local_config) {
+	public ReleaseFactory_4D(String local_config) {
 		initialize(local_config);
 	}
 
@@ -152,22 +153,23 @@ public class ReleaseFactory_3D {
 			}
 
 		} catch (IOException e) {
-			System.out.println("\nError reading terrain file: " + lp.landFileName
-					+ ".\n");
+			System.out.println("\nError reading terrain file: "
+					+ lp.landFileName + ".\n");
 			e.printStackTrace();
-			err=true;
+			err = true;
 		}
 
-		if(err){
+		if (err) {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 			}
-			System.out.println("\nErrors occurred during initialization.  Exiting.");
+			System.out
+					.println("\nErrors occurred during initialization.  Exiting.");
 			shutdown();
 			System.exit(-1);
 		}
-		
+
 		System.out.println("\nInitialization successful.");
 	}
 
@@ -195,7 +197,7 @@ public class ReleaseFactory_3D {
 		// Set the output writers
 
 		tw = new TrajectoryWriter_Text(output + prm.getLocName() + ".trj");
-		tw.setNegCoord(!lp.negOceanCoord&&lp.negCoord);
+		tw.setNegCoord(!lp.negOceanCoord && lp.negCoord);
 		mw = new MatrixWriter_Text(output + prm.getLocName() + ".sum");
 		dw = new DistanceWriter_Text(output + prm.getLocName() + ".dst");
 
@@ -247,8 +249,9 @@ public class ReleaseFactory_3D {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
-			nvr.setTimeOffset(TimeConvert.convertToMillis(lp.timeOffsetUnits, lp.timeOffset));
+
+			nvr.setTimeOffset(TimeConvert.convertToMillis(lp.timeOffsetUnits,
+					lp.timeOffset));
 
 			nvr.setLonName(lp.lonName);
 			nvr.setLatName(lp.latName);
@@ -271,21 +274,50 @@ public class ReleaseFactory_3D {
 		} else if (lp.velocityType.equalsIgnoreCase("IANN_DIR")) {
 			VelocityReader_NetCDFDir_4D ndr = null;
 			try {
-			ndr = new VelocityReader_NetCDFDir_4D();
-			ndr.setLonName(lp.lonName);
-			ndr.setLatName(lp.latName);
-			//ndr.setNegOceanCoord(lp.negOceanCoord);
-			//ndr.setNegPolyCoord(lp.negCoord);
-			ndr.setUName(lp.uname);
-			ndr.setVName(lp.vname);
-			ndr.setWName(lp.wname);  // uVar, vVar and wVar need to be generated somewhere here.  But they depend on time.
-			ndr.setZName(lp.kName);  // Time is normally checked, but null is not acceptable for cloning or as an
-			ndr.setTName(lp.tName);  // initial start.
-			ndr.initialize(lp.veldir);
-			ndr.setXLookup(lp.latName);
-			ndr.setYLookup(lp.lonName);
-			ndr.setZLookup(lp.kName);
-			ndr.setTLookup(lp.tName);
+				ndr = new VelocityReader_NetCDFDir_4D();
+				ndr.setLonName(lp.lonName);
+				ndr.setLatName(lp.latName);
+				// ndr.setNegOceanCoord(lp.negOceanCoord);
+				// ndr.setNegPolyCoord(lp.negCoord);
+				ndr.setUName(lp.uname);
+				ndr.setVName(lp.vname);
+				ndr.setWName(lp.wname); // uVar, vVar and wVar need to be
+										// generated somewhere here. But they
+										// depend on time.
+				ndr.setZName(lp.kName); // Time is normally checked, but null is
+										// not acceptable for cloning or as an
+				ndr.setTName(lp.tName); // initial start.
+				ndr.initialize(lp.veldir);
+				ndr.setXLookup(lp.latName);
+				ndr.setYLookup(lp.lonName);
+				ndr.setZLookup(lp.kName);
+				ndr.setTLookup(lp.tName);
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			vr = ndr;
+
+			// Otherwise, it's not supported (a new reader will have to be
+			// coded and added here as a choice)
+
+		} else if (lp.velocityType.equalsIgnoreCase("HYCOM_LIST")) {
+			VelocityReader_HYCOMList_4D ndr = null;
+			try {
+				ndr = new VelocityReader_HYCOMList_4D();
+				ndr.setLonName(lp.lonName);
+				ndr.setLatName(lp.latName);
+				ndr.setUName(lp.uname);
+				ndr.setVName(lp.vname);
+				ndr.setWName(lp.wname);
+				ndr.setZName(lp.kName);
+				ndr.setTName(lp.tName); 
+				ndr.initialize(lp.veldir);
+				ndr.setXLookup(lp.latName);
+				ndr.setYLookup(lp.lonName);
+				ndr.setZLookup(lp.kName);
+				ndr.setTLookup(lp.tName);
 
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -328,11 +360,11 @@ public class ReleaseFactory_3D {
 	 * 
 	 * @return - The CollisionDetection object
 	 */
-	
+
 	public CollisionDetector getCollisionDetection() {
 		return cd;
 	}
-	
+
 	/**
 	 * Retrieves the Diffusion object associated with this instance.
 	 * 
@@ -461,11 +493,11 @@ public class ReleaseFactory_3D {
 	 * @param df
 	 *            - The CollisionDetection object
 	 */
-	
+
 	public void setCollisionDetection(CollisionDetector cd) {
 		this.cd = cd;
 	}
-	
+
 	/**
 	 * Sets the Diffusion object for this instance.
 	 * 

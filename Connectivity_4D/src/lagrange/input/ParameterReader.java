@@ -59,7 +59,7 @@ public class ParameterReader {
 					continue;
 				} catch (NoSuchFieldException ex) {
 					System.out.println("WARNING: Field " + tk
-							+ " was not found.  Continuing...");
+							+ " was provided in the text file, but is not a Parameter class variable.  Continuing...");
 					parse = br.readLine();
 					continue;
 				} catch (IllegalAccessException ex) {

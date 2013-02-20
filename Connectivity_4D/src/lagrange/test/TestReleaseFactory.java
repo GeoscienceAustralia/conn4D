@@ -10,7 +10,7 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 
 import lagrange.Parameters;
 import lagrange.impl.Release;
-import lagrange.impl.ReleaseFactory_3D;
+import lagrange.impl.ReleaseFactory_4D;
 import lagrange.impl.behavior.Mortality_None;
 import lagrange.impl.behavior.Settlement_None;
 import lagrange.impl.movement.Diffusion_None;
@@ -22,7 +22,7 @@ import lagrange.parameters.Parameters_Test;
 
 public class TestReleaseFactory {
 	
-	ReleaseFactory_3D rf = new ReleaseFactory_3D();
+	ReleaseFactory_4D rf = new ReleaseFactory_4D();
 	GeometryFactory gf = new GeometryFactory();
 	
 	public static void main(String[] args){

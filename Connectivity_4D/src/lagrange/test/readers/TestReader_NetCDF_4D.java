@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestReader_NetCDF_3D {
+public class TestReader_NetCDF_4D {
 
 	Reader_NetCDF_3D n3;
 	String filename = "E:/HPC/Modeling/AUS/Input/NetCDF/AUS_mld_2009.nc";
