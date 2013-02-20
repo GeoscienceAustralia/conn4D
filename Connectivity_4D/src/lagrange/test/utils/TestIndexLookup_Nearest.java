@@ -3,6 +3,7 @@ package lagrange.test.utils;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import lagrange.utils.IndexLookup_Nearest;
 
@@ -50,6 +51,26 @@ public class TestIndexLookup_Nearest{
 		// Ensure rounding works
 		assertEquals(5, loc.lookup(.475));
 		assertEquals(6, loc.lookup(.612));
+	}
+	
+	@Test
+	public void testDimension(){
+		try {
+			ncFile = NetcdfFile.open("V://HYCOM//AUS_u_2009_1.nc");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		var = ncFile.findVariable("Longitude");
+		loc = new IndexLookup_Nearest(var,0);
+		System.out.println(Arrays.toString(loc.getJavaArray()));
+		loc.setVariable(var,1);
+		System.out.println(Arrays.toString(loc.getJavaArray()));
+		var = ncFile.findVariable("Latitude");
+		loc.setVariable(var,0);
+		System.out.println(Arrays.toString(loc.getJavaArray()));
+		loc.setVariable(var,1);
+		System.out.println(Arrays.toString(loc.getJavaArray()));
 	}
 	
 	public static void main(String[] args){

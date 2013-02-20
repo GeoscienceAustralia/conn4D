@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import ucar.ma2.Array;
+import ucar.ma2.InvalidRangeException;
 import ucar.nc2.Variable;
 
 /**
@@ -40,6 +41,17 @@ public class IndexLookup_Nearest implements Cloneable {
 	}
 	
 	/**
+	 * Constructor accepting a Variable object
+	 * 
+	 * @param variable
+	 */
+	
+	public IndexLookup_Nearest(Variable variable, int dim){
+		setVariable(variable);
+		readArray(dim);
+	}
+	
+	/**
 	 * Reads the variable values into An array object
 	 */
 	
@@ -62,6 +74,43 @@ public class IndexLookup_Nearest implements Cloneable {
 		} else {
 			java_array = (double[]) array.copyTo1DJavaArray();
 		}
+	}
+	
+	/**
+	 * Reads the variable values into An array object
+	 */
+	
+	public Array readArray(int dim) {
+		
+			int len = variable.getShape(dim);
+			int[] shape = new int[variable.getRank()];
+			for(int i = 0; i < shape.length; i++){
+				shape[i] = 1;
+			}
+			shape[dim] = len;
+			try {
+				array = variable.read(new int[variable.getRank()],shape);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidRangeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		// Convert into a java array
+
+		if (array.getElementType() == Float.TYPE) {
+
+			float[] fa = (float[]) array.copyTo1DJavaArray();
+			java_array = new double[fa.length];
+			for (int i = 0; i < java_array.length; i++) {
+				java_array[i] = fa[i];
+			}
+		} else {
+			java_array = (double[]) array.copyTo1DJavaArray();
+		}
+		return array;
 	}
 	
 	/**
@@ -142,6 +191,17 @@ public class IndexLookup_Nearest implements Cloneable {
 	}
 	
 	/**
+	 * Sets the Variable associated with the class instance.
+	 * 
+	 * @param variable
+	 */
+	
+	public void setVariable(Variable variable, int dim){
+		this.variable=variable;
+		readArray(dim);
+	}
+	
+	/**
 	 * Releases resources associated with the class.
 	 */
 	
@@ -159,7 +219,11 @@ public class IndexLookup_Nearest implements Cloneable {
 	
 	public double[] getJavaArray(){
 		if(negate){
-			System.out.println("Trying to get a negative array from IndexLookup_Nearest");
+			double[] tmp = new double[java_array.length];
+			for(int i = 0; i < java_array.length; i++){
+				tmp[i] = -java_array[i];
+			}
+			return tmp;
 		}
 		return java_array;}
 	

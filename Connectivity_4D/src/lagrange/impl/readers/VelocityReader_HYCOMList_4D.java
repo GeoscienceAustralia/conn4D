@@ -11,14 +11,12 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.TreeMap;
-import java.util.Date;
 
 import lagrange.VelocityReader;
 import lagrange.utils.FilenamePatternFilter;
 import lagrange.utils.IndexLookup_Nearest;
 import lagrange.utils.TimeConvert;
 import lagrange.utils.TriCubicSpline;
-import lagrange.utils.VectorMath;
 
 import ucar.ma2.Array;
 import ucar.ma2.InvalidRangeException;
@@ -31,7 +29,7 @@ import ucar.nc2.Variable;
  * @author Johnathan Kool
  */
 
-public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
+public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 
 	Calendar c = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 	SimpleDateFormat formatUTC = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ssZ");
@@ -53,7 +51,7 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 	private NetcdfFile uFile, vFile, wFile;
 	private Variable latVar, lonVar, zVar, tVar;
 	private Variable uVar, vVar, wVar;
-	private Array uArr, vArr, wArr, latArr, zArr;
+	private Array uArr, vArr, wArr;
 	private IndexLookup_Nearest xloc, yloc, zloc, tloc;
 	private TriCubicSpline tcs = new TriCubicSpline(new double[zKernelSize],
 			new double[kernelSize], new double[kernelSize],
@@ -64,48 +62,50 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 	private String zName = "Depth";
 	private String tName = "MT";
 	private String dir;
-	private double[] latvec, zvec;
 	private double[][] bounds = new double[4][2];
-	//private boolean negOceanCoord = false;
-	// private boolean negPolyCoord = true;
-	private long timeOffset = TimeConvert.HYCOM_OFFSET;
-	
 	private boolean nearNoData = false;
 
-	private String uName;
-	private String vName;
-	private String wName;
+	private String uName = "u";
+	private String vName = "v";
+	private String wName = "w";
 
 	private double[] velocities;
 	private double[] averages;
 	private double[] variances;
 
 	/**
-	 * Reads velocities from a collection of u, v and w NetCDF file collection within
-	 * a single directory.
+	 * Reads velocities from a collection of u, v and w NetCDF file collection
+	 * within a single directory.
 	 * 
-	 * @param dir - The directory path containing the NetCDF velocity files
+	 * @param dir
+	 *            - The directory path containing the NetCDF velocity files
 	 * @throws IOException
 	 */
 
-	public VelocityReader_NetCDFList_4D(){}
-	public VelocityReader_NetCDFList_4D(String dir) throws IOException{
+	public VelocityReader_HYCOMList_4D() {
+	}
+
+	public VelocityReader_HYCOMList_4D(String dir) throws IOException {
 		initialize(dir);
 	}
-	
+
 	public void initialize(String dir) throws IOException {
+		// Set Time Zone to UTC
 		formatUTC.setTimeZone(TimeZone.getTimeZone("UTC"));
+		
 		this.dir = dir;
 		File f = new File(dir);
+		
+		// Ensure the path is a directory
 		if (!f.isDirectory()) {
 			throw new IllegalArgumentException(f.getName()
 					+ " is not a directory.");
 		}
 
 		// Filter the list of files
-		
-		File [] fa = f.listFiles(new FilenamePatternFilter(".*_[uvw]_.*\\.nc"));
-		
+
+		File[] fa = f.listFiles(new FilenamePatternFilter(".*_[uvw]_.*\\.nc"));
+
 		for (File fil : fa) {
 
 			String name = fil.getName();
@@ -120,14 +120,14 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 			double[] ja = (double[]) arr.copyTo1DJavaArray();
 
 			// Determine the minimum and maximum times
-			
+
 			long[] minmax = new long[2];
 
 			minmax[0] = TimeConvert.HYCOMToMillis((long) ja[0]);
 			minmax[1] = TimeConvert.HYCOMToMillis((long) ja[ja.length - 1]);
 
 			// Put into an index linking start time with the associated file
-			
+
 			if (name.substring(name.indexOf("_") + 1, name.indexOf("_") + 2)
 					.equalsIgnoreCase("u")) {
 				uFiles.put(minmax[0], ncf);
@@ -144,107 +144,105 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 		}
 
 		// If there are no files in one of the index collections, then exit.
-		
-		if (uFiles.size()==0 || vFiles.size()==0|| wFiles.size()==0){
-			System.out.println("Velocity directory is missing a file set, or files are not named properly." +
-					"Files  must be named as *_u_*, *_v_*, and *_w_*.");
-			
+
+		if (uFiles.size() == 0 || vFiles.size() == 0 || wFiles.size() == 0) {
+			System.out
+					.println("Velocity directory is missing a file set, or files are not named properly."
+							+ "Files  must be named as *_u_*, *_v_*, and *_w_*.");
+
 			System.exit(0);
 		}
-		
+
 		uKeys = new ArrayList<Long>(uFiles.keySet());
 		vKeys = new ArrayList<Long>(vFiles.keySet());
 		wKeys = new ArrayList<Long>(wFiles.keySet());
-		
-		for (int i = 0; i < wFiles.size(); i++){
-			System.out.println(i + "\t" + uKeys.get(i)+"\t" + vKeys.get(i) + "\t" + wKeys.get(i));
+
+		for (int i = 0; i < wFiles.size(); i++) {
+			System.out.println(i + "\t" + uKeys.get(i) + "\t" + vKeys.get(i)
+					+ "\t" + wKeys.get(i));
 		}
-		
+
+		// Populate uFile, vFile and wFile with the first entry so that they
+		// are not null
+
 		uFile = uFiles.get(uKeys.get(0));
 		vFile = vFiles.get(vKeys.get(0));
 		wFile = wFiles.get(wKeys.get(0));
-		
+
 		uVar = uFile.findVariable(uName);
 		vVar = vFile.findVariable(vName);
 		wVar = wFile.findVariable(wName);
-		
+
 		// Latitude and depth are read here because they should not change
 		// and therefore can be input once only.
-		
+
 		latVar = uFile.findVariable(latName);
+		lonVar = uFile.findVariable(lonName);
 		zVar = uFile.findVariable(zName);
-		latArr = latVar.read();
-		zArr = zVar.read();
-		//latvec = (double[]) latArr.copyTo1DJavaArray();
-		//zvec = (double[]) zArr.copyTo1DJavaArray();
-		latvec = (double[]) latArr.get1DJavaArray(java.lang.Double.class);
-		zvec = (double[]) zArr.get1DJavaArray(java.lang.Double.class);
-		
-		if(positiveDown){VectorMath.negate(zvec);}
-		
+
 		setXLookup(lonName);
 		setYLookup(latName);
 		setZLookup(zName);
-		
+
+		if (positiveDown) {
+			zloc.setNegate(true);
+		}
 		bounds[0][0] = uKeys.get(0);
 	}
 
-	private boolean checkTime(long time){
-		
-		// Right now, the lookups are solely based on the dimensions (lats, lons, depth, time)
-		// of the u velocity file, assuming that u v w and w share common Dimensions.  Otherwise
-		// we'd need to set up independent XYZ and T lookups for UV and W
-		// increasing computational overhead, when this really shouldn't be necessary.
-		// BUT, it might be a good idea to ensure that the velocity files are consistent.
-		
+	private boolean checkTime(long time) {
+
+		/* Right now, the lookups are based solely on the dimensions (lats,
+		   lons, depth, time) of the u velocity files, assuming that u, v 
+		   and w share common Dimensions. Otherwise we'd need to set up 
+		   independent XYZ and T lookups for UV and W increasing computational 
+		   overhead, when this really shouldn't be necessary. BUT, it might 
+		   be a good idea to ensure that the velocity files are consistent.*/
+
 		int uidx = Collections.binarySearch(uKeys, time);
-		//int vidx = Collections.binarySearch(vKeys, time);
-		//int widx = Collections.binarySearch(wKeys, time);
-		
-		if (uidx==-1 || uidx>uKeys.size()){
+		// int vidx = Collections.binarySearch(vKeys, time);
+		// int widx = Collections.binarySearch(wKeys, time);
+
+		if (uidx == -1 || uidx > uKeys.size()) {
 			return false;
 		}
-		
+
 		if (uidx < 0) {
 			uidx = -(uidx + 2);
 		}
 
-		//if (vidx < 0) {
-		//	vidx = -(vidx + 2);
-		//}
-		
-		//if (widx < 0) {
-		//	widx = -(widx + 2);
-		//}
-		
-		if(pidx!=uidx){
-		
-		uFile = uFiles.get(uKeys.get(uidx));
-		vFile = vFiles.get(vKeys.get(uidx));
-		wFile = wFiles.get(wKeys.get(uidx));
-		
-		uVar = uFile.findVariable(uName);
-		vVar = vFile.findVariable(vName);
-		wVar = wFile.findVariable(wName);
+		// if (vidx < 0) {
+		// vidx = -(vidx + 2);
+		// }
 
-		setTLookup(tName);
-		//setXLookup(lonName);
-		//setYLookup(latName);
-		//setZLookup(zName);
-		
-		pidx = uidx;	
+		// if (widx < 0) {
+		// widx = -(widx + 2);
+		// }
+
+		if (pidx != uidx) {
+
+			uFile = uFiles.get(uKeys.get(uidx));
+			vFile = vFiles.get(vKeys.get(uidx));
+			wFile = wFiles.get(wKeys.get(uidx));
+
+			uVar = uFile.findVariable(uName);
+			vVar = vFile.findVariable(vName);
+			wVar = wFile.findVariable(wName);
+
+			setTLookup(tName);
+			pidx = uidx;
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Clones the VelocityReader_NetCDF_3D object.
 	 */
 
 	@Override
-	public VelocityReader_NetCDFList_4D clone() {
+	public VelocityReader_HYCOMList_4D clone() {
 		try {
-			VelocityReader_NetCDFList_4D ndr = new VelocityReader_NetCDFList_4D();
+			VelocityReader_HYCOMList_4D ndr = new VelocityReader_HYCOMList_4D();
 			ndr.dir = dir;
 			ndr.freqUnits = freqUnits;
 			ndr.latName = latName;
@@ -256,12 +254,12 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 			ndr.tName = tName;
 
 			ndr.initialize(dir);
-			
+
 			ndr.setXLookup(ndr.latName);
 			ndr.setYLookup(ndr.lonName);
 			ndr.setZLookup(ndr.zName);
 			ndr.setTLookup(ndr.tName);
-			
+
 			return ndr;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -277,14 +275,14 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 			Iterator<Long> uit = uKeys.iterator();
 			Iterator<Long> vit = vKeys.iterator();
 			Iterator<Long> wit = wKeys.iterator();
-			
-			while(uit.hasNext()){
+
+			while (uit.hasNext()) {
 				uFiles.get(uit.next()).close();
 			}
-			while(vit.hasNext()){
+			while (vit.hasNext()) {
 				vFiles.get(vit.next()).close();
 			}
-			while(wit.hasNext()){
+			while (wit.hasNext()) {
 				wFiles.get(wit.next()).close();
 			}
 		} catch (IOException e) {
@@ -300,12 +298,24 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 			vArr = null;
 			wArr = null;
 		}
-		
-		if(xloc!=null){xloc.close();xloc = null;}
-		if(yloc!=null){yloc.close();yloc = null;}
-		if(zloc!=null){zloc.close();zloc = null;}
-		if(tloc!=null){tloc.close();tloc = null;}
-}
+
+		if (xloc != null) {
+			xloc.close();
+			xloc = null;
+		}
+		if (yloc != null) {
+			yloc.close();
+			yloc = null;
+		}
+		if (zloc != null) {
+			zloc.close();
+			zloc = null;
+		}
+		if (tloc != null) {
+			tloc.close();
+			tloc = null;
+		}
+	}
 
 	/**
 	 * Retrieves average velocity values associated with the last queried
@@ -319,22 +329,6 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 	}
 
 	/**
-	 * Indicates whether negative latitude and longitude coordinates are being
-	 * used. Used to back-transform coordinate values into the original
-	 * reference frame if required.
-	 * 
-	 * @return
-	 */
-
-	// public boolean isNegOceanCoord() {
-	// return negOceanCoord;
-	// }
-
-	// public boolean isNegPolyCoord() {
-	// return negPolyCoord;
-	// }
-
-	/**
 	 * Retrieves the minimum and maximum values of the t, z, y and x dimensions
 	 * 
 	 * @return
@@ -343,7 +337,7 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 	public double[][] getBounds() {
 		return bounds;
 	}
-	
+
 	/**
 	 * Retrieves the name of the Latitude variable
 	 * 
@@ -433,25 +427,21 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 					"Latitude or Longitude value is NaN");
 		}
 
-		if(!checkTime(time)){
+		if (!checkTime(time)) {
 			throw new IllegalArgumentException(
 					"Time provided is out of the range of available data");
 		}
-		
+
 		try {
 			int js, is, ks, ts;
-
-			//float stime = (float) TimeConvert.convertFromMillis(freqUnits, time
-			//		- timeOffset);
 
 			// Searching for the cell indices nearest to the given location
 
 			is = yloc.lookup(lat);
 			js = xloc.lookup(lon);
 			ks = zloc.lookup(z);
-			//ts = tloc.lookup(stime);
-			ts = 0; // No point in looking up time since we've already done so.
-
+			ts = tloc.lookup(TimeConvert.millisToHYCOM(time));
+			
 			// Completely outside the horizontal bounds - return null as opposed
 			// to NODATA
 
@@ -480,9 +470,9 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 				this.notifyAll();
 				return null;
 			}
-			
+
 			// Beyond the vertical ocean surface
-			
+
 			if (zloc.isIn_Bounds() > 0) {
 				ks = 0; // Assign the index to the surface for now.
 				z = zloc.getMinVal();
@@ -546,28 +536,10 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 			}
 
 			int blocksize = idim * jdim * kdim;
-			int semiblock = (idim * (jdim + 1) * kdim)/2;
+			int semiblock = (idim * (jdim + 1) * kdim) / 3;
 
 			int[] origin = new int[] { ts, kstart, istart, jstart };
 			int[] shape = new int[] { 1, kdim, idim, jdim };
-
-			//Array latArr = null, lonArr = null, zArr = null;
-			Array lonArr = null;
-
-			// Here we are subsetting the dimensions.  Reading an Array from the Variable 
-			// seems to be inefficient, probably because they are large and are not in memory.
-			// For the latitude and z arrays, which should not change structure - 
-			// we can instead read the arrays built during initialization.
-			
-			try {
-				//latArr = latVar.read(new int[] { istart }, new int[] { idim });
-				lonArr = lonVar.read(new int[] { jstart }, new int[] { jdim });
-				//zArr = zVar.read(new int[] { kstart }, new int[] { kdim });
-
-			} catch (InvalidRangeException e) {
-				// Should not occur. Checking done above.
-				e.printStackTrace();
-			}
 
 			try {
 				uArr = uVar.read(origin, shape);
@@ -751,9 +723,9 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 
 					// Otherwise mitigate by replacing using the average value.
 
-					for (int i = 0; i < kernelSize; i++) {
-						for (int j = 0; j < kernelSize; j++) {
-							for (int k = 0; k < zKernelSize; k++) {
+					for (int i = 0; i < idim; i++) {
+						for (int j = 0; j < jdim; j++) {
+							for (int k = 0; k < kdim; k++) {
 
 								if (awtmp[k][i][j] > cutoff
 										|| Double.isNaN(awtmp[k][i][j])) {
@@ -766,15 +738,13 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 				}
 			}
 
-			// Convert the Arrays into Java arrays - because latitude and z should
-			// be consistent among files, we subset from a constant array.
+			/* Convert the Arrays into Java arrays - because latitude and z
+			   should be consistent among files, we subset from a constant 
+			   array. */
 
-			double[] latja = Arrays.copyOfRange(latvec, istart, istart+idim);
-			//double[] latja = (double[]) latArr.copyTo1DJavaArray();
-			//double[] lonja = (float[]) lonArr.copyTo1DJavaArray();
-			double[] lonja = (double[]) lonArr.get1DJavaArray(java.lang.Double.class);
-			//double[] zja = (double[]) zArr.copyTo1DJavaArray();
-			double[] zja = Arrays.copyOfRange(zvec, kstart, kstart+kdim);
+			double[] latja = Arrays.copyOfRange(yloc.getJavaArray(), istart, istart + idim);
+			double[] lonja = Arrays.copyOfRange(xloc.getJavaArray(), jstart, jstart + jdim);
+			double[] zja = Arrays.copyOfRange(zloc.getJavaArray(), kstart, kstart + kdim);
 
 			// Obtain the interpolated values
 
@@ -880,7 +850,7 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 	public String getZName() {
 		return zName;
 	}
-	
+
 	/**
 	 * Indicates if the position is near an element with NoData
 	 */
@@ -895,7 +865,7 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 	 * 
 	 * @param latName
 	 */
-	
+
 	public void setLatName(String latName) {
 		this.latName = latName;
 	}
@@ -905,29 +875,18 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 	 * 
 	 * @param latName
 	 */
-	
+
 	public void setLonName(String lonName) {
 		this.lonName = lonName;
 	}
 
-	 //public void setNegOceanCoord(boolean negOceanCoord) {
-	 //    this.negOceanCoord = negOceanCoord;
-	 //}
+	// public void setNegOceanCoord(boolean negOceanCoord) {
+	// this.negOceanCoord = negOceanCoord;
+	// }
 
 	// public void setNegPolyCoord(boolean negPolyCoord) {
 	// this.negPolyCoord = negPolyCoord;
 	// }
-	
-	/**
-	 * Sets the time offset value for the time reference of the velocity files
-	 * from Java's base time
-	 * 
-	 * @param offset
-	 */
-
-	public void setTimeOffset(long offset) {
-		this.timeOffset = offset;
-	}
 
 	/**
 	 * Sets the name of the lookup variable for the Time position
@@ -945,9 +904,8 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 					+ uFile.getVariables().toString() + "\n");
 		}
 		tloc = new IndexLookup_Nearest(tVar);
-		bounds[0][0] = tloc.getMinVal()+timeOffset;
-		bounds[0][1] = tloc.getMaxVal()+timeOffset;
-
+		bounds[0][0] = TimeConvert.HYCOMToMillis((long) tloc.getMinVal());
+		bounds[0][1] = TimeConvert.HYCOMToMillis((long) tloc.getMaxVal());
 	}
 
 	/**
@@ -955,7 +913,7 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 	 * 
 	 * @param latName
 	 */
-	
+
 	public void setTName(String name) {
 		tName = name;
 	}
@@ -986,13 +944,15 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 
 	public void setUName(String uName) throws IOException {
 		this.uName = uName;
-		if(uFile!=null){uVar = uFile.findVariable(uName);}
+		if (uFile != null) {
+			uVar = uFile.findVariable(uName);
+		}
 	}
-	
+
 	public void setUnits(String units) {
 		this.freqUnits = units;
 	}
-	
+
 	/**
 	 * Sets the v-velocity file to be used by this class
 	 * 
@@ -1006,8 +966,9 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 	public void setVFile(String _velocityFile, String vName) throws IOException {
 		this.vName = vName;
 		vFile = NetcdfFile.open(_velocityFile);
-		if(vFile!=null){
-		vVar = vFile.findVariable(vName);}
+		if (vFile != null) {
+			vVar = vFile.findVariable(vName);
+		}
 	}
 
 	/**
@@ -1020,9 +981,11 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 
 	public void setVName(String vName) throws IOException {
 		this.vName = vName;
-		if(vFile!=null){vVar = vFile.findVariable(vName);}
+		if (vFile != null) {
+			vVar = vFile.findVariable(vName);
+		}
 	}
-	
+
 	/**
 	 * Sets the w-velocity ffile to be used by this class
 	 * 
@@ -1049,7 +1012,9 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 
 	public void setWName(String wName) throws IOException {
 		this.wName = wName;
-		if(wFile!=null){wVar = wFile.findVariable(wName);}
+		if (wFile != null) {
+			wVar = wFile.findVariable(wName);
+		}
 	}
 
 	/**
@@ -1067,7 +1032,8 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 			System.out.println("Velocity file variables: "
 					+ uFile.getVariables().toString() + "\n");
 		}
-		xloc = new IndexLookup_Nearest(lonVar);
+		xloc = new IndexLookup_Nearest(lonVar, 1);// dimension 1 because slices
+													// have 2D lat/lon
 		bounds[3][0] = xloc.getMinVal();
 		bounds[3][1] = xloc.getMaxVal();
 	}
@@ -1087,7 +1053,8 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 			System.out.println("Velocity file variables: "
 					+ uFile.getVariables().toString() + "\n");
 		}
-		yloc = new IndexLookup_Nearest(latVar);
+		yloc = new IndexLookup_Nearest(latVar, 0);// dimension 0 because slices
+													// have 2D lat/lon
 		bounds[2][0] = yloc.getMinVal();
 		bounds[2][1] = yloc.getMaxVal();
 
@@ -1118,8 +1085,13 @@ public class VelocityReader_NetCDFList_4D implements VelocityReader, Cloneable {
 	 * Sets the name of the depth variable
 	 * 
 	 * @param latName
-	 */	
+	 */
 
 	public void setZName(String zname) {
 		this.zName = zname;
-	}}
+	}
+	
+	public double[][] getDims(){
+		return new double[][]{tloc.getJavaArray(),zloc.getJavaArray(),yloc.getJavaArray(),xloc.getJavaArray()};
+	}
+}

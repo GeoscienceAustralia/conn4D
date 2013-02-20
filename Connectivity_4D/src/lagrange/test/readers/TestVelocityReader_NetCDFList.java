@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-import lagrange.impl.readers.VelocityReader_NetCDFList_4D;
+import lagrange.impl.readers.VelocityReader_HYCOMList_4D;
 import lagrange.utils.TimeConvert;
 
 import org.junit.Before;
@@ -16,19 +16,19 @@ import org.junit.Test;
 public class TestVelocityReader_NetCDFList {
 
 	String dir = "V:/HYCOM";
-	VelocityReader_NetCDFList_4D ncl;
+	VelocityReader_HYCOMList_4D ncl;
 	
 	@Before
 	public void setUp(){
 		try {
-			ncl = new VelocityReader_NetCDFList_4D(dir);
+			ncl = new VelocityReader_HYCOMList_4D(dir); 
 			ncl.setXLookup("Longitude");
 			ncl.setYLookup("Latitude");
 			ncl.setTLookup("MT");
 			ncl.setZLookup("Depth");
-			
 			ncl.setUName("u");
 			ncl.setVName("v");
+			ncl.setWName("w");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -56,7 +56,8 @@ public class TestVelocityReader_NetCDFList {
 		c.set(Calendar.MILLISECOND, 0);
 		long time = c.getTimeInMillis();
 		System.out.println(formatUTC.format(time));
-		double[] vels = ncl.getVelocities(time, -5, 100, -50);
+		double[][] dims = ncl.getDims();
+		double[] vels = ncl.getVelocities(time, -10, 100.0799560546875, -49.904899597);	
 	}
 
 }
