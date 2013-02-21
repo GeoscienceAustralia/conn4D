@@ -91,10 +91,8 @@ public class IndexLookup_Nearest implements Cloneable {
 			try {
 				array = variable.read(new int[variable.getRank()],shape);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InvalidRangeException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -148,7 +146,7 @@ public class IndexLookup_Nearest implements Cloneable {
 
 			if (-(index) > java_array.length) {
 				in_bounds = 1;
-				return index;
+				return -(index+2);
 			}
 			
 			// If not an exact match - determine which value we're closer to

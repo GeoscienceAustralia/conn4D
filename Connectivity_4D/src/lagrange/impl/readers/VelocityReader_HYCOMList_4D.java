@@ -431,11 +431,37 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 			throw new IllegalArgumentException(
 					"Latitude or Longitude value is NaN");
 		}
+		
+		// Completely outside the time bounds
 
-		if (!checkTime(time)) {
-			throw new IllegalArgumentException(
-					"Time provided is out of the range of available data");
+		if (time < bounds[0][0] || time > bounds[0][1]) {
+			this.notifyAll();
+			return null;
 		}
+		
+		// Completely outside the vertical bounds
+		
+		if (z < bounds[1][0] || z > bounds[1][1]){
+			this.notifyAll();
+			return null;
+		}
+		
+		// Completely outside the north-south bounds - return null as opposed
+		// to NODATA
+
+		if (lat < bounds[2][0] || lat > bounds[2][1]) {
+			this.notifyAll();
+			return null;
+		}
+		
+		// Completely outside the east-west bounds
+
+		if (lon < bounds[3][0] || lon > bounds[3][1]) {
+			this.notifyAll();
+			return null;
+		}
+
+		checkTime(time);
 
 		try {
 			int js, is, ks, ts;
@@ -446,42 +472,6 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 			js = xloc.lookup(lon);
 			ks = zloc.lookup(z);
 			ts = tloc.lookup(TimeConvert.millisToHYCOM(time));
-			
-			// Completely outside the horizontal bounds - return null as opposed
-			// to NODATA
-
-			if (yloc.isIn_Bounds() != 0) {
-				this.notifyAll();
-				return null;
-			}
-
-			// Completely outside the vertical bounds
-
-			if (xloc.isIn_Bounds() != 0) {
-				this.notifyAll();
-				return null;
-			}
-
-			// Completely outside the time bounds
-
-			if (tloc.isIn_Bounds() != 0) {
-				this.notifyAll();
-				return null;
-			}
-
-			// Outside the depth bounds (downwards)
-
-			if (zloc.isIn_Bounds() < 0) {
-				this.notifyAll();
-				return null;
-			}
-
-			// Beyond the vertical ocean surface
-
-			if (zloc.isIn_Bounds() > 0) {
-				ks = 0; // Assign the index to the surface for now.
-				z = zloc.getMinVal();
-			}
 
 			// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			// ATTENTION!!!! THE ORDER IS VERY IMPORTANT HERE!!!! Latitude (i/y)

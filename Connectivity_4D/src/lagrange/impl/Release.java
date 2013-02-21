@@ -124,9 +124,6 @@ public class Release implements Runnable {
 				}
 
 				// Use the Runge-Kutta function to move the particle
-				if(ct==87){
-					System.out.println("Pause");
-				}
 				
 				mv.apply(p);
 
