@@ -104,7 +104,6 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 				// Nibble to prevent re-reflection
 				CoordinateMath.nibble(trans, 1E-8);
 				backtrans = new LineSegment(CoordinateMath.ceqd2lonlat(trans.p0),CoordinateMath.ceqd2lonlat(trans.p1));
-				System.out.print("\t" + (bnd.getBoundaryDepth(backtrans.p0.x, backtrans.p0.y)));
 				dda.setLine(backtrans);
 				tmpStart = trans.p0;
 				trans = i3d.reflect_special(trans, box);
@@ -141,7 +140,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 
 		if (backtrans.p1.z < bnd.getBoundaryDepth(backtrans.p1.x, backtrans.p1.y)) {
 			System.out.println("Hold it.");
-			handleIntersection(p);
+			//handleIntersection(p);
 		}
 
 		// Check to make sure we haven't reflected above the surface

@@ -98,10 +98,6 @@ public class Release implements Runnable {
 			// For each time step...
 
 			for (long t = 0; t < rd; t += prm.getH()) {
-
-				if(ct==293){
-					System.out.println("Pause");
-				}
 				
 				// Update the Particle's time reference
 
