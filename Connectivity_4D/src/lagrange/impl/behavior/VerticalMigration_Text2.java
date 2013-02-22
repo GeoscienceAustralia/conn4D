@@ -10,19 +10,19 @@ import lagrange.Particle;
 import lagrange.VerticalMigration;
 import lagrange.impl.readers.Boundary_NetCDF_Grid;
 import lagrange.utils.TimeConvert;
+import lagrange.utils.VectorMath;
+import lagrange.utils.VectorUtils;
 
 import cern.jet.random.Empirical;
 import cern.jet.random.EmpiricalWalker;
 import cern.jet.random.Uniform;
 import cern.jet.random.engine.MersenneTwister64;
 import cern.jet.random.engine.RandomEngine;
-import foghat.MatrixUtilities;
 
 public class VerticalMigration_Text2 implements VerticalMigration, Cloneable {
 
 	private long timeInterval = 5;
 	private String timeIntervalUnits = "Days";
-	private MatrixUtilities mu = new MatrixUtilities();
 	private double[][] vmtx;
 	private double[] binbnd = { 0, 20, 40, 60, 80 };
 	private RandomEngine re = new MersenneTwister64(new Date(System
@@ -50,7 +50,7 @@ public class VerticalMigration_Text2 implements VerticalMigration, Cloneable {
 	 */
 
 	public VerticalMigration_Text2(String vertfile) {
-		vmtx = mu.loadASCIIMatrix(new File(vertfile));
+		vmtx = VectorUtils.loadASCIIMatrix(new File(vertfile));
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class VerticalMigration_Text2 implements VerticalMigration, Cloneable {
 
 		// Retrieve the probabilities from the appropriate matrix column
 
-		double[] probabilities = mu.standardize(mu.getColumn(vmtx, column));
+		double[] probabilities = VectorMath.norm1(VectorUtils.getColumn(vmtx, column));
 
 		// Create the Empirical Walker to generate random values
 
@@ -289,7 +289,7 @@ public class VerticalMigration_Text2 implements VerticalMigration, Cloneable {
 		VerticalMigration_Text2 adv = new VerticalMigration_Text2();
 		adv.timeInterval=timeInterval;
 		adv.timeIntervalUnits=timeIntervalUnits;
-		adv.vmtx=mu.copy(vmtx);
+		adv.vmtx=VectorUtils.copy(vmtx);
 		adv.binbnd = binbnd;
 		adv.bathym = bathym.clone();
 		return adv;

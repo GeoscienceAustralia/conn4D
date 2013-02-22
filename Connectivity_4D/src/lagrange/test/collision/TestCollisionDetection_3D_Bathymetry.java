@@ -6,7 +6,7 @@ import java.util.Arrays;
 import lagrange.Particle;
 import lagrange.impl.collision.CollisionDetector_3D_Bathymetry;
 import lagrange.impl.readers.Boundary_NetCDF_Grid;
-import lagrange.utils.Utils;
+import lagrange.utils.GeometryUtils;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -42,7 +42,7 @@ public class TestCollisionDetection_3D_Bathymetry {
 		Particle p1 = new Particle();
 		p1.setPX(0); p1.setPY(0);	p1.setPZ(1); p1.setX(0); p1.setY(0); p1.setZ(-1); 
 		cdb_x.handleIntersection(p1);
-		double[] da = Utils.lonlat2ceqd(new double[]{p1.getX(),p1.getY(),p1.getZ()});
+		double[] da = GeometryUtils.lonlat2ceqd(new double[]{p1.getX(),p1.getY(),p1.getZ()});
 	    Assert.assertArrayEquals(new double[]{-1,0,0},da ,1E-1);// precision decrease due to use of meters
 	}
 	
@@ -63,7 +63,7 @@ public class TestCollisionDetection_3D_Bathymetry {
 		Particle p1 = new Particle();
 		p1.setPX(0); p1.setPY(0);	p1.setPZ(1); p1.setX(0); p1.setY(0); p1.setZ(-1); 
 		cdb_x.handleIntersection(p1);
-		double[] da = Utils.lonlat2ceqd(new double[]{p1.getX(),p1.getY(),p1.getZ()});
+		double[] da = GeometryUtils.lonlat2ceqd(new double[]{p1.getX(),p1.getY(),p1.getZ()});
 	    Assert.assertArrayEquals(new double[]{1,0,0},da ,1E-1);// precision decrease due to use of meters
 	}
 	
@@ -72,7 +72,7 @@ public class TestCollisionDetection_3D_Bathymetry {
 		Particle p1 = new Particle();
 		p1.setPX(0); p1.setPY(0);	p1.setPZ(1); p1.setX(0); p1.setY(0); p1.setZ(-1); 
 		cdb_y.handleIntersection(p1);
-		double[] da = Utils.lonlat2ceqd(new double[]{p1.getX(),p1.getY(),p1.getZ()});
+		double[] da = GeometryUtils.lonlat2ceqd(new double[]{p1.getX(),p1.getY(),p1.getZ()});
 	    Assert.assertArrayEquals(new double[]{0,-1,0},da ,1E-1);// precision decrease due to use of meters
 	}
 	

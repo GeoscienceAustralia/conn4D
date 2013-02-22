@@ -3,36 +3,16 @@ package lagrange.impl;
 import java.io.File;
 import java.io.IOException;
 
-import lagrange.Boundary;
-import lagrange.CollisionDetector;
-import lagrange.Diffusion;
-import lagrange.Mortality;
-import lagrange.Movement;
-import lagrange.Parameters;
-import lagrange.Settlement;
-import lagrange.VelocityReader;
-import lagrange.VerticalMigration;
-import lagrange.impl.behavior.Mortality_Exponential;
-import lagrange.impl.behavior.Mortality_Weibull;
-import lagrange.impl.behavior.Settlement_FloatOver;
-import lagrange.impl.behavior.Settlement_Simple;
-import lagrange.impl.behavior.VerticalSettling_Text;
-import lagrange.impl.collision.CollisionDetector_3D_Bathymetry;
-import lagrange.impl.collision.Intersector_2D_Shapefile;
-import lagrange.impl.movement.Diffusion_Simple_3D;
-import lagrange.impl.movement.Advection_RK4_3D;
-import lagrange.impl.readers.Boundary_NetCDF_Grid;
-import lagrange.impl.readers.Shapefile;
-import lagrange.impl.readers.VelocityReader_HYCOMList_4D;
-import lagrange.impl.readers.VelocityReader_NetCDFDir_4D;
-import lagrange.impl.readers.VelocityReader_NetCDF_4D;
-import lagrange.impl.writers.DistanceWriter_Text;
-import lagrange.impl.writers.MatrixWriter_Text;
-import lagrange.impl.writers.TrajectoryWriter_Text;
-import lagrange.input.LocalParameters;
+import lagrange.*;
+import lagrange.impl.behavior.*;
+import lagrange.impl.collision.*;
+import lagrange.impl.movement.*;
+import lagrange.impl.readers.*;
+import lagrange.impl.writers.*;
+import lagrange.input.*;
 import lagrange.output.*;
-import lagrange.utils.TimeConvert;
-import foghat.MatrixUtilities;
+import lagrange.utils.*;
+import lagrange.utils.VectorUtils;
 
 /**
  * Factory class used to generate individual instances of Release, which are
@@ -45,8 +25,7 @@ import foghat.MatrixUtilities;
 public class ReleaseFactory_4D {
 
 	private LocalParameters lp;
-
-	private MatrixUtilities mu = new MatrixUtilities();
+	//private MatrixUtilities mu = new MatrixUtilities();
 	private VelocityReader vr;
 	private TrajectoryWriter tw;
 	private DistanceWriter dw;
@@ -97,6 +76,7 @@ public class ReleaseFactory_4D {
 		rel.setId(counter);
 		rel.setMovement(mv.clone());
 		rel.setDiffusion(df.clone());
+		
 		if (cd != null) {
 			rel.setBoundaryHandler(cd.clone());
 		}
@@ -196,7 +176,7 @@ public class ReleaseFactory_4D {
 
 		// Set the output writers
 
-		tw = new TrajectoryWriter_Text(output + prm.getLocName() + ".trj");
+		tw = new TrajectoryWriter_Text(output + prm.getLocName() + ".txt");
 		tw.setNegCoord(!lp.negOceanCoord && lp.negCoord);
 		mw = new MatrixWriter_Text(output + prm.getLocName() + ".sum");
 		dw = new DistanceWriter_Text(output + prm.getLocName() + ".dst");
@@ -342,13 +322,14 @@ public class ReleaseFactory_4D {
 
 		// Initialize the Turbulence engine
 
-		df = new Diffusion_Simple_3D(prm.getH());
+		//df = new Diffusion_Simple_3D(prm.getH());
+		df = new Diffusion_None();
 
 		// Initialize vertical migration, if required.
 
 		if (prm.usesVerticalMigration()) {
 			VerticalSettling_Text tvm = new VerticalSettling_Text();
-			tvm.setVmtx(mu.loadASCIIMatrix(new File(lp.vertFile)));
+			tvm.setVmtx(VectorUtils.loadASCIIMatrix(new File(lp.vertFile)));
 			tvm.setBathymetry(lp.bathymetryFileName);
 
 			vm = tvm;

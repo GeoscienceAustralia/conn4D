@@ -9,7 +9,7 @@ import lagrange.Movement;
 import lagrange.Particle;
 import lagrange.VelocityReader;
 import lagrange.impl.readers.VelocityReader_NetCDF_4D;
-import lagrange.utils.Utils;
+import lagrange.utils.GeometryUtils;
 
 /**
  * 3D Movement implementation using a Cash-Karp Runge-Kutte solver to perform
@@ -118,7 +118,7 @@ public class Advection_RK4_3D implements Movement, Cloneable {
 
 			// Automatic conversion of coordinate system
 
-			tmpcoord = Utils.latLon(new double[] { y, x }, dy, dx);
+			tmpcoord = GeometryUtils.latLon(new double[] { y, x }, dy, dx);
 
 			// Get the velocities at the updated position
 
@@ -155,7 +155,7 @@ public class Advection_RK4_3D implements Movement, Cloneable {
 			dy = h * (B31 * akv1 + B32 * akv2);
 			dz = h * (B31 * akw1 + B32 * akw2);
 
-			tmpcoord = Utils.latLonZ(new double[] { y, x, z }, dy, dx, dz);
+			tmpcoord = GeometryUtils.latLonZ(new double[] { y, x, z }, dy, dx, dz);
 			ctmp = vr.getVelocities(t, Math.min(
 					Math.max(vr.getBounds()[1][0], vr.getBounds()[1][1]), z + dz),
 					tmpcoord[1], tmpcoord[0]);
@@ -189,7 +189,7 @@ public class Advection_RK4_3D implements Movement, Cloneable {
 			dy = h * (B41 * akv1 + B42 * akv2 + B43 * akv3);
 			dz = h * (B41 * akw1 + B42 * akw2 + B43 * akw3);
 
-			tmpcoord = Utils.latLonZ(new double[] { y, x, z }, dy, dx, dz);
+			tmpcoord = GeometryUtils.latLonZ(new double[] { y, x, z }, dy, dx, dz);
 			ctmp = vr.getVelocities(t, Math.min(
 					Math.max(vr.getBounds()[1][0], vr.getBounds()[1][1]), z + dz),
 					tmpcoord[1], tmpcoord[0]);
@@ -222,7 +222,7 @@ public class Advection_RK4_3D implements Movement, Cloneable {
 			dy = h * (B51 * akv1 + B52 * akv2 + B53 * akv3 + B54 * akv4);
 			dz = h * (B51 * akw1 + B52 * akw2 + B53 * akw3 + B54 * akw4);
 
-			tmpcoord = Utils.latLonZ(new double[] { y, x, z }, dy, dx, dz);
+			tmpcoord = GeometryUtils.latLonZ(new double[] { y, x, z }, dy, dx, dz);
 			ctmp = vr.getVelocities(t, Math.min(
 					Math.max(vr.getBounds()[1][0], vr.getBounds()[1][1]), z + dz),
 					tmpcoord[1], tmpcoord[0]);
@@ -262,7 +262,7 @@ public class Advection_RK4_3D implements Movement, Cloneable {
 					* (B61 * akw1 + B62 * akw2 + B63 * akw3 + B64 * akw4 + B65
 							* akw5);
 
-			tmpcoord = Utils.latLonZ(new double[] { y, x, z }, dy, dx, dz);
+			tmpcoord = GeometryUtils.latLonZ(new double[] { y, x, z }, dy, dx, dz);
 			ctmp = vr.getVelocities(t, Math.min(
 					Math.max(vr.getBounds()[1][0], vr.getBounds()[1][1]), z + dz),
 					tmpcoord[1], tmpcoord[0]);
@@ -296,7 +296,7 @@ public class Advection_RK4_3D implements Movement, Cloneable {
 			dy = h * (C1 * akv1 + C3 * akv3 + C4 * akv4 + C6 * akv6);
 			dz = h * (C1 * akw1 + C3 * akw3 + C4 * akw4 + C6 * akw6);
 
-			tmpcoord = Utils.latLon(new double[] { y, x }, dy, dx);
+			tmpcoord = GeometryUtils.latLon(new double[] { y, x }, dy, dx);
 			ctmp = vr.getVelocities(t, Math.min(
 					Math.max(vr.getBounds()[1][0], vr.getBounds()[1][1]), z + dz),
 					tmpcoord[1], tmpcoord[0]);
@@ -306,14 +306,13 @@ public class Advection_RK4_3D implements Movement, Cloneable {
 			p.setPZ(p.getZ());
 			p.setY(tmpcoord[0]);
 			p.setX(tmpcoord[1]);
-			p.setZ(Math.max(0, z + dz));
+			p.setZ(Math.min(0, z + dz));
 			p.setU(aku6);
 			p.setV(akv6);
 			p.setW(akw6);
 		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
 			// TODO Auto-generated catch block
-			System.out.println("Array error");
-			apply(p);
+			e.printStackTrace();
 		}
 	}
 

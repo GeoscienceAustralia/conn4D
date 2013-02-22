@@ -8,18 +8,18 @@ import java.util.Date;
 import lagrange.Particle;
 import lagrange.VerticalMigration;
 import lagrange.utils.TimeConvert;
+import lagrange.utils.VectorMath;
 
 import cern.jet.random.Empirical;
 import cern.jet.random.EmpiricalWalker;
 import cern.jet.random.engine.MersenneTwister64;
 import cern.jet.random.engine.RandomEngine;
-import foghat.MatrixUtilities;
+import lagrange.utils.VectorUtils;
 
 public class VerticalMigration_Text implements VerticalMigration,Cloneable {
 
 	private long timeInterval = 5;
 	private String timeIntervalUnits = "Days";
-	private MatrixUtilities mu = new MatrixUtilities();
 	private double[][] vmtx;
 	//private double[] bins = {5,15,25,40,62.5,87.5,112.5,137.5};
 	private double[] bins = {10,30,50,70};
@@ -40,7 +40,7 @@ public class VerticalMigration_Text implements VerticalMigration,Cloneable {
 	public VerticalMigration_Text(){}
 	
 	public VerticalMigration_Text(String vertfile){
-		vmtx = mu.loadASCIIMatrix(new File(vertfile));
+		vmtx = VectorUtils.loadASCIIMatrix(new File(vertfile));
 	}
 	
 	// *** What if we are in a shallower area than the depth range?
@@ -60,7 +60,7 @@ public class VerticalMigration_Text implements VerticalMigration,Cloneable {
 					column = vmtx[0].length-1;
 				}
 
-				double[] probabilities = mu.standardize(mu.getColumn(vmtx, column));
+				double[] probabilities = VectorMath.norm1(VectorUtils.getColumn(vmtx, column));
 				ew = new EmpiricalWalker(probabilities,Empirical.NO_INTERPOLATION, re);
 				int select = ew.nextInt();
 				int val;
@@ -116,7 +116,7 @@ public class VerticalMigration_Text implements VerticalMigration,Cloneable {
 		VerticalMigration_Text tvm = new VerticalMigration_Text();
 		tvm.timeInterval=timeInterval;
 		tvm.timeIntervalUnits=timeIntervalUnits;
-		tvm.vmtx=mu.copy(vmtx);
+		tvm.vmtx=VectorUtils.copy(vmtx);
 		return tvm;
 	}
 }

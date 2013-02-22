@@ -779,6 +779,40 @@ public class VectorMath {
 	}
 	
 	/**
+	 * Divides the vector by its sum to return a 1-norm of the
+	 * vector
+	 * 
+	 * @param vector
+	 * @return
+	 */
+	
+	public static double[] norm1(double[] vector){
+		double sum = sumAsDouble(vector);
+		double[] out = new double[vector.length];
+		for(int i = 0; i < vector.length; i++){
+			out[i] = vector[i]/sum;
+		}
+		return out;
+	}
+	
+	/**
+	 * Divides the vector by its sum to return a 1-norm of the
+	 * vector
+	 * 
+	 * @param vector
+	 * @return
+	 */
+	
+	public static float[] norm1(float[] vector){
+		float sum = sumAsFloat(vector);
+		float[] out = new float[vector.length];
+		for(int i = 0; i < vector.length; i++){
+			out[i] = vector[i]/sum;
+		}
+		return out;
+	}
+	
+	/**
 	 * Subtracts two vectors of equal dimension.
 	 * 
 	 * @param a

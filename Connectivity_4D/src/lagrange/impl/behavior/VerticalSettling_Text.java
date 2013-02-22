@@ -7,14 +7,12 @@ import lagrange.Boundary;
 import lagrange.Particle;
 import lagrange.VerticalMigration;
 import lagrange.impl.readers.Boundary_NetCDF_Grid;
-
-import foghat.MatrixUtilities;
+import lagrange.utils.VectorUtils;
 
 public class VerticalSettling_Text implements VerticalMigration, Cloneable {
 
 	private long timeInterval = 1;
 	private String timeIntervalUnits = "Days";
-	private MatrixUtilities mu = new MatrixUtilities();
 	private double[][] vmtx;
 	// private double[] bins = {5,15,25,40,62.5,87.5,112.5,137.5};
 	private double[] bins = { 10, 30, 50, 70 };
@@ -31,7 +29,7 @@ public class VerticalSettling_Text implements VerticalMigration, Cloneable {
 	}
 
 	public VerticalSettling_Text(String vertfile) {
-		vmtx = mu.loadASCIIMatrix(new File(vertfile));
+		vmtx = VectorUtils.loadASCIIMatrix(new File(vertfile));
 	}
 
 	// *** What if we are in a shallower area than the depth range?
@@ -119,7 +117,7 @@ public class VerticalSettling_Text implements VerticalMigration, Cloneable {
 		VerticalSettling_Text tvs = new VerticalSettling_Text();
 		tvs.timeInterval = timeInterval;
 		tvs.timeIntervalUnits = timeIntervalUnits;
-		tvs.vmtx = mu.copy(vmtx);
+		tvs.vmtx = VectorUtils.copy(vmtx);
 		tvs.bathym = bathym.clone();
 		return tvs;
 	}

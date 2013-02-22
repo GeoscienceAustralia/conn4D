@@ -29,30 +29,30 @@ public class ReleaseRunner_4D implements ReleaseRunner {
 
 	/**
 	 * 
-	 * @param dg
+	 * @param prm
 	 * @throws InterruptedException
 	 */
 
-	public void run(Parameters dg) {
+	public void run(Parameters prm) {
 
 		// Set the parameters of the ReleaseTemplate using the Datagram
 
-		relFactory.setParameters(dg);
+		relFactory.setParameters(prm);
 
 		// For each and every particle...
 
-		relFactory.setTime(dg.getTime());
-		int n = dg.getNPart();
+		relFactory.setTime(prm.getTime());
+		int n = prm.getNPart();
 
 		// Ensure we start in bounds
 		
-		if(!relFactory.getCollisionDetection().isInBounds(dg.getTime(), dg.getDepth(), dg.getCoordinates().x, dg.getCoordinates().y)){
-			System.out.print("\t Initial depth ("+ dg.getDepth() + ") is not in the water column. Continuing to the next release site.");
+		if(!relFactory.getCollisionDetection().isInBounds(prm.getTime(), prm.getDepth(), prm.getCoordinates().x, prm.getCoordinates().y)){
+			System.out.print("\t Initial depth ("+ prm.getDepth() + ") is not in the water column. Continuing to the next release site.");
 			relFactory.shutdown();
 			return;
 		}
 		
-		if(dg.getTime()<relFactory.getVelocityReader().getBounds()[0][0]){
+		if(prm.getTime()<relFactory.getVelocityReader().getBounds()[0][0]){
 			System.out.print("\t Release time occurs outside the range of velocity data values. Continuing to the next release site.");
 			relFactory.shutdown();
 			return;

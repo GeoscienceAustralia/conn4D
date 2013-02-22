@@ -7,7 +7,7 @@ import cern.jet.random.engine.RandomEngine;
 import cern.jet.random.engine.RandomSeedTable;
 import lagrange.Particle;
 import lagrange.Diffusion;
-import lagrange.utils.Utils;
+import lagrange.utils.GeometryUtils;
 
 /**
  * @author Johnathan Kool based on FORTRAN code developed by Robert K. Cowen,
@@ -61,7 +61,7 @@ public class Diffusion_Simple_3D implements Diffusion, Cloneable {
 
 		// Determine the new coordinates
 
-		double[] coords = Utils.latLon(new double[] { p.getY(), p.getX() }, dy,
+		double[] coords = GeometryUtils.latLon(new double[] { p.getY(), p.getX() }, dy,
 				dx);
 
 		// Update the particle's coordinates.

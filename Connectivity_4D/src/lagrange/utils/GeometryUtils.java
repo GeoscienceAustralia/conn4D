@@ -7,7 +7,7 @@ package lagrange.utils;
  * 
  */
 
-public class Utils {
+public class GeometryUtils {
 
 	final static double R_EARTH = 6378137d; 
 	//final static double R_EARTH = 6372795.477598f; // Quadratic mean radius of

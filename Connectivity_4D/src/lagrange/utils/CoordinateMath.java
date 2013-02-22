@@ -242,12 +242,12 @@ public class CoordinateMath {
 	}
 	
 	public static Coordinate lonlat2ceqd(Coordinate c){
-		double[] coords = Utils.lonlat2ceqd(new double[]{c.x,c.y,c.z});
+		double[] coords = GeometryUtils.lonlat2ceqd(new double[]{c.x,c.y,c.z});
 		return new Coordinate(coords[0],coords[1],coords[2]);
 	}
 	
 	public static Coordinate ceqd2lonlat(Coordinate c){
-		double[] coords = Utils.ceqd2lonlat(new double[]{c.x,c.y,c.z});
+		double[] coords = GeometryUtils.ceqd2lonlat(new double[]{c.x,c.y,c.z});
 		return new Coordinate(coords[0],coords[1],coords[2]);
 	}
 }

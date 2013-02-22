@@ -92,10 +92,10 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 	public void initialize(String dir) throws IOException {
 		// Set Time Zone to UTC
 		formatUTC.setTimeZone(TimeZone.getTimeZone("UTC"));
-		
+
 		this.dir = dir;
 		File f = new File(dir);
-		
+
 		// Ensure the path is a directory
 		if (!f.isDirectory()) {
 			throw new IllegalArgumentException(f.getName()
@@ -183,12 +183,13 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 			zloc.setNegate(true);
 		}
 		bounds[0][0] = uKeys.get(0);
-		NetcdfFile lastfile = uFiles.get(uKeys.get(uKeys.size()-1));
+		NetcdfFile lastfile = uFiles.get(uKeys.get(uKeys.size() - 1));
 		Variable t = lastfile.findVariable(tName);
 		double last;
 		try {
-			last = t.read(new int[]{t.getShape(0)-1},new int[]{1}).getDouble(0);
-			bounds[0][1] = TimeConvert.HYCOMToMillis((long) last);  
+			last = t.read(new int[] { t.getShape(0) - 1 }, new int[] { 1 })
+					.getDouble(0);
+			bounds[0][1] = TimeConvert.HYCOMToMillis((long) last);
 		} catch (InvalidRangeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -197,12 +198,14 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 
 	private boolean checkTime(long time) {
 
-		/* Right now, the lookups are based solely on the dimensions (lats,
-		   lons, depth, time) of the u velocity files, assuming that u, v 
-		   and w share common Dimensions. Otherwise we'd need to set up 
-		   independent XYZ and T lookups for UV and W increasing computational 
-		   overhead, when this really shouldn't be necessary. BUT, it might 
-		   be a good idea to ensure that the velocity files are consistent.*/
+		/*
+		 * Right now, the lookups are based solely on the dimensions (lats,
+		 * lons, depth, time) of the u velocity files, assuming that u, v and w
+		 * share common Dimensions. Otherwise we'd need to set up independent
+		 * XYZ and T lookups for UV and W increasing computational overhead,
+		 * when this really shouldn't be necessary. BUT, it might be a good idea
+		 * to ensure that the velocity files are consistent.
+		 */
 
 		int uidx = Collections.binarySearch(uKeys, time);
 		// int vidx = Collections.binarySearch(vKeys, time);
@@ -431,21 +434,21 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 			throw new IllegalArgumentException(
 					"Latitude or Longitude value is NaN");
 		}
-		
+
 		// Completely outside the time bounds
 
 		if (time < bounds[0][0] || time > bounds[0][1]) {
 			this.notifyAll();
 			return null;
 		}
-		
+
 		// Completely outside the vertical bounds
-		
-		if (z < bounds[1][0] || z > bounds[1][1]){
+
+		if (z < bounds[1][0] || z > bounds[1][1]) {
 			this.notifyAll();
 			return null;
 		}
-		
+
 		// Completely outside the north-south bounds - return null as opposed
 		// to NODATA
 
@@ -453,7 +456,7 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 			this.notifyAll();
 			return null;
 		}
-		
+
 		// Completely outside the east-west bounds
 
 		if (lon < bounds[3][0] || lon > bounds[3][1]) {
@@ -531,7 +534,7 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 			}
 
 			int blocksize = idim * jdim * kdim;
-			int semiblock = (idim * (jdim + 1) * kdim) / 3;
+			//int semiblock = (idim * (jdim + 1) * kdim) / 3;
 
 			int[] origin = new int[] { ts, kstart, istart, jstart };
 			int[] shape = new int[] { 1, kdim, idim, jdim };
@@ -568,7 +571,7 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 			float[][][] avtmp = (float[][][]) vArr.copyToNDJavaArray();
 			float[][][] awtmp = (float[][][]) wArr.copyToNDJavaArray();
 
-			// Replace NODATA values with average values...
+			// Mitigate NODATA values
 
 			int uct = 0;
 			double usum = 0;
@@ -599,7 +602,10 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 							uavg = usum / (double) uct;
 							ussq += autmp[k][i][j] * autmp[k][i][j];
 							uvar = ussq / (double) uct - uavg * uavg;
-
+						} else {
+							if ((k > 0)	&& Double.isNaN(autmp[k - 1][i][j])) {
+								autmp[k][i][j] = 0;
+							}
 						}
 					}
 				}
@@ -615,6 +621,11 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 							vavg = vsum / (double) vct;
 							vssq += avtmp[k][i][j] * avtmp[k][i][j];
 							vvar = vssq / (double) vct - vavg * vavg;
+						} else {
+							if ((k > 0)
+									&& Double.isNaN(avtmp[k - 1][i][j])) {
+								avtmp[k][i][j] = 0;
+							}
 						}
 					}
 				}
@@ -633,6 +644,11 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 								wavg = wsum / (double) wct;
 								wssq += awtmp[k][i][j] * awtmp[k][i][j];
 								wvar = wssq / (double) wct - wavg * wavg;
+							} else {
+								if ((k > 0)
+										&& Double.isNaN(awtmp[k - 1][i][j])) {
+									awtmp[k][i][j] = 0;
+								}
 							}
 						}
 					}
@@ -649,12 +665,10 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 
 				// If there are more than (io-1)^2, return null
 
-				if (uct < semiblock) {
-					velocities = NODATA;
-					averages = NODATA;
-					variances = NODATA;
-					return NODATA;
-				}
+				/*
+				 * if (uct < semiblock) { velocities = NODATA; averages =
+				 * NODATA; variances = NODATA; return NODATA; }
+				 */
 
 				// Otherwise mitigate by replacing using the average value.
 
@@ -664,6 +678,10 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 
 							if (autmp[k][i][j] > cutoff
 									|| Double.isNaN(autmp[k][i][j])) {
+
+								if (ks == 0) {
+									autmp[k][i][j] = 0;
+								}
 
 								autmp[k][i][j] = (float) uavg;
 							}
@@ -678,13 +696,10 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 
 				// If there are more than halfKernel/2, return null
 
-				if (vct < semiblock) {
-					this.notifyAll();
-					velocities = NODATA;
-					averages = NODATA;
-					variances = NODATA;
-					return NODATA;
-				}
+				/*
+				 * if (vct < semiblock) { this.notifyAll(); velocities = NODATA;
+				 * averages = NODATA; variances = NODATA; return NODATA; }
+				 */
 
 				// Otherwise mitigate by replacing using the average value.
 
@@ -708,13 +723,11 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 
 					// If there are more than (halfKernel-1)^2, return null
 
-					if (wct < semiblock) {
-						this.notifyAll();
-						velocities = NODATA;
-						averages = NODATA;
-						variances = NODATA;
-						return NODATA;
-					}
+					/*
+					 * if (wct < semiblock) { this.notifyAll(); velocities =
+					 * NODATA; averages = NODATA; variances = NODATA; return
+					 * NODATA; }
+					 */
 
 					// Otherwise mitigate by replacing using the average value.
 
@@ -733,13 +746,18 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 				}
 			}
 
-			/* Convert the Arrays into Java arrays - because latitude and z
-			   should be consistent among files, we subset from a constant 
-			   array. */
+			/*
+			 * Convert the Arrays into Java arrays - because latitude and z
+			 * should be consistent among files, we subset from a constant
+			 * array.
+			 */
 
-			double[] latja = Arrays.copyOfRange(yloc.getJavaArray(), istart, istart + idim);
-			double[] lonja = Arrays.copyOfRange(xloc.getJavaArray(), jstart, jstart + jdim);
-			double[] zja = Arrays.copyOfRange(zloc.getJavaArray(), kstart, kstart + kdim);
+			double[] latja = Arrays.copyOfRange(yloc.getJavaArray(), istart,
+					istart + idim);
+			double[] lonja = Arrays.copyOfRange(xloc.getJavaArray(), jstart,
+					jstart + jdim);
+			double[] zja = Arrays.copyOfRange(zloc.getJavaArray(), kstart,
+					kstart + kdim);
 
 			// Obtain the interpolated values
 
@@ -1083,8 +1101,9 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 	public void setZName(String zname) {
 		this.zName = zname;
 	}
-	
-	public double[][] getDims(){
-		return new double[][]{tloc.getJavaArray(),zloc.getJavaArray(),yloc.getJavaArray(),xloc.getJavaArray()};
+
+	public double[][] getDims() {
+		return new double[][] { tloc.getJavaArray(), zloc.getJavaArray(),
+				yloc.getJavaArray(), xloc.getJavaArray() };
 	}
 }

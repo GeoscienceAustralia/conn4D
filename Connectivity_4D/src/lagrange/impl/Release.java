@@ -15,7 +15,7 @@ import lagrange.VerticalMigration;
 import lagrange.output.DistanceWriter;
 import lagrange.output.MatrixWriter;
 import lagrange.output.TrajectoryWriter;
-import lagrange.utils.Utils;
+import lagrange.utils.GeometryUtils;
 
 /**
  * 
@@ -92,7 +92,7 @@ public class Release implements Runnable {
 			p.setCompetencyStart(prm.getCompetencyStart());
 			
 			long rd = prm.getRelDuration();
-			int ct = 0;
+			//int ct = 0;
 			long writect = 0;
 			
 			// For each time step...
@@ -151,7 +151,7 @@ public class Release implements Runnable {
 				// reflection would truncate the distance traveled.
 
 				p.setDistance(p.getDistance()
-						+ Utils.distance_Sphere(p.getPX(), p.getPY(), p.getX(),
+						+ GeometryUtils.distance_Sphere(p.getPX(), p.getPY(), p.getX(),
 								p.getY()));
 
 				// Check and see if the particle has bounced off land. (only
@@ -184,8 +184,8 @@ public class Release implements Runnable {
 				
 				writect += prm.getH();
 				
-				System.out.print("\n" + ct + "\t" + p.toString());
-				ct++;
+				//System.out.print("\n" + ct + "\t" + p.toString());
+				//ct++;
 
 				// If we're lost or dead, then there's no point in going on...
 				

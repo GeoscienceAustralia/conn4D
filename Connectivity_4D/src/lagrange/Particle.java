@@ -1,5 +1,6 @@
 package lagrange;
 
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,7 +12,9 @@ import java.util.Set;
 public class Particle {
 
 	private long id;
-	private double x, y, z;
+	private double x; 
+	private double y; 
+	private double z;
 	private double px, py, pz;
 	private double u = 0d, v = 0d, w = 0d;
 	private long t;
@@ -577,16 +580,19 @@ public class Particle {
 	
 	public String toString(){
 		StringBuffer sb = new StringBuffer();
+		NumberFormat nf = NumberFormat.getNumberInstance();
+		nf.setMaximumFractionDigits(8);
 		sb.append(id);
-		sb.append("\t");
-		sb.append(x);
-		sb.append("\t");
-		sb.append(y);
-		sb.append("\t");
-		sb.append(z);
 		sb.append("\t");
 		sb.append(new Date(t));
 		sb.append("\t");
+		sb.append(z);
+		sb.append("\t");
+		sb.append(y);
+		sb.append("\t");		
+		sb.append(x);
+		sb.append("\t");
+		sb.append(nf.format(u) + "," + nf.format(v) + "," + nf.format(w) + "\t");
 		sb.append(source);
 		return sb.toString();
 	}
