@@ -1,5 +1,7 @@
 package lagrange.utils;
 
+import java.util.Arrays;
+
 /**
  * Utilities for determining change in position and distance along a sphere.
  * 
@@ -245,9 +247,13 @@ public class GeometryUtils {
 	// Longitude and latitude values to Cylindrical Equidistant Meters
 	
 	public static double[] lonlat2ceqd(double[] coords){
+		double latitude_origin = Math.toRadians(0);
+		double central_meridian = Math.toRadians(0);
+		double longitude = Math.toRadians(coords[0]);
+		double latitude = Math.toRadians(coords[1]);
 		double [] out = new double[coords.length];
-		out[1] = Math.toRadians(coords[1])*R_EARTH;
-		out[0] = out[0] = Math.cos(Math.toRadians(coords[1]))*Math.toRadians(coords[0])*R_EARTH;
+		out[1] = R_EARTH*latitude;
+		out[0] = R_EARTH*(longitude-central_meridian)*Math.cos(latitude_origin);
 		if(coords.length==3){out[2]=coords[2];}
 		return out;
 	}
@@ -255,10 +261,11 @@ public class GeometryUtils {
 	// Cylindrical Equidistant Meters to longitude and latitude
 	
 	public static double[] ceqd2lonlat(double[] coords){
+		double latitude_origin = Math.toRadians(0);
+		double central_meridian = Math.toRadians(0);
 		double [] out = new double[coords.length];
-		double latrads = coords[1]/R_EARTH;
-		out[1] = Math.toDegrees(latrads);
-		out[0] = Math.toDegrees((coords[0]/R_EARTH)*1/(Math.cos(latrads)));
+		out[1] = Math.toDegrees(coords[1]/R_EARTH);
+		out[0] = Math.toDegrees(central_meridian+(coords[0]/(R_EARTH*Math.cos(latitude_origin))));
 		if(coords.length==3){out[2]=coords[2];}
 		return out;
 	}

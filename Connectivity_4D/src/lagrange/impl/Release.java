@@ -92,13 +92,17 @@ public class Release implements Runnable {
 			p.setCompetencyStart(prm.getCompetencyStart());
 			
 			long rd = prm.getRelDuration();
-			//int ct = 0;
+			int ct = 0;
 			long writect = 0;
 			
 			// For each time step...
 
 			for (long t = 0; t < rd; t += prm.getH()) {
 
+				if(ct==293){
+					System.out.println("Pause");
+				}
+				
 				// Update the Particle's time reference
 
 				p.setT(time + t);
@@ -136,9 +140,11 @@ public class Release implements Runnable {
 					break;
 				}
 
+				//Positional check?
+				
 				// For now, if above surface, return to surface.
 				// we should instead randomize in the mixed layer.
-				
+
 				if(p.getZ()>0){p.setZ(0);}
 				
 				// Apply vertical migration
@@ -184,8 +190,8 @@ public class Release implements Runnable {
 				
 				writect += prm.getH();
 				
-				//System.out.print("\n" + ct + "\t" + p.toString());
-				//ct++;
+				System.out.print("\n" + ct + "\t" + p.toString());
+				ct++;
 
 				// If we're lost or dead, then there's no point in going on...
 				

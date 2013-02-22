@@ -602,10 +602,10 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 							uavg = usum / (double) uct;
 							ussq += autmp[k][i][j] * autmp[k][i][j];
 							uvar = ussq / (double) uct - uavg * uavg;
-						} else {
-							if ((k > 0)	&& Double.isNaN(autmp[k - 1][i][j])) {
-								autmp[k][i][j] = 0;
-							}
+						//} else {
+						//	if ((k > 0)	&& Double.isNaN(autmp[k - 1][i][j])) {
+						//		autmp[k][i][j] = 0;
+						//	}
 						}
 					}
 				}
@@ -621,11 +621,11 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 							vavg = vsum / (double) vct;
 							vssq += avtmp[k][i][j] * avtmp[k][i][j];
 							vvar = vssq / (double) vct - vavg * vavg;
-						} else {
-							if ((k > 0)
-									&& Double.isNaN(avtmp[k - 1][i][j])) {
-								avtmp[k][i][j] = 0;
-							}
+						//} else {
+						//	if ((k > 0)
+						//			&& Double.isNaN(avtmp[k - 1][i][j])) {
+						//		avtmp[k][i][j] = 0;
+						//	}
 						}
 					}
 				}
@@ -644,11 +644,11 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 								wavg = wsum / (double) wct;
 								wssq += awtmp[k][i][j] * awtmp[k][i][j];
 								wvar = wssq / (double) wct - wavg * wavg;
-							} else {
-								if ((k > 0)
-										&& Double.isNaN(awtmp[k - 1][i][j])) {
-									awtmp[k][i][j] = 0;
-								}
+							//} else {
+							//	if ((k > 0)
+							//			&& Double.isNaN(awtmp[k - 1][i][j])) {
+							//		awtmp[k][i][j] = 0;
+							//	}
 							}
 						}
 					}

@@ -100,9 +100,11 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 			// If there was a reflection
 			
 			if (!trans.p0.equals2D(tmpStart)) {
+				System.out.println("\nBonk!");
 				// Nibble to prevent re-reflection
 				CoordinateMath.nibble(trans, 1E-8);
 				backtrans = new LineSegment(CoordinateMath.ceqd2lonlat(trans.p0),CoordinateMath.ceqd2lonlat(trans.p1));
+				System.out.print("\t" + (bnd.getBoundaryDepth(backtrans.p0.x, backtrans.p0.y)));
 				dda.setLine(backtrans);
 				tmpStart = trans.p0;
 				trans = i3d.reflect_special(trans, box);
@@ -137,10 +139,10 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 
 		// Temporary check to make sure we're not below the benthic layer
 
-		//if (backtrans.p1.z < bnd.getBoundaryDepth(backtrans.p1.x, backtrans.p1.y)) {
-		//	System.out.println("Hold it.");
-		//	handleIntersection(p);
-		//}
+		if (backtrans.p1.z < bnd.getBoundaryDepth(backtrans.p1.x, backtrans.p1.y)) {
+			System.out.println("Hold it.");
+			handleIntersection(p);
+		}
 
 		// Check to make sure we haven't reflected above the surface
 		// currently handled by setting to 0. May want to randomize in the mixed
