@@ -224,7 +224,28 @@ public class TestIntersector_3D_Poly {
 			
 			////////////////////////////////////////////////
 		}
-	}	
+	}
+	
+	@Test
+	public void testIntersection(){
+		Coordinate p0 = new Coordinate(-1,-1,-1);
+		Coordinate p1 = new Coordinate(1,-1,-1);
+		Coordinate p2 = new Coordinate(1,1,1);
+		Coordinate p3 = new Coordinate(-1,1,1);
+		Coordinate[] vertices = new Coordinate[] {p0,p1,p2,p3};
+		LineSegment ls = new LineSegment(new Coordinate(0,0,1),new Coordinate(0,0,-1));
+		
+		System.out.println(lsi.intersection(ls, vertices));
+		
+		p0 = new Coordinate(-1,-1,-5);
+		p1 = new Coordinate(+1,-1,-5);
+		p2 = new Coordinate(+1,+1,-4);
+		p3 = new Coordinate(-1,+1,-4);
+		vertices = new Coordinate[] {p0,p1,p2,p3};
+		ls = new LineSegment(new Coordinate(0,0,1E6),new Coordinate(0,0,-1E6));
+		
+		System.out.println(lsi.intersection(ls, vertices));
+	}
 
 	private double[] c2arr(Coordinate c) {
 		return new double[] { c.x, c.y, c.z };

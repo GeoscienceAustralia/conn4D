@@ -182,6 +182,7 @@ public class Intersector_3D_Poly{
 				isect, p1));
 		Coordinate reflection = CoordinateMath.dilate(nresult, remainder);
 		LineSegment r_line = new LineSegment(isect, CoordinateMath.add(isect, reflection));
+		LineSegment r_line_debug = new LineSegment(isect, CoordinateMath.add(isect, reflection));
 		
 		if(r_line.p1.z>0){
 			double xdir = Math.signum(r_line.p1.x-r_line.p0.x);
@@ -191,7 +192,17 @@ public class Intersector_3D_Poly{
 			r_line.p1.x+=x_adj;
 			r_line.p1.y+=y_adj;
 			r_line.p1.z=0;
+			if(r_line.getLength()!=r_line_debug.getLength()){
+				System.out.println("Rotation error");
+			}
 		}
+		
+		double olen = ls.getLength();
+		LineSegment firstbit = new LineSegment(p0,r_line.p0);
+		if(olen!=firstbit.getLength()+r_line.getLength()){
+			System.out.println("Reflection scaling error");
+		}
+		
 		return r_line;
 	}
 	

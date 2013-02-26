@@ -3,8 +3,10 @@ package lagrange.impl.readers;
 import java.io.IOException;
 
 import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.LineSegment;
 
 import lagrange.Boundary;
+import lagrange.impl.collision.Intersector_3D_Poly;
 import lagrange.utils.CoordinateMath;
 import lagrange.utils.IndexLookup_Nearest;
 
@@ -32,6 +34,7 @@ public class Boundary_NetCDF_Grid implements Boundary, Cloneable {
 	private double maxx;
 	private double maxy;
 	private int nrows;
+	private Intersector_3D_Poly i3d = new Intersector_3D_Poly();
 
 	private int ncols;
 
@@ -108,6 +111,11 @@ public class Boundary_NetCDF_Grid implements Boundary, Cloneable {
 	public double getBoundaryDepth(int[] indices) {
 		bndInd.set(indices[0], indices[1]);
 		return bnd.getDouble(bndInd)*pd; // Corrects if bathymetry is in positive units.
+	}
+	
+	public double getRealDepth(double x, double y){
+		LineSegment ls = new LineSegment(new Coordinate(x,y,1E6),new Coordinate(x,y,-1E6));
+		return (i3d.intersection(ls, getVertices(getIndices(x,y)))).z;
 	}
 	
 	public int[] getIndices(double x, double y){

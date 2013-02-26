@@ -16,6 +16,7 @@ import lagrange.output.DistanceWriter;
 import lagrange.output.MatrixWriter;
 import lagrange.output.TrajectoryWriter;
 import lagrange.utils.GeometryUtils;
+import lagrange.utils.Trace;
 
 /**
  * 
@@ -44,6 +45,7 @@ public class Release implements Runnable {
 	private boolean kill = false;
 	private boolean negCoord = false;
 	private boolean negOceanCoord = false;
+	private Trace trace = new Trace("C:/Temp/particle.txt");
 
 	public boolean preKill(){
 		if(prm==null){return false;}

@@ -11,6 +11,7 @@ import lagrange.Particle;
 import lagrange.impl.readers.Boundary_NetCDF_Grid;
 import lagrange.utils.CoordinateMath;
 import lagrange.utils.DigitalDifferentialAnalyzer;
+import lagrange.utils.Trace;
 import lagrange.utils.VectorMath;
 
 /**
@@ -21,6 +22,8 @@ import lagrange.utils.VectorMath;
 
 public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 
+	private Trace trace = new Trace("C:/Temp/path.txt");
+	private Trace pointTrace = new Trace("C:/Temp/points.txt");
 	private Boundary_NetCDF_Grid bnd;
 	private Intersector_3D_Raster i3d = new Intersector_3D_Raster();
 
@@ -51,10 +54,12 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 		}
 		
 		LineSegment trans = new LineSegment(start_prj,end_prj);
+		trace.write(trans);
 		
 		// Test for reflection at least once
 
 		trans = i3d.reflect_special(trans, box);
+		trace.write(trans);
 		//trans = i3d.reflect(trans, box);
 		
 		// Because we are using lats and lons for our horizontal reference
@@ -62,6 +67,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 		// reflection in the vertical, and then back-convert.
 		
 		LineSegment backtrans = new LineSegment(CoordinateMath.ceqd2lonlat(trans.p0),CoordinateMath.ceqd2lonlat(trans.p1));
+
 		
 		// Get the indices of the current starting point (
 		// (after checking for reflection, in case it was
@@ -107,6 +113,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 				dda.setLine(backtrans);
 				tmpStart = trans.p0;
 				trans = i3d.reflect_special(trans, box);
+				trace.write(trans);
 				continue;
 			}
 
@@ -134,12 +141,13 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 			
 			trans = i3d.reflect_special(trans, box);
 			backtrans = new LineSegment(CoordinateMath.ceqd2lonlat(trans.p0),CoordinateMath.ceqd2lonlat(trans.p1));
+			trace.write(trans);
 		}
 
 		// Temporary check to make sure we're not below the benthic layer
 
-		if (backtrans.p1.z < bnd.getBoundaryDepth(backtrans.p1.x, backtrans.p1.y)) {
-			System.out.println("Hold it.");
+		if (backtrans.p1.z < bnd.getRealDepth(backtrans.p1.x, backtrans.p1.y)) {
+			System.out.println("\nHold it.");
 			//handleIntersection(p);
 		}
 
