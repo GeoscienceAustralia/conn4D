@@ -106,7 +106,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 			// If there was a reflection
 			
 			if (!trans.p0.equals2D(tmpStart)) {
-				System.out.println("\nBonk!");
+				System.out.print("\nBonk!");
 				// Nibble to prevent re-reflection
 				CoordinateMath.nibble(trans, 1E-8);
 				backtrans = new LineSegment(CoordinateMath.ceqd2lonlat(trans.p0),CoordinateMath.ceqd2lonlat(trans.p1));
@@ -145,9 +145,22 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 		}
 
 		// Temporary check to make sure we're not below the benthic layer
+		
+		double realDepth = bnd.getRealDepth(backtrans.p1.x, backtrans.p1.y);
 
-		if (backtrans.p1.z < bnd.getRealDepth(backtrans.p1.x, backtrans.p1.y)) {
-			System.out.println("\nHold it.");
+		if (backtrans.p1.z < realDepth) {
+			trans.p1.z = realDepth + 1;
+			trace.write(trans);
+			if (realDepth+1 >0){
+				trans.p1.z = 0;
+				backtrans.p1.z = 0;
+				p.setLost(true);
+			}
+			else{
+				trans.p1.z = realDepth+1;
+				backtrans.p1.z = realDepth+1;
+			}
+			//System.out.println("\nHold it.");
 			//handleIntersection(p);
 		}
 
