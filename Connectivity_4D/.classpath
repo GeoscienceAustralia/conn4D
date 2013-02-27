@@ -7,8 +7,6 @@
 	<classpathentry kind="lib" path="Z:/Libraries/JUnit/junit-4.10.jar"/>
 	<classpathentry kind="lib" path="Z:/Libraries/JTS-1.12/lib/jts-1.12.jar" sourcepath="H:/Transfer/Libraries/JTS-1.12/src"/>
 	<classpathentry kind="lib" path="Z:/Libraries/Flanagan/flanagan.jar"/>
-	<classpathentry kind="lib" path="Z:/Libraries/checkthread/checkthread-annotations-1.0.9.jar"/>
-	<classpathentry kind="lib" path="Z:/Libraries/Oracle/ojdbc6.jar"/>
 	<classpathentry kind="lib" path="Z:/Libraries/joda/joda-time-2.1/joda-time-2.1.jar"/>
 	<classpathentry kind="lib" path="Z:/Libraries/NetCDF 4.3/netcdfUI-4.2.jar" sourcepath="/thredds"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
