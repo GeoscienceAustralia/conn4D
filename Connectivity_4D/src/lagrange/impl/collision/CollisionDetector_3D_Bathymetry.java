@@ -22,8 +22,6 @@ import lagrange.utils.VectorMath;
 
 public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 
-	private Trace trace = new Trace("C:/Temp/path.txt");
-	private Trace pointTrace = new Trace("C:/Temp/points.txt");
 	private Boundary_NetCDF_Grid bnd;
 	private Intersector_3D_Raster i3d = new Intersector_3D_Raster();
 
@@ -54,12 +52,10 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 		}
 		
 		LineSegment trans = new LineSegment(start_prj,end_prj);
-		trace.write(trans);
 		
 		// Test for reflection at least once
 
 		trans = i3d.reflect_special(trans, box);
-		trace.write(trans);
 		//trans = i3d.reflect(trans, box);
 		
 		// Because we are using lats and lons for our horizontal reference
@@ -106,14 +102,12 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 			// If there was a reflection
 			
 			if (!trans.p0.equals2D(tmpStart)) {
-				System.out.print("\nBonk!");
 				// Nibble to prevent re-reflection
 				CoordinateMath.nibble(trans, 1E-8);
 				backtrans = new LineSegment(CoordinateMath.ceqd2lonlat(trans.p0),CoordinateMath.ceqd2lonlat(trans.p1));
 				dda.setLine(backtrans);
 				tmpStart = trans.p0;
 				trans = i3d.reflect_special(trans, box);
-				trace.write(trans);
 				continue;
 			}
 
@@ -141,7 +135,6 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 			
 			trans = i3d.reflect_special(trans, box);
 			backtrans = new LineSegment(CoordinateMath.ceqd2lonlat(trans.p0),CoordinateMath.ceqd2lonlat(trans.p1));
-			trace.write(trans);
 		}
 
 		// Temporary check to make sure we're not below the benthic layer
@@ -150,7 +143,6 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 
 		if (backtrans.p1.z < realDepth) {
 			trans.p1.z = realDepth + 1;
-			trace.write(trans);
 			if (realDepth+1 >0){
 				trans.p1.z = 0;
 				backtrans.p1.z = 0;

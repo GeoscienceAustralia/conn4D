@@ -16,7 +16,6 @@ import lagrange.output.DistanceWriter;
 import lagrange.output.MatrixWriter;
 import lagrange.output.TrajectoryWriter;
 import lagrange.utils.GeometryUtils;
-import lagrange.utils.Trace;
 
 /**
  * 
@@ -45,7 +44,6 @@ public class Release implements Runnable {
 	private boolean kill = false;
 	private boolean negCoord = false;
 	private boolean negOceanCoord = false;
-	private Trace trace = new Trace("C:/Temp/particle.txt");
 
 	public boolean preKill(){
 		if(prm==null){return false;}
@@ -94,7 +92,7 @@ public class Release implements Runnable {
 			p.setCompetencyStart(prm.getCompetencyStart());
 			
 			long rd = prm.getRelDuration();
-			int ct = 0;
+			//int ct = 0;
 			long writect = 0;
 			
 			// For each time step...
@@ -188,8 +186,8 @@ public class Release implements Runnable {
 				
 				writect += prm.getH();
 				
-				System.out.print("\n" + ct + "\t" + p.toString());
-				ct++;
+				//System.out.print("\n" + ct + "\t" + p.toString());
+				//ct++;
 
 				// If we're lost or dead, then there's no point in going on...
 				

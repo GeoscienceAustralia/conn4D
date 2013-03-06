@@ -47,7 +47,7 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 	private final int zHalfKernel = zKernelSize / 2;
 	private int pidx;
 	private float cutoff = 1E3f;
-	private boolean positiveDown = true;
+	private boolean positiveDown = false;
 	private NetcdfFile uFile, vFile, wFile;
 	private Variable latVar, lonVar, zVar, tVar;
 	private Variable uVar, vVar, wVar;
@@ -104,7 +104,7 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 
 		// Filter the list of files
 
-		File[] fa = f.listFiles(new FilenamePatternFilter(".*_[uvw]_.*\\.nc"));
+		File[] fa = f.listFiles(new FilenamePatternFilter(".*_[uvw].*\\.nc"));
 
 		for (File fil : fa) {
 
@@ -127,18 +127,16 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 			minmax[1] = TimeConvert.HYCOMToMillis((long) ja[ja.length - 1]);
 
 			// Put into an index linking start time with the associated file
-
-			if (name.substring(name.indexOf("_") + 1, name.indexOf("_") + 2)
-					.equalsIgnoreCase("u")) {
+			
+			if(name.lastIndexOf("_u") > 0){
 				uFiles.put(minmax[0], ncf);
 			}
-
-			if (name.substring(name.indexOf("_") + 1, name.indexOf("_") + 2)
-					.equalsIgnoreCase("v")) {
+		
+			if(name.lastIndexOf("_v") > 0){
 				vFiles.put(minmax[0], ncf);
 			}
-			if (name.substring(name.indexOf("_") + 1, name.indexOf("_") + 2)
-					.equalsIgnoreCase("w")) {
+			
+			if(name.lastIndexOf("_w") > 0){
 				wFiles.put(minmax[0], ncf);
 			}
 		}
@@ -148,7 +146,7 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 		if (uFiles.size() == 0 || vFiles.size() == 0 || wFiles.size() == 0) {
 			System.out
 					.println("Velocity directory is missing a file set, or files are not named properly."
-							+ "Files  must be named as *_u_*, *_v_*, and *_w_*.");
+							+ "Files  must be named as *_u*, *_v*, and *_w*.");
 
 			System.exit(0);
 		}
@@ -1043,7 +1041,13 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 			System.out.println("Velocity file variables: "
 					+ uFile.getVariables().toString() + "\n");
 		}
-		xloc = new IndexLookup_Nearest(lonVar, 1);// dimension 1 because slices
+		
+		int dim = 0;
+		if(lonVar.getRank()>1){
+			dim = 1;
+		}
+		
+		xloc = new IndexLookup_Nearest(lonVar, dim);// dimension 1 because slices
 													// have 2D lat/lon
 		bounds[3][0] = xloc.getMinVal();
 		bounds[3][1] = xloc.getMaxVal();
@@ -1087,7 +1091,11 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 					+ uFile.getVariables().toString() + "\n");
 		}
 		zloc = new IndexLookup_Nearest(zVar);
-		zloc.setNegate(true);
+		
+		if(positiveDown){
+			zloc.setNegate(true);
+		}
+		
 		bounds[1][0] = zloc.getMinVal();
 		bounds[1][1] = zloc.getMaxVal();
 	}

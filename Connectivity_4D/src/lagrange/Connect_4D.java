@@ -18,8 +18,6 @@ import lagrange.utils.TimeConvert;
 
 /**
  * Lagrangian particle tracking program.
- * 
- * @author Johnathan Kool
  */
 
 public class Connect_4D {
@@ -63,9 +61,9 @@ public class Connect_4D {
 			//'Hard' end (simulation terminates such that releases stop
 			// in advance of end date
 			
-			// for (long time = start; time < end-relsp; time += relsp) {
+			// for (long time = start; time < end-relDuration; time += relsp) {
 			
-			//'Soft' end (simulation carries past end date until relsp is complete)
+			//'Soft' end (simulation carries past end date until release duration is complete)
 			
 			for (long time = start; time < end; time += relsp) {
 				
@@ -109,14 +107,17 @@ public class Connect_4D {
 					gp.setParameters(prm);
 
 					// Produce a single run.
-					
+					// if time units are dates, name folders by date
 					String folder="";
 					if(gp.minTimeUnits.equalsIgnoreCase("Date")){
 						folder = df.format(new Date(time));	
 					}
+					
+					// otherwise name according to the time value
 					else{
 						folder = "T_" + TimeConvert.convertToMillis(gp.minTimeUnits, time);
 					}
+					
 					prm.setTime(time);
 					prm.setWriteFolder(prm.getOutputFolder() + "/" + folder);
 					System.out.print("\t"  + prm.getLocName());

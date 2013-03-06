@@ -8,10 +8,7 @@ import ucar.ma2.InvalidRangeException;
 import ucar.nc2.Variable;
 
 /**
- * 
- * 
  * @author Johnathan Kool
- *
  */
 
 public class IndexLookup_Nearest implements Cloneable {
@@ -22,6 +19,7 @@ public class IndexLookup_Nearest implements Cloneable {
 	private int index;
 	private int in_bounds = 0;
 	private boolean negate = false;
+	private boolean reverse_order = false;
 
 	/**
 	 * No argument constructor
@@ -37,7 +35,6 @@ public class IndexLookup_Nearest implements Cloneable {
 	
 	public IndexLookup_Nearest(Variable variable){
 		setVariable(variable);
-		readArray();
 	}
 	
 	/**
@@ -47,8 +44,7 @@ public class IndexLookup_Nearest implements Cloneable {
 	 */
 	
 	public IndexLookup_Nearest(Variable variable, int dim){
-		setVariable(variable);
-		readArray(dim);
+		setVariable(variable, dim);
 	}
 	
 	/**
@@ -74,6 +70,8 @@ public class IndexLookup_Nearest implements Cloneable {
 		} else {
 			java_array = (double[]) array.copyTo1DJavaArray();
 		}
+		
+		reverse_order=isReversed();
 	}
 	
 	/**
@@ -108,6 +106,8 @@ public class IndexLookup_Nearest implements Cloneable {
 		} else {
 			java_array = (double[]) array.copyTo1DJavaArray();
 		}
+		
+		reverse_order=isReversed();
 		return array;
 	}
 	
@@ -129,7 +129,7 @@ public class IndexLookup_Nearest implements Cloneable {
 		// Use binary search to look for the value. // Change to splay tree
 		// search???
 
-		if(java_array[0]>java_array[java_array.length-1]){
+		if(reverse_order){
 			index = ArraySearch.reverseSearch(java_array, val);
 		}
 		
@@ -254,8 +254,9 @@ public class IndexLookup_Nearest implements Cloneable {
 	 */
 	
 	public double getMinVal(){
-		if(negate){return -java_array[java_array.length-1];}
-		return java_array[0];
+		double val = negate?-1:1;
+		if(reverse_order){return val*java_array[java_array.length-1];}
+		return val*java_array[0];
 	}
 
 	/**
@@ -263,8 +264,9 @@ public class IndexLookup_Nearest implements Cloneable {
 	 */
 	
 	public double getMaxVal(){
-		if(negate){return -java_array[0];}
-		return java_array[java_array.length-1];
+		double val = negate?-1:1;
+		if(reverse_order){return val*java_array[0];}
+		return val*java_array[java_array.length-1];
 	}
 	
 	public IndexLookup_Nearest clone(){
@@ -277,5 +279,10 @@ public class IndexLookup_Nearest implements Cloneable {
 	
 	public boolean getNegate(){
 		return negate;
+	}
+	
+	private boolean isReversed(){
+		if(java_array[0]>java_array[java_array.length-1]){return true;}
+		return false;
 	}
 }
