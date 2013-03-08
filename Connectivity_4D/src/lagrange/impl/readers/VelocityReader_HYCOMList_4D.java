@@ -113,6 +113,16 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 			NetcdfFile ncf = NetcdfFile.open(fil.getPath());
 			tVar = ncf.findVariable(tName);
 
+			if (tVar == null) {
+				System.out
+						.println("WARNING: Time variable "
+								+ tVar
+								+ " was not found in "
+								+ fil.getPath()
+								+ " when initializing the VelocityReader.  Skipping.");
+				continue;
+			}
+
 			Array arr = tVar.read();
 
 			// Convert into a java array
@@ -127,16 +137,16 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 			minmax[1] = TimeConvert.HYCOMToMillis((long) ja[ja.length - 1]);
 
 			// Put into an index linking start time with the associated file
-			
-			if(name.lastIndexOf("_u") > 0){
+
+			if (name.lastIndexOf("_u") > 0) {
 				uFiles.put(minmax[0], ncf);
 			}
-		
-			if(name.lastIndexOf("_v") > 0){
+
+			if (name.lastIndexOf("_v") > 0) {
 				vFiles.put(minmax[0], ncf);
 			}
-			
-			if(name.lastIndexOf("_w") > 0){
+
+			if (name.lastIndexOf("_w") > 0) {
 				wFiles.put(minmax[0], ncf);
 			}
 		}
@@ -145,7 +155,7 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 
 		if (uFiles.size() == 0 || vFiles.size() == 0 || wFiles.size() == 0) {
 			System.out
-					.println("Velocity directory is missing a file set, or files are not named properly."
+					.println("Velocity directory is missing a file set, or files/variables are not named properly."
 							+ "Files  must be named as *_u*, *_v*, and *_w*.");
 
 			System.exit(0);
@@ -532,7 +542,7 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 			}
 
 			int blocksize = idim * jdim * kdim;
-			//int semiblock = (idim * (jdim + 1) * kdim) / 3;
+			// int semiblock = (idim * (jdim + 1) * kdim) / 3;
 
 			int[] origin = new int[] { ts, kstart, istart, jstart };
 			int[] shape = new int[] { 1, kdim, idim, jdim };
@@ -600,10 +610,11 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 							uavg = usum / (double) uct;
 							ussq += autmp[k][i][j] * autmp[k][i][j];
 							uvar = ussq / (double) uct - uavg * uavg;
-						//} else {
-						//	if ((k > 0)	&& Double.isNaN(autmp[k - 1][i][j])) {
-						//		autmp[k][i][j] = 0;
-						//	}
+							// } else {
+							// if ((k > 0) && Double.isNaN(autmp[k - 1][i][j]))
+							// {
+							// autmp[k][i][j] = 0;
+							// }
 						}
 					}
 				}
@@ -619,11 +630,11 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 							vavg = vsum / (double) vct;
 							vssq += avtmp[k][i][j] * avtmp[k][i][j];
 							vvar = vssq / (double) vct - vavg * vavg;
-						//} else {
-						//	if ((k > 0)
-						//			&& Double.isNaN(avtmp[k - 1][i][j])) {
-						//		avtmp[k][i][j] = 0;
-						//	}
+							// } else {
+							// if ((k > 0)
+							// && Double.isNaN(avtmp[k - 1][i][j])) {
+							// avtmp[k][i][j] = 0;
+							// }
 						}
 					}
 				}
@@ -642,11 +653,11 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 								wavg = wsum / (double) wct;
 								wssq += awtmp[k][i][j] * awtmp[k][i][j];
 								wvar = wssq / (double) wct - wavg * wavg;
-							//} else {
-							//	if ((k > 0)
-							//			&& Double.isNaN(awtmp[k - 1][i][j])) {
-							//		awtmp[k][i][j] = 0;
-							//	}
+								// } else {
+								// if ((k > 0)
+								// && Double.isNaN(awtmp[k - 1][i][j])) {
+								// awtmp[k][i][j] = 0;
+								// }
 							}
 						}
 					}
@@ -1041,13 +1052,14 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 			System.out.println("Velocity file variables: "
 					+ uFile.getVariables().toString() + "\n");
 		}
-		
+
 		int dim = 0;
-		if(lonVar.getRank()>1){
+		if (lonVar.getRank() > 1) {
 			dim = 1;
 		}
-		
-		xloc = new IndexLookup_Nearest(lonVar, dim);// dimension 1 because slices
+
+		xloc = new IndexLookup_Nearest(lonVar, dim);// dimension 1 because
+													// slices
 													// have 2D lat/lon
 		bounds[3][0] = xloc.getMinVal();
 		bounds[3][1] = xloc.getMaxVal();
@@ -1091,11 +1103,11 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 					+ uFile.getVariables().toString() + "\n");
 		}
 		zloc = new IndexLookup_Nearest(zVar);
-		
-		if(positiveDown){
+
+		if (positiveDown) {
 			zloc.setNegate(true);
 		}
-		
+
 		bounds[1][0] = zloc.getMinVal();
 		bounds[1][1] = zloc.getMaxVal();
 	}

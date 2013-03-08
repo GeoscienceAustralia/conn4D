@@ -39,39 +39,12 @@ package lagrange.utils;
 
 import java.util.ArrayList;
 import java.util.Vector;
-import java.io.IOException;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Fmath{
-
-        // PHYSICAL CONSTANTS
-
-        public static final double N_AVAGADRO = 6.0221419947e23;        /*      mol^-1          */
-        public static final double K_BOLTZMANN = 1.380650324e-23;       /*      J K^-1          */
-        public static final double H_PLANCK = 6.6260687652e-34;         /*      J s             */
-        public static final double H_PLANCK_RED = H_PLANCK/(2*Math.PI); /*      J s             */
-        public static final double C_LIGHT = 2.99792458e8;              /*      m s^-1          */
-        public static final double R_GAS = 8.31447215;                  /*      J K^-1 mol^-1   */
-        public static final double F_FARADAY = 9.6485341539e4;          /*      C mol^-1        */
-        public static final double T_ABS = -273.15;                     /*      Celsius         */
-        public static final double Q_ELECTRON = -1.60217646263e-19;     /*      C               */
-        public static final double M_ELECTRON = 9.1093818872e-31;       /*      kg              */
-        public static final double M_PROTON = 1.6726215813e-27;         /*      kg              */
-        public static final double M_NEUTRON = 1.6749271613e-27;        /*      kg              */
-        public static final double EPSILON_0 = 8.854187817e-12;         /*      F m^-1          */
-        public static final double MU_0 = Math.PI*4e-7;                 /*      H m^-1 (N A^-2) */
-
-        // MATHEMATICAL CONSTANTS
-        public static final double EULER_CONSTANT_GAMMA = 0.5772156649015627;
-        public static final double PI = Math.PI;                        /*  3.141592653589793D  */
-        public static final double E = Math.E;                          /*  2.718281828459045D  */
 
         // HashMap for 'arithmetic integer' recognition nmethod
         private static final Map<Object,Object> integers = new HashMap<Object,Object>();
@@ -270,8 +243,6 @@ public class Fmath{
             iCount = null;
             return f;
         }
-
-
 
         // log to base e of the factorial of n
         // log[e](factorial) returned as double
@@ -548,7 +519,7 @@ public class Fmath{
             return (1.0D - Math.cos(a));
         }
 
-        // Inverse  versine
+        // Inverse versine
         public static double avers(double a){
             if(a<0.0D && a>2.0D) throw new IllegalArgumentException("avers argument (" + a + ") must be <= 2 and >= 0");
             return Math.acos(1.0D - a);
@@ -3606,7 +3577,6 @@ public class Fmath{
             }
        }
 
-
         // sort elements in an array of doubles (first argument) into ascending order
         // using selection sort method
         // returns the sorted array as second argument
@@ -3643,303 +3613,6 @@ public class Fmath{
                 indices[index]=indices[lastIndex];
                 indices[lastIndex]=holdi;
             }
-        }
-
-        // COPY OF AN OBJECT (deprecated - see Conv class)
-        // Returns a copy of the object
-        // An exception will be thrown if an attempt to copy a non-serialisable object is made.
-        // Taken, with minor changes,  from { Java Techniques }
-        // http://javatechniques.com/blog/
-        public static Object copyObject(Object obj) {
-            Object objCopy = null;
-            try {
-                // Write the object out to a byte array
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                ObjectOutputStream oos = new ObjectOutputStream(bos);
-                oos.writeObject(obj);
-                oos.flush();
-                oos.close();
-                // Make an input stream from the byte array and
-                // read a copy of the object back in.
-                ObjectInputStream ois = new ObjectInputStream(
-                    new ByteArrayInputStream(bos.toByteArray()));
-                objCopy = ois.readObject();
-            }
-            catch(IOException e) {
-                e.printStackTrace();
-            }
-            catch(ClassNotFoundException cnfe) {
-                cnfe.printStackTrace();
-            }
-            return objCopy;
-        }
-
-        // UNIT CONVERSIONS (deprecated - see Conv class)
-
-        // Converts radians to degrees
-        public static double radToDeg(double rad){
-            return  rad*180.0D/Math.PI;
-        }
-
-        // Converts degrees to radians
-        public static double degToRad(double deg){
-            return  deg*Math.PI/180.0D;
-        }
-
-        // Converts frequency (Hz) to radial frequency
-        public static double frequencyToRadialFrequency(double frequency){
-            return  2.0D*Math.PI*frequency;
-        }
-
-        // Converts radial frequency to frequency (Hz)
-        public static double radialFrequencyToFrequency(double radial){
-            return  radial/(2.0D*Math.PI);
-        }
-
-        // Converts electron volts(eV) to corresponding wavelength in nm
-        public static double evToNm(double ev){
-            return  1e+9*C_LIGHT/(-ev*Q_ELECTRON/H_PLANCK);
-        }
-
-        // Converts wavelength in nm to matching energy in eV
-        public static double nmToEv(double nm)
-        {
-            return  C_LIGHT/(-nm*1e-9)*H_PLANCK/Q_ELECTRON;
-        }
-
-        // Converts moles per litre to percentage weight by volume
-        public static double molarToPercentWeightByVol(double molar, double molWeight){
-            return  molar*molWeight/10.0D;
-        }
-
-        // Converts percentage weight by volume to moles per litre
-        public static double percentWeightByVolToMolar(double perCent, double molWeight){
-            return  perCent*10.0D/molWeight;
-        }
-
-        // Converts Celsius to Kelvin
-        public static double celsiusToKelvin(double cels){
-            return  cels-T_ABS;
-        }
-
-        // Converts Kelvin to Celsius
-        public static double kelvinToCelsius(double kelv){
-            return  kelv+T_ABS;
-        }
-
-        // Converts Celsius to Fahrenheit
-        public static double celsiusToFahren(double cels){
-            return  cels*(9.0/5.0)+32.0;
-        }
-
-        // Converts Fahrenheit to Celsius
-        public static double fahrenToCelsius(double fahr){
-            return  (fahr-32.0)*5.0/9.0;
-        }
-
-        // Converts calories to Joules
-        public static double calorieToJoule(double cal){
-            return  cal*4.1868;
-        }
-
-        // Converts Joules to calories
-        public static double jouleToCalorie(double joule){
-            return  joule*0.23884;
-        }
-
-        // Converts grams to ounces
-        public static double gramToOunce(double gm){
-            return  gm/28.3459;
-        }
-
-        // Converts ounces to grams
-        public static double ounceToGram(double oz){
-            return  oz*28.3459;
-        }
-
-        // Converts kilograms to pounds
-        public static double kgToPound(double kg){
-            return  kg/0.4536;
-        }
-
-        // Converts pounds to kilograms
-        public static double poundToKg(double pds){
-            return  pds*0.4536;
-        }
-
-        // Converts kilograms to tons
-        public static double kgToTon(double kg){
-            return  kg/1016.05;
-        }
-
-        // Converts tons to kilograms
-        public static double tonToKg(double tons){
-            return  tons*1016.05;
-        }
-
-        // Converts millimetres to inches
-        public static double millimetreToInch(double mm){
-            return  mm/25.4;
-        }
-
-        // Converts inches to millimetres
-        public static double inchToMillimetre(double in){
-            return  in*25.4;
-        }
-
-        // Converts feet to metres
-        public static double footToMetre(double ft){
-            return  ft*0.3048;
-        }
-
-        // Converts metres to feet
-        public static double metreToFoot(double metre){
-            return  metre/0.3048;
-        }
-
-        // Converts yards to metres
-        public static double yardToMetre(double yd){
-            return  yd*0.9144;
-        }
-
-        // Converts metres to yards
-        public static double metreToYard(double metre){
-            return  metre/0.9144;
-        }
-
-        // Converts miles to kilometres
-        public static double mileToKm(double mile){
-            return  mile*1.6093;
-        }
-
-        // Converts kilometres to miles
-        public static double kmToMile(double km){
-            return  km/1.6093;
-        }
-
-        // Converts UK gallons to litres
-        public static double gallonToLitre(double gall){
-            return  gall*4.546;
-        }
-
-        // Converts litres to UK gallons
-        public static double litreToGallon(double litre){
-            return  litre/4.546;
-        }
-
-        // Converts UK quarts to litres
-        public static double quartToLitre(double quart){
-            return  quart*1.137;
-        }
-
-        // Converts litres to UK quarts
-        public static double litreToQuart(double litre){
-            return  litre/1.137;
-        }
-
-        // Converts UK pints to litres
-        public static double pintToLitre(double pint){
-            return  pint*0.568;
-        }
-
-        // Converts litres to UK pints
-        public static double litreToPint(double litre){
-            return  litre/0.568;
-        }
-
-        // Converts UK gallons per mile to litres per kilometre
-        public static double gallonPerMileToLitrePerKm(double gallPmile){
-            return  gallPmile*2.825;
-        }
-
-        // Converts litres per kilometre to UK gallons per mile
-        public static double litrePerKmToGallonPerMile(double litrePkm){
-            return  litrePkm/2.825;
-        }
-
-        // Converts miles per UK gallons to kilometres per litre
-        public static double milePerGallonToKmPerLitre(double milePgall){
-            return  milePgall*0.354;
-        }
-
-        // Converts kilometres per litre to miles per UK gallons
-        public static double kmPerLitreToMilePerGallon(double kmPlitre){
-            return  kmPlitre/0.354;
-        }
-
-        // Converts UK fluid ounce to American fluid ounce
-        public static double fluidOunceUKtoUS(double flOzUK){
-            return  flOzUK*0.961;
-        }
-
-        // Converts American fluid ounce to UK fluid ounce
-        public static double fluidOunceUStoUK(double flOzUS){
-            return  flOzUS*1.041;
-        }
-
-        // Converts UK pint to American liquid pint
-        public static double pintUKtoUS(double pintUK){
-            return  pintUK*1.201;
-        }
-
-        // Converts American liquid pint to UK pint
-        public static double pintUStoUK(double pintUS){
-            return  pintUS*0.833;
-        }
-
-        // Converts UK quart to American liquid quart
-        public static double quartUKtoUS(double quartUK){
-            return  quartUK*1.201;
-        }
-
-        // Converts American liquid quart to UK quart
-        public static double quartUStoUK(double quartUS){
-            return  quartUS*0.833;
-        }
-
-        // Converts UK gallon to American gallon
-        public static double gallonUKtoUS(double gallonUK){
-            return  gallonUK*1.201;
-        }
-
-        // Converts American gallon to UK gallon
-        public static double gallonUStoUK(double gallonUS){
-            return  gallonUS*0.833;
-        }
-
-        // Converts UK pint to American cup
-        public static double pintUKtoCupUS(double pintUK){
-            return  pintUK/0.417;
-        }
-
-        // Converts American cup to UK pint
-        public static double cupUStoPintUK(double cupUS){
-            return  cupUS*0.417;
-        }
-
-        // Calculates body mass index (BMI) from height (m) and weight (kg)
-        public static double calcBMImetric(double height, double weight){
-            return  weight/(height*height);
-        }
-
-        // Calculates body mass index (BMI) from height (ft) and weight (lbs)
-        public static double calcBMIimperial(double height, double weight){
-                height = Fmath.footToMetre(height);
-                weight = Fmath.poundToKg(weight);
-            return  weight/(height*height);
-        }
-
-        // Calculates weight (kg) to give a specified BMI for a given height (m)
-        public static double calcWeightFromBMImetric(double bmi, double height){
-            return bmi*height*height;
-        }
-
-        // Calculates weight (lbs) to give a specified BMI for a given height (ft)
-        public static double calcWeightFromBMIimperial(double bmi, double height){
-            height = Fmath.footToMetre(height);
-            double weight = bmi*height*height;
-            weight = Fmath.kgToPound(weight);
-            return  weight;
         }
 }
 
