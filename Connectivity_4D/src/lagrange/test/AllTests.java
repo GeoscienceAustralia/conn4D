@@ -5,6 +5,7 @@ import lagrange.test.collision.TestIntersector_3D_Poly;
 import lagrange.test.collision.TestIntersector_3D_Triangles;
 import lagrange.test.movement.TestMovement_RK4_3D;
 import lagrange.test.readers.TestBathymetryReader_Grid;
+import lagrange.test.readers.TestVelocityReader_HYCOMList_4D;
 import lagrange.test.readers.TestVelocityReader_NetCDF_4D;
 import lagrange.test.utils.TestArraySearch;
 import lagrange.test.utils.TestIndexLookup_Cell;
@@ -21,6 +22,6 @@ import org.junit.runners.Suite.SuiteClasses;
 		TestIndexLookup_Cell.class, TestIndexLookup_Nearest.class,
 		TestIntersector_3D_Triangles.class, TestIntersector_3D_Poly.class,
 		TestMovement_RK4_3D.class, TestTriCubicSpline.class, TestRelease.class,
-		TestReleaseFactory.class, TestVelocityReader_NetCDF_4D.class })
+		TestReleaseFactory.class, TestVelocityReader_NetCDF_4D.class, TestVelocityReader_HYCOMList_4D.class })
 public class AllTests {
 }

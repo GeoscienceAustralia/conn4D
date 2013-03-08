@@ -41,8 +41,6 @@ package lagrange.utils;
  *
  ***************************************************************************************/
 
-import flanagan.math.Fmath;
-
 public class BiCubicSpline {
 
 	private int nPoints = 0; // no. of x1 tabulated points

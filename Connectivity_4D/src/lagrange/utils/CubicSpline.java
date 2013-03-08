@@ -1,7 +1,6 @@
 package lagrange.utils;
 
-import flanagan.math.Conv;
-import flanagan.math.Fmath;
+import java.util.Arrays;
 
 /**********************************************************
 *
@@ -263,9 +262,9 @@ public class CubicSpline{
                                 naoi[i] = this.newAndOldIndices[i+1];
                             }
                             this.nPoints--;
-                            this.x = Conv.copy(xx);
-                            this.y = Conv.copy(yy);
-                            this.newAndOldIndices = Conv.copy(naoi);
+                            this.x = Arrays.copyOf(xx,xx.length);
+                            this.y = Arrays.copyOf(yy, yy.length);
+                            this.newAndOldIndices = Arrays.copyOf(naoi,naoi.length);
     	                }
     	                else{
     	                    if(CubicSpline.averageIdenticalAbscissae==true){
@@ -288,9 +287,9 @@ public class CubicSpline{
                                     naoi[i] = this.newAndOldIndices[i+1];
                                 }
                                 this.nPoints--;
-                                this.x = Conv.copy(xx);
-                                this.y = Conv.copy(yy);
-                                this.newAndOldIndices = Conv.copy(naoi);
+                                this.x = Arrays.copyOf(xx,xx.length);
+                                this.y = Arrays.copyOf(yy,yy.length);
+                                this.newAndOldIndices = Arrays.copyOf(naoi,naoi.length);
     	                    }
     	                    else{
     	                        double sepn = range*0.0005D;

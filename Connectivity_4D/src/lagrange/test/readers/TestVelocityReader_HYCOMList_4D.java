@@ -2,6 +2,7 @@ package lagrange.test.readers;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -12,7 +13,7 @@ import org.junit.Test;
 
 public class TestVelocityReader_HYCOMList_4D {
 
-	String dir = "V:/HYCOM";
+	String dir = "V:/Data/HYCOM";
 	VelocityReader_HYCOMList_4D ncl;
 	
 	@Before
@@ -32,16 +33,8 @@ public class TestVelocityReader_HYCOMList_4D {
 		}
 	}
 	
-	public static void main(String[] args){
-		TestVelocityReader_HYCOMList_4D tvr = new TestVelocityReader_HYCOMList_4D();
-		tvr.setUp();
-		tvr.test();
-	}
-	
-	@SuppressWarnings("unused")
 	@Test
 	public void test() {
-		double[][] bnds = ncl.getBounds();
 		Calendar c = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 		SimpleDateFormat formatUTC = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ssZ");
 		formatUTC.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -53,8 +46,7 @@ public class TestVelocityReader_HYCOMList_4D {
 		c.set(Calendar.MILLISECOND, 0);
 		long time = c.getTimeInMillis();
 		System.out.println(formatUTC.format(time));
-		double[][] dims = ncl.getDims();
-		double[] vels = ncl.getVelocities(time, -10, 100.0799560546875, -49.904899597);	
+		double[] vels = ncl.getVelocities(time, -10, 100.0799560546875, -49.904899597);
+		System.out.println(Arrays.toString(vels));
 	}
-
 }

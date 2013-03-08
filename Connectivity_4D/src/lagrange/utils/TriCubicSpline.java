@@ -31,8 +31,6 @@ package lagrange.utils;
 *
 ***************************************************************************************/
 
-import flanagan.math.Fmath;
-
 public class TriCubicSpline{
 
     	private int nPoints = 0;   	                            // no. of x1 tabulated points

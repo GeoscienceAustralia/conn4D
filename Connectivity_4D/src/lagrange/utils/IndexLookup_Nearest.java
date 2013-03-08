@@ -141,7 +141,7 @@ public class IndexLookup_Nearest implements Cloneable {
 
 			if (index == -1) {
 				in_bounds = -1;
-				return index;
+				return 0;
 			}
 
 			if (-(index) > java_array.length) {

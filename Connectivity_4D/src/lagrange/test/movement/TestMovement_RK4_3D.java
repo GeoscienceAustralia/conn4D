@@ -19,7 +19,7 @@ public class TestMovement_RK4_3D {
 	public void setUp() throws Exception {
 		v3.setUFile("C:/Temp/Ones.nc", "Variable X");
 		v3.setVFile("C:/Temp/Ones.nc", "Variable X");
-		v3.setWFile("C:/Temp/Ones.nc", "Variable X");
+		v3.setWFile("C:/Temp/Negative_Ones.nc", "Variable_X");
 		v3.setXLookup("Longitude");
 		v3.setYLookup("Latitude");
 		v3.setZLookup("Depth");
@@ -35,10 +35,19 @@ public class TestMovement_RK4_3D {
 	}
 
 	@Test
+	
+	/**
+	 * The position of the particle should change in a linear manner of
+	 * one unit per thousand time steps.  i.e. at t=1000, the particle
+	 * should be at position 1 etc.  Note, the code automatically converts
+	 * X and Y to Latitude and Longitude, therefore this needs to be
+	 * accounted for.
+	 */
+	
 	public void test() {
 		for(int i = 0; i < 100; i++){
 			rk3d.apply(p);
-			Assert.assertEquals((double) (i+1)/1000, p.getZ(), 1E-4);
+			Assert.assertEquals((double) -(i+1)/1000, p.getZ(), 1E-4);
 		}
 	}
 }
