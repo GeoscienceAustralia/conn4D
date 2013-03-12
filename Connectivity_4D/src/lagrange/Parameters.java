@@ -27,6 +27,11 @@ public interface Parameters{
 	
 	public Coordinate getCoordinates();	
 	
+	/**
+	 * Retrieves the depth at which the Particles are to be released
+	 * @return
+	 */
+	
 	public double getReleaseDepth();
 	public double getMaxReleaseDepth();
 	public long getEtime();
