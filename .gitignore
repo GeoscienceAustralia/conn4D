@@ -1,0 +1,9 @@
+.DS_Store
+*.swp
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+target/
+.classpath
