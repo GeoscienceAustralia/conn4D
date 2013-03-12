@@ -7,9 +7,8 @@ import lagrange.impl.readers.Reader_NetCDF_3D;
 import lagrange.utils.TimeConvert;
 import lagrange.utils.Triangular;
 import lagrange.Particle;
-import lagrange.Process;
 
-public class Correction_MixedLayer implements Process {
+public class Correction_MixedLayer{
 	
 	private Reader_NetCDF_3D n3;
 	

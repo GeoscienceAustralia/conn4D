@@ -27,25 +27,27 @@ import lagrange.input.ReleaseFileReader;
 
 public class ReleaseFileReader_Shapefile implements ReleaseFileReader{
 
-	private long relID; // Release ID
-	private Geometry position;
-	private float z; // Longitude, Latitude and Depth
-	private int npart; // # of particles to be released
-	private String locName; // Location name
+	protected long relID; // Release ID
+	protected Geometry position;
+	protected float z; // Longitude, Latitude and Depth
+	protected int npart; // # of particles to be released
+	protected String locName; // Location name
 
-	private boolean EOF = false; // Indicates whether the end of the file has
+	protected boolean EOF = false; // Indicates whether the end of the file has
 									// been reached
 
-	private ShapefileDataStore dataStore;
-	private FeatureSource<SimpleFeatureType,SimpleFeature> source;
-	private FeatureCollection<SimpleFeatureType,SimpleFeature> collection;
-	private FeatureIterator<SimpleFeature> iterator;
-	private SimpleFeature feat;
+	protected ShapefileDataStore dataStore;
+	protected FeatureSource<SimpleFeatureType,SimpleFeature> source;
+	protected FeatureCollection<SimpleFeatureType,SimpleFeature> collection;
+	protected FeatureIterator<SimpleFeature> iterator;
+	protected SimpleFeature feat;
 
-	private String header_ID = "POLYNUM";
-	private String header_Depth = "DEPTH";
-	private String header_Npart = "NPART";
-	private String header_locName = "FNAME";
+	protected String header_ID = "POLYNUM";
+	protected String header_Depth = "DEPTH";
+	protected String header_Npart = "NPART";
+	protected String header_locName = "FNAME";
+	
+	protected ReleaseFileReader_Shapefile(){}
 
 	public ReleaseFileReader_Shapefile(String filename)
 			throws FileNotFoundException, MalformedURLException, IOException {
@@ -85,7 +87,7 @@ public class ReleaseFileReader_Shapefile implements ReleaseFileReader{
 	 * Parses the information from the line
 	 */
 
-	private void parse() {
+	protected void parse() {
 
 		position = (Geometry) feat.getDefaultGeometry();
 		
@@ -111,7 +113,7 @@ public class ReleaseFileReader_Shapefile implements ReleaseFileReader{
 	 * EOF if there is no more data.
 	 */
 
-	private void readNext() {
+	protected void readNext() {
 
 		try {
 			if (!iterator.hasNext()) {
@@ -127,6 +129,10 @@ public class ReleaseFileReader_Shapefile implements ReleaseFileReader{
 		}
 	}
 
+	/**
+	 * Sets the values of the passed-in Parameters object
+	 */
+	
 	public Parameters setParameters(Parameters d) {
 		d.setLocName(locName);
 		d.setNPart(npart);

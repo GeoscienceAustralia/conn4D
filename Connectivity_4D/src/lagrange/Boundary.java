@@ -26,4 +26,6 @@ public interface Boundary {
 	 */
 	
 	public Boundary clone();
+	
+	public double getPreciseBoundaryDepth(double x, double y);
 }

@@ -105,6 +105,10 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 		// Filter the list of files
 
 		File[] fa = f.listFiles(new FilenamePatternFilter(".*_[uvw].*\\.nc"));
+		
+		if(fa==null){
+			throw new IOException("File list is empty.");
+		}
 
 		for (File fil : fa) {
 
@@ -278,7 +282,6 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 
 			return ndr;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			System.out
 					.println("WARNING:  Unexpected error.  NetCDFDirReader could not be cloned.\n");
 			return null;

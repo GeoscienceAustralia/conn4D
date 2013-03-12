@@ -9,11 +9,11 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import lagrange.impl.ReleaseRunner_4D;
-import lagrange.impl.readers.ReleaseFileReader_Shapefile;
+import lagrange.impl.readers.ReleaseFileReader_Shapefile_4D;
 import lagrange.impl.readers.ReleaseFileReader_Text;
 import lagrange.input.GlobalParameters;
 import lagrange.input.ReleaseFileReader;
-import lagrange.parameters.Parameters_Zonal;
+import lagrange.parameters.Parameters_Zonal_4D;
 import lagrange.utils.TimeConvert;
 
 /**
@@ -76,7 +76,7 @@ public class Connect_4D {
 				// Try reading the release file (if it can't be found, then quit).
 
 					if(gp.relFileName.endsWith(".shp")){
-						rf = new ReleaseFileReader_Shapefile(gp.relFileName);
+						rf = new ReleaseFileReader_Shapefile_4D(gp.relFileName);
 					}
 					else{
 						rf = new ReleaseFileReader_Text(gp.relFileName);
@@ -96,7 +96,7 @@ public class Connect_4D {
 						}
 					}
 					
-					Parameters prm = new Parameters_Zonal();
+					Parameters prm = new Parameters_Zonal_4D();
 					//Parameters prm = new Parameters_Zonal_Ind();
 					long timer = System.currentTimeMillis();
 

@@ -86,7 +86,15 @@ public class Release implements Runnable {
 			p.setPX(p.getX());
 			p.setY(c.y);
 			p.setPY(p.getY());
-			p.setZ(prm.getDepth());	
+			p.setZ(prm.getReleaseDepth());
+			double floor = collisionDetect.getBoundary().getPreciseBoundaryDepth(p.getX(), p.getY());
+			
+			if(p.getZ()>floor){
+				if(floor+1>0){p.setLost(true);
+				p.setError(true);}
+				else{p.setZ(floor+1);}
+			}
+			
 			p.setBirthday(time);
 			p.setSource(prm.getLocName());
 			p.setCompetencyStart(prm.getCompetencyStart());

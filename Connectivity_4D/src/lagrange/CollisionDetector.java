@@ -26,4 +26,6 @@ public interface CollisionDetector {
 	public boolean isInBounds(long t, double z, double x, double y);
 	
 	public CollisionDetector clone();
+	
+	public Boundary getBoundary();
 }

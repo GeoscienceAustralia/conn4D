@@ -27,7 +27,8 @@ public interface Parameters{
 	
 	public Coordinate getCoordinates();	
 	
-	public double getDepth();
+	public double getReleaseDepth();
+	public double getMaxReleaseDepth();
 	public long getEtime();
 	public long getH();
 	public String getLocName();
@@ -47,6 +48,7 @@ public interface Parameters{
 	public void setCompetencyStart(long competencyStart);
 	public void setCompetencyStartUnits(String competencyStartUnits);
 	public void setDepth(double depth);
+	public void setDepthRange(double minDepth, double maxDepth);
 	public void setEffectiveMigration(boolean effectiveMigration);
 	public void setEtime(long etime);
 	public void setH(long h);

@@ -55,10 +55,14 @@ public class Parameters_Zonal_Ind implements Parameters {
 		}
 	}
 
-	public double getDepth() {
+	public double getReleaseDepth() {
 		return depth;
 	}
 
+	public double getMaxReleaseDepth() {
+		return depth;
+	}
+	
 	public long getEtime() {
 		return etime;
 	}
@@ -157,6 +161,13 @@ public class Parameters_Zonal_Ind implements Parameters {
 
 	public void setDepth(double depth) {
 		this.depth = depth;
+	}
+	
+	public void setDepthRange(double mindepth, double maxdepth) {
+		if (mindepth != maxdepth) {
+			throw new IllegalArgumentException(
+					"This class does not support the use of a depth range.");
+		}
 	}
 
 	public void setEffectiveMigration(boolean effectiveMigration) {

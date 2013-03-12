@@ -11,7 +11,6 @@ import lagrange.Particle;
 import lagrange.impl.readers.Boundary_NetCDF_Grid;
 import lagrange.utils.CoordinateMath;
 import lagrange.utils.DigitalDifferentialAnalyzer;
-import lagrange.utils.Trace;
 import lagrange.utils.VectorMath;
 
 /**

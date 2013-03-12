@@ -6,7 +6,6 @@ import cern.jet.random.Uniform;
 import cern.jet.random.engine.MersenneTwister64;
 import cern.jet.random.engine.RandomEngine;
 import cern.jet.random.engine.RandomSeedTable;
-import lagrange.Process;
 
 /**
  * Implements mortality using an exponential function.
@@ -14,7 +13,7 @@ import lagrange.Process;
  * @author Johnathan Kool
  */
 
-public class Mortality_Exponential implements Mortality, Process {
+public class Mortality_Exponential implements Mortality {
 
 	private int seed = RandomSeedTable.getSeedAtRowColumn(
 			Uniform.staticNextIntFromTo(0, Integer.MAX_VALUE),

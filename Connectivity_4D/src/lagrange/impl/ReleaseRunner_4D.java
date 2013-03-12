@@ -46,8 +46,8 @@ public class ReleaseRunner_4D implements ReleaseRunner {
 
 		// Ensure we start in bounds
 		
-		if(!relFactory.getCollisionDetection().isInBounds(prm.getTime(), prm.getDepth(), prm.getCoordinates().x, prm.getCoordinates().y)){
-			System.out.print("\t Initial depth ("+ prm.getDepth() + ") is not in the water column. Continuing to the next release site.");
+		if(!relFactory.getCollisionDetection().isInBounds(prm.getTime(), prm.getMaxReleaseDepth(), prm.getCoordinates().x, prm.getCoordinates().y)){
+			System.out.print("\t Initial depth/range ("+ prm.getMaxReleaseDepth() + ") is not in the water column. Continuing to the next release site.");
 			relFactory.shutdown();
 			return;
 		}

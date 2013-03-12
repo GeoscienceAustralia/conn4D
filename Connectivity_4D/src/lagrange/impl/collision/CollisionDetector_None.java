@@ -1,5 +1,6 @@
 package lagrange.impl.collision;
 
+import lagrange.Boundary;
 import lagrange.CollisionDetector;
 import lagrange.Particle;
 
@@ -10,4 +11,5 @@ public class CollisionDetector_None implements CollisionDetector {
 		return this;
 	}
 	public boolean isInBounds(long t, double z, double x, double y){return true;}
+	public Boundary getBoundary(){return null;}
 }
