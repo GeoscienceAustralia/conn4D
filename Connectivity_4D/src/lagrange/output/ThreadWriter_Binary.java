@@ -77,7 +77,8 @@ public class ThreadWriter_Binary implements Runnable {
      * as long as it is not stopped, and there is something left to write.
      */
     
-    public void run() {
+    @Override
+	public void run() {
         while (!stopped || queue.size() > 0) {
             try {
                 Item item = queue.poll(100, TimeUnit.MICROSECONDS);
@@ -133,7 +134,8 @@ public class ThreadWriter_Binary implements Runnable {
             this.s = s;
         }
 
-        public void write(Writer out) throws IOException {
+        @Override
+		public void write(Writer out) throws IOException {
             out.append(s);
         }
     }

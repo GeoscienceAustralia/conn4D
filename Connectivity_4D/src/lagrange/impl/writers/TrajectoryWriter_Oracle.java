@@ -240,6 +240,7 @@ public class TrajectoryWriter_Oracle implements TrajectoryWriter {
 		return durationUnits;
 	}
 
+	@Override
 	public void setDurationUnits(String durationUnits) {
 		this.durationUnits = durationUnits;
 	}
@@ -248,10 +249,12 @@ public class TrajectoryWriter_Oracle implements TrajectoryWriter {
 		return timeUnits;
 	}
 
+	@Override
 	public void setTimeUnits(String timeUnits) {
 		this.timeUnits = timeUnits;
 	}
 	
+	@Override
 	public void setNegCoord(boolean negCoord){
 		this.negCoord = negCoord;
 	}

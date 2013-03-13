@@ -24,9 +24,9 @@ public class Connect_4D {
 	private static GlobalParameters gp = new GlobalParameters();
 	private static ReleaseFileReader rf;
 	private static ReleaseRunner_4D rr;
+	private static DateFormat outerformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz");
 	private static String prmfile = "default.prm";
 	private static String cfgfile = "default.cfg";
-	private static DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 	private static String restartAt = "#";
 	private static boolean pass = true;
 
@@ -47,10 +47,16 @@ public class Connect_4D {
 		rr = new ReleaseRunner_4D(cfgfile);
 	}
 	
+	/**
+	 * Executes the simulation
+	 */
+	
 	public void run(){
 		
 		long outertimer = System.currentTimeMillis();
-		System.out.println("\nSimulation started " + new Date(outertimer)+"\n");
+		System.out.println("\nSimulation started " + outerformat.format(new Date(outertimer))+"\n");
+		SimpleDateFormat innerformat = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat innerformat_full = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz");
 		
 		try {
 			
@@ -69,7 +75,7 @@ public class Connect_4D {
 				
 				long reltimer = System.currentTimeMillis();
 				if(gp.minTimeUnits.equalsIgnoreCase("Date")){
-					System.out.println("Release date " + df.format(time) + ":");	
+					System.out.println("Release time " + innerformat_full.format(time) + ":");	
 				}
 				else{System.out.println("Release " + (time+1) + ":");}			
 
@@ -110,7 +116,7 @@ public class Connect_4D {
 					// if time units are dates, name folders by date
 					String folder="";
 					if(gp.minTimeUnits.equalsIgnoreCase("Date")){
-						folder = df.format(new Date(time));	
+						folder = innerformat.format(new Date(time));	
 					}
 					
 					// otherwise name according to the time value
@@ -126,7 +132,7 @@ public class Connect_4D {
 
 					System.out.println("\tComplete\t("
 							+ TimeConvert.millisToString(System.currentTimeMillis()
-									- timer) + ")\t" + new Date(System.currentTimeMillis()));
+									- timer) + ")\t" + outerformat.format(new Date(System.currentTimeMillis())));
 					rf.next();
 					System.gc();
 				}
@@ -137,7 +143,7 @@ public class Connect_4D {
 				}
 				
 				if(gp.relSpUnits.equalsIgnoreCase("Date")){
-					System.out.println("\nRelease date " + df.format(time) + "complete. (" +TimeConvert.millisToString(System.currentTimeMillis()-reltimer)+ ")");	
+					System.out.println("\nRelease date " + innerformat_full.format(time) + "complete. (" +TimeConvert.millisToString(System.currentTimeMillis()-reltimer)+ ")");	
 				}
 				else{System.out.println("\nRelease " + (time+1) + " complete. (" +TimeConvert.millisToString(System.currentTimeMillis()-reltimer)+ ")");}	
 				

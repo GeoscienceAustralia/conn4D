@@ -48,6 +48,7 @@ public class ReleaseFileReader_Text implements ReleaseFileReader{
 	 * Indicates whether there are remaining records to be read
 	 */
 
+	@Override
 	public boolean hasNext() {
 
 		return !EOF;
@@ -57,6 +58,7 @@ public class ReleaseFileReader_Text implements ReleaseFileReader{
 	 * Parses the next available record
 	 */
 
+	@Override
 	public void next() {
 
 		parse();
@@ -113,6 +115,7 @@ public class ReleaseFileReader_Text implements ReleaseFileReader{
 
 	}
 	
+	@Override
 	public Parameters setParameters(Parameters prm){
 		prm.setLocName(locName);
 		prm.setNPart(npart);
@@ -135,14 +138,17 @@ public class ReleaseFileReader_Text implements ReleaseFileReader{
 		return lat;
 	}
 	
+	@Override
 	public Geometry getPosition() {
 		return gf.createPoint(new Coordinate(lon,lat));
 	}
 
+	@Override
 	public float getDepth() {
 		return z;
 	}
 
+	@Override
 	public long getNpart() {
 		return npart;
 	}
@@ -159,6 +165,7 @@ public class ReleaseFileReader_Text implements ReleaseFileReader{
 		return rdd;
 	}
 
+	@Override
 	public String getLocName() {
 		return locName;
 	}

@@ -10,6 +10,141 @@ import java.util.StringTokenizer;
 public class VectorUtils {
 
 	/**
+	 * Creates a copy of a 2-dimensional matrix of doubles
+	 * 
+	 * @param mtx
+	 * @return
+	 */
+	
+	public static double[][] copy(double[][] mtx){
+		double[][] out = new double[mtx.length][mtx[0].length];
+		for(int i = 0; i < mtx.length; i++){
+			System.arraycopy(mtx[i], 0, out[i], 0, mtx[i].length);
+		}
+		return out;
+	}
+	
+	/**
+	 * Retrieves a column vector of ints from an integer matrix.
+	 * 
+	 * @param mtx
+	 *            int[][] - The integer matrix from which the value is to be
+	 *            retrieved.
+	 * @param col
+	 *            int - The identifier of the column to be retrieved.
+	 * @return int[] - The column vector.
+	 */
+
+	public static double[] getColumn(double[][] mtx, int col) {
+
+		double[] out = new double[mtx.length];
+
+		for (int i = 0; i < mtx.length; i++) {
+
+			out[i] = mtx[i][col];
+
+		}
+
+		return out;
+	}
+	
+	/**
+	 * Retrieves a column vector of ints from an integer matrix.
+	 * 
+	 * @param mtx
+	 *            int[][] - The integer matrix from which the value is to be
+	 *            retrieved.
+	 * @param col
+	 *            int - The identifier of the column to be retrieved.
+	 * @return int[] - The column vector.
+	 */
+
+	public static float[] getColumn(float[][] mtx, int col) {
+
+		float[] out = new float[mtx.length];
+
+		for (int i = 0; i < mtx.length; i++) {
+
+			out[i] = mtx[i][col];
+
+		}
+
+		return out;
+	}
+	
+	/**
+	 * Retrieves a column vector of ints from an integer matrix.
+	 * 
+	 * @param mtx
+	 *            int[][] - The integer matrix from which the value is to be
+	 *            retrieved.
+	 * @param col
+	 *            int - The identifier of the column to be retrieved.
+	 * @return int[] - The column vector.
+	 */
+
+	public static int[] getColumn(int[][] mtx, int col) {
+
+		int[] out = new int[mtx.length];
+
+		for (int i = 0; i < mtx.length; i++) {
+
+			out[i] = mtx[i][col];
+
+		}
+
+		return out;
+	}
+	
+	/**
+	 * Retrieves a column vector of ints from an integer matrix.
+	 * 
+	 * @param mtx
+	 *            int[][] - The integer matrix from which the value is to be
+	 *            retrieved.
+	 * @param col
+	 *            int - The identifier of the column to be retrieved.
+	 * @return int[] - The column vector.
+	 */
+
+	public static long[] getColumn(long[][] mtx, int col) {
+
+		long[] out = new long[mtx.length];
+
+		for (int i = 0; i < mtx.length; i++) {
+
+			out[i] = mtx[i][col];
+
+		}
+
+		return out;
+	}
+	
+	/**
+	 * Retrieves a column vector of ints from an integer matrix.
+	 * 
+	 * @param mtx
+	 *            int[][] - The integer matrix from which the value is to be
+	 *            retrieved.
+	 * @param col
+	 *            int - The identifier of the column to be retrieved.
+	 * @return int[] - The column vector.
+	 */
+
+	public static Number[] getColumn(Number[][] mtx, int col) {
+
+		Number[] out = new Number[mtx.length];
+
+		for (int i = 0; i < mtx.length; i++) {
+
+			out[i] = mtx[i][col];
+
+		}
+
+		return out;
+	}
+	
+	/**
 	 * Loads a transition matrix into the class based on a stored text file.
 	 * 
 	 * @param file
@@ -90,135 +225,4 @@ public class VectorUtils {
 		}
 		return matrix;
 	}
-	
-	/**
-	 * Retrieves a column vector of ints from an integer matrix.
-	 * 
-	 * @param mtx
-	 *            int[][] - The integer matrix from which the value is to be
-	 *            retrieved.
-	 * @param col
-	 *            int - The identifier of the column to be retrieved.
-	 * @return int[] - The column vector.
-	 */
-
-	public static int[] getColumn(int[][] mtx, int col) {
-
-		int[] out = new int[mtx.length];
-
-		for (int i = 0; i < mtx.length; i++) {
-
-			out[i] = mtx[i][col];
-
-		}
-
-		return out;
-	}
-	
-	/**
-	 * Retrieves a column vector of ints from an integer matrix.
-	 * 
-	 * @param mtx
-	 *            int[][] - The integer matrix from which the value is to be
-	 *            retrieved.
-	 * @param col
-	 *            int - The identifier of the column to be retrieved.
-	 * @return int[] - The column vector.
-	 */
-
-	public static double[] getColumn(double[][] mtx, int col) {
-
-		double[] out = new double[mtx.length];
-
-		for (int i = 0; i < mtx.length; i++) {
-
-			out[i] = mtx[i][col];
-
-		}
-
-		return out;
-	}
-	
-	/**
-	 * Retrieves a column vector of ints from an integer matrix.
-	 * 
-	 * @param mtx
-	 *            int[][] - The integer matrix from which the value is to be
-	 *            retrieved.
-	 * @param col
-	 *            int - The identifier of the column to be retrieved.
-	 * @return int[] - The column vector.
-	 */
-
-	public static float[] getColumn(float[][] mtx, int col) {
-
-		float[] out = new float[mtx.length];
-
-		for (int i = 0; i < mtx.length; i++) {
-
-			out[i] = mtx[i][col];
-
-		}
-
-		return out;
-	}
-	
-	/**
-	 * Retrieves a column vector of ints from an integer matrix.
-	 * 
-	 * @param mtx
-	 *            int[][] - The integer matrix from which the value is to be
-	 *            retrieved.
-	 * @param col
-	 *            int - The identifier of the column to be retrieved.
-	 * @return int[] - The column vector.
-	 */
-
-	public static long[] getColumn(long[][] mtx, int col) {
-
-		long[] out = new long[mtx.length];
-
-		for (int i = 0; i < mtx.length; i++) {
-
-			out[i] = mtx[i][col];
-
-		}
-
-		return out;
-	}
-	
-	/**
-	 * Retrieves a column vector of ints from an integer matrix.
-	 * 
-	 * @param mtx
-	 *            int[][] - The integer matrix from which the value is to be
-	 *            retrieved.
-	 * @param col
-	 *            int - The identifier of the column to be retrieved.
-	 * @return int[] - The column vector.
-	 */
-
-	public static Number[] getColumn(Number[][] mtx, int col) {
-
-		Number[] out = new Number[mtx.length];
-
-		for (int i = 0; i < mtx.length; i++) {
-
-			out[i] = mtx[i][col];
-
-		}
-
-		return out;
-	}
-	
-	public static double[][] copy(double[][] mtx){
-		double[][] out = new double[mtx.length][mtx[0].length];
-		for(int i = 0; i < mtx.length; i++){
-			System.arraycopy(mtx[i], 0, out[i], 0, mtx[i].length);
-		}
-		return out;
-	}
-	
-	
-	
 }

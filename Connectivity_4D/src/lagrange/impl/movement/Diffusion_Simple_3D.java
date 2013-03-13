@@ -43,6 +43,7 @@ public class Diffusion_Simple_3D implements Diffusion, Cloneable {
 	 *            - The particle to be acted upon.
 	 */
 
+	@Override
 	public void apply(Particle p) {
 
 		float usc = (float) Math.sqrt(2f * uK * h);
@@ -91,6 +92,7 @@ public class Diffusion_Simple_3D implements Diffusion, Cloneable {
 		this.h = h / 1000;
 	}
 
+	@Override
 	public Diffusion_Simple_3D clone() {
 		return new Diffusion_Simple_3D(h * 1000);
 	}

@@ -54,6 +54,7 @@ public class MatrixWriter_Text implements MatrixWriter {
 	 * @param p
 	 */
 
+	@Override
 	public synchronized void apply(Particle p) {
 		if (p.canSettle()) {
 			if (m.get(p.getDestination()) != null) {
@@ -64,6 +65,7 @@ public class MatrixWriter_Text implements MatrixWriter {
 		}
 	}
 
+	@Override
 	public void close() {
 
 		try {

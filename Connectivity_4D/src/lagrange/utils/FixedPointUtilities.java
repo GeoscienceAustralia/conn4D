@@ -41,7 +41,7 @@ public class FixedPointUtilities {
      * @return The equivalent floating-point value.
      */
     public static float toFloat(int val) {
-            return ((float)val)/65536.0f;
+            return (val)/65536.0f;
     }
     
     /**

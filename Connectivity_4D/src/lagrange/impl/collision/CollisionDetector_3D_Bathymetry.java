@@ -28,6 +28,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 		this.bnd = (Boundary_NetCDF_Grid) bathym;
 	}
 
+	@Override
 	public void handleIntersection(Particle p) {
 
 		// In addition to reflecting, we may also want to consider triggering
@@ -164,6 +165,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 		p.setZ(backtrans.p1.z);
 	}
 
+	@Override
 	public boolean isInBounds(long t, double z, double x, double y) {
 		if (z < bnd.getBoundaryDepth(x, y)) {
 			return false;
@@ -177,6 +179,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 	 * @return
 	 */
 
+	@Override
 	public CollisionDetector_3D_Bathymetry clone() {
 		return new CollisionDetector_3D_Bathymetry(bnd);
 	}
@@ -187,6 +190,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 	 * @return
 	 */
 
+	@Override
 	public Boundary getBoundary() {
 		return bnd;
 	}

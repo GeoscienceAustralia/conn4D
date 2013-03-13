@@ -41,6 +41,7 @@ public class DistanceWriter_Floater_Text implements DistanceWriter{
 
 	}
 	
+	@Override
 	public synchronized void apply(Particle p){
 		if(p.canSettle()&&!p.getVisited().contains(num.get(p.getDestination()))){
 			if(num.get(p.getDestination())!=null){
@@ -61,6 +62,7 @@ public class DistanceWriter_Floater_Text implements DistanceWriter{
 		}
 	}
 	
+	@Override
 	public void close() {
 
 		try {

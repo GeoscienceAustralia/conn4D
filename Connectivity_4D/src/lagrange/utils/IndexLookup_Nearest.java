@@ -269,6 +269,7 @@ public class IndexLookup_Nearest implements Cloneable {
 		return val*java_array[java_array.length-1];
 	}
 	
+	@Override
 	public IndexLookup_Nearest clone(){
 		return new IndexLookup_Nearest(variable);
 	}

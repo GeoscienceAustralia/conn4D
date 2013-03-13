@@ -170,6 +170,7 @@ public class IndexLookup_Cell implements Cloneable {
 		return java_array[java_array.length-1];
 	}
 	
+	@Override
 	public IndexLookup_Cell clone(){
 		return new IndexLookup_Cell(variable);
 	}

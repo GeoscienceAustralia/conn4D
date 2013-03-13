@@ -25,7 +25,17 @@ public interface CollisionDetector {
 	
 	public boolean isInBounds(long t, double z, double x, double y);
 	
+	/**
+	 * Returns a copy of the class instance
+	 * @return
+	 */
+	
 	public CollisionDetector clone();
+	
+	/**
+	 * Returns the boundary object being used by the CollisionDetector
+	 * @return
+	 */
 	
 	public Boundary getBoundary();
 }

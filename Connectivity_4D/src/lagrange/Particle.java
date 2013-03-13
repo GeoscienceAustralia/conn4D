@@ -12,15 +12,15 @@ import java.util.Set;
 public class Particle {
 
 	private long id;
-	private double x; 
-	private double y; 
+	private double x;
+	private double y;
 	private double z;
 	private double px, py, pz;
 	private double u = 0d, v = 0d, w = 0d;
 	private long t;
 	private long birthday = 0;
 	private long competencyStart = 0;
-	private int tm,k,i,j;
+	private int tm, k, i, j;
 	private boolean settling = false;
 	private boolean dead = false;
 	private boolean lost = false;
@@ -41,7 +41,7 @@ public class Particle {
 	 * 
 	 * @return
 	 */
-	
+
 	public boolean canSettle() {
 		return settling;
 	}
@@ -51,9 +51,9 @@ public class Particle {
 	 * 
 	 * @return
 	 */
-	
-	public long getAge(){
-		return this.t-this.birthday;
+
+	public long getAge() {
+		return this.t - this.birthday;
 	}
 
 	/**
@@ -62,7 +62,6 @@ public class Particle {
 	 * @return
 	 */
 
-	
 	public long getBirthday() {
 		return birthday;
 	}
@@ -72,17 +71,18 @@ public class Particle {
 	 * 
 	 * @return
 	 */
-	
+
 	public String getComments() {
 		return comments;
 	}
-	
+
 	/**
-	 * Retrieves the duration after which the Particle becomes competent to settle
+	 * Retrieves the duration after which the Particle becomes competent to
+	 * settle
 	 * 
 	 * @return
 	 */
-	
+
 	public long getCompetencyStart() {
 		return competencyStart;
 	}
@@ -96,27 +96,27 @@ public class Particle {
 	public double[] getCoords() {
 		return new double[] { x, y, z };
 	}
-	
+
 	/**
 	 * Retrieve the settlement destination of the Particle
 	 * 
 	 * @return
 	 */
-	
+
 	public String getDestination() {
 		return destination;
 	}
-	
+
 	/**
 	 * Retrieve the distance traveled by the Particle (meters)
 	 * 
 	 * @return
 	 */
-	
+
 	public double getDistance() {
 		return distance;
 	}
-	
+
 	/**
 	 * Retrieve the unique identifier of the particle
 	 * 
@@ -128,12 +128,12 @@ public class Particle {
 	}
 
 	/**
-	 * Identify whether the particle encountered a NoData value in the
-	 * velocity field.
+	 * Identify whether the particle encountered a NoData value in the velocity
+	 * field.
 	 * 
 	 * @return
 	 */
-	
+
 	public boolean getNodata() {
 		return nodata;
 	}
@@ -153,37 +153,37 @@ public class Particle {
 	 * 
 	 * @return
 	 */
-	
+
 	public double getPY() {
 		return py;
 	}
-	
+
 	/**
 	 * Retrieve the Previous Z Coordinate of the particle
 	 * 
 	 * @return
 	 */
-	
+
 	public double getPZ() {
 		return pz;
 	}
-	
+
 	/**
 	 * Retrieves the release source ID for the Particle
 	 * 
 	 * @return
 	 */
-	
+
 	public String getSource() {
 		return source;
 	}
-	
+
 	/**
 	 * Retrieve the Time Coordinate of the particle
 	 * 
 	 * @return
 	 */
-	
+
 	public long getT() {
 		return t;
 	}
@@ -197,7 +197,7 @@ public class Particle {
 	public double getU() {
 		return u;
 	}
-	
+
 	/**
 	 * Retrieve the last N-S velocity of the particle
 	 * 
@@ -213,18 +213,17 @@ public class Particle {
 	 * 
 	 * @return
 	 */
-	
+
 	public Set<Long> getVisited() {
 		return visited;
 	}
-	
+
 	/**
 	 * Retrieve the last vertical velocity of the particle
 	 * 
 	 * @return
 	 */
 
-	
 	public double getW() {
 		return w;
 	}
@@ -234,11 +233,11 @@ public class Particle {
 	 * 
 	 * @return
 	 */
-	
+
 	public double getX() {
 		return x;
 	}
-	
+
 	/**
 	 * Retrieve the Y coordinate of the particle
 	 * 
@@ -264,11 +263,11 @@ public class Particle {
 	 * 
 	 * @return
 	 */
-	
+
 	public boolean isDead() {
 		return dead;
 	}
-	
+
 	/**
 	 * Indicates if the Particle has completed its run
 	 * 
@@ -278,19 +277,20 @@ public class Particle {
 	public boolean isFinished() {
 		return finished;
 	}
-	
+
 	/**
 	 * Indicates if the particle was lost - e.g. through exiting boundaries
 	 * 
 	 * @return
 	 */
-	
+
 	public boolean isLost() {
 		return lost;
 	}
-	
+
 	/**
-	 * Indicates if the Particle encountered a NoData value in the velocity field
+	 * Indicates if the Particle encountered a NoData value in the velocity
+	 * field
 	 * 
 	 * @return
 	 */
@@ -298,14 +298,14 @@ public class Particle {
 	public boolean isNearNoData() {
 		return nearNoData;
 	}
-	
+
 	/**
 	 * Indicates whether the particle date should be recorded (by the Writers)
 	 * 
 	 * @return
 	 */
-	
-	public boolean recording(){
+
+	public boolean recording() {
 		return recording;
 	}
 
@@ -314,11 +314,11 @@ public class Particle {
 	 * 
 	 * @param birthday
 	 */
-	
+
 	public void setBirthday(long birthday) {
 		this.birthday = birthday;
 	}
-	
+
 	/**
 	 * Sets the value of a general information String attached to the Particle
 	 * 
@@ -328,9 +328,10 @@ public class Particle {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
-	
+
 	/**
-	 * Sets the duration after which the Particle is eligible to settle (milliseconds)
+	 * Sets the duration after which the Particle is eligible to settle
+	 * (milliseconds)
 	 * 
 	 * @param competencyStart
 	 */
@@ -338,7 +339,7 @@ public class Particle {
 	public void setCompetencyStart(long competencyStart) {
 		this.competencyStart = competencyStart;
 	}
-	
+
 	/**
 	 * Sets the Particle to be dead
 	 * 
@@ -355,7 +356,6 @@ public class Particle {
 	 * @param destination
 	 */
 
-	
 	public void setDestination(String destination) {
 		this.destination = destination;
 	}
@@ -365,28 +365,28 @@ public class Particle {
 	 * 
 	 * @param distance
 	 */
-	
+
 	public void setDistance(double distance) {
 		this.distance = distance;
 	}
-	
+
 	/**
 	 * Sets whether the particle encountered an error during processing
 	 * 
 	 * @param error
 	 */
-	
-	public void setError(boolean error){
+
+	public void setError(boolean error) {
 		this.error = error;
 	}
-	
+
 	/**
 	 * Sets
 	 * 
 	 * @param finished
 	 */
-	
-	public void setFinished(boolean finished){
+
+	public void setFinished(boolean finished) {
 		this.finished = finished;
 	}
 
@@ -395,7 +395,7 @@ public class Particle {
 	 * 
 	 * @param id
 	 */
-	
+
 	public void setID(long id) {
 		this.id = id;
 	}
@@ -405,11 +405,11 @@ public class Particle {
 	 * 
 	 * @param lost
 	 */
-	
+
 	public void setLost(boolean lost) {
 		this.lost = lost;
 	}
-	
+
 	/**
 	 * Sets whether the particle is near a NoData element in the velocity field
 	 * 
@@ -421,14 +421,17 @@ public class Particle {
 	}
 
 	/**
-	 * Sets whether the particle is on top of a NoData element in the velocity field
+	 * Sets whether the particle is on top of a NoData element in the velocity
+	 * field
 	 * 
 	 * @param nodata
 	 */
-	
+
 	public void setNodata(boolean nodata) {
 		this.nodata = nodata;
-		if(nodata){this.hadNoData = true;}
+		if (nodata) {
+			this.hadNoData = true;
+		}
 	}
 
 	/**
@@ -436,7 +439,7 @@ public class Particle {
 	 * 
 	 * @param px
 	 */
-	
+
 	public void setPX(double px) {
 		this.px = px;
 	}
@@ -447,7 +450,6 @@ public class Particle {
 	 * @param py
 	 */
 
-	
 	public void setPY(double py) {
 		this.py = py;
 	}
@@ -457,19 +459,19 @@ public class Particle {
 	 * 
 	 * @param px
 	 */
-	
+
 	public void setPZ(double pz) {
 		this.pz = pz;
 	}
-	
+
 	/**
 	 * Sets whether the Particle data should be recorded by the Writer classes
 	 * 
 	 * @param recording
 	 */
-	
-	public void setRecording(boolean recording){
-		this.recording=recording;
+
+	public void setRecording(boolean recording) {
+		this.recording = recording;
 	}
 
 	/**
@@ -477,17 +479,17 @@ public class Particle {
 	 * 
 	 * @param settling
 	 */
-	
+
 	public void setSettling(boolean settling) {
 		this.settling = settling;
 	}
-	
+
 	/**
 	 * Sets the source location of the Particle
 	 * 
 	 * @param source
 	 */
-	
+
 	public void setSource(String source) {
 		this.source = source;
 	}
@@ -507,7 +509,7 @@ public class Particle {
 	 * 
 	 * @param u
 	 */
-	
+
 	public void setU(double u) {
 		this.u = u;
 	}
@@ -517,11 +519,11 @@ public class Particle {
 	 * 
 	 * @param v
 	 */
-	
+
 	public void setV(double v) {
 		this.v = v;
 	}
-	
+
 	/**
 	 * Assigns the set of visited destinations
 	 * 
@@ -537,7 +539,7 @@ public class Particle {
 	 * 
 	 * @param w
 	 */
-	
+
 	public void setW(double w) {
 		this.w = w;
 	}
@@ -557,7 +559,7 @@ public class Particle {
 	 * 
 	 * @param y
 	 */
-	
+
 	public void setY(double y) {
 		this.y = y;
 	}
@@ -571,14 +573,15 @@ public class Particle {
 	public void setZ(double z) {
 		this.z = z;
 	}
-	
+
 	/**
 	 * Returns a String representation of the Particle
 	 * 
 	 * @return
 	 */
-	
-	public String toString(){
+
+	@Override
+	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		NumberFormat nf = NumberFormat.getNumberInstance();
 		nf.setMaximumFractionDigits(8);
@@ -589,7 +592,7 @@ public class Particle {
 		sb.append(z);
 		sb.append("\t");
 		sb.append(y);
-		sb.append("\t");		
+		sb.append("\t");
 		sb.append(x);
 		sb.append("\t");
 		sb.append(nf.format(u) + "," + nf.format(v) + "," + nf.format(w) + "\t");
@@ -600,10 +603,11 @@ public class Particle {
 	/**
 	 * Indicates if an error occurred while processing the Particle
 	 * 
-	 * @return boolean indicating if an error occurred while processing the Particle
+	 * @return boolean indicating if an error occurred while processing the
+	 *         Particle
 	 */
-	
-	public boolean wasError(){
+
+	public boolean wasError() {
 		return error;
 	}
 
@@ -612,7 +616,7 @@ public class Particle {
 	 * 
 	 * @return boolean indicating if NoData was ever encountered by the Particle
 	 */
-	
+
 	public boolean wasNoData() {
 		return hadNoData;
 	}

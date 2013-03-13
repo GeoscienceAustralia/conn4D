@@ -69,6 +69,7 @@ public class ReleaseFileReader_Shapefile implements ReleaseFileReader{
 	 * Indicates whether there are remaining records to be read
 	 */
 
+	@Override
 	public boolean hasNext() {
 		return !EOF;
 	}
@@ -77,6 +78,7 @@ public class ReleaseFileReader_Shapefile implements ReleaseFileReader{
 	 * Parses the next available record
 	 */
 
+	@Override
 	public void next() {
 
 		parse();
@@ -133,6 +135,7 @@ public class ReleaseFileReader_Shapefile implements ReleaseFileReader{
 	 * Sets the values of the passed-in Parameters object
 	 */
 	
+	@Override
 	public Parameters setParameters(Parameters d) {
 		d.setLocName(locName);
 		d.setNPart(npart);
@@ -147,18 +150,22 @@ public class ReleaseFileReader_Shapefile implements ReleaseFileReader{
 		return relID;
 	}
 
+	@Override
 	public Geometry getPosition() {
 		return position;
 	}
 
+	@Override
 	public float getDepth() {
 		return z;
 	}
 
+	@Override
 	public long getNpart() {
 		return npart;
 	}
 
+	@Override
 	public String getLocName() {
 		return locName;
 	}

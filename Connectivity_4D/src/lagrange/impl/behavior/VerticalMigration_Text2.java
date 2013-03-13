@@ -60,6 +60,7 @@ public class VerticalMigration_Text2 implements VerticalMigration, Cloneable {
 	 * information to ensure that particles do not intercept the seafloor.
 	 */
 
+	@Override
 	public void apply(Particle p) {
 
 		float blocktime = TimeConvert.convertToMillis(timeIntervalUnits,
@@ -285,6 +286,7 @@ public class VerticalMigration_Text2 implements VerticalMigration, Cloneable {
 		return depth;
 	}
 	
+	@Override
 	public VerticalMigration_Text2 clone(){
 		VerticalMigration_Text2 adv = new VerticalMigration_Text2();
 		adv.timeInterval=timeInterval;

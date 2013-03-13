@@ -40,6 +40,7 @@ public class Advection_RK4_3D implements Movement, Cloneable {
 	 * 
 	 */
 
+	@Override
 	public synchronized void apply(Particle p) {
 
 		// Runge-Kutta components
@@ -346,6 +347,7 @@ public class Advection_RK4_3D implements Movement, Cloneable {
 	 * Returns a clone of the object.
 	 */
 
+	@Override
 	public Advection_RK4_3D clone() {
 		Advection_RK4_3D rk4 = new Advection_RK4_3D();
 		rk4.setH(h * 1000);// We multiply by 1000 because h is stored as seconds
@@ -357,6 +359,7 @@ public class Advection_RK4_3D implements Movement, Cloneable {
 	 * Releases resources associated with the class.
 	 */
 
+	@Override
 	public void close() {
 		vr.close();
 	}

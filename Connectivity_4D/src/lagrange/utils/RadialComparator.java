@@ -13,6 +13,7 @@ public class RadialComparator implements Comparator<Coordinate>{
 		this.center = center;
 	}
 	
+	@Override
 	public int compare(Coordinate a, Coordinate b){
 		if(a.equals(b)){return 0;}
 		double d1 = center.distance(a);

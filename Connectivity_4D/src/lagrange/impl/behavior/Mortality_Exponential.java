@@ -23,8 +23,6 @@ public class Mortality_Exponential implements Mortality {
 	private long timeInterval;
 	private double mrate;
 
-	// private String units;
-
 	public Mortality_Exponential(double mrate) {
 		this.mrate = mrate;
 	}
@@ -33,6 +31,7 @@ public class Mortality_Exponential implements Mortality {
 	 * Applies probabilistic mortality the given particle
 	 */
 
+	@Override
 	public void apply(Particle p) {
 
 		if (uni.nextDouble() > Math.exp(-1.0 * mrate * timeInterval)) {
@@ -44,6 +43,7 @@ public class Mortality_Exponential implements Mortality {
 	 * Applies probabilistic mortality the given particle
 	 */
 
+	@Override
 	public void apply(Particle p, double cycles) {
 
 		if (uni.nextDouble() > Math.exp(-1.0 * mrate * cycles * timeInterval)) {
@@ -61,7 +61,13 @@ public class Mortality_Exponential implements Mortality {
 		return mrate;
 	}
 	
-	public double getTimeIntervalMillis(){
+	/**
+	 * Returns the time interval over which mortality occurs
+	 * 
+	 * @return
+	 */
+	
+	public long getTimeIntervalMillis(){
 		return timeInterval;
 	}
 
@@ -75,14 +81,21 @@ public class Mortality_Exponential implements Mortality {
 		this.mrate = mrate;
 	}
 	
+	/**
+	 * Sets the time interval over which mortality occurs
+	 */
+	
 	public void setTimeInterval(long millis){
 		this.timeInterval = millis;
 	}
 
+	/**
+	 * Generates a copy of the class instance
+	 */
+	
 	public Mortality_Exponential clone() {
 		Mortality_Exponential me = new Mortality_Exponential(mrate);
 		me.setTimeInterval(timeInterval);
 		return me;
 	}
-
 }

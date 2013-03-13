@@ -27,5 +27,14 @@ public interface Boundary {
 	
 	public Boundary clone();
 	
+	/**
+	 * Given x and y locations, return the depth at that location taking into
+	 * account intracell change.
+	 * 
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	
 	public double getPreciseBoundaryDepth(double x, double y);
 }

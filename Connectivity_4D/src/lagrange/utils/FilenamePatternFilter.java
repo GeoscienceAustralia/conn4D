@@ -28,6 +28,7 @@ public class FilenamePatternFilter implements FilenameFilter {
 	 * @param name - The name of the file to be queried
 	 */
 	
+	@Override
 	public boolean accept(File dir, String name) {
 		if (name.matches(pattern)){
 			return true;}

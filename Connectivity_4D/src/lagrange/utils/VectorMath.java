@@ -3,17 +3,11 @@ import java.util.*;
 
 /**
  * <p>
- * Title: Matrix Utilities
+ * Title: VectorMath
  * </p>
  * <p>
  * Description: A collection of methods for creating and manipulating matrices
  * of primitives.
- * </p>
- * <p>
- * Copyright: Copyright (c) 2005
- * </p>
- * <p>
- * Company: RSMAS, University of Miami
  * </p>
  * 
  * @author Johnathan Kool
@@ -206,7 +200,6 @@ public class VectorMath {
 		}
 
 		return cm;
-
 	}
 
 	/**

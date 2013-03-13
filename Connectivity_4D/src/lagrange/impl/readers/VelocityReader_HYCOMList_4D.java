@@ -354,6 +354,7 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 	 * @return
 	 */
 
+	@Override
 	public double[][] getBounds() {
 		return bounds;
 	}
@@ -611,9 +612,9 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 								&& !Double.isNaN(autmp[k][i][j])) {
 							uct++;
 							usum += autmp[k][i][j];
-							uavg = usum / (double) uct;
+							uavg = usum / uct;
 							ussq += autmp[k][i][j] * autmp[k][i][j];
-							uvar = ussq / (double) uct - uavg * uavg;
+							uvar = ussq / uct - uavg * uavg;
 							// } else {
 							// if ((k > 0) && Double.isNaN(autmp[k - 1][i][j]))
 							// {
@@ -631,9 +632,9 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 								&& !Double.isNaN(avtmp[k][i][j])) {
 							vct++;
 							vsum += avtmp[k][i][j];
-							vavg = vsum / (double) vct;
+							vavg = vsum / vct;
 							vssq += avtmp[k][i][j] * avtmp[k][i][j];
-							vvar = vssq / (double) vct - vavg * vavg;
+							vvar = vssq / vct - vavg * vavg;
 							// } else {
 							// if ((k > 0)
 							// && Double.isNaN(avtmp[k - 1][i][j])) {
@@ -654,9 +655,9 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 									&& !Double.isNaN(awtmp[k][i][j])) {
 								wct++;
 								wsum += awtmp[k][i][j];
-								wavg = wsum / (double) wct;
+								wavg = wsum / wct;
 								wssq += awtmp[k][i][j] * awtmp[k][i][j];
-								wvar = wssq / (double) wct - wavg * wavg;
+								wvar = wssq / wct - wavg * wavg;
 								// } else {
 								// if ((k > 0)
 								// && Double.isNaN(awtmp[k - 1][i][j])) {

@@ -71,6 +71,7 @@ public class TrajectoryWriter_Text implements TrajectoryWriter {
 	 *            The particle whose information will be persisted.
 	 */
 
+	@Override
 	public void apply(Particle p) {
 
 		StringBuffer sb = new StringBuffer();
@@ -125,6 +126,7 @@ public class TrajectoryWriter_Text implements TrajectoryWriter {
 	 * Closes and cleans up the output file
 	 */
 
+	@Override
 	public void close() {
 
 		// Close and flush the trajectory file
@@ -140,6 +142,7 @@ public class TrajectoryWriter_Text implements TrajectoryWriter {
 		return timeUnits;
 	}
 
+	@Override
 	public void setTimeUnits(String timeUnits) {
 		this.timeUnits = timeUnits;
 	}
@@ -148,10 +151,12 @@ public class TrajectoryWriter_Text implements TrajectoryWriter {
 		return durationUnits;
 	}
 
+	@Override
 	public void setDurationUnits(String durationUnits) {
 		this.durationUnits = durationUnits;
 	}
 	
+	@Override
 	public void setNegCoord(boolean negCoord){
 		this.negCoord = negCoord;
 	}

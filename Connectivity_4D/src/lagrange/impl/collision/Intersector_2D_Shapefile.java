@@ -27,6 +27,7 @@ public class Intersector_2D_Shapefile implements Intersector {
 		this.sh = sh;
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public long intersect(double x, double y) {
 
@@ -73,6 +74,7 @@ public class Intersector_2D_Shapefile implements Intersector {
 	 * @return
 	 */
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public long intersect(double x1, double y1, double x2, double y2) {
 
@@ -101,6 +103,7 @@ public class Intersector_2D_Shapefile implements Intersector {
 
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public boolean intersects(double x, double y) {
 

@@ -107,6 +107,7 @@ public class Reader_NetCDF_3D {
 		this.neglon = neglon;
 	}
 
+	@Override
 	public Reader_NetCDF_3D clone() {
 		Reader_NetCDF_3D ncb;
 		ncb = new Reader_NetCDF_3D(netcdfFile.getLocation());

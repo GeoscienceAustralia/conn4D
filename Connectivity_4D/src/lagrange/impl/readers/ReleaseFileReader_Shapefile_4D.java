@@ -40,6 +40,7 @@ public class ReleaseFileReader_Shapefile_4D extends ReleaseFileReader_Shapefile{
 		  readNext();	  
 	}
 	
+	@Override
 	protected void parse() {
 
 		position = (Geometry) super.feat.getDefaultGeometry();
@@ -63,6 +64,7 @@ public class ReleaseFileReader_Shapefile_4D extends ReleaseFileReader_Shapefile{
 		locName = (String) feat.getAttribute(header_locName);
 	}
 
+	@Override
 	public Parameters setParameters(Parameters d) {
 		d.setLocName(super.locName);
 		d.setNPart(super.npart);
@@ -71,6 +73,7 @@ public class ReleaseFileReader_Shapefile_4D extends ReleaseFileReader_Shapefile{
 		return d;
 	}
 
+	@Override
 	public float getDepth() {
 		throw new IllegalArgumentException("Depth is provided as a range by this class");
 	}

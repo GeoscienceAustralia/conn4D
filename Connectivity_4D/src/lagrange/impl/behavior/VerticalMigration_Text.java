@@ -2,9 +2,7 @@ package lagrange.impl.behavior;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.Date;
 
-//import lagrange.Bathymetry;
 import lagrange.Particle;
 import lagrange.VerticalMigration;
 import lagrange.utils.TimeConvert;
@@ -12,9 +10,17 @@ import lagrange.utils.VectorMath;
 
 import cern.jet.random.Empirical;
 import cern.jet.random.EmpiricalWalker;
+import cern.jet.random.Uniform;
 import cern.jet.random.engine.MersenneTwister64;
 import cern.jet.random.engine.RandomEngine;
+import cern.jet.random.engine.RandomSeedTable;
 import lagrange.utils.VectorUtils;
+
+/**
+ * 
+ * 
+ * @author Johnathan Kool
+ */
 
 public class VerticalMigration_Text implements VerticalMigration,Cloneable {
 
@@ -23,7 +29,10 @@ public class VerticalMigration_Text implements VerticalMigration,Cloneable {
 	private double[][] vmtx;
 	//private double[] bins = {5,15,25,40,62.5,87.5,112.5,137.5};
 	private double[] bins = {10,30,50,70};
-	private RandomEngine re = new MersenneTwister64(new Date(System.currentTimeMillis()));
+	private int seed = RandomSeedTable.getSeedAtRowColumn(
+			Uniform.staticNextIntFromTo(0, Integer.MAX_VALUE),
+			Uniform.staticNextIntFromTo(0, RandomSeedTable.COLUMNS));
+	private RandomEngine re = new MersenneTwister64(seed);
 	private EmpiricalWalker ew;
 
 	/*
@@ -45,6 +54,7 @@ public class VerticalMigration_Text implements VerticalMigration,Cloneable {
 	
 	// *** What if we are in a shallower area than the depth range?
 	
+	@Override
 	public void apply(Particle p) {
 
 				float blocktime = TimeConvert.convertToMillis(timeIntervalUnits, timeInterval);
@@ -112,6 +122,7 @@ public class VerticalMigration_Text implements VerticalMigration,Cloneable {
 		this.bins = bins;
 	}
 	
+	@Override
 	public VerticalMigration_Text clone(){
 		VerticalMigration_Text tvm = new VerticalMigration_Text();
 		tvm.timeInterval=timeInterval;

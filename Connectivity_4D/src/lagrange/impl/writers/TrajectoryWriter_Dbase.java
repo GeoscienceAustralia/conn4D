@@ -64,6 +64,7 @@ public class TrajectoryWriter_Dbase implements TrajectoryWriter {
 	 *            The particle whose information will be persisted.
 	 */
 
+	@Override
 	public synchronized void apply(Particle p) {
 		
 		try {
@@ -109,6 +110,7 @@ public class TrajectoryWriter_Dbase implements TrajectoryWriter {
 	 * Closes and cleans up the output file
 	 */
 	
+	@Override
 	public void close() {
 
 		try {
@@ -150,6 +152,7 @@ public class TrajectoryWriter_Dbase implements TrajectoryWriter {
 		return durationUnits;
 	}
 
+	@Override
 	public void setDurationUnits(String durationUnits) {
 		this.durationUnits = durationUnits;
 	}
@@ -158,10 +161,12 @@ public class TrajectoryWriter_Dbase implements TrajectoryWriter {
 		return timeUnits;
 	}
 
+	@Override
 	public void setTimeUnits(String timeUnits) {
 		this.timeUnits = timeUnits;
 	}
 	
+	@Override
 	public void setNegCoord(boolean negCoord){
 		this.negCoord = negCoord;
 	}

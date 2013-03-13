@@ -62,6 +62,7 @@ public class Boundary_NetCDF_Grid implements Boundary, Cloneable {
 		initialize();
 	}
 
+	@Override
 	public Boundary_NetCDF_Grid clone() {
 		Boundary_NetCDF_Grid ncb;
 		ncb = new Boundary_NetCDF_Grid(boundary.getLocation());
@@ -74,6 +75,7 @@ public class Boundary_NetCDF_Grid implements Boundary, Cloneable {
 		return cellsize;
 	}
 	
+	@Override
 	public double getBoundaryDepth(double x, double y) {
 
 		if (!inBounds(x, y)) {
@@ -84,6 +86,7 @@ public class Boundary_NetCDF_Grid implements Boundary, Cloneable {
 		return bnd.getDouble(bndInd)*pd; // Corrects if bathymetry is in positive units.
 	}
 	
+	@Override
 	public double getPreciseBoundaryDepth(double x, double y) {
 
 		if (!inBounds(x, y)) {
@@ -331,7 +334,7 @@ public class Boundary_NetCDF_Grid implements Boundary, Cloneable {
 		lons = new IndexLookup_Nearest(boundary.findVariable(lonName));
 		nrows = lats.arraySize();
 		ncols = lons.arraySize();
-		cellsize = (lats.getMaxVal()-lats.getMinVal())/(double)(nrows-1);
+		cellsize = (lats.getMaxVal()-lats.getMinVal())/(nrows-1);
 		minx = lons.getMinVal()-(cellsize/2);
 		miny = lats.getMinVal()-(cellsize/2);
 		maxx = lons.getMaxVal()+(cellsize/2);

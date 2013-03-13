@@ -48,6 +48,7 @@ public class Habitat_Shapefile implements Habitat, Cloneable{
 
 	protected SpatialIndex index = new STRtree();
 
+	@Override
 	public void setDataSource(String filename) throws IOException {
 
 		this.fileName = filename;
@@ -78,6 +79,7 @@ public class Habitat_Shapefile implements Habitat, Cloneable{
 	 * @throws IllegalAttributeException
 	 */
 
+	@Override
 	public void setLookupField(String field) {
 		
 		luField = field;
@@ -221,6 +223,7 @@ public class Habitat_Shapefile implements Habitat, Cloneable{
 	 * @param neglon
 	 */
 
+	@Override
 	public void setNegLon(boolean neglon) {
 		this.neglon = neglon;
 	}
@@ -240,6 +243,7 @@ public class Habitat_Shapefile implements Habitat, Cloneable{
 			return oldlon;
 	}
 	
+	@Override
 	public Habitat_Shapefile clone(){
 		Habitat_Shapefile out = new Habitat_Shapefile();
 		try {

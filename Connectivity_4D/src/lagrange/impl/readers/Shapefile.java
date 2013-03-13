@@ -44,6 +44,7 @@ public class Shapefile implements Habitat{
 		this.filename = filename;
 	}
 	
+	@Override
 	public void setDataSource(String filename) throws IOException {
 		
 		  this.filename = filename;
@@ -105,6 +106,7 @@ public class Shapefile implements Habitat{
 		return negLon;
 	}
 	
+	@Override
 	public void setNegLon(boolean negLon){
 		this.negLon = negLon;
 	}
@@ -117,6 +119,7 @@ public class Shapefile implements Habitat{
 		return filename;
 	}
 	
+	@Override
 	public void setLookupField(String lookupField) {
 		luField = lookupField;
 	}

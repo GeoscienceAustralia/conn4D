@@ -33,10 +33,42 @@ public interface Parameters{
 	 */
 	
 	public double getReleaseDepth();
+	
+	/**
+	 * Retrieves the maximum depth at which Particles are to be released 
+	 * @return
+	 */
+	
 	public double getMaxReleaseDepth();
+	
+	/**
+	 * Retrieves the end time (in Java milliseconds) of the simulated release
+	 * 
+	 * @return
+	 */
+	
 	public long getEtime();
+	
+	/**
+	 * Retrieves the minimum integration time step (the minimum duration over which
+	 * the Particles move)
+	 * @return
+	 */
+	
 	public long getH();
+	
+	/**
+	 * Retrieves the location name of the release set.
+	 * @return
+	 */
+	
 	public String getLocName();
+	
+	/**
+	 * Retrieves an array of double corresponding to mortality parameter values
+	 * @return
+	 */
+	
 	public double[] getMortalityParameters();
 	public abstract double getMortalityRate();
 	public String getMortalityType();

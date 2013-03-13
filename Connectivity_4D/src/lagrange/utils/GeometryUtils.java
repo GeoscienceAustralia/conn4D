@@ -1,7 +1,5 @@
 package lagrange.utils;
 
-import java.util.Arrays;
-
 /**
  * Utilities for determining change in position and distance along a sphere.
  * 

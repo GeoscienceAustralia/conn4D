@@ -34,6 +34,7 @@ public class VerticalSettling_Text implements VerticalMigration, Cloneable {
 
 	// *** What if we are in a shallower area than the depth range?
 
+	@Override
 	public void apply(Particle p) {
 
 		double depth = p.getZ();
@@ -113,6 +114,7 @@ public class VerticalSettling_Text implements VerticalMigration, Cloneable {
 
 	}
 
+	@Override
 	public VerticalSettling_Text clone() {
 		VerticalSettling_Text tvs = new VerticalSettling_Text();
 		tvs.timeInterval = timeInterval;

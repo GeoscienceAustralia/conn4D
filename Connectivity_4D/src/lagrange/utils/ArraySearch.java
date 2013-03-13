@@ -161,7 +161,7 @@ public class ArraySearch {
 				prior = 1 - prior;
 			}
 
-			mid = (int) Math.ceil((double) low + prior * (double) subsize); // Ceiling?
+			mid = (int) Math.ceil(low + prior * subsize); // Ceiling?
 
 			if (mid - low > subsize / 2)
 				reflect = true;
@@ -207,7 +207,7 @@ public class ArraySearch {
 			}
 
 			else {
-				mid = (int) Math.ceil((double) low + prior * (double) subsize); // Ceiling?
+				mid = (int) Math.ceil(low + prior * subsize); // Ceiling?
 			}
 
 			if (mid - low > subsize / 2)
@@ -318,7 +318,7 @@ public class ArraySearch {
 				prior = 1 - prior;
 			}
 
-			mid = (int) Math.ceil((double) low + prior * (double) subsize); // Ceiling?
+			mid = (int) Math.ceil(low + prior * subsize); // Ceiling?
 
 			if (mid - low > subsize / 2)
 				reflect = true;
@@ -362,7 +362,7 @@ public class ArraySearch {
 				mid = init;
 				first = false;
 			} else {
-				mid = (int) Math.ceil((double) low + prior * (double) subsize); // Ceiling?
+				mid = (int) Math.ceil(low + prior * subsize); // Ceiling?
 			}
 
 			if (mid - low > subsize / 2)
@@ -480,7 +480,7 @@ public class ArraySearch {
 				prior = 1 - prior;
 			}
 
-			mid = (int) Math.ceil((double) low + prior * (double) subsize); // Ceiling?
+			mid = (int) Math.ceil(low + prior * subsize); // Ceiling?
 
 			if (mid - low > subsize / 2)
 				reflect = true;
@@ -524,7 +524,7 @@ public class ArraySearch {
 				mid = init;
 				first = false;
 			} else {
-				mid = (int) Math.ceil((double) low + prior * (double) subsize); // Ceiling?
+				mid = (int) Math.ceil(low + prior * subsize); // Ceiling?
 			}
 
 			if (mid - low > subsize / 2)
@@ -642,7 +642,7 @@ public class ArraySearch {
 				prior = 1 - prior;
 			}
 
-			mid = (int) Math.ceil((double) low + prior * (double) subsize); // Ceiling?
+			mid = (int) Math.ceil(low + prior * subsize); // Ceiling?
 
 			if (mid - low > subsize / 2)
 				reflect = true;
@@ -686,7 +686,7 @@ public class ArraySearch {
 				mid = init;
 				first = false;
 			} else {
-				mid = (int) Math.ceil((double) low + prior * (double) subsize); // Ceiling?
+				mid = (int) Math.ceil(low + prior * subsize); // Ceiling?
 			}
 
 			if (mid - low > subsize / 2)
@@ -802,7 +802,7 @@ public class ArraySearch {
 				prior = 1 - prior;
 			}
 
-			mid = (int) Math.ceil((double) low + prior * (double) subsize); // Ceiling?
+			mid = (int) Math.ceil(low + prior * subsize); // Ceiling?
 
 			if (mid - low > subsize / 2)
 				reflect = true;
@@ -846,7 +846,7 @@ public class ArraySearch {
 				mid = init;
 				first = false;
 			} else {
-				mid = (int) Math.ceil((double) low + prior * (double) subsize); // Ceiling?
+				mid = (int) Math.ceil(low + prior * subsize); // Ceiling?
 			}
 
 			if (mid - low > subsize / 2)
@@ -964,7 +964,7 @@ public class ArraySearch {
 				prior = 1 - prior;
 			}
 
-			mid = (int) Math.ceil((double) low + prior * (double) subsize); // Ceiling?
+			mid = (int) Math.ceil(low + prior * subsize); // Ceiling?
 
 			if (mid - low > subsize / 2)
 				reflect = true;
@@ -1017,7 +1017,7 @@ public class ArraySearch {
 				mid = init;
 				first = false;
 			} else {
-				mid = (int) Math.ceil((double) low + prior * (double) subsize); // Ceiling?
+				mid = (int) Math.ceil(low + prior * subsize); // Ceiling?
 			}
 
 			if (mid - low > subsize / 2)
@@ -1144,7 +1144,7 @@ public class ArraySearch {
 				prior = 1 - prior;
 			}
 
-			mid = (int) Math.ceil((double) low + prior * (double) subsize); // Ceiling?
+			mid = (int) Math.ceil(low + prior * subsize); // Ceiling?
 
 			if (mid - low > subsize / 2)
 				reflect = true;
@@ -1181,7 +1181,7 @@ public class ArraySearch {
 
 		int low = fromIndex;
 		int high = toIndex - 1;
-		double prior = (double) var / (double) a.length;
+		double prior = var / a.length;
 		boolean reflect = true;
 		boolean first = true;
 
@@ -1197,7 +1197,7 @@ public class ArraySearch {
 				mid = init;
 				first = false;
 			} else {
-				mid = (int) Math.ceil((double) low + prior * (double) subsize); // Ceiling?
+				mid = (int) Math.ceil(low + prior * subsize); // Ceiling?
 			}
 
 			if (mid - low > subsize / 2)
@@ -1337,7 +1337,7 @@ public class ArraySearch {
 				prior = 1 - prior;
 			}
 
-			mid = (int) Math.ceil((double) low + prior * (double) subsize); // Ceiling?
+			mid = (int) Math.ceil(low + prior * subsize); // Ceiling?
 
 			if (mid - low > subsize / 2)
 				reflect = true;
@@ -1365,7 +1365,7 @@ public class ArraySearch {
 
 		int low = fromIndex;
 		int high = toIndex - 1;
-		double prior = (double) var / (double) a.length;
+		double prior = var / a.length;
 		boolean reflect = true;
 		boolean first = true;
 
@@ -1381,7 +1381,7 @@ public class ArraySearch {
 				mid = init;
 				first = false;
 			} else {
-				mid = (int) Math.ceil((double) low + prior * (double) subsize); // Ceiling?
+				mid = (int) Math.ceil(low + prior * subsize); // Ceiling?
 			}
 
 			if (mid - low > subsize / 2)
@@ -1518,7 +1518,7 @@ public class ArraySearch {
 				prior = 1 - prior;
 			}
 
-			mid = (int) Math.ceil((double) low + prior * (double) subsize); // Ceiling?
+			mid = (int) Math.ceil(low + prior * subsize); // Ceiling?
 
 			if (mid - low > subsize / 2)
 				reflect = true;
@@ -1549,7 +1549,7 @@ public class ArraySearch {
 
 		int low = fromIndex;
 		int high = toIndex - 1;
-		double prior = (double) var / (double) a.length;
+		double prior = var / a.length;
 		boolean reflect = true;
 		boolean first = true;
 
@@ -1565,7 +1565,7 @@ public class ArraySearch {
 				mid = init;
 				first = false;
 			} else {
-				mid = (int) Math.ceil((double) low + prior * (double) subsize); // Ceiling?
+				mid = (int) Math.ceil(low + prior * subsize); // Ceiling?
 			}
 
 			if (mid - low > subsize / 2)
