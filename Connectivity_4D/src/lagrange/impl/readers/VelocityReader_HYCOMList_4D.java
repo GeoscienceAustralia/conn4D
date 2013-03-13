@@ -283,7 +283,8 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 			return ndr;
 		} catch (IOException e) {
 			System.out
-					.println("WARNING:  Unexpected error.  NetCDFDirReader could not be cloned.\n");
+					.println("WARNING:  Unexpected error.  VelocityReader could not be cloned.\n");
+			e.printStackTrace();
 			return null;
 		}
 	}
