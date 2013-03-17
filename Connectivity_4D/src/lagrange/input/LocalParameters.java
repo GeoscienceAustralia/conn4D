@@ -27,7 +27,6 @@ public class LocalParameters extends ParameterReader {
 	public boolean negCoord = false; // Are negative coordinate values being used?
 	public String landFileName = "landmask.shp"; // Name of the land mask file
 	public String landKey = "ID";
-	//public boolean negLandCoord = true;			// Does the landmask use negative coordinates?
 	public String bathymetryFileName = "bathymetry.asc";
 	public String trajOutputDir = ".\\";		// Output directory for trajectory files
 	public String vertFile = "vertical.vrt";	// Path and name of the vertical migration matrix.

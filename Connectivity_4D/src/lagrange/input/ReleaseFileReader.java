@@ -3,6 +3,13 @@ package lagrange.input;
 import lagrange.Parameters;
 import com.vividsolutions.jts.geom.Geometry;
 
+/**
+ * General interface for reading from Release Files
+ * 
+ * @author Johnathan Kool
+ *
+ */
+
 public interface ReleaseFileReader {
 	
 	/**
@@ -36,14 +43,6 @@ public interface ReleaseFileReader {
 	 */
 	
 	public Geometry getPosition();
-	
-	/**
-	 * Retrieves the ID of the source location.
-	 * 
-	 * @return long - ID of the current source location
-	 */
-
-	//public long getSourceID();
 
 	/**
 	 * Identifies whether there is another line following the current position in the file.

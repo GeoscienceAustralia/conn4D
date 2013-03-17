@@ -8,11 +8,24 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.LineSegment;
 import com.vividsolutions.jts.geom.LineString;
 
+/**
+ * Convenient writer for debugging across multiple classes.
+ * 
+ * @author Johnathan Kool
+ *
+ */
+
 public class Trace {
 
 	BufferedWriter br;
 	long id = 0;
 
+	/**
+	 * Creates an output file for writing simple text output.
+	 * 
+	 * @param s - the path name of the output file
+	 */
+	
 	public Trace(String s) {
 		try {
 			br = new BufferedWriter(new FileWriter(s));
@@ -21,6 +34,11 @@ public class Trace {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Writes a string to the output file.
+	 * @param s
+	 */
 
 	public void write(String s) {
 		try {
@@ -31,6 +49,11 @@ public class Trace {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Writes the contents of a JTS LineString to the output file
+	 * @param ls
+	 */
 	
 	public void write(LineString ls){
 		Coordinate p0 = ls.getCoordinateN(0);
@@ -48,6 +71,11 @@ public class Trace {
 		}
 	}
 	
+	/**
+	 * Writes the contents of a JTS LineSegment to the output file
+	 * @param ls
+	 */
+	
 	public void write(LineSegment ls){
 		Coordinate p0 = ls.p0;
 		Coordinate p1 = ls.p1;
@@ -64,6 +92,10 @@ public class Trace {
 		}
 	}
 
+	/**
+	 * Closes the output file
+	 */
+	
 	public void close() {
 		if (br != null) {
 			try {

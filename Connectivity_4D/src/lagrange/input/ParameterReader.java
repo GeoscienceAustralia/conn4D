@@ -86,6 +86,16 @@ public class ParameterReader {
 		}
 	}
 
+	/**
+	 * Parses a text string to set variables dynamically at run time.
+	 * 
+	 * @param _parse
+	 * @throws SecurityException
+	 * @throws NoSuchFieldException
+	 * @throws IllegalAccessException
+	 * @throws IOException
+	 */
+	
 	public void read(String _parse) throws SecurityException,
 			NoSuchFieldException, IllegalAccessException, IOException {
 
@@ -134,7 +144,7 @@ public class ParameterReader {
 			String ntk = stk.nextToken();
 			if (!ntk.equalsIgnoreCase("true") && !ntk.equalsIgnoreCase("false")) {
 				System.out
-						.println("Invalid parameter value provided for variable diag, setting to false");
+						.println("Invalid parameter value provided for variable "+f.getName()+", setting to false");
 			}
 
 			f.setBoolean(this, Boolean.valueOf(ntk));

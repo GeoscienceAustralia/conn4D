@@ -4,15 +4,15 @@ import lagrange.Parameters;
 import lagrange.utils.TimeConvert;
 
 /**
- * Class for reading Global model parameters.  Also
- * contains a method for packaging the values into a Datagram.
+ * Class for reading Global model parameters. Also contains a method for
+ * packaging the values into a Datagram.
  * 
  * @author Johnathan Kool
- *
+ * 
  */
 
 public class GlobalParameters extends ParameterReader {
-	
+
 	public String h = "7200"; // Integration time step (seconds)
 	public String hUnits = "Seconds"; // Units of h
 	public String minTime = "01/02/2003";// Earliest bound of the model run
@@ -31,37 +31,48 @@ public class GlobalParameters extends ParameterReader {
 	public String outputFreqUnits = "Days";
 	public boolean vmgrt = false; // Incorporate vertical migration?
 	public boolean true3D = true; // Incorporate vertical velocity?
-	public String relFileName = "release.txt"; // Path and name of the release file
+	public String relFileName = "release.txt"; // Path and name of the release
+												// file
 	public String outputFolder = "";
 	public double mrate = 0.0d; // Mortality rate
 	public String mUnits = "Days";
 	public boolean saveTracks = true; // Save particle tracks?
-	public boolean negReleaseCoord = true; // Do the release coordinates use negative values?
+	public boolean negReleaseCoord = true; // Do the release coordinates use
+											// negative values?
 	public final double NODATA = 1e34f; // NO DATA code
-	public boolean effectiveMigration = true;  // Use effective migration?  i.e. don't keep track of individuals that wouldn't make it.
-	public boolean writeTrajectories = true;  //  Write trajectories to disk?
+	public boolean effectiveMigration = true; // Use effective migration? i.e.
+												// don't keep track of
+												// individuals that wouldn't
+												// make it.
+	public boolean writeTrajectories = true; // Write trajectories to disk?
 	public long writeSkip = 0; // Skip writing trajectory files by this value
-	public String writeSkipUnits = "Days";  // Units by which to skip writing trajectory files.
+	public String writeSkipUnits = "Days"; // Units by which to skip writing
+											// trajectory files.
 	public boolean useAdvection = true;
 	public String mortalityType = "None";
 	public String settlementType = "Simple";
 	public String timezone = "UTC";
-	
+
 	/**
-	 * Packages values into a Datagram (for transmission for distributed processing)
+	 * Packages values into a Datagram (for transmission for distributed
+	 * processing)
 	 * 
-	 * @param d - The Datagram to be updated
+	 * @param d
+	 *            - The Datagram to be updated
 	 * @return
 	 */
-	
-	public void setParameters(Parameters d){
-		d.setStime(TimeConvert.convertToMillis(minTimeUnits,minTime));
-		d.setEtime(TimeConvert.convertToMillis(maxTimeUnits,maxTime));
+
+	public void setParameters(Parameters d) {
+		d.setStime(TimeConvert.convertToMillis(minTimeUnits, minTime));
+		d.setEtime(TimeConvert.convertToMillis(maxTimeUnits, maxTime));
 		d.setRelSp(TimeConvert.convertToMillis(relSpUnits, relSp));
-		d.setRelDuration(TimeConvert.convertToMillis(relDurationUnits,relDuration));
+		d.setRelDuration(TimeConvert.convertToMillis(relDurationUnits,
+				relDuration));
 		d.setH(TimeConvert.convertToMillis(hUnits, h));
-		d.setOutputFreq(TimeConvert.convertToMillis(outputFreqUnits,outputFreq));
-		d.setCompetencyStart(TimeConvert.convertToMillis(competencyStartUnits, competencyStart));
+		d.setOutputFreq(TimeConvert
+				.convertToMillis(outputFreqUnits, outputFreq));
+		d.setCompetencyStart(TimeConvert.convertToMillis(competencyStartUnits,
+				competencyStart));
 		d.setMortalityRate(mrate);
 		d.setMortalityUnits(mUnits);
 		d.setVerticalMigration(vmgrt);

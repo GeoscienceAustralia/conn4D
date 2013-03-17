@@ -37,7 +37,8 @@ public class Advection_RK4_3D implements Movement, Cloneable {
 			C4 = 125.0f / 594.0f, C6 = 512.0f / 1771.0f;
 
 	/**
-	 * 
+	 * Moves a particle through advection, integrating along the velocity field
+	 * through Runge-Kutta integration.
 	 */
 
 	@Override

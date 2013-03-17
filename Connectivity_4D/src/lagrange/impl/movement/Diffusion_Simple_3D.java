@@ -10,6 +10,8 @@ import lagrange.Diffusion;
 import lagrange.utils.GeometryUtils;
 
 /**
+ * Performs simple anisotropic diffusion in three dimensions.
+ * 
  * @author Johnathan Kool based on FORTRAN code developed by Robert K. Cowen,
  *         Claire Paris and Ashwanth Srinivasan.
  */
@@ -19,7 +21,6 @@ public class Diffusion_Simple_3D implements Diffusion, Cloneable {
 	private float uK = 0.03f / 21600f; //0; The magic number in distance/seconds
 	private float vK = 0.03f / 21600f; //0;
 	private float wK = 1E-8f / 21600f; //0; Vertical coefficient of diffusivity
-	// private float TL = 21600f; // 6 hours in seconds
 	private float h; // Minimum integration time step (default=2hrs)
 
 	private int seed = RandomSeedTable.getSeedAtRowColumn(
@@ -33,7 +34,7 @@ public class Diffusion_Simple_3D implements Diffusion, Cloneable {
 	}
 
 	/**
-	 * Applies turbulent velocity to a particle.
+	 * Applies turbulent diffusion velocity to a particle.
 	 * 
 	 * The equations are based on equations 8 and 9 of Dimou, K.N. and Adams,
 	 * E.E. 1993 - Estuarine and Coastal Shelf Science 37:99-110. A Random-walk,
@@ -91,6 +92,10 @@ public class Diffusion_Simple_3D implements Diffusion, Cloneable {
 	public void setH(float h) {
 		this.h = h / 1000;
 	}
+	
+	/**
+	 * Returns a copy of the class instance
+	 */
 
 	@Override
 	public Diffusion_Simple_3D clone() {

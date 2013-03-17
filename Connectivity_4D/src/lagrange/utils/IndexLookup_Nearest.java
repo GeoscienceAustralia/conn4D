@@ -24,33 +24,34 @@ public class IndexLookup_Nearest implements Cloneable {
 	/**
 	 * No argument constructor
 	 */
-	
-	public IndexLookup_Nearest(){}
-	
+
+	public IndexLookup_Nearest() {
+	}
+
 	/**
 	 * Constructor accepting a Variable object
 	 * 
 	 * @param variable
 	 */
-	
-	public IndexLookup_Nearest(Variable variable){
+
+	public IndexLookup_Nearest(Variable variable) {
 		setVariable(variable);
 	}
-	
+
 	/**
 	 * Constructor accepting a Variable object
 	 * 
 	 * @param variable
 	 */
-	
-	public IndexLookup_Nearest(Variable variable, int dim){
+
+	public IndexLookup_Nearest(Variable variable, int dim) {
 		setVariable(variable, dim);
 	}
-	
+
 	/**
 	 * Reads the variable values into An array object
 	 */
-	
+
 	private void readArray() {
 		try {
 			array = variable.read();
@@ -70,29 +71,29 @@ public class IndexLookup_Nearest implements Cloneable {
 		} else {
 			java_array = (double[]) array.copyTo1DJavaArray();
 		}
-		
-		reverse_order=isReversed();
+
+		reverse_order = isReversed();
 	}
-	
+
 	/**
 	 * Reads the variable values into An array object
 	 */
-	
+
 	public Array readArray(int dim) {
-		
-			int len = variable.getShape(dim);
-			int[] shape = new int[variable.getRank()];
-			for(int i = 0; i < shape.length; i++){
-				shape[i] = 1;
-			}
-			shape[dim] = len;
-			try {
-				array = variable.read(new int[variable.getRank()],shape);
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (InvalidRangeException e) {
-				e.printStackTrace();
-			}
+
+		int len = variable.getShape(dim);
+		int[] shape = new int[variable.getRank()];
+		for (int i = 0; i < shape.length; i++) {
+			shape[i] = 1;
+		}
+		shape[dim] = len;
+		try {
+			array = variable.read(new int[variable.getRank()], shape);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InvalidRangeException e) {
+			e.printStackTrace();
+		}
 
 		// Convert into a java array
 
@@ -106,11 +107,11 @@ public class IndexLookup_Nearest implements Cloneable {
 		} else {
 			java_array = (double[]) array.copyTo1DJavaArray();
 		}
-		
-		reverse_order=isReversed();
+
+		reverse_order = isReversed();
 		return array;
 	}
-	
+
 	/**
 	 * Retrieves the nearest index to the supplied value within the Variable
 	 * associated with the class instance.
@@ -120,20 +121,22 @@ public class IndexLookup_Nearest implements Cloneable {
 	 */
 
 	public synchronized int lookup(double val) {
-		
+
 		// Switch negative values to positive if needed
-		val = negate?val==0?0:-val:val;
+		val = negate ? val == 0 ? 0 : -val : val;
 
 		in_bounds = 0;
 
-		// Use binary search to look for the value. // Change to splay tree
+		// Use binary search to look for the value. // splay tree
 		// search???
 
-		if(reverse_order){
+		if (reverse_order) {
 			index = ArraySearch.reverseSearch(java_array, val);
 		}
-		
-		else {index = Arrays.binarySearch(java_array, val);}
+
+		else {
+			index = Arrays.binarySearch(java_array, val);
+		}
 
 		if (index < 0) {
 
@@ -146,18 +149,21 @@ public class IndexLookup_Nearest implements Cloneable {
 
 			if (-(index) > java_array.length) {
 				in_bounds = 1;
-				return -(index+2);
+				return -(index + 2);
 			}
-			
+
 			// If not an exact match - determine which value we're closer to
-			
-			double spval = -9999; // -9999 as opposed to 0 for troubleshooting, because 0 can be a proper value.
-			int iindex = -(index+1)-1;
-			
+
+			double spval = -9999; // -9999 as opposed to 0 for troubleshooting,
+									// because 0 can be a proper value.
+			int iindex = -(index + 1) - 1;
+
 			try {
-				spval = (java_array[iindex] + java_array[iindex+1]) / 2d;
-			} catch (ArrayIndexOutOfBoundsException e) { // Should not reach here.
-				System.out.println("val: " + val + ", max array val: "+ java_array[java_array.length-1] +", idx: " + index
+				spval = (java_array[iindex] + java_array[iindex + 1]) / 2d;
+			} catch (ArrayIndexOutOfBoundsException e) { // Should not reach
+															// here.
+				System.out.println("val: " + val + ", max array val: "
+						+ java_array[java_array.length - 1] + ", idx: " + index
 						+ ", ja.length: " + java_array.length + ", comp: "
 						+ -(index + 2));
 				System.exit(-1);
@@ -168,7 +174,7 @@ public class IndexLookup_Nearest implements Cloneable {
 
 			} else {
 
-				return iindex+1;
+				return iindex + 1;
 			}
 		}
 
@@ -176,114 +182,141 @@ public class IndexLookup_Nearest implements Cloneable {
 
 		return index;
 	}
-	
+
 	/**
 	 * Sets the Variable associated with the class instance.
 	 * 
 	 * @param variable
 	 */
-	
-	public void setVariable(Variable variable){
-		this.variable=variable;
+
+	public void setVariable(Variable variable) {
+		this.variable = variable;
 		readArray();
 	}
-	
+
 	/**
 	 * Sets the Variable associated with the class instance.
 	 * 
 	 * @param variable
 	 */
-	
-	public void setVariable(Variable variable, int dim){
-		this.variable=variable;
+
+	public void setVariable(Variable variable, int dim) {
+		this.variable = variable;
 		readArray(dim);
 	}
-	
+
 	/**
 	 * Releases resources associated with the class.
 	 */
-	
-	public void close(){
+
+	public void close() {
 		array = null;
 		java_array = null;
 		variable = null;
 	}
-	
+
 	/**
 	 * Retrieves variable values as a Java array
 	 * 
 	 * @return
 	 */
-	
-	public double[] getJavaArray(){
-		if(negate){
+
+	public double[] getJavaArray() {
+		if (negate) {
 			double[] tmp = new double[java_array.length];
-			for(int i = 0; i < java_array.length; i++){
+			for (int i = 0; i < java_array.length; i++) {
 				tmp[i] = -java_array[i];
 			}
 			return tmp;
 		}
-		return java_array;}
-	
+		return java_array;
+	}
+
 	/**
 	 * Retrieves the size of the variable
 	 * 
 	 * @return
 	 */
-	
-	public int arraySize(){
+
+	public int arraySize() {
 		return java_array.length;
 	}
-	
+
 	/**
-	 * Identifies whether the last queried value was within the bounds
-	 * of the variable.
+	 * Identifies whether the last queried value was within the bounds of the
+	 * variable.
 	 * 
-	 * @return 
-	 * 			-1 means the searched value was below the minimum variable value
-	 * 			0 means the searched value was within variable bounds
-	 * 			+1 means the searched value was above the maximum variable value
+	 * @return -1 means the searched value was below the minimum variable value
+	 *         0 means the searched value was within variable bounds +1 means
+	 *         the searched value was above the maximum variable value
 	 */
-	
-	public int isIn_Bounds(){
+
+	public int isIn_Bounds() {
 		return in_bounds;
 	}
-	
+
 	/**
 	 * Returns the minimum value of the Variable
 	 */
-	
-	public double getMinVal(){
-		double val = negate?-1:1;
-		if(reverse_order){return val*java_array[java_array.length-1];}
-		return val*java_array[0];
+
+	public double getMinVal() {
+		double val = negate ? -1 : 1;
+		if (reverse_order) {
+			return val * java_array[java_array.length - 1];
+		}
+		return val * java_array[0];
 	}
 
 	/**
 	 * Returns the maximum value of the Variable
 	 */
-	
-	public double getMaxVal(){
-		double val = negate?-1:1;
-		if(reverse_order){return val*java_array[0];}
-		return val*java_array[java_array.length-1];
+
+	public double getMaxVal() {
+		double val = negate ? -1 : 1;
+		if (reverse_order) {
+			return val * java_array[0];
+		}
+		return val * java_array[java_array.length - 1];
 	}
-	
+
 	@Override
-	public IndexLookup_Nearest clone(){
+	public IndexLookup_Nearest clone() {
 		return new IndexLookup_Nearest(variable);
 	}
-	
-	public void setNegate(boolean negate){
+
+	/**
+	 * Sets whether the values need to be negated or not (e.g. negating
+	 * bathymetry values)
+	 * 
+	 * @param negate
+	 */
+
+	public void setNegate(boolean negate) {
 		this.negate = negate;
 	}
-	
-	public boolean getNegate(){
+
+	/**
+	 * Indicates whether the values are being negated or not (e.g. negating
+	 * bathymetry values)
+	 * 
+	 * @param negate
+	 */
+
+	public boolean getNegate() {
 		return negate;
 	}
-	
-	private boolean isReversed(){
-		if(java_array[0]>java_array[java_array.length-1]){return true;}
+
+	/**
+	 * Indicates whether the array elements are sorted in reverse (e.g.
+	 * descending) order
+	 * 
+	 * @return
+	 */
+
+	private boolean isReversed() {
+		if (java_array[0] > java_array[java_array.length - 1]) {
+			return true;
+		}
 		return false;
 	}
 }
