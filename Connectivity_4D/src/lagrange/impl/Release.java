@@ -12,6 +12,7 @@ import lagrange.Parameters;
 import lagrange.Particle;
 import lagrange.Settlement;
 import lagrange.VerticalMigration;
+import lagrange.impl.collision.CollisionDetector_None;
 import lagrange.output.DistanceWriter;
 import lagrange.output.MatrixWriter;
 import lagrange.output.TrajectoryWriter;
@@ -45,13 +46,15 @@ public class Release implements Runnable {
 	private boolean negCoord = false;
 	private boolean negOceanCoord = false;
 
-	public boolean preKill(){
-		if(prm==null){return false;}
+	public boolean preKill() {
+		if (prm == null) {
+			return false;
+		}
 		competencyStart = prm.getCompetencyStart();
 		Particle p = new Particle();
-		for(int i = 0; i < competencyStart; i+=prm.getH()){
+		for (int i = 0; i < competencyStart; i += prm.getH()) {
 			mort.apply(p);
-			if(p.isDead()){
+			if (p.isDead()) {
 				kill = true;
 				break;
 			}
@@ -65,9 +68,9 @@ public class Release implements Runnable {
 
 	@Override
 	public void run() {
-		
+
 		Particle p = new Particle();
-		
+
 		// Create the particle object.
 
 		// Set the ID.
@@ -80,39 +83,48 @@ public class Release implements Runnable {
 
 			Coordinate c = prm.getCoordinates();
 
-			if(!negOceanCoord&&negCoord){
+			if (!negOceanCoord && negCoord) {
 				p.setX((c.x + 360) % 360);
-			} else {p.setX(c.x);}
+			} else {
+				p.setX(c.x);
+			}
 			p.setPX(p.getX());
 			p.setY(c.y);
 			p.setPY(p.getY());
 			p.setZ(prm.getReleaseDepth());
-			double floor = collisionDetect.getBoundary().getPreciseBoundaryDepth(p.getX(), p.getY());
-			
-			if(p.getZ()>floor){
-				if(floor+1>0){p.setLost(true);
-				p.setError(true);}
-				else{p.setZ(floor+1);}
+
+			if (!(collisionDetect instanceof CollisionDetector_None)) {
+				double floor = collisionDetect.getBoundary()
+						.getPreciseBoundaryDepth(p.getX(), p.getY());
+
+				if (p.getZ() > floor) {
+					if (floor + 1 > 0) {
+						p.setLost(true);
+						p.setError(true);
+					} else {
+						p.setZ(floor + 1);
+					}
+				}
 			}
-			
+
 			p.setBirthday(time);
 			p.setSource(prm.getLocName());
 			p.setCompetencyStart(prm.getCompetencyStart());
-			
+
 			long rd = prm.getRelDuration();
-			//int ct = 0;
+			// int ct = 0;
 			long writect = 0;
-			
+
 			// For each time step...
 
 			for (long t = 0; t < rd; t += prm.getH()) {
-				
+
 				// Update the Particle's time reference
 
 				p.setT(time + t);
 
 				// If mortality was pre-processed, avoid double-processing
-				
+
 				if (prm.usesEffectiveMigration()) {
 					if (p.getAge() >= p.getCompetencyStart()) {
 
@@ -122,7 +134,7 @@ public class Release implements Runnable {
 						}
 					}
 
-				// Or, go about it the traditional way.
+					// Or, go about it the traditional way.
 
 				} else {
 					mort.apply(p);
@@ -132,7 +144,7 @@ public class Release implements Runnable {
 				}
 
 				// Use the Runge-Kutta function to move the particle
-				
+
 				mv.apply(p);
 
 				// Apply stochastic turbulent velocity
@@ -144,13 +156,15 @@ public class Release implements Runnable {
 					break;
 				}
 
-				//Positional check?
-				
+				// Positional check?
+
 				// For now, if above surface, return to surface.
 				// we should instead randomize in the mixed layer.
 
-				if(p.getZ()>0){p.setZ(0);}
-				
+				if (p.getZ() > 0) {
+					p.setZ(0);
+				}
+
 				// Apply vertical migration
 
 				if (prm.usesVerticalMigration()) {
@@ -161,13 +175,13 @@ public class Release implements Runnable {
 				// reflection would truncate the distance traveled.
 
 				p.setDistance(p.getDistance()
-						+ GeometryUtils.distance_Sphere(p.getPX(), p.getPY(), p.getX(),
-								p.getY()));
+						+ GeometryUtils.distance_Sphere(p.getPX(), p.getPY(),
+								p.getX(), p.getY()));
 
 				// Check and see if the particle has bounced off land. (only
 				// check if a NODATA cell has been encountered in the
 				// interpolation range)
-				
+
 				if (p.isNearNoData()) {
 					collisionDetect.handleIntersection(p);
 				}
@@ -180,43 +194,42 @@ public class Release implements Runnable {
 				// or if settling has occurred, then write.
 
 				if (writect >= prm.getOutputFreq()
-						
-						// write immediately if it can settle, and is over
-						// appropriate habitat, unless we're using FloatOver
-						
-						|| (p.canSettle() && 
-								!(sm instanceof lagrange.impl.behavior.Settlement_FloatOver))) {
+
+				// write immediately if it can settle, and is over
+				// appropriate habitat, unless we're using FloatOver
+
+						|| (p.canSettle() && !(sm instanceof lagrange.impl.behavior.Settlement_FloatOver))) {
 					tw.apply(p);
 					mw.apply(p);
 					dw.apply(p);
 					writect = 0;
 				}
-				
+
 				writect += prm.getH();
-				
-				//System.out.print("\n" + ct + "\t" + p.toString());
-				//ct++;
+
+				// System.out.print("\n" + ct + "\t" + p.toString());
+				// ct++;
 
 				// If we're lost or dead, then there's no point in going on...
-				
+
 				if (p.isFinished()) {
 					break;
 				}
-			} 
+			}
 			p.setFinished(true);
-			
+
 			// end of time step
-			
-		} catch (StackOverflowError e){
+
+		} catch (StackOverflowError e) {
 			e.printStackTrace();
-		} catch(Exception e) {			
+		} catch (Exception e) {
 			p.setError(true);
 			System.out.println("ERROR: " + e.toString());
 			e.printStackTrace();
 			tw.apply(p);
 		} finally {
-			//Ensure the doneSignal is passed upon termination.
-			if(doneSignal!=null){
+			// Ensure the doneSignal is passed upon termination.
+			if (doneSignal != null) {
 				doneSignal.countDown();
 			}
 			mv.close();
@@ -224,7 +237,7 @@ public class Release implements Runnable {
 			df = null;
 		}
 	}
-	
+
 	/**
 	 * Retrieves the BoundaryHandler associated with this instance
 	 * 
@@ -240,7 +253,7 @@ public class Release implements Runnable {
 	 * 
 	 * @return
 	 */
-	
+
 	public Diffusion getDiffusion() {
 		return df;
 	}
@@ -250,7 +263,7 @@ public class Release implements Runnable {
 	 * 
 	 * @return
 	 */
-	
+
 	public DistanceWriter getDistanceWriter() {
 		return dw;
 	}
@@ -260,7 +273,7 @@ public class Release implements Runnable {
 	 * 
 	 * @return
 	 */
-	
+
 	public long getId() {
 		return id;
 	}
@@ -270,7 +283,7 @@ public class Release implements Runnable {
 	 * 
 	 * @return
 	 */
-	
+
 	public MatrixWriter getMatrixWriter() {
 		return mw;
 	}
@@ -280,7 +293,7 @@ public class Release implements Runnable {
 	 * 
 	 * @return
 	 */
-	
+
 	public Mortality getMortality() {
 		return mort;
 	}
@@ -290,7 +303,7 @@ public class Release implements Runnable {
 	 * 
 	 * @return
 	 */
-	
+
 	public Movement getMovement() {
 		return mv;
 	}
@@ -300,11 +313,11 @@ public class Release implements Runnable {
 	 * 
 	 * @return
 	 */
-	
+
 	public Parameters getParameters() {
 		return prm;
 	}
-	
+
 	/**
 	 * Retrieves the Settlement object associated with this instance.
 	 * 
@@ -314,7 +327,7 @@ public class Release implements Runnable {
 	public Settlement getSettlement() {
 		return sm;
 	}
-	
+
 	/**
 	 * Retrieves the timestamp (in milliseconds) of this instance.
 	 * 
@@ -330,7 +343,7 @@ public class Release implements Runnable {
 	 * 
 	 * @return
 	 */
-	
+
 	public TrajectoryWriter getTrajectoryWriter() {
 		return tw;
 	}
@@ -340,7 +353,7 @@ public class Release implements Runnable {
 	 * 
 	 * @return
 	 */
-	
+
 	public VerticalMigration getVerticalMigration() {
 		return vm;
 	}
@@ -348,9 +361,10 @@ public class Release implements Runnable {
 	/**
 	 * Sets the BoundaryHandler object for this instance.
 	 * 
-	 * @param bh - The BoundaryHandler object
+	 * @param bh
+	 *            - The BoundaryHandler object
 	 */
-	
+
 	public void setBoundaryHandler(CollisionDetector bh) {
 		this.collisionDetect = bh;
 	}
@@ -358,9 +372,10 @@ public class Release implements Runnable {
 	/**
 	 * Sets the Diffusion object for this instance.
 	 * 
-	 * @param df - The Diffusion object
+	 * @param df
+	 *            - The Diffusion object
 	 */
-	
+
 	public void setDiffusion(Diffusion df) {
 		this.df = df;
 	}
@@ -368,9 +383,10 @@ public class Release implements Runnable {
 	/**
 	 * Sets the DistanceWriter object for this instance.
 	 * 
-	 * @param dw - The DistanceWriter object
+	 * @param dw
+	 *            - The DistanceWriter object
 	 */
-	
+
 	public void setDistanceWriter(DistanceWriter dw) {
 		this.dw = dw;
 	}
@@ -378,18 +394,20 @@ public class Release implements Runnable {
 	/**
 	 * Sets the CountDownLatch object associated with this instance.
 	 * 
-	 * @param doneSignal - CountDownLatch object for coordinating 
-	 * multiple simultaneous Releases.
+	 * @param doneSignal
+	 *            - CountDownLatch object for coordinating multiple simultaneous
+	 *            Releases.
 	 */
-	
+
 	public void setDoneSignal(CountDownLatch doneSignal) {
 		this.doneSignal = doneSignal;
 	}
-	
+
 	/**
 	 * Sets the identifier for a Release instance.
 	 * 
-	 * @param id - The identifier number
+	 * @param id
+	 *            - The identifier number
 	 */
 
 	public void setId(long id) {
@@ -399,9 +417,10 @@ public class Release implements Runnable {
 	/**
 	 * Flag the instance for termination.
 	 * 
-	 * @param kill - boolean indicating whether the instance should be terminated
+	 * @param kill
+	 *            - boolean indicating whether the instance should be terminated
 	 */
-	
+
 	public void setKill(boolean kill) {
 		this.kill = kill;
 	}
@@ -409,9 +428,10 @@ public class Release implements Runnable {
 	/**
 	 * Sets the MatrixWriter object for this instance.
 	 * 
-	 * @param mw - The MatrixWriter object
+	 * @param mw
+	 *            - The MatrixWriter object
 	 */
-	
+
 	public void setMatrixWriter(MatrixWriter mw) {
 		this.mw = mw;
 	}
@@ -419,9 +439,10 @@ public class Release implements Runnable {
 	/**
 	 * Sets the Mortality object for this instance.
 	 * 
-	 * @param mort - The Mortality object
+	 * @param mort
+	 *            - The Mortality object
 	 */
-	
+
 	public void setMortality(Mortality mort) {
 		this.mort = mort;
 	}
@@ -429,28 +450,29 @@ public class Release implements Runnable {
 	/**
 	 * Sets the Movement object for this instance.
 	 * 
-	 * @param mv - The Movement object
+	 * @param mv
+	 *            - The Movement object
 	 */
-	
+
 	public void setMovement(Movement mv) {
 		this.mv = mv;
 	}
 
-	
-	public void setNegativeCoordinates(boolean negCoord){
-		this.negCoord=negCoord;
+	public void setNegativeCoordinates(boolean negCoord) {
+		this.negCoord = negCoord;
 	}
-	
-	public void setNegativeOceanCoordinates(boolean negOceanCoord){
-		this.negOceanCoord=negOceanCoord;
+
+	public void setNegativeOceanCoordinates(boolean negOceanCoord) {
+		this.negOceanCoord = negOceanCoord;
 	}
-	
+
 	/**
 	 * Sets the Parameters object for this instance.
 	 * 
-	 * @param prm - The Parameters object
+	 * @param prm
+	 *            - The Parameters object
 	 */
-	
+
 	public void setParameters(Parameters prm) {
 		this.prm = prm;
 	}
@@ -458,17 +480,19 @@ public class Release implements Runnable {
 	/**
 	 * Sets the Settlement object for this instance.
 	 * 
-	 * @param sm - The Settlement object
+	 * @param sm
+	 *            - The Settlement object
 	 */
-	
+
 	public void setSettlement(Settlement sm) {
 		this.sm = sm;
 	}
-	
+
 	/**
 	 * Sets the timestamp (in milliseconds) for this instance.
 	 * 
-	 * @param time - timestamp (in milliseconds)
+	 * @param time
+	 *            - timestamp (in milliseconds)
 	 */
 
 	public void setTime(long time) {
@@ -478,9 +502,10 @@ public class Release implements Runnable {
 	/**
 	 * Sets the TrajectoryWriter object for this instance.
 	 * 
-	 * @param tw - The TrajectoryWriter object
+	 * @param tw
+	 *            - The TrajectoryWriter object
 	 */
-	
+
 	public void setTrajectoryWriter(TrajectoryWriter tw) {
 		this.tw = tw;
 	}
@@ -488,13 +513,14 @@ public class Release implements Runnable {
 	/**
 	 * Sets the VerticalMigration object for this instance.
 	 * 
-	 * @param vm - The VerticalMigration object
+	 * @param vm
+	 *            - The VerticalMigration object
 	 */
-	
+
 	public void setVerticalMigration(VerticalMigration vm) {
 		this.vm = vm;
 	}
-	
+
 	/**
 	 * Sets whether this instance should be terminated
 	 * 
@@ -504,12 +530,12 @@ public class Release implements Runnable {
 	public boolean toBeKilled() {
 		return kill;
 	}
-	
-	public boolean usesNegativeCoordinates(){
+
+	public boolean usesNegativeCoordinates() {
 		return negCoord;
 	}
-	
-	public boolean usesNegativeOceanCoordinates(){
+
+	public boolean usesNegativeOceanCoordinates() {
 		return negOceanCoord;
 	}
 }

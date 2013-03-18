@@ -24,6 +24,7 @@ public class Boundary_NetCDF_Grid implements Boundary, Cloneable {
 	private String lonName = "Longitude";
 	private boolean neglon = true;
 	private boolean positiveDown = false;
+	private boolean centroid_reference = false;
 	private float pd=1f;
 	private Array bnd;
 	private Index bndInd;
@@ -335,11 +336,18 @@ public class Boundary_NetCDF_Grid implements Boundary, Cloneable {
 		nrows = lats.arraySize();
 		ncols = lons.arraySize();
 		cellsize = (lats.getMaxVal()-lats.getMinVal())/(nrows-1);
-		minx = lons.getMinVal();//-(cellsize/2);
-		miny = lats.getMinVal();//-(cellsize/2);
-		maxx = lons.getMaxVal()+cellsize;//+(cellsize/2);
-		maxy = lats.getMaxVal()+cellsize;//+(cellsize/2);
-
+		if(centroid_reference){
+			minx = lons.getMinVal()-(cellsize/2);
+			miny = lats.getMinVal()-(cellsize/2);
+			maxx = lons.getMaxVal()+(cellsize/2);
+			maxy = lats.getMaxVal()+(cellsize/2);
+		}
+		else{
+			minx = lons.getMinVal();
+			miny = lats.getMinVal();
+			maxx = lons.getMaxVal()+cellsize;
+			maxy = lats.getMaxVal()+cellsize;
+		}
 	}
 	
 	public boolean isNeglon() {
@@ -421,5 +429,13 @@ public class Boundary_NetCDF_Grid implements Boundary, Cloneable {
 	public void setPositiveDown(boolean positiveDown){
 		this.positiveDown = positiveDown;
 		pd=positiveDown?-1f:1f;
+	}
+
+	public boolean usesCentroidReference() {
+		return centroid_reference;
+	}
+
+	public void setReferenceByCentroid(boolean centroid_reference) {
+		this.centroid_reference = centroid_reference;
 	}
 }
