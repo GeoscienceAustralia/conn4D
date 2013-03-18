@@ -335,10 +335,10 @@ public class Boundary_NetCDF_Grid implements Boundary, Cloneable {
 		nrows = lats.arraySize();
 		ncols = lons.arraySize();
 		cellsize = (lats.getMaxVal()-lats.getMinVal())/(nrows-1);
-		minx = lons.getMinVal()-(cellsize/2);
-		miny = lats.getMinVal()-(cellsize/2);
-		maxx = lons.getMaxVal()+(cellsize/2);
-		maxy = lats.getMaxVal()+(cellsize/2);
+		minx = lons.getMinVal();//-(cellsize/2);
+		miny = lats.getMinVal();//-(cellsize/2);
+		maxx = lons.getMaxVal()+cellsize;//+(cellsize/2);
+		maxy = lats.getMaxVal()+cellsize;//+(cellsize/2);
 
 	}
 	

@@ -23,8 +23,8 @@ public class TestCollisionDetection_3D_Bathymetry {
 	public void setUp(){
 		
 		try {
-			gx = new Boundary_NetCDF_Grid("C:/Temp/bath_x_m.nc","Latitude","Longitude");
-			gy = new Boundary_NetCDF_Grid("C:/Temp/bath_y_m.nc","Latitude","Longitude");
+			//gx = new Boundary_NetCDF_Grid("C:/Temp/bath_x_m.nc","Latitude","Longitude");
+			//gy = new Boundary_NetCDF_Grid("C:/Temp/bath_y_m.nc","Latitude","Longitude");
 			greal = new Boundary_NetCDF_Grid("C:/Temp/aus_bath_lite.nc","Latitude","Longitude");
 			greal.setPositiveDown(false);
 
@@ -37,7 +37,7 @@ public class TestCollisionDetection_3D_Bathymetry {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void testXSlopeZLine() {
 		Particle p1 = new Particle();
 		p1.setPX(0); p1.setPY(0);	p1.setPZ(1); p1.setX(0); p1.setY(0); p1.setZ(-1); 
@@ -67,7 +67,7 @@ public class TestCollisionDetection_3D_Bathymetry {
 	    Assert.assertArrayEquals(new double[]{1,0,0},da ,1E-1);// precision decrease due to use of meters
 	}
 	
-	@Test
+	//@Test
 	public void testYSlopeZLine() {
 		Particle p1 = new Particle();
 		p1.setPX(0); p1.setPY(0);	p1.setPZ(1); p1.setX(0); p1.setY(0); p1.setZ(-1); 
@@ -76,7 +76,7 @@ public class TestCollisionDetection_3D_Bathymetry {
 	    Assert.assertArrayEquals(new double[]{0,-1,0},da ,1E-1);// precision decrease due to use of meters
 	}
 	
-	@Test
+	//@Test
 	public void testRealSlopeRealLine(){
 		Particle p1 = new Particle();
 		p1.setPX(113.46163392338082); p1.setPY(-27.67861062425476); p1.setPZ(-5.0); p1.setX(113.4442410384298); p1.setY(-27.667486017407406); p1.setZ(-24417.7189078367); 
@@ -87,5 +87,20 @@ public class TestCollisionDetection_3D_Bathymetry {
 		System.out.println(greal.getAspect(p1.getPX(),p1.getPY()));
 		cdbreal.handleIntersection(p1);
 		//double[] da = new double[]{p1.getX(),p1.getY(),p1.getZ()};
+	}
+	
+	@Test
+	public void testRealProblem(){
+		Particle p1 = new Particle();
+		p1.setPX(113.1314548954153); p1.setPY(-25.15381371021109); p1.setPZ(0.0); p1.setX(113.1206995353216); p1.setY(-25.1427262565772); p1.setZ(0.0);
+		int[] indices = greal.getIndices(p1.getPX(), p1.getPY()); 
+		System.out.println(Arrays.toString(indices));
+		cdbreal.handleIntersection(p1);
+	}
+	
+	public static void main(String[] args){
+		TestCollisionDetection_3D_Bathymetry t = new TestCollisionDetection_3D_Bathymetry();
+		t.setUp();
+		t.testRealProblem();
 	}
 }

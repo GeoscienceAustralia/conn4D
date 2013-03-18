@@ -122,6 +122,17 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 
 			currentCell = VectorMath.add(currentCell, dir);
 			
+			// Sanity check
+			
+			if (currentCell[0]<Math.min(startCell[0], endCell[0]) ||
+			    currentCell[0]>Math.max(startCell[0], endCell[0]) ||
+			    currentCell[0]<Math.min(startCell[1], endCell[1]) ||		
+			    currentCell[0]>Math.max(startCell[1], endCell[1])){
+			    	System.out.println("Warning:  Collision error.  Aborting particle " + p.getID() + ", track " + start + " " + end);
+			    	p.setError(true);
+			    	return;
+			    } 
+			
 			// Retrieve the vertices of the current cell
 
 			box = bnd.getCeqdVertices(currentCell);
