@@ -45,14 +45,4 @@ public class TestBathymetryReader_Grid {
 			Assert.assertEquals(i, ybr.getBoundaryDepth(0,i),1E-6);
 		}		
 	}
-	
-	@Test
-	public void printTest(){
-		System.out.println(Arrays.toString(rbr.getIndices(92, -60)));
-		System.out.println(Arrays.toString(rbr.getIndices(92.007, -59.995)));
-		int[] idx = rbr.getIndices(113.71699029648877, -26.870002872571874);
-		idx = rbr.getIndices(113.71699029648877, -26.870002872571874);
-		System.out.println(Arrays.toString(idx));
-		System.out.println(rbr.getBoundaryDepth(113.71699029648877, -26.870002872571874));
-	}
 }

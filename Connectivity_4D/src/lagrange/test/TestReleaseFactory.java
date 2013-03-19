@@ -13,6 +13,7 @@ import lagrange.impl.Release;
 import lagrange.impl.ReleaseFactory_4D;
 import lagrange.impl.behavior.Mortality_None;
 import lagrange.impl.behavior.Settlement_None;
+import lagrange.impl.collision.CollisionDetector_None;
 import lagrange.impl.movement.Diffusion_None;
 import lagrange.impl.movement.Advection_RK4_3D;
 import lagrange.impl.readers.VelocityReader_NetCDF_4D;
@@ -75,6 +76,7 @@ public class TestReleaseFactory {
 		rf.setMovement(rk4);	
 		rf.setDiffusion(new Diffusion_None());
 		rf.setMortality(new Mortality_None());
+		rf.setCollisionDetection(new CollisionDetector_None());
 		rf.setDistanceWriter(new NullPlug());
 		rf.setMatrixWriter(new NullPlug());
 		rf.setSettlement(new Settlement_None());

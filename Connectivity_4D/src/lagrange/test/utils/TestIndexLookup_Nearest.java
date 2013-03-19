@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 import lagrange.utils.IndexLookup_Nearest;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import ucar.nc2.NetcdfFile;
@@ -14,10 +15,19 @@ import ucar.nc2.Variable;
 
 public class TestIndexLookup_Nearest {
 
-	NetcdfFile ncFile;
+	NetcdfFile linear_x;
 	IndexLookup_Nearest loc;
 	Variable var;
 
+	@Before
+	public void setUp(){
+		try {
+			linear_x = NetcdfFile.open("C://Temp//Linear_x.nc");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@Test
 	/**
 	 * Tests the values that are retrieved nearest to the provided location.  Linear_x increases from 0 to 100 in the range -1 to 1, and ranges from 0 to 1 units in depth.
@@ -27,12 +37,7 @@ public class TestIndexLookup_Nearest {
 	 */
 	
 	public void testLocate() {
-		try {
-			ncFile = NetcdfFile.open("C://Temp//Linear_x.nc");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		var = ncFile.findVariable("Longitude");
+		var = linear_x.findVariable("Longitude");
 		loc = new IndexLookup_Nearest(var);
 		
 		// Half-way between -1 and 1 should be 50
@@ -62,7 +67,7 @@ public class TestIndexLookup_Nearest {
 		
 		// Switch variable to Latitude, and repeat the basic tests.
 		
-		var = ncFile.findVariable("Latitude");
+		var = linear_x.findVariable("Latitude");
 		loc = new IndexLookup_Nearest(var);
 		loc.setVariable(var);
 		assertEquals(50, loc.lookup(0));
@@ -71,7 +76,7 @@ public class TestIndexLookup_Nearest {
 		
 		// Switch variable to Depth
 		
-		var = ncFile.findVariable("Depth");
+		var = linear_x.findVariable("Depth");
 		loc = new IndexLookup_Nearest(var);
 		loc.setVariable(var);
 		assertEquals(0, loc.lookup(0));
@@ -86,30 +91,5 @@ public class TestIndexLookup_Nearest {
 		// Ensure rounding works
 		assertEquals(5, loc.lookup(.475));
 		assertEquals(6, loc.lookup(.612));
-	}
-
-	/**
-	 * Tests values when variables (e.g. Latitude and Longitude) have more than
-	 * one dimension.
-	 */
-
-	@Test
-	public void testDimension() {
-		try {
-			ncFile = NetcdfFile.open("V:/Data/HYCOM/AUS_u_2009_1.nc");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		var = ncFile.findVariable("Longitude");
-		loc = new IndexLookup_Nearest(var, 0);
-		System.out.println(Arrays.toString(loc.getJavaArray()));
-		loc.setVariable(var, 1);
-		System.out.println(Arrays.toString(loc.getJavaArray()));
-		var = ncFile.findVariable("Latitude");
-		loc.setVariable(var, 0);
-		System.out.println(Arrays.toString(loc.getJavaArray()));
-		loc.setVariable(var, 1);
-		System.out.println(Arrays.toString(loc.getJavaArray()));
 	}
 }

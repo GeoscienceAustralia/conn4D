@@ -43,7 +43,7 @@ public class TestCollisionDetection_3D_Bathymetry {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void testXSlopeZLine() {
 		Particle p1 = new Particle();
 		p1.setPX(0); p1.setPY(0);	p1.setPZ(-9); p1.setX(0); p1.setY(0); p1.setZ(-11); 
@@ -52,7 +52,7 @@ public class TestCollisionDetection_3D_Bathymetry {
 	    Assert.assertArrayEquals(new double[]{-1,0,-10},da ,1E-1);// precision decrease due to use of meters
 	}
 	
-	@Test
+	//@Test
 	public void testXSlopeOffsetZLine(){
 		Particle p1 = new Particle();
 		p1.setPX(5); p1.setPY(5);	p1.setPZ(-4); p1.setX(5); p1.setY(5); p1.setZ(-6); 
@@ -61,7 +61,7 @@ public class TestCollisionDetection_3D_Bathymetry {
 	    Assert.assertArrayEquals(new double[]{4,5,-5},da ,1E-1);// precision decrease due to use of meters
 	}
 	
-	@Test
+	//@Test
 	public void testXReverseSlopeZLine() {
 		Particle p1 = new Particle();
 		p1.setPX(0); p1.setPY(0);	p1.setPZ(-9); p1.setX(0); p1.setY(0); p1.setZ(-11); 
@@ -70,7 +70,7 @@ public class TestCollisionDetection_3D_Bathymetry {
 	    Assert.assertArrayEquals(new double[]{1,0,-10},da ,1E-1);// precision decrease due to use of meters
 	}
 	
-	@Test
+	//@Test
 	public void testYSlopeZLine() {
 		Particle p1 = new Particle();
 		p1.setPX(0); p1.setPY(0);	p1.setPZ(-9); p1.setX(0); p1.setY(0); p1.setZ(-11); 
@@ -79,7 +79,7 @@ public class TestCollisionDetection_3D_Bathymetry {
 	    Assert.assertArrayEquals(new double[]{0,-1,-10},da ,1E-1);// precision decrease due to use of meters
 	}
 	
-	//@Test
+	@Test
 	public void testRealProblem(){
 		Particle p1 = new Particle();
 		p1.setPX(113.1314548954153); p1.setPY(-25.15381371021109); p1.setPZ(0.0); p1.setX(113.1206995353216); p1.setY(-25.1427262565772); p1.setZ(0.0);
@@ -91,7 +91,6 @@ public class TestCollisionDetection_3D_Bathymetry {
 	public static void main(String[] args){
 		TestCollisionDetection_3D_Bathymetry t = new TestCollisionDetection_3D_Bathymetry();
 		t.setUp();
-		t.testYSlopeZLine();
-		//t.testRealProblem();
+		t.testRealProblem();
 	}
 }

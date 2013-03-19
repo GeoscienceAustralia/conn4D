@@ -33,6 +33,7 @@ public class TestVelocityReader_HYCOMList_4D {
 		}
 	}
 	
+	//Test is currently incomplete.
 	@Test
 	public void test() {
 		Calendar c = Calendar.getInstance(TimeZone.getTimeZone("UTC"));

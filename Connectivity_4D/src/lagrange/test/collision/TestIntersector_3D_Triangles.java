@@ -148,10 +148,7 @@ public class TestIntersector_3D_Triangles {
 			lsit.setUp();
 			lsit.testIntersect();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
+		}	
 	}
-
 }

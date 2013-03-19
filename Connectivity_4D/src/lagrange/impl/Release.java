@@ -46,6 +46,130 @@ public class Release implements Runnable {
 	private boolean negCoord = false;
 	private boolean negOceanCoord = false;
 
+	/**
+	 * Retrieves the BoundaryHandler associated with this instance
+	 * 
+	 * @return
+	 */
+
+	public CollisionDetector getBoundaryHandler() {
+		return collisionDetect;
+	}
+
+	public CollisionDetector getCollisionDetect() {
+		return collisionDetect;
+	}
+
+	/**
+	 * Retrieves the Diffusion object associated with this instance
+	 * 
+	 * @return
+	 */
+
+	public Diffusion getDiffusion() {
+		return df;
+	}
+
+	/**
+	 * Retrieves the DistanceWriter associated with this instance
+	 * 
+	 * @return
+	 */
+
+	public DistanceWriter getDistanceWriter() {
+		return dw;
+	}
+
+	/**
+	 * Retrieves the ID of the Particle
+	 * 
+	 * @return
+	 */
+
+	public long getId() {
+		return id;
+	}
+
+	/**
+	 * Retrieves the MatrixWriter associated with this instance
+	 * 
+	 * @return
+	 */
+
+	public MatrixWriter getMatrixWriter() {
+		return mw;
+	}
+
+	/**
+	 * Retrieves the Mortality object associated with this instance
+	 * 
+	 * @return
+	 */
+
+	public Mortality getMortality() {
+		return mort;
+	}
+
+	/**
+	 * Retrieves the Movement object associated with this instance
+	 * 
+	 * @return
+	 */
+
+	public Movement getMovement() {
+		return mv;
+	}
+
+	/**
+	 * Retrieves the Parameter object associated with this instance.
+	 * 
+	 * @return
+	 */
+
+	public Parameters getParameters() {
+		return prm;
+	}
+
+	/**
+	 * Retrieves the Settlement object associated with this instance.
+	 * 
+	 * @return
+	 */
+
+	public Settlement getSettlement() {
+		return sm;
+	}
+
+	/**
+	 * Retrieves the timestamp (in milliseconds) of this instance.
+	 * 
+	 * @return
+	 */
+
+	public long getTime() {
+		return time;
+	}
+
+	/**
+	 * Retrieves the TrajectoryWriter associated with this instance.
+	 * 
+	 * @return
+	 */
+
+	public TrajectoryWriter getTrajectoryWriter() {
+		return tw;
+	}
+
+	/**
+	 * Retrieves the VerticalMigration object associated with this instance.
+	 * 
+	 * @return
+	 */
+
+	public VerticalMigration getVerticalMigration() {
+		return vm;
+	}
+
 	public boolean preKill() {
 		if (prm == null) {
 			return false;
@@ -93,18 +217,22 @@ public class Release implements Runnable {
 			p.setPY(p.getY());
 			p.setZ(prm.getReleaseDepth());
 
-			if (!(collisionDetect instanceof CollisionDetector_None)) {
-				double floor = collisionDetect.getBoundary()
-						.getPreciseBoundaryDepth(p.getX(), p.getY());
+			try {
+				if (!(collisionDetect instanceof CollisionDetector_None)) {
+					double floor = collisionDetect.getBoundary()
+							.getPreciseBoundaryDepth(p.getX(), p.getY());
 
-				if (p.getZ() > floor) {
-					if (floor + 1 > 0) {
-						p.setLost(true);
-						p.setError(true);
-					} else {
-						p.setZ(floor + 1);
+					if (p.getZ() > floor) {
+						if (floor + 1 > 0) {
+							p.setLost(true);
+							p.setError(true);
+						} else {
+							p.setZ(floor + 1);
+						}
 					}
 				}
+			} catch (NullPointerException e) {
+				e.printStackTrace();
 			}
 
 			p.setBirthday(time);
@@ -239,126 +367,6 @@ public class Release implements Runnable {
 	}
 
 	/**
-	 * Retrieves the BoundaryHandler associated with this instance
-	 * 
-	 * @return
-	 */
-
-	public CollisionDetector getBoundaryHandler() {
-		return collisionDetect;
-	}
-
-	/**
-	 * Retrieves the Diffusion object associated with this instance
-	 * 
-	 * @return
-	 */
-
-	public Diffusion getDiffusion() {
-		return df;
-	}
-
-	/**
-	 * Retrieves the DistanceWriter associated with this instance
-	 * 
-	 * @return
-	 */
-
-	public DistanceWriter getDistanceWriter() {
-		return dw;
-	}
-
-	/**
-	 * Retrieves the ID of the Particle
-	 * 
-	 * @return
-	 */
-
-	public long getId() {
-		return id;
-	}
-
-	/**
-	 * Retrieves the MatrixWriter associated with this instance
-	 * 
-	 * @return
-	 */
-
-	public MatrixWriter getMatrixWriter() {
-		return mw;
-	}
-
-	/**
-	 * Retrieves the Mortality object associated with this instance
-	 * 
-	 * @return
-	 */
-
-	public Mortality getMortality() {
-		return mort;
-	}
-
-	/**
-	 * Retrieves the Movement object associated with this instance
-	 * 
-	 * @return
-	 */
-
-	public Movement getMovement() {
-		return mv;
-	}
-
-	/**
-	 * Retrieves the Parameter object associated with this instance.
-	 * 
-	 * @return
-	 */
-
-	public Parameters getParameters() {
-		return prm;
-	}
-
-	/**
-	 * Retrieves the Settlement object associated with this instance.
-	 * 
-	 * @return
-	 */
-
-	public Settlement getSettlement() {
-		return sm;
-	}
-
-	/**
-	 * Retrieves the timestamp (in milliseconds) of this instance.
-	 * 
-	 * @return
-	 */
-
-	public long getTime() {
-		return time;
-	}
-
-	/**
-	 * Retrieves the TrajectoryWriter associated with this instance.
-	 * 
-	 * @return
-	 */
-
-	public TrajectoryWriter getTrajectoryWriter() {
-		return tw;
-	}
-
-	/**
-	 * Retrieves the VerticalMigration object associated with this instance.
-	 * 
-	 * @return
-	 */
-
-	public VerticalMigration getVerticalMigration() {
-		return vm;
-	}
-
-	/**
 	 * Sets the BoundaryHandler object for this instance.
 	 * 
 	 * @param bh
@@ -367,6 +375,10 @@ public class Release implements Runnable {
 
 	public void setBoundaryHandler(CollisionDetector bh) {
 		this.collisionDetect = bh;
+	}
+
+	public void setCollisionDetect(CollisionDetector collisionDetect) {
+		this.collisionDetect = collisionDetect;
 	}
 
 	/**

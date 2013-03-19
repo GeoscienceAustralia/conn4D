@@ -67,6 +67,7 @@ public class ReleaseFactory_4D {
 		rel.setParameters(prm);
 		rel.setTime(time);
 		rel.setMortality(mort.clone());
+		rel.setCollisionDetect(cd.clone());
 
 		if (rel.preKill()) {
 			return rel;

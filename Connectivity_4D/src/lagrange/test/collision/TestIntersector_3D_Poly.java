@@ -10,7 +10,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineSegment;
-import com.vividsolutions.jts.geom.LinearRing;
+//import com.vividsolutions.jts.geom.LinearRing;
 
 public class TestIntersector_3D_Poly {
 
@@ -18,6 +18,7 @@ public class TestIntersector_3D_Poly {
 	private LineSegment linex;
 	private LineSegment liney;
 	private LineSegment linez;
+	private double e = 1E-12;
 	Intersector_3D_Poly lsi = new Intersector_3D_Poly();
 	GeometryFactory gf = new GeometryFactory();
 
@@ -60,19 +61,6 @@ public class TestIntersector_3D_Poly {
 		linez = new LineSegment(new Coordinate(0, 0, 1), new Coordinate(0, 0,
 				-1));
 	}
-	
-	@Test
-	public void testReal(){
-		LineSegment ls = new LineSegment(new Coordinate(1.1294038837651424E7,-2988174.896541603,0.0),new Coordinate(1.12949498235908E7,-2986702.288635664,37.28376752868615));
-		Coordinate v0 = new Coordinate(1.1293015118771879E7,-2988086.5847938135,-36.90625);
-		Coordinate v1 = new Coordinate(1.1294008368664475E7,-2988086.5847938135,-3.828125);
-		Coordinate v2 = new Coordinate(1.1295005742654992E7,-2986973.389952041,40.734375);
-		Coordinate v3 = new Coordinate(1.129401240504849E7,-2986973.389952041,-6.375);
-		Coordinate[] vertices = new Coordinate[]{v0,v1,v2,v3};
-		LineSegment reflect = lsi.reflect(ls, vertices);
-		System.out.println("Pause");
-		
-	}
 
 	@Test
 	public void testXAxisRotationLineZ() {
@@ -112,7 +100,6 @@ public class TestIntersector_3D_Poly {
 	public void testXAxisRotationLineY() {
 		int n = 100;
 		for (int i = 0; i < n; i++) {
-			System.out.println(i);
 			double fraction = (double) i / (double) n;
 			LineSegment newLine = new LineSegment(
 					rotateX(liney.p0, fraction),
@@ -211,7 +198,7 @@ public class TestIntersector_3D_Poly {
 		}
 	}
 	
-	@Test
+	/*@Test
 	public void testXSurfaceRotationLineZ() {
 		int n = 100;
 		LineSegment line = linez;
@@ -224,7 +211,7 @@ public class TestIntersector_3D_Poly {
 			
 			////////////////////////////////////////////////
 		}
-	}
+	}*/
 	
 	@Test
 	public void testIntersection(){
@@ -234,8 +221,9 @@ public class TestIntersector_3D_Poly {
 		Coordinate p3 = new Coordinate(-1,1,1);
 		Coordinate[] vertices = new Coordinate[] {p0,p1,p2,p3};
 		LineSegment ls = new LineSegment(new Coordinate(0,0,1),new Coordinate(0,0,-1));
+		Coordinate isect = lsi.intersection(ls, vertices);
 		
-		System.out.println(lsi.intersection(ls, vertices));
+		Assert.assertArrayEquals(new double[]{0,0,0},new double[]{isect.x,isect.y,isect.z},e);
 		
 		p0 = new Coordinate(-1,-1,-5);
 		p1 = new Coordinate(+1,-1,-5);
@@ -243,8 +231,9 @@ public class TestIntersector_3D_Poly {
 		p3 = new Coordinate(-1,+1,-4);
 		vertices = new Coordinate[] {p0,p1,p2,p3};
 		ls = new LineSegment(new Coordinate(0,0,1E6),new Coordinate(0,0,-1E6));
+		isect = lsi.intersection(ls, vertices);
 		
-		System.out.println(lsi.intersection(ls, vertices));
+		Assert.assertArrayEquals(new double[]{0,0,-4.5},new double[]{isect.x,isect.y,isect.z},e);
 	}
 
 	private double[] c2arr(Coordinate c) {
@@ -293,7 +282,7 @@ public class TestIntersector_3D_Poly {
 		return new Coordinate(x, y, c.z);
 	}
 
-	private Coordinate[] rotateX(Coordinate[] ca, double fraction) {
+/*	private Coordinate[] rotateX(Coordinate[] ca, double fraction) {
 		Coordinate[] out = new Coordinate[ca.length];
 		for (int i = 0; i < ca.length; i++) {
 			out[i] = rotateX(ca[i], fraction);
@@ -315,5 +304,5 @@ public class TestIntersector_3D_Poly {
 			out[i] = rotateZ(ca[i], fraction);
 		}
 		return out;
-	}
+	}*/
 }

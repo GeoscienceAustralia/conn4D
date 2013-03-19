@@ -10,6 +10,9 @@ public class DigitalDifferentialAnalyzer {
 	private int[] adjacency = new int[2];
 	private int[] displacement = new int[2];
 	private final double PRECISION = 1E-6;
+	//private boolean first = true;
+	private double x_linedist = Double.MAX_VALUE;
+	private double y_linedist = Double.MAX_VALUE;
 
 	@SuppressWarnings("unused")
 	private int x, y;
@@ -52,6 +55,28 @@ public class DigitalDifferentialAnalyzer {
 	 */
 
 	public void increment() {
+		/*if(first){
+			first = false;
+			if(edgeCheck()){
+				if(x_linedist<y_linedist){
+					adjacency[0] = x_inc;
+					adjacency[1] = 0;
+				}
+				if(x_linedist>y_linedist){
+					adjacency[0] = 0;
+					adjacency[1] = y_inc;
+				}
+				if(x_linedist==y_linedist){
+					adjacency[0] = x_inc;
+					adjacency[1] = y_inc;
+				}
+				displacement[0]+=adjacency[0];
+				displacement[1]+=displacement[1];
+				return;
+			}
+			increment();
+		}*/
+		
 		if (t_next_vertical < t_next_horizontal) {
 			y += y_inc;
 			t_next_vertical += dt_dy;
@@ -102,6 +127,13 @@ public class DigitalDifferentialAnalyzer {
 	 * @param ls
 	 */
 
+	public boolean edgeCheck(){
+		if (Math.abs(x_linedist)<PRECISION||Math.abs(y_linedist)<PRECISION){
+			return true;
+		}
+		return false;
+	}
+	
 	public void setLine(LineSegment ls) {
 		this.ls = ls;
 
@@ -115,6 +147,9 @@ public class DigitalDifferentialAnalyzer {
 
 		x = (int) (Math.floor(p0x));
 		y = (int) (Math.floor(p0y));
+		
+		x_linedist = (p0x-snap_x)%cellsize-cellsize;
+		y_linedist = (p0y-snap_y)%cellsize-cellsize;
 
 		dx = Math.abs(p1x - p0x);
 		dy = Math.abs(p1y - p0y);
