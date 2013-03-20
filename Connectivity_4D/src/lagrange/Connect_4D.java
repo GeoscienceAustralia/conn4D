@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
@@ -25,6 +27,7 @@ public class Connect_4D {
 	private static ReleaseFileReader rf;
 	private static ReleaseRunner_4D rr;
 	private static DateFormat outerformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz");
+	private static NumberFormat deltaformat = new DecimalFormat("#.000");
 	private static String prmfile = "default.prm";
 	private static String cfgfile = "default.cfg";
 	private static String restartAt = "#";
@@ -103,7 +106,6 @@ public class Connect_4D {
 					}
 					
 					Parameters prm = new Parameters_Zonal_4D();
-					//Parameters prm = new Parameters_Zonal_Ind();
 					long timer = System.currentTimeMillis();
 
 					// Set parameters using the current line of the release file
@@ -145,7 +147,7 @@ public class Connect_4D {
 				if(gp.relSpUnits.equalsIgnoreCase("Date")){
 					System.out.println("\nRelease date " + innerformat_full.format(time) + "complete. (" +TimeConvert.millisToString(System.currentTimeMillis()-reltimer)+ ")");	
 				}
-				else{System.out.println("\nRelease " + (time+1) + " complete. (" +TimeConvert.millisToString(System.currentTimeMillis()-reltimer)+ ")");}	
+				else{System.out.println("\nRelease " + (time+1) + " complete. (" +deltaformat.format(((double)System.currentTimeMillis()-(double)reltimer)/1000d)+ "s)");}	
 				
 			}
 		} catch (FileNotFoundException e) {

@@ -12,6 +12,7 @@ import lagrange.impl.readers.Boundary_NetCDF_Grid;
 import lagrange.utils.CoordinateMath;
 import lagrange.utils.DigitalDifferentialAnalyzer;
 import lagrange.utils.PrjTransform;
+import lagrange.utils.TimeConvert;
 import lagrange.utils.VectorMath;
 import lagrange.utils.PrjTransform_WGS2CEQD;
 
@@ -66,8 +67,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 		// system, we must convert on the fly to meters to ensure proper
 		// reflection in the vertical, and then back-convert.
 
-		LineSegment backtrans = new LineSegment(
-				pt.inverse(trans.p0),
+		LineSegment backtrans = new LineSegment(pt.inverse(trans.p0),
 				pt.inverse(trans.p1));
 
 		// Get the indices of the current starting point (
@@ -104,14 +104,27 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 		while (!Arrays.equals(currentCell, endCell)
 				|| !trans.p0.equals2D(tmpStart)) {
 
+			// Compensate for a null start
+
+			if (Double.isNaN(trans.p0.x) && Double.isNaN(trans.p0.y)) {
+				System.out.println("\nWarning: NaN error.  Aborting particle "
+						+ p.getID() + " at time= "
+						+ TimeConvert.millisToDays(p.getAge()) + ", track "
+						+ start + " " + end);
+				p.setError(true);
+				p.setLost(true);
+				break;
+			}
+
 			// If there was a reflection
 
 			if (!trans.p0.equals2D(tmpStart)) {
 
 				// Nibble to prevent re-reflection
-				CoordinateMath.nibble(trans, 1E-8); // Nibbling can throw off the dda, esp. if we hit a corner.
-				backtrans = new LineSegment(
-						pt.inverse(trans.p0),
+				CoordinateMath.nibble(trans, 1E-8); // Nibbling can throw off
+													// the dda, esp. if we hit a
+													// corner.
+				backtrans = new LineSegment(pt.inverse(trans.p0),
 						pt.inverse(trans.p1));
 				dda.setLine(backtrans);
 				tmpStart = trans.p0;
@@ -137,8 +150,11 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 					|| currentCell[1] < Math.min(startCell[1], endCell[1])
 					|| currentCell[1] > Math.max(startCell[1], endCell[1])) {
 				System.out
-						.println("Warning:  Collision error.  Aborting particle "
-								+ p.getID() + ", track " + start + " " + end);
+						.println("\nWarning:  Collision error.  Aborting particle "
+								+ p.getID()
+								+ " at time="
+								+ TimeConvert.millisToDays(p.getAge())
+								+ ", track " + start + " " + end);
 				p.setError(true);
 				return;
 			}
@@ -196,7 +212,8 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 
 	@Override
 	public CollisionDetector_3D_Bathymetry clone() {
-		CollisionDetector_3D_Bathymetry clone = new CollisionDetector_3D_Bathymetry(bnd);
+		CollisionDetector_3D_Bathymetry clone = new CollisionDetector_3D_Bathymetry(
+				bnd);
 		clone.setProjectionTransform(this.pt);
 		return clone;
 	}

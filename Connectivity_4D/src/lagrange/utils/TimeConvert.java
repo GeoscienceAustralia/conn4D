@@ -1,6 +1,7 @@
 package lagrange.utils;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -332,6 +333,8 @@ public class TimeConvert {
 		int minutes = (int) Math.floor(remainder / minute);
 		remainder = remainder - (minute * minutes);
 		double seconds = remainder / 1000;
+		
+		DecimalFormat df = new DecimalFormat("#0.000");
 
 		StringBuffer sb = new StringBuffer();
 
@@ -344,7 +347,7 @@ public class TimeConvert {
 		if (minutes != 0 || days != 0 || hours != 0) {
 			sb.append(minutes + "m ");
 		}
-		sb.append(seconds + "s");
+		sb.append(df.format(seconds) + "s");
 
 		return sb.toString();
 	}
