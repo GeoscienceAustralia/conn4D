@@ -45,6 +45,7 @@ public class Release implements Runnable {
 	private boolean kill = false;
 	private boolean negCoord = false;
 	private boolean negOceanCoord = false;
+	private boolean writeInitial = true;
 
 	/**
 	 * Retrieves the BoundaryHandler associated with this instance
@@ -222,7 +223,7 @@ public class Release implements Runnable {
 					double floor = collisionDetect.getBoundary()
 							.getPreciseBoundaryDepth(p.getX(), p.getY());
 
-					if (p.getZ() > floor) {
+					if (p.getZ() < floor) {
 						if (floor + 1 > 0) {
 							p.setLost(true);
 							p.setError(true);
@@ -238,18 +239,21 @@ public class Release implements Runnable {
 			p.setBirthday(time);
 			p.setSource(prm.getLocName());
 			p.setCompetencyStart(prm.getCompetencyStart());
+			p.setT(time);
+
+			if(writeInitial){
+				tw.apply(p);
+				mw.apply(p);
+				dw.apply(p);
+			}
 
 			long rd = prm.getRelDuration();
 			// int ct = 0;
-			long writect = 0;
+			long writect = prm.getH();
 
 			// For each time step...
 
 			for (long t = 0; t < rd; t += prm.getH()) {
-
-				// Update the Particle's time reference
-
-				p.setT(time + t);
 
 				// If mortality was pre-processed, avoid double-processing
 
@@ -317,7 +321,12 @@ public class Release implements Runnable {
 				// Can the particle settle?
 
 				sm.apply(p);
+				
+				// Update the Particle's time reference after processes are complete
+				// so that the time reflects state upon completion of the processes.
 
+				p.setT(p.getT()+prm.getH());
+				
 				// If we have exceeded the output frequency threshold,
 				// or if settling has occurred, then write.
 

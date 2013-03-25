@@ -25,7 +25,6 @@ import lagrange.utils.VectorUtils;
 public class ReleaseFactory_4D {
 
 	private LocalParameters lp;
-	//private MatrixUtilities mu = new MatrixUtilities();
 	private VelocityReader vr;
 	private TrajectoryWriter tw;
 	private DistanceWriter dw;
@@ -323,8 +322,8 @@ public class ReleaseFactory_4D {
 
 		// Initialize the Turbulence engine
 
-		//df = new Diffusion_None();
-		df = new Diffusion_Simple_3D(prm.getH());
+		df = new Diffusion_None();
+		//df = new Diffusion_Simple_3D(prm.getH());
 
 		// Initialize vertical migration, if required.
 

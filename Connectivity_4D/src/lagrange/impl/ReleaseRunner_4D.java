@@ -73,7 +73,6 @@ public class ReleaseRunner_4D implements ReleaseRunner {
 			 */
 
 			int ct = 0;
-			
 			for (long k = 0; k < n; k++) {
 				Release rel = relFactory.generate();
 				if(rel.toBeKilled()){doneSignal.countDown(); continue;}
