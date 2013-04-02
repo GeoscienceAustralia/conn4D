@@ -1,5 +1,6 @@
 package lagrange.impl.writers;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
@@ -12,8 +13,10 @@ import lagrange.output.ThreadWriter;
 public class DistanceWriter_Text implements DistanceWriter{
 
 	ThreadWriter bw;
+	String filename;
 	Map<String,Double> num = new TreeMap<String,Double>();
 	Map<String,Double> dist = new TreeMap<String,Double>();
+	boolean deleteEmpty = true;
 
 	/**
 	 * Constructor that uses a String to generate the output file.
@@ -23,6 +26,8 @@ public class DistanceWriter_Text implements DistanceWriter{
 	 */
 
 	public DistanceWriter_Text(String outputFile) {
+		
+		filename = outputFile;
 
 		try {
 
@@ -65,6 +70,12 @@ public class DistanceWriter_Text implements DistanceWriter{
 		}
 		finally {
 			if(bw!=null){bw.close();
+			}
+			if (deleteEmpty) {
+				if (dist.isEmpty()) {
+					File f = new File(filename);
+					f.delete();
+				}
 			}
 		}
 	}

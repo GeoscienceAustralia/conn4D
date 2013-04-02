@@ -121,7 +121,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 			if (!trans.p0.equals2D(tmpStart)) {
 
 				// Nibble to prevent re-reflection
-				CoordinateMath.nibble(trans, 1E-8); // Nibbling can throw off
+				CoordinateMath.nibble(trans, Double.MIN_VALUE); // Nibbling can throw off
 													// the dda, esp. if we hit a
 													// corner.
 				backtrans = new LineSegment(pt.inverse(trans.p0),

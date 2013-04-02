@@ -1,5 +1,6 @@
 package lagrange.impl.writers;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -21,10 +22,12 @@ public class TrajectoryWriter_Text implements TrajectoryWriter {
 
 	private ThreadWriter tw;
 	private ThreadWriter stl;
+	private String filename;
 	private String timeUnits = "Date";
 	private String durationUnits = "Days";
 	private DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private boolean negCoord = false;
+	private boolean isEmpty = true;
 
 	/**
 	 * Constructor that uses a String to generate the output file.
@@ -34,6 +37,8 @@ public class TrajectoryWriter_Text implements TrajectoryWriter {
 	 */
 
 	public TrajectoryWriter_Text(String outputFile) {
+		
+		filename = outputFile;
 
 		try {
 
@@ -72,7 +77,7 @@ public class TrajectoryWriter_Text implements TrajectoryWriter {
 	 */
 
 	@Override
-	public void apply(Particle p) {
+	public synchronized void apply(Particle p) {
 
 		StringBuffer sb = new StringBuffer();
 
@@ -116,6 +121,7 @@ public class TrajectoryWriter_Text implements TrajectoryWriter {
 		sb.append("\n");
 
 		tw.write(sb.toString());
+		isEmpty = false;
 
 		//this.notifyAll();
 		}
@@ -136,6 +142,13 @@ public class TrajectoryWriter_Text implements TrajectoryWriter {
 		// Close and flush the settlement file
 
 		stl.close();
+		
+		if(isEmpty){
+			File file = new File(filename);
+			file.delete();
+			File sfile = new File(filename.substring(0, filename.lastIndexOf("."))+ ".set");
+			sfile.delete();
+		}
 	}
 
 	public String getTimeUnits() {
