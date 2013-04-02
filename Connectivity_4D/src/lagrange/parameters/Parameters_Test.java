@@ -28,10 +28,25 @@ public class Parameters_Test implements Parameters{
 	private String outputFolder = "Test";
 	private String settlementType = "Simple";
 	private String diffusionType = "Simple";
+	private String initialPositionType = "centroid";
 	private String mortalityUnits = "Days";
 	private String writeFolder;
 	private boolean effectiveMigration= true;
 	GeometryFactory gf = new GeometryFactory();
+	
+	@Override
+	public long getCompetencyStart() {
+		return competencyStart;
+	}
+	
+	public String getCompetencyStartUnits() {
+		return competencyStartUnits;
+	}
+	
+	@Override
+	public Coordinate getCoordinates() {
+		return new Coordinate(position.getCentroid().getX(),position.getCentroid().getY());
+	}
 	
 	@Override
 	public String getDiffusionType(){
@@ -39,31 +54,18 @@ public class Parameters_Test implements Parameters{
 	}
 	
 	@Override
-	public void setDiffusionType(String diffusionType){
-		this.diffusionType = diffusionType;
-	}
-	
-	@Override
-	public double getReleaseDepth() {
-		return depth;
-	}
-	
-	@Override
-	public double getMaxReleaseDepth() {
-		return depth;
-	}
-	
-	@Override
 	public long getEtime() {
 		return etime;
 	}
+	
 	@Override
 	public long getH() {
 		return h;
 	}
+	
 	@Override
-	public Coordinate getCoordinates() {
-		return new Coordinate(position.getCentroid().getX(),position.getCentroid().getY());
+	public String getInitialPositionType(){
+		return initialPositionType;
 	}
 	@Override
 	public String getLocName() {
@@ -73,27 +75,32 @@ public class Parameters_Test implements Parameters{
 		return position.getCentroid().getX();
 	}
 	@Override
-	public double getMortalityRate() {
-		return mortalityRate/(TimeConvert.convertToMillis(mortalityUnits, 1));
+	public double getMaxReleaseDepth() {
+		return depth;
 	}
 	@Override
 	public double[] getMortalityParameters() {
 		return mortalityParameters;
 	}
 	@Override
+	public double getMortalityRate() {
+		return mortalityRate/(TimeConvert.convertToMillis(mortalityUnits, 1));
+	}
+	@Override
+	public String getMortalityType() {
+		return mortalityType;
+	}
+	@Override
 	public int getNPart() {
 		return nPart;
 	}
 	@Override
-	public long getOutputFreq() {
-		return outputFreq;
+	public String getOutputFolder() {
+		return outputFolder;
 	}
 	@Override
-	public long getCompetencyStart() {
-		return competencyStart;
-	}
-	public String getCompetencyStartUnits() {
-		return competencyStartUnits;
+	public long getOutputFreq() {
+		return outputFreq;
 	}
 	@Override
 	public Geometry getPosition(){
@@ -102,6 +109,10 @@ public class Parameters_Test implements Parameters{
 	@Override
 	public long getRelDuration() {
 		return relDuration;
+	}
+	@Override
+	public double getReleaseDepth() {
+		return depth;
 	}
 	@Override
 	public long getRelSp() {
@@ -124,12 +135,12 @@ public class Parameters_Test implements Parameters{
 		return writeFolder;
 	}
 	@Override
-	public boolean usesVerticalMigration() {
-		return verticalMigration;
+	public void setCompetencyStart(long competencyStart) {
+		this.competencyStart = competencyStart;
 	}
 	@Override
-	public boolean usesEffectiveMigration() {
-		return effectiveMigration;
+	public void setCompetencyStartUnits(String units) {
+		this.competencyStartUnits = units;
 	}
 	@Override
 	public void setDepth(double depth) {
@@ -143,6 +154,10 @@ public class Parameters_Test implements Parameters{
 		}
 	}
 	@Override
+	public void setDiffusionType(String diffusionType){
+		this.diffusionType = diffusionType;
+	}
+	@Override
 	public void setEffectiveMigration(boolean effectiveMigration) {
 		this.effectiveMigration = effectiveMigration;
 	}
@@ -154,26 +169,25 @@ public class Parameters_Test implements Parameters{
 	public void setH(long h) {
 		this.h = h;
 	}
-	public void setPosition(double x, double y, double z){
-		position = gf.createPoint(new Coordinate(x,y,z));
-		depth = z;
-	}
 	@Override
-	public void setPosition(Geometry position) {
-		this.position = position;
-		this.depth = position.getCoordinate().z;
+	public void setInitialPositionType(String diffusionType){
+		this.initialPositionType = diffusionType;
 	}
 	@Override
 	public void setLocName(String locName) {
 		this.locName = locName;
 	}
 	@Override
+	public void setMortalityParameters(double[] mortalityParameters) {
+		this.mortalityParameters = mortalityParameters;
+	}
+	@Override
 	public void setMortalityRate(double mortalityRate) {
 		this.mortalityRate = mortalityRate;
 	}
 	@Override
-	public void setMortalityParameters(double[] mortalityParameters) {
-		this.mortalityParameters = mortalityParameters;
+	public void setMortalityType(String mortalityType) {
+		this.mortalityType = mortalityType;
 	}
 	@Override
 	public void setMortalityUnits(String units){
@@ -184,16 +198,21 @@ public class Parameters_Test implements Parameters{
 		nPart = part;
 	}
 	@Override
+	public void setOutputFolder(String outputFolder) {
+		this.outputFolder = outputFolder;
+	}
+	@Override
 	public void setOutputFreq(long outputFreq) {
 		this.outputFreq = outputFreq;
 	}
-	@Override
-	public void setCompetencyStart(long competencyStart) {
-		this.competencyStart = competencyStart;
+	public void setPosition(double x, double y, double z){
+		position = gf.createPoint(new Coordinate(x,y,z));
+		depth = z;
 	}
 	@Override
-	public void setCompetencyStartUnits(String units) {
-		this.competencyStartUnits = units;
+	public void setPosition(Geometry position) {
+		this.position = position;
+		this.depth = position.getCoordinate().z;
 	}
 	@Override
 	public void setRelDuration(long relDuration) {
@@ -224,19 +243,11 @@ public class Parameters_Test implements Parameters{
 		this.writeFolder = writeFolder;
 	}
 	@Override
-	public String getOutputFolder() {
-		return outputFolder;
+	public boolean usesEffectiveMigration() {
+		return effectiveMigration;
 	}
 	@Override
-	public void setOutputFolder(String outputFolder) {
-		this.outputFolder = outputFolder;
-	}
-	@Override
-	public String getMortalityType() {
-		return mortalityType;
-	}
-	@Override
-	public void setMortalityType(String mortalityType) {
-		this.mortalityType = mortalityType;
+	public boolean usesVerticalMigration() {
+		return verticalMigration;
 	}
 }

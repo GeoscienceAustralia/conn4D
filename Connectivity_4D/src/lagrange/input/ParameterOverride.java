@@ -11,7 +11,7 @@ import lagrange.utils.TimeConvert;
  * 
  */
 
-public class GlobalParameters extends ParameterReader {
+public class ParameterOverride extends ParameterReader {
 
 	public String h = "7200"; // Integration time step (seconds)
 	public String hUnits = "Seconds"; // Units of h
@@ -51,33 +51,37 @@ public class GlobalParameters extends ParameterReader {
 	public boolean useAdvection = true;
 	public String mortalityType = "None";
 	public String settlementType = "Simple";
+	public String diffusionType = "Simple";
 	public String timezone = "UTC";
+	public String zName = "Depth";
+	public boolean centroid = true;
 
 	/**
 	 * Packages values into a Datagram (for transmission for distributed
 	 * processing)
 	 * 
-	 * @param d
+	 * @param parameters
 	 *            - The Datagram to be updated
 	 * @return
 	 */
 
-	public void setParameters(Parameters d) {
-		d.setStime(TimeConvert.convertToMillis(minTimeUnits, minTime));
-		d.setEtime(TimeConvert.convertToMillis(maxTimeUnits, maxTime));
-		d.setRelSp(TimeConvert.convertToMillis(relSpUnits, relSp));
-		d.setRelDuration(TimeConvert.convertToMillis(relDurationUnits,
+	public void setParameters(Parameters parameters) {
+		parameters.setStime(TimeConvert.convertToMillis(minTimeUnits, minTime));
+		parameters.setEtime(TimeConvert.convertToMillis(maxTimeUnits, maxTime));
+		parameters.setRelSp(TimeConvert.convertToMillis(relSpUnits, relSp));
+		parameters.setRelDuration(TimeConvert.convertToMillis(relDurationUnits,
 				relDuration));
-		d.setH(TimeConvert.convertToMillis(hUnits, h));
-		d.setOutputFreq(TimeConvert
+		parameters.setH(TimeConvert.convertToMillis(hUnits, h));
+		parameters.setOutputFreq(TimeConvert
 				.convertToMillis(outputFreqUnits, outputFreq));
-		d.setCompetencyStart(TimeConvert.convertToMillis(competencyStartUnits,
+		parameters.setCompetencyStart(TimeConvert.convertToMillis(competencyStartUnits,
 				competencyStart));
-		d.setMortalityRate(mrate);
-		d.setMortalityUnits(mUnits);
-		d.setVerticalMigration(vmgrt);
-		d.setOutputFolder(outputFolder);
-		d.setEffectiveMigration(effectiveMigration);
-		d.setSettlementType(settlementType);
+		parameters.setMortalityRate(mrate);
+		parameters.setMortalityUnits(mUnits);
+		parameters.setVerticalMigration(vmgrt);
+		parameters.setOutputFolder(outputFolder);
+		parameters.setEffectiveMigration(effectiveMigration);
+		parameters.setSettlementType(settlementType);
+		parameters.setDiffusionType(diffusionType);
 	}
 }

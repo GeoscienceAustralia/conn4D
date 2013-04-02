@@ -88,6 +88,7 @@ public interface Parameters{
 	public double getReleaseDepth();
 	public long getRelSp();
 	public String getSettlementType();
+	public String getInitialPositionType();
 	public long getStime();
 	public long getTime();
 	public String getWriteFolder();
@@ -99,6 +100,7 @@ public interface Parameters{
 	public void setEffectiveMigration(boolean effectiveMigration);
 	public void setEtime(long etime);
 	public void setH(long h);
+	public void setInitialPositionType(String initialPositionType);
 	public void setLocName(String locName);
 	public void setMortalityParameters(double[] mortalityParameters);
 	public void setMortalityRate(double mortalityRate);

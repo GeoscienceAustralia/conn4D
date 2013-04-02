@@ -24,7 +24,7 @@ import lagrange.utils.VectorUtils;
 
 public class ReleaseFactory_4D {
 
-	private LocalParameters lp;
+	private ConfigurationOverride lp;
 	private VelocityReader vr;
 	private TrajectoryWriter tw;
 	private DistanceWriter dw;
@@ -103,7 +103,7 @@ public class ReleaseFactory_4D {
 	 */
 
 	private void initialize(String local_config) {
-		lp = new LocalParameters(local_config);
+		lp = new ConfigurationOverride(local_config);
 		boolean err = false;
 
 		// Initialize the habitat class.
@@ -322,7 +322,7 @@ public class ReleaseFactory_4D {
 
 		// Initialize the Turbulence engine
 		
-		if(prm.getDiffusionType().equalsIgnoreCase("None")){
+		if(prm.getDiffusionType().equalsIgnoreCase("NONE")){
 			df = new Diffusion_None();
 		}
 		
@@ -377,7 +377,7 @@ public class ReleaseFactory_4D {
 	 * @return - The LocalParameters object
 	 */
 
-	public LocalParameters getLocalParameters() {
+	public ConfigurationOverride getLocalParameters() {
 		return lp;
 	}
 
@@ -513,7 +513,7 @@ public class ReleaseFactory_4D {
 	 *            - The LocalParameters object
 	 */
 
-	public void setLocalParameters(LocalParameters lp) {
+	public void setLocalParameters(ConfigurationOverride lp) {
 		this.lp = lp;
 	}
 

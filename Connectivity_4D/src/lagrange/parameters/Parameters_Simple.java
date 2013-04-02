@@ -28,20 +28,26 @@ public class Parameters_Simple implements Parameters {
 	private double[] mortalityParameters = { 1 / .0635, .7559 };
 	private boolean verticalMigration = false;
 	private String outputFolder = "Test";
-	public String settlementType = "Simple";
+	private String settlementType = "Simple";
 	private String mortalityUnits = "Days";
 	private String writeFolder;
 	private String diffusionType;
+	private String initialPositionType = "centroid";	
 	private boolean effectiveMigration = true;
 
 	@Override
-	public double getReleaseDepth() {
-		return depth;
+	public long getCompetencyStart() {
+		return competencyStart;
 	}
 
+	public String getCompetencyStartUnits() {
+		return competencyStartUnits;
+	}
+	
 	@Override
-	public double getMaxReleaseDepth() {
-		return depth;
+	public Coordinate getCoordinates() {
+		return new Coordinate(position.getCentroid().getX(), position
+				.getCentroid().getY());
 	}
 	
 	@Override
@@ -50,24 +56,18 @@ public class Parameters_Simple implements Parameters {
 	}
 	
 	@Override
-	public void setDiffusionType(String diffusionType){
-		this.diffusionType = diffusionType;
-	}
-	
-	@Override
 	public long getEtime() {
 		return etime;
 	}
-
+	
 	@Override
 	public long getH() {
 		return h;
 	}
-
+	
 	@Override
-	public Coordinate getCoordinates() {
-		return new Coordinate(position.getCentroid().getX(), position
-				.getCentroid().getY());
+	public String getInitialPositionType(){
+		return initialPositionType;
 	}
 
 	@Override
@@ -80,8 +80,8 @@ public class Parameters_Simple implements Parameters {
 	}
 
 	@Override
-	public double getMortalityRate() {
-		return mortalityRate / (TimeConvert.convertToMillis(mortalityUnits, 1));
+	public double getMaxReleaseDepth() {
+		return depth;
 	}
 
 	@Override
@@ -90,22 +90,28 @@ public class Parameters_Simple implements Parameters {
 	}
 
 	@Override
+	public double getMortalityRate() {
+		return mortalityRate / (TimeConvert.convertToMillis(mortalityUnits, 1));
+	}
+
+	@Override
+	public String getMortalityType() {
+		return mortalityType;
+	}
+
+	@Override
 	public int getNPart() {
 		return nPart;
 	}
 
 	@Override
-	public long getOutputFreq() {
-		return outputFreq;
+	public String getOutputFolder() {
+		return outputFolder;
 	}
 
 	@Override
-	public long getCompetencyStart() {
-		return competencyStart;
-	}
-
-	public String getCompetencyStartUnits() {
-		return competencyStartUnits;
+	public long getOutputFreq() {
+		return outputFreq;
 	}
 
 	@Override
@@ -116,6 +122,11 @@ public class Parameters_Simple implements Parameters {
 	@Override
 	public long getRelDuration() {
 		return relDuration;
+	}
+
+	@Override
+	public double getReleaseDepth() {
+		return depth;
 	}
 
 	@Override
@@ -144,13 +155,13 @@ public class Parameters_Simple implements Parameters {
 	}
 
 	@Override
-	public boolean usesVerticalMigration() {
-		return verticalMigration;
+	public void setCompetencyStart(long competencyStart) {
+		this.competencyStart = competencyStart;
 	}
 
 	@Override
-	public boolean usesEffectiveMigration() {
-		return effectiveMigration;
+	public void setCompetencyStartUnits(String units) {
+		this.competencyStartUnits = units;
 	}
 
 	@Override
@@ -164,6 +175,11 @@ public class Parameters_Simple implements Parameters {
 			throw new IllegalArgumentException(
 					"This class does not support the use of a depth range.");
 		}
+	}
+
+	@Override
+	public void setDiffusionType(String diffusionType){
+		this.diffusionType = diffusionType;
 	}
 
 	@Override
@@ -182,8 +198,8 @@ public class Parameters_Simple implements Parameters {
 	}
 
 	@Override
-	public void setPosition(Geometry position) {
-		this.position = position;
+	public void setInitialPositionType(String diffusionType){
+		this.initialPositionType = diffusionType;
 	}
 
 	@Override
@@ -192,13 +208,18 @@ public class Parameters_Simple implements Parameters {
 	}
 
 	@Override
+	public void setMortalityParameters(double[] mortalityParameters) {
+		this.mortalityParameters = mortalityParameters;
+	}
+
+	@Override
 	public void setMortalityRate(double mortalityRate) {
 		this.mortalityRate = mortalityRate;
 	}
 
 	@Override
-	public void setMortalityParameters(double[] mortalityParameters) {
-		this.mortalityParameters = mortalityParameters;
+	public void setMortalityType(String mortalityType) {
+		this.mortalityType = mortalityType;
 	}
 
 	@Override
@@ -212,18 +233,18 @@ public class Parameters_Simple implements Parameters {
 	}
 
 	@Override
+	public void setOutputFolder(String outputFolder) {
+		this.outputFolder = outputFolder;
+	}
+
+	@Override
 	public void setOutputFreq(long outputFreq) {
 		this.outputFreq = outputFreq;
 	}
 
 	@Override
-	public void setCompetencyStart(long competencyStart) {
-		this.competencyStart = competencyStart;
-	}
-
-	@Override
-	public void setCompetencyStartUnits(String units) {
-		this.competencyStartUnits = units;
+	public void setPosition(Geometry position) {
+		this.position = position;
 	}
 
 	@Override
@@ -262,22 +283,12 @@ public class Parameters_Simple implements Parameters {
 	}
 
 	@Override
-	public String getOutputFolder() {
-		return outputFolder;
+	public boolean usesEffectiveMigration() {
+		return effectiveMigration;
 	}
 
 	@Override
-	public void setOutputFolder(String outputFolder) {
-		this.outputFolder = outputFolder;
-	}
-
-	@Override
-	public String getMortalityType() {
-		return mortalityType;
-	}
-
-	@Override
-	public void setMortalityType(String mortalityType) {
-		this.mortalityType = mortalityType;
+	public boolean usesVerticalMigration() {
+		return verticalMigration;
 	}
 }

@@ -32,13 +32,23 @@ public class Parameters_Zonal_4D implements Parameters {
 	private boolean true3D = true;
 	private boolean centroid = true;
 	private String outputFolder = "Test";
-	public String settlementType = "Simple";
+	private String settlementType = "Simple";
 	private String diffusionType = "Simple";
+	private String initialPositionType = "centroid";
 	private String writeFolder;
 	private String mortalityUnits = "Days";
 	private boolean effectiveMigration = true;
 	private RandomPointsBuilder rpb = new RandomPointsBuilder();
 
+	@Override
+	public long getCompetencyStart() {
+		return competencyStart;
+	}
+
+	public String getCompetencyStartUnits() {
+		return competencyStartUnits;
+	}
+	
 	@Override
 	public Coordinate getCoordinates() {
 		if (position.getGeometryType().equalsIgnoreCase("Point")) {
@@ -59,13 +69,30 @@ public class Parameters_Zonal_4D implements Parameters {
 							+ " could not be resolved");
 		}
 	}
+	
+	@Override
+	public String getDiffusionType(){
+		return diffusionType;
+	}
+	
+	@Override
+	public long getEtime() {
+		return etime;
+	}
 
 	@Override
-	public double getReleaseDepth() {
-		if(minDepth==maxDepth){
-			return maxDepth;
-		}
-		return Uniform.staticNextDoubleFromTo(minDepth, maxDepth);
+	public long getH() {
+		return h;
+	}
+
+	@Override
+	public String getInitialPositionType(){
+		return initialPositionType;
+	}
+	
+	@Override
+	public String getLocName() {
+		return locName;
 	}
 	
 	@Override
@@ -74,28 +101,8 @@ public class Parameters_Zonal_4D implements Parameters {
 	}
 
 	@Override
-	public long getEtime() {
-		return etime;
-	}
-
-	@Override
-	public String getDiffusionType(){
-		return diffusionType;
-	}
-	
-	@Override
-	public void setDiffusionType(String diffusionType){
-		this.diffusionType = diffusionType;
-	}
-	
-	@Override
-	public long getH() {
-		return h;
-	}
-
-	@Override
-	public String getLocName() {
-		return locName;
+	public double[] getMortalityParameters() {
+		return mortalityParameters;
 	}
 
 	@Override
@@ -104,8 +111,8 @@ public class Parameters_Zonal_4D implements Parameters {
 	}
 
 	@Override
-	public double[] getMortalityParameters() {
-		return mortalityParameters;
+	public String getMortalityType() {
+		return mortalityType;
 	}
 
 	@Override
@@ -114,19 +121,15 @@ public class Parameters_Zonal_4D implements Parameters {
 	}
 
 	@Override
-	public long getOutputFreq() {
-		return outputFreq;
+	public String getOutputFolder() {
+		return outputFolder;
 	}
 
 	@Override
-	public long getCompetencyStart() {
-		return competencyStart;
+	public long getOutputFreq() {
+		return outputFreq;
 	}
 	
-	public String getCompetencyStartUnits() {
-		return competencyStartUnits;
-	}
-
 	@Override
 	public Geometry getPosition() {
 		return position;
@@ -135,6 +138,14 @@ public class Parameters_Zonal_4D implements Parameters {
 	@Override
 	public long getRelDuration() {
 		return relDuration;
+	}
+
+	@Override
+	public double getReleaseDepth() {
+		if(minDepth==maxDepth){
+			return maxDepth;
+		}
+		return Uniform.staticNextDoubleFromTo(minDepth, maxDepth);
 	}
 
 	@Override
@@ -157,23 +168,23 @@ public class Parameters_Zonal_4D implements Parameters {
 		return time;
 	}
 
-	public boolean isTrue3D(){
-		return true3D;
-	}
-	
 	@Override
 	public String getWriteFolder() {
 		return writeFolder;
 	}
-
-	@Override
-	public boolean usesVerticalMigration() {
-		return verticalMigration;
+	
+	public boolean isTrue3D(){
+		return true3D;
 	}
 
 	@Override
-	public boolean usesEffectiveMigration() {
-		return effectiveMigration;
+	public void setCompetencyStart(long competencyStart) {
+		this.competencyStart = competencyStart;
+	}
+
+	@Override
+	public void setCompetencyStartUnits(String units) {
+		this.competencyStartUnits = units;
 	}
 	
 	@Override
@@ -188,6 +199,11 @@ public class Parameters_Zonal_4D implements Parameters {
 		this.maxDepth = maxDepth;
 	}
 		
+	@Override
+	public void setDiffusionType(String diffusionType){
+		this.diffusionType = diffusionType;
+	}
+
 	@Override
 	public void setEffectiveMigration(boolean effectiveMigration) {
 		this.effectiveMigration = effectiveMigration;
@@ -204,8 +220,8 @@ public class Parameters_Zonal_4D implements Parameters {
 	}
 
 	@Override
-	public void setPosition(Geometry position) {
-		this.position = position;
+	public void setInitialPositionType(String diffusionType){
+		this.initialPositionType = diffusionType;
 	}
 
 	@Override
@@ -214,40 +230,45 @@ public class Parameters_Zonal_4D implements Parameters {
 	}
 
 	@Override
-	public void setMortalityRate(double mortalityRate) {
-		this.mortalityRate = mortalityRate;
+	public void setMortalityParameters(double[] mortalityParameters) {
+		this.mortalityParameters = mortalityParameters;
 	}
 
 	@Override
-	public void setMortalityParameters(double[] mortalityParameters) {
-		this.mortalityParameters = mortalityParameters;
+	public void setMortalityRate(double mortalityRate) {
+		this.mortalityRate = mortalityRate;
+	}
+	
+	@Override
+	public void setMortalityType(String mortalityType) {
+		this.mortalityType = mortalityType;
 	}
 
 	@Override
 	public void setMortalityUnits(String units){
 		this.mortalityUnits = units;
 	}
-	
+
 	@Override
 	public void setNPart(int part) {
 		nPart = part;
 	}
 
 	@Override
+	public void setOutputFolder(String outputFolder) {
+		this.outputFolder = outputFolder;
+	}
+	
+	@Override
 	public void setOutputFreq(long outputFreq) {
 		this.outputFreq = outputFreq;
 	}
 
 	@Override
-	public void setCompetencyStart(long competencyStart) {
-		this.competencyStart = competencyStart;
+	public void setPosition(Geometry position) {
+		this.position = position;
 	}
 
-	@Override
-	public void setCompetencyStartUnits(String units) {
-		this.competencyStartUnits = units;
-	}
-	
 	@Override
 	public void setRelDuration(long relDuration) {
 		this.relDuration = relDuration;
@@ -273,6 +294,10 @@ public class Parameters_Zonal_4D implements Parameters {
 		this.time = time;
 	}
 
+	public void setTrue3D(boolean true3D){
+		this.true3D = true3D;
+	}
+
 	@Override
 	public void setVerticalMigration(boolean verticalMigration) {
 		this.verticalMigration = verticalMigration;
@@ -284,26 +309,12 @@ public class Parameters_Zonal_4D implements Parameters {
 	}
 
 	@Override
-	public String getOutputFolder() {
-		return outputFolder;
-	}
-
-	@Override
-	public void setOutputFolder(String outputFolder) {
-		this.outputFolder = outputFolder;
-	}
-
-	@Override
-	public String getMortalityType() {
-		return mortalityType;
-	}
-
-	@Override
-	public void setMortalityType(String mortalityType) {
-		this.mortalityType = mortalityType;
+	public boolean usesEffectiveMigration() {
+		return effectiveMigration;
 	}
 	
-	public void setTrue3D(boolean true3D){
-		this.true3D = true3D;
+	@Override
+	public boolean usesVerticalMigration() {
+		return verticalMigration;
 	}
 }

@@ -8,7 +8,7 @@ package lagrange.input;
  * @author Johnathan Kool
  */
 
-public class LocalParameters extends ParameterReader {
+public class ConfigurationOverride extends ParameterReader {
 
 	public String uname = "uvel"; // Name of the u parameter in the velocity files (e.g. "UVEL")
 	public String vname = "vvel"; // Name of the v parameter in the velocity files (e.g. "VVEL")
@@ -38,7 +38,7 @@ public class LocalParameters extends ParameterReader {
 
 	//LocalParameters using default values.  Useful for testing.
 	
-	public LocalParameters(){}
+	public ConfigurationOverride(){}
 	
 	/**
 	 * Constructor that accepts a file name.
@@ -46,7 +46,7 @@ public class LocalParameters extends ParameterReader {
 	 * @param str - name of the file to be read
 	 */
 	
-	public LocalParameters(String str) {
+	public ConfigurationOverride(String str) {
 		readFile(str);
 	}	
 }

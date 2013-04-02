@@ -13,7 +13,7 @@ import java.util.TimeZone;
 import lagrange.impl.ReleaseRunner_4D;
 import lagrange.impl.readers.ReleaseFileReader_Shapefile_4D;
 import lagrange.impl.readers.ReleaseFileReader_Text;
-import lagrange.input.GlobalParameters;
+import lagrange.input.ParameterOverride;
 import lagrange.input.ReleaseFileReader;
 import lagrange.parameters.Parameters_Zonal_4D;
 import lagrange.utils.TimeConvert;
@@ -23,7 +23,7 @@ import lagrange.utils.TimeConvert;
  */
 
 public class Connect_4D {
-	private static GlobalParameters gp = new GlobalParameters();
+	private static ParameterOverride gp = new ParameterOverride();
 	private static ReleaseFileReader rf;
 	private static ReleaseRunner_4D rr;
 	private static DateFormat outerformat = new SimpleDateFormat(

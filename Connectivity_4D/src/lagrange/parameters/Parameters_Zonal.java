@@ -31,6 +31,7 @@ public class Parameters_Zonal implements Parameters {
 	private String outputFolder = "Test";
 	private String settlementType = "Simple";
 	private String diffusionType = "Simple";
+	private String initialPositionType = "centroid";
 	private String writeFolder;
 	private String mortalityUnits = "Days";
 	private boolean effectiveMigration = true;
@@ -72,20 +73,20 @@ public class Parameters_Zonal implements Parameters {
 	}
 	
 	@Override
-	public void setDiffusionType(String diffusionType){
-		this.diffusionType = diffusionType;
-	}
-	
-	@Override
 	public long getEtime() {
 		return etime;
 	}
-
+	
 	@Override
 	public long getH() {
 		return h;
 	}
-
+	
+	@Override
+	public String getInitialPositionType(){
+		return initialPositionType;
+	}
+	
 	@Override
 	public String getLocName() {
 		return locName;
@@ -115,7 +116,7 @@ public class Parameters_Zonal implements Parameters {
 	public int getNPart() {
 		return nPart;
 	}
-	
+
 	@Override
 	public String getOutputFolder() {
 		return outputFolder;
@@ -125,7 +126,7 @@ public class Parameters_Zonal implements Parameters {
 	public long getOutputFreq() {
 		return outputFreq;
 	}
-
+	
 	@Override
 	public Geometry getPosition() {
 		return position;
@@ -155,7 +156,7 @@ public class Parameters_Zonal implements Parameters {
 	public long getStime() {
 		return stime;
 	}
-	
+
 	@Override
 	public long getTime() {
 		return time;
@@ -165,7 +166,7 @@ public class Parameters_Zonal implements Parameters {
 	public String getWriteFolder() {
 		return writeFolder;
 	}
-
+	
 	public boolean isTrue3D(){
 		return true3D;
 	}
@@ -179,7 +180,7 @@ public class Parameters_Zonal implements Parameters {
 	public void setCompetencyStartUnits(String units) {
 		this.competencyStartUnits = units;
 	}
-	
+
 	@Override
 	public void setDepth(double depth) {
 		this.depth = depth;
@@ -191,6 +192,11 @@ public class Parameters_Zonal implements Parameters {
 			throw new IllegalArgumentException(
 					"This class does not support the use of a depth range.");
 		}
+	}
+	
+	@Override
+	public void setDiffusionType(String diffusionType){
+		this.diffusionType = diffusionType;
 	}
 
 	@Override
@@ -206,6 +212,11 @@ public class Parameters_Zonal implements Parameters {
 	@Override
 	public void setH(long h) {
 		this.h = h;
+	}
+
+	@Override
+	public void setInitialPositionType(String diffusionType){
+		this.initialPositionType = diffusionType;
 	}
 
 	@Override

@@ -36,6 +36,7 @@ public class Parameters_Zonal_GOM implements Parameters {
 	private String outputFolder = "Test";
 	private String settlementType = "Simple";
 	private String diffusionType = "Simple";
+	private String initialPositionType = "centroid";
 	private String writeFolder;
 	private String mortalityUnits = "Days";
 	private boolean effectiveMigration = true;
@@ -46,6 +47,14 @@ public class Parameters_Zonal_GOM implements Parameters {
 	private double[][] daa = {{15.5,17.5},{21.5,48.5},{48.5,80},{80,90.5},{90.5,100.5},{100.5,112.5},{112.5,120}};//frnk
 	
 	private EmpiricalWalker ew = new EmpiricalWalker(da,Empirical.NO_INTERPOLATION, new MersenneTwister64(new Date(System.currentTimeMillis())));
+
+	@Override
+	public long getCompetencyStart() {
+		int index = ew.nextInt();
+		double day = Uniform.staticNextDoubleFromTo(daa[index][0], daa[index][1]);
+		competencyStart = TimeConvert.convertToMillis(competencyStartUnits, day);
+		return competencyStart;
+	}
 
 	@Override
 	public Coordinate getCoordinates() {
@@ -67,10 +76,30 @@ public class Parameters_Zonal_GOM implements Parameters {
 							+ " could not be resolved");
 		}
 	}
+	
+	@Override
+	public String getDiffusionType(){
+		return diffusionType;
+	}
+	
+	@Override
+	public long getEtime() {
+		return etime;
+	}
+	
+	@Override
+	public long getH() {
+		return h;
+	}
 
 	@Override
-	public double getReleaseDepth() {
-		return depth;
+	public String getInitialPositionType(){
+		return initialPositionType;
+	}
+	
+	@Override
+	public String getLocName() {
+		return locName;
 	}
 	
 	@Override
@@ -79,28 +108,8 @@ public class Parameters_Zonal_GOM implements Parameters {
 	}
 
 	@Override
-	public String getDiffusionType(){
-		return diffusionType;
-	}
-	
-	@Override
-	public void setDiffusionType(String diffusionType){
-		this.diffusionType = diffusionType;
-	}
-	
-	@Override
-	public long getEtime() {
-		return etime;
-	}
-
-	@Override
-	public long getH() {
-		return h;
-	}
-
-	@Override
-	public String getLocName() {
-		return locName;
+	public double[] getMortalityParameters() {
+		return mortalityParameters;
 	}
 
 	@Override
@@ -109,8 +118,8 @@ public class Parameters_Zonal_GOM implements Parameters {
 	}
 
 	@Override
-	public double[] getMortalityParameters() {
-		return mortalityParameters;
+	public String getMortalityType() {
+		return mortalityType;
 	}
 
 	@Override
@@ -119,16 +128,13 @@ public class Parameters_Zonal_GOM implements Parameters {
 	}
 
 	@Override
-	public long getOutputFreq() {
-		return outputFreq;
+	public String getOutputFolder() {
+		return outputFolder;
 	}
 
 	@Override
-	public long getCompetencyStart() {
-		int index = ew.nextInt();
-		double day = Uniform.staticNextDoubleFromTo(daa[index][0], daa[index][1]);
-		competencyStart = TimeConvert.convertToMillis(competencyStartUnits, day);
-		return competencyStart;
+	public long getOutputFreq() {
+		return outputFreq;
 	}
 
 	@Override
@@ -139,6 +145,11 @@ public class Parameters_Zonal_GOM implements Parameters {
 	@Override
 	public long getRelDuration() {
 		return relDuration;
+	}
+
+	@Override
+	public double getReleaseDepth() {
+		return depth;
 	}
 
 	@Override
@@ -167,13 +178,13 @@ public class Parameters_Zonal_GOM implements Parameters {
 	}
 
 	@Override
-	public boolean usesVerticalMigration() {
-		return verticalMigration;
+	public void setCompetencyStart(long competencyStart) {
+		this.competencyStart = competencyStart;
 	}
 
 	@Override
-	public boolean usesEffectiveMigration() {
-		return effectiveMigration;
+	public void setCompetencyStartUnits(String units) {
+		this.competencyStartUnits = units;
 	}
 
 	@Override
@@ -188,6 +199,11 @@ public class Parameters_Zonal_GOM implements Parameters {
 					"This class does not support the use of a depth range.");
 		}
 	}
+	@Override
+	public void setDiffusionType(String diffusionType){
+		this.diffusionType = diffusionType;
+	}
+
 	@Override
 	public void setEffectiveMigration(boolean effectiveMigration) {
 		this.effectiveMigration = effectiveMigration;
@@ -204,8 +220,8 @@ public class Parameters_Zonal_GOM implements Parameters {
 	}
 
 	@Override
-	public void setPosition(Geometry position) {
-		this.position = position;
+	public void setInitialPositionType(String diffusionType){
+		this.initialPositionType = diffusionType;
 	}
 
 	@Override
@@ -214,23 +230,33 @@ public class Parameters_Zonal_GOM implements Parameters {
 	}
 
 	@Override
-	public void setMortalityRate(double mortalityRate) {
-		this.mortalityRate = mortalityRate;
+	public void setMortalityParameters(double[] mortalityParameters) {
+		this.mortalityParameters = mortalityParameters;
 	}
 
 	@Override
-	public void setMortalityParameters(double[] mortalityParameters) {
-		this.mortalityParameters = mortalityParameters;
+	public void setMortalityRate(double mortalityRate) {
+		this.mortalityRate = mortalityRate;
+	}
+	
+	@Override
+	public void setMortalityType(String mortalityType) {
+		this.mortalityType = mortalityType;
 	}
 
 	@Override
 	public void setMortalityUnits(String units){
 		this.mortalityUnits = units;
 	}
-	
+
 	@Override
 	public void setNPart(int part) {
 		nPart = part;
+	}
+	
+	@Override
+	public void setOutputFolder(String outputFolder) {
+		this.outputFolder = outputFolder;
 	}
 
 	@Override
@@ -239,13 +265,8 @@ public class Parameters_Zonal_GOM implements Parameters {
 	}
 
 	@Override
-	public void setCompetencyStart(long competencyStart) {
-		this.competencyStart = competencyStart;
-	}
-	
-	@Override
-	public void setCompetencyStartUnits(String units) {
-		this.competencyStartUnits = units;
+	public void setPosition(Geometry position) {
+		this.position = position;
 	}
 
 	@Override
@@ -284,22 +305,12 @@ public class Parameters_Zonal_GOM implements Parameters {
 	}
 
 	@Override
-	public String getOutputFolder() {
-		return outputFolder;
+	public boolean usesEffectiveMigration() {
+		return effectiveMigration;
 	}
 
 	@Override
-	public void setOutputFolder(String outputFolder) {
-		this.outputFolder = outputFolder;
-	}
-
-	@Override
-	public String getMortalityType() {
-		return mortalityType;
-	}
-
-	@Override
-	public void setMortalityType(String mortalityType) {
-		this.mortalityType = mortalityType;
+	public boolean usesVerticalMigration() {
+		return verticalMigration;
 	}
 }

@@ -18,7 +18,7 @@ import lagrange.impl.movement.Diffusion_None;
 import lagrange.impl.movement.Advection_RK4_3D;
 import lagrange.impl.readers.VelocityReader_NetCDF_4D;
 import lagrange.impl.writers.TrajectoryWriter_Text;
-import lagrange.input.LocalParameters;
+import lagrange.input.ConfigurationOverride;
 import lagrange.parameters.Parameters_Test;
 
 public class TestReleaseFactory {
@@ -48,7 +48,7 @@ public class TestReleaseFactory {
 		// Rather than bottlenecking at the source (the requester), we create copies
 		// of the values that can then be distributed to the client machines.
 		
-		LocalParameters lp = new LocalParameters();
+		ConfigurationOverride lp = new ConfigurationOverride();
 		lp.ufile = "C:/Temp/Ones.nc";
 		lp.uname = "Variable X";
 		lp.vfile = "C:/Temp/Ones.nc";
@@ -81,7 +81,7 @@ public class TestReleaseFactory {
 		rf.setMatrixWriter(new NullPlug());
 		rf.setSettlement(new Settlement_None());
 		rf.setTrajectoryWriter(new TrajectoryWriter_Text("C:/Temp/testme.txt"));
-		rf.setLocalParameters(new LocalParameters());
+		rf.setLocalParameters(new ConfigurationOverride());
 	}
 	
 	@Test
