@@ -28,24 +28,19 @@ public interface Parameters{
 	public Coordinate getCoordinates();	
 	
 	/**
-	 * Retrieves the depth at which the Particles are to be released
+	 * Sets the type of diffusion to be used by the application using a String
+	 * 
 	 * @return
 	 */
 	
-	public double getReleaseDepth();
-	
-	/**
-	 * Retrieves the maximum depth at which Particles are to be released 
-	 * @return
-	 */
-	
-	public double getMaxReleaseDepth();
+	public String getDiffusionType();
 	
 	/**
 	 * Retrieves the end time (in Java milliseconds) of the simulated release
 	 * 
 	 * @return
 	 */
+	
 	
 	public long getEtime();
 	
@@ -65,11 +60,19 @@ public interface Parameters{
 	public String getLocName();
 	
 	/**
+	 * Retrieves the maximum depth at which Particles are to be released 
+	 * @return
+	 */
+	
+	public double getMaxReleaseDepth();
+	
+	/**
 	 * Retrieves an array of double corresponding to mortality parameter values
 	 * @return
 	 */
 	
 	public double[] getMortalityParameters();
+	
 	public abstract double getMortalityRate();
 	public String getMortalityType();
 	public int getNPart();
@@ -77,6 +80,12 @@ public interface Parameters{
 	public long getOutputFreq();
 	public Geometry getPosition();
 	public long getRelDuration();
+	/**
+	 * Retrieves the depth at which the Particles are to be released
+	 * @return
+	 */
+	
+	public double getReleaseDepth();
 	public long getRelSp();
 	public String getSettlementType();
 	public long getStime();
@@ -86,6 +95,7 @@ public interface Parameters{
 	public void setCompetencyStartUnits(String competencyStartUnits);
 	public void setDepth(double depth);
 	public void setDepthRange(double minDepth, double maxDepth);
+	public void setDiffusionType(String diffusionType);
 	public void setEffectiveMigration(boolean effectiveMigration);
 	public void setEtime(long etime);
 	public void setH(long h);

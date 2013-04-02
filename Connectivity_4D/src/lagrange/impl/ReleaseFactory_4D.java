@@ -321,10 +321,15 @@ public class ReleaseFactory_4D {
 		mv = rk4;
 
 		// Initialize the Turbulence engine
-
-		//df = new Diffusion_None();
-		df = new Diffusion_Simple_3D(prm.getH());
-
+		
+		if(prm.getDiffusionType().equalsIgnoreCase("None")){
+			df = new Diffusion_None();
+		}
+		
+		else{
+			df = new Diffusion_Simple_3D(prm.getH());
+		}
+		
 		// Initialize vertical migration, if required.
 
 		if (prm.usesVerticalMigration()) {

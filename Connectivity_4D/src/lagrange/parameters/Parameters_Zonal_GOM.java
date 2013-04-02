@@ -34,7 +34,8 @@ public class Parameters_Zonal_GOM implements Parameters {
 	private boolean verticalMigration = false;
 	private boolean centroid = true;
 	private String outputFolder = "Test";
-	public String settlementType = "Simple";
+	private String settlementType = "Simple";
+	private String diffusionType = "Simple";
 	private String writeFolder;
 	private String mortalityUnits = "Days";
 	private boolean effectiveMigration = true;
@@ -77,6 +78,16 @@ public class Parameters_Zonal_GOM implements Parameters {
 		return depth;
 	}
 
+	@Override
+	public String getDiffusionType(){
+		return diffusionType;
+	}
+	
+	@Override
+	public void setDiffusionType(String diffusionType){
+		this.diffusionType = diffusionType;
+	}
+	
 	@Override
 	public long getEtime() {
 		return etime;

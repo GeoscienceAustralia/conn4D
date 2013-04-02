@@ -26,11 +26,22 @@ public class Parameters_Test implements Parameters{
 	private double[] mortalityParameters = {1/.0635, .7559};
 	private boolean verticalMigration = false;
 	private String outputFolder = "Test";
-	public String settlementType = "Simple";
+	private String settlementType = "Simple";
+	private String diffusionType = "Simple";
 	private String mortalityUnits = "Days";
 	private String writeFolder;
 	private boolean effectiveMigration= true;
 	GeometryFactory gf = new GeometryFactory();
+	
+	@Override
+	public String getDiffusionType(){
+		return diffusionType;
+	}
+	
+	@Override
+	public void setDiffusionType(String diffusionType){
+		this.diffusionType = diffusionType;
+	}
 	
 	@Override
 	public double getReleaseDepth() {

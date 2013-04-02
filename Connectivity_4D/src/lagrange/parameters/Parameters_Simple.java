@@ -31,6 +31,7 @@ public class Parameters_Simple implements Parameters {
 	public String settlementType = "Simple";
 	private String mortalityUnits = "Days";
 	private String writeFolder;
+	private String diffusionType;
 	private boolean effectiveMigration = true;
 
 	@Override
@@ -41,6 +42,16 @@ public class Parameters_Simple implements Parameters {
 	@Override
 	public double getMaxReleaseDepth() {
 		return depth;
+	}
+	
+	@Override
+	public String getDiffusionType(){
+		return diffusionType;
+	}
+	
+	@Override
+	public void setDiffusionType(String diffusionType){
+		this.diffusionType = diffusionType;
 	}
 	
 	@Override
