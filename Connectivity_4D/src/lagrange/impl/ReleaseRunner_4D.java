@@ -40,21 +40,28 @@ public class ReleaseRunner_4D implements ReleaseRunner {
 
 		relFactory.setParameters(prm);
 
-		// For each and every particle...
+		// For all particles in the group...
 
 		relFactory.setTime(prm.getTime());
 		int n = prm.getNPart();
 
-		// Ensure we start in bounds
-		
-		if(!relFactory.getCollisionDetection().isInBounds(prm.getTime(), prm.getMaxReleaseDepth(), prm.getCoordinates().x, prm.getCoordinates().y)){
-			System.out.print("\t Initial depth/range ("+ prm.getMaxReleaseDepth() + ") is not in the water column. Continuing to the next release site.");
+		// Ensure that the group starts in bounds. With centroid we can test as
+		// a group.
+
+		if (!relFactory.getCollisionDetection().isInBounds(prm.getTime(),
+				prm.getMaxReleaseDepth(), prm.getCoordinates().x,
+				prm.getCoordinates().y)) {
+			System.out
+					.print("\t Initial depth/range ("
+							+ prm.getMaxReleaseDepth()
+							+ ") is not in the water column. Continuing to the next release site.");
 			relFactory.shutdown();
 			return;
 		}
-		
-		if(prm.getTime()<relFactory.getVelocityReader().getBounds()[0][0]){
-			System.out.print("\t Release time occurs outside the range of velocity data values. Continuing to the next release site.");
+
+		if (prm.getTime() < relFactory.getVelocityReader().getBounds()[0][0]) {
+			System.out
+					.print("\t Release time occurs outside the range of velocity data values. Continuing to the next release site.");
 			relFactory.shutdown();
 			return;
 		}
@@ -75,26 +82,30 @@ public class ReleaseRunner_4D implements ReleaseRunner {
 			int ct = 0;
 			for (long k = 0; k < n; k++) {
 				Release rel = relFactory.generate();
-				if(rel.toBeKilled()){doneSignal.countDown(); continue;}
+				if (rel.toBeKilled()) {
+					doneSignal.countDown();
+					continue;
+				}
 				rel.setDoneSignal(doneSignal);
 				Thread th = new Thread(rel);
 
 				// Setting the priority manually to 3 to avoid hogging
 				// resources
 
-				th.setPriority(3);
+				// th.setPriority(3);
 				th.start();
 				ct++;
 			}
-			
-			System.out.print("\t" + ct + " effective migrant" + (ct==1?"":"s") +"\t");
+
+			System.out.print("\t" + ct + " effective migrant"
+					+ (ct == 1 ? "" : "s") + "\t");
 
 			// Wait for the threads to all finish.
 
-			//doneSignal.await();
+			// doneSignal.await();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally{
+		} finally {
 			try {
 				doneSignal.await();
 			} catch (InterruptedException e) {
@@ -110,6 +121,6 @@ public class ReleaseRunner_4D implements ReleaseRunner {
 	 */
 
 	public void close() {
-		//exec.shutdown();
+		// exec.shutdown();
 	}
 }

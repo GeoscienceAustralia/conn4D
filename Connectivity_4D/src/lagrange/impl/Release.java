@@ -217,6 +217,9 @@ public class Release implements Runnable {
 			p.setY(c.y);
 			p.setPY(p.getY());
 			p.setZ(prm.getReleaseDepth());
+			
+			// Ensuring initial position is above the seafloor and in the
+			// water column.
 
 			try {
 				if (!(collisionDetect instanceof CollisionDetector_None)) {

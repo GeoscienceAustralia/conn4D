@@ -34,7 +34,7 @@ public class Parameters_Zonal_4D implements Parameters {
 	private String outputFolder = "Test";
 	private String settlementType = "Simple";
 	private String diffusionType = "Simple";
-	private String initialPositionType = "centroid";
+	private String initialPositionType = "Centroid";
 	private String writeFolder;
 	private String mortalityUnits = "Days";
 	private boolean effectiveMigration = true;
@@ -55,7 +55,7 @@ public class Parameters_Zonal_4D implements Parameters {
 			return position.getCoordinate();
 		}
 		if (position.getGeometryType().equalsIgnoreCase("Polygon") || position.getGeometryType().equalsIgnoreCase("MultiPolygon")) {
-			if(!centroid){
+			if(initialPositionType.equalsIgnoreCase("RANDOM")){
 				rpb.setExtent(position);
 				rpb.setNumPoints(1);
 			return rpb.getGeometry().getCoordinate();}

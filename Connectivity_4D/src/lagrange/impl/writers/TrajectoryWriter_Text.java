@@ -25,7 +25,6 @@ public class TrajectoryWriter_Text implements TrajectoryWriter {
 	private String filename;
 	private String timeUnits = "Date";
 	private String durationUnits = "Days";
-	private DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private boolean negCoord = false;
 	private boolean isEmpty = true;
 
@@ -80,6 +79,7 @@ public class TrajectoryWriter_Text implements TrajectoryWriter {
 	public synchronized void apply(Particle p) {
 
 		StringBuffer sb = new StringBuffer();
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 		/*
 		 * Write ID, Time (as an actual Date/Time stamp), Duration (Days),
@@ -122,8 +122,6 @@ public class TrajectoryWriter_Text implements TrajectoryWriter {
 
 		tw.write(sb.toString());
 		isEmpty = false;
-
-		//this.notifyAll();
 		}
 	}
 

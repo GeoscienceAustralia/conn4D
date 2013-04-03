@@ -52,6 +52,7 @@ public class ParameterOverride extends ParameterReader {
 	public String mortalityType = "None";
 	public String settlementType = "Simple";
 	public String diffusionType = "Simple";
+	public String initialPositionType = "centroid";
 	public String timezone = "UTC";
 	public String zName = "Depth";
 	public boolean centroid = true;
@@ -83,5 +84,6 @@ public class ParameterOverride extends ParameterReader {
 		parameters.setEffectiveMigration(effectiveMigration);
 		parameters.setSettlementType(settlementType);
 		parameters.setDiffusionType(diffusionType);
+		parameters.setInitialPositionType(initialPositionType);
 	}
 }
