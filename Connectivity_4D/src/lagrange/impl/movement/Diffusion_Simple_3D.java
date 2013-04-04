@@ -18,9 +18,9 @@ import lagrange.utils.GeometryUtils;
 
 public class Diffusion_Simple_3D implements Diffusion, Cloneable {
 
-	private float uK = 0.03f / 21600f; //0; The magic number in distance/seconds
-	private float vK = 0.03f / 21600f; //0;
-	private float wK = 1E-8f / 21600f; //0; Vertical coefficient of diffusivity
+	private float uK = 0.03f / 21600f; // The magic number in distance/seconds.  21600 is 6 hours.
+	private float vK = 0.03f / 21600f; //
+	private float wK = 1.3E-4f; // Vertical coefficient of diffusivity http://oceanworld.tamu.edu/resources/ocng_textbook/chapter08/chapter08_05.htm
 	private float h; // Minimum integration time step (default=2hrs)
 
 	private int seed = RandomSeedTable.getSeedAtRowColumn(

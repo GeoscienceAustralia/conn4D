@@ -230,4 +230,16 @@ public class Connect_4D {
 		Connect_4D connect = new Connect_4D(prmfile, cfgfile);
 		connect.run();
 	}
+	
+	public ReleaseRunner getReleaseRunner(){
+		return rr;
+	}
+	
+	public ReleaseFileReader getReleaseFileReader(){
+		return rf;
+	}
+	
+	public void setRestart(String val){
+		restartAt = val;
+	}
 }
