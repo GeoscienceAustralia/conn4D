@@ -18,11 +18,15 @@ import lagrange.utils.GeometryUtils;
 
 public class Diffusion_Simple_3D implements Diffusion, Cloneable {
 
-	private float uK = 0.03f / 21600f; // The magic number in distance/seconds.  21600 is 6 hours.
-	private float vK = 0.03f / 21600f; //
-	private float wK = 1.3E-4f; // Vertical coefficient of diffusivity http://oceanworld.tamu.edu/resources/ocng_textbook/chapter08/chapter08_05.htm
+	private float TL = 21600f;
+	private float uK = (float) Math.sqrt(2 * 0.03f / TL); // The magic number in distance/seconds.  .03 is the variance in u, 21600 is 6 hours.
+	private float vK = (float) Math.sqrt(2 * 0.03f / TL); // The magic number in distance/seconds.  .03 is the variance in v, 21600 is 6 hours.
+	private float wK = 1.0E-5f; // Open-ocean vertical eddy diffusivity coefficient in m/s from http://oceanworld.tamu.edu/resources/ocng_textbook/chapter08/chapter08_05.htm (Munk, 1966)
 	private float h; // Minimum integration time step (default=2hrs)
+	private float sqrt_h;
 
+	// Seed the random number generator by randomly picking from a seed table.
+	
 	private int seed = RandomSeedTable.getSeedAtRowColumn(
 			Uniform.staticNextIntFromTo(0, Integer.MAX_VALUE),
 			Uniform.staticNextIntFromTo(0, RandomSeedTable.COLUMNS));
@@ -30,7 +34,8 @@ public class Diffusion_Simple_3D implements Diffusion, Cloneable {
 	private Normal norm = new Normal(0, 1, re);
 
 	public Diffusion_Simple_3D(float h) {
-		this.h = h / 1000; // convert to seconds
+		this.h = h / 1000; // convert h from milliseconds to seconds
+		this.sqrt_h = (float) Math.sqrt(h);
 	}
 
 	/**
@@ -40,6 +45,10 @@ public class Diffusion_Simple_3D implements Diffusion, Cloneable {
 	 * E.E. 1993 - Estuarine and Coastal Shelf Science 37:99-110. A Random-walk,
 	 * Particle Tracking Model for Well-Mixed Estuaries and Coastal Waters
 	 * 
+	 * Because we are calculating the diffusion coefficients independently (sqrt2D in
+	 * Dimou's text), we multiply the result by sqrt of h (delta t in Dimou's text)
+	 * since the square root of products is equal to the product of their square roots.
+	 * 
 	 * @param p
 	 *            - The particle to be acted upon.
 	 */
@@ -47,19 +56,19 @@ public class Diffusion_Simple_3D implements Diffusion, Cloneable {
 	@Override
 	public void apply(Particle p) {
 
-		float usc = (float) Math.sqrt(2f * uK * h);
-		float vsc = (float) Math.sqrt(2f * vK * h);
-		float wsc = (float) Math.sqrt(2f * wK * h);
+		float usc = uK * (float) sqrt_h;
+		float vsc = vK * (float) sqrt_h;
+		float wsc = wK * (float) sqrt_h;
 
-		double u = usc * (float) norm.nextDouble();
-		double v = vsc * (float) norm.nextDouble();
-		double w = wsc * (float) norm.nextDouble();
+		double dx = usc * (float) norm.nextDouble();
+		double dy = vsc * (float) norm.nextDouble();
+		double dz = wsc * (float) norm.nextDouble();
 
 		// Displacement equals velocity over time
 
-		double dx = u * h;
-		double dy = v * h;
-		double dz = w * h;
+		//double dx = u * h;
+		//double dy = v * h;
+		//double dz = w * h;
 
 		// Determine the new coordinates
 
@@ -91,6 +100,7 @@ public class Diffusion_Simple_3D implements Diffusion, Cloneable {
 
 	public void setH(float h) {
 		this.h = h / 1000;
+		this.sqrt_h = (float) Math.sqrt(h);
 	}
 	
 	/**
