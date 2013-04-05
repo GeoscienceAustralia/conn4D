@@ -987,4 +987,48 @@ public class VectorMath {
 
 		return sum;
 	}
+	
+	/**
+	 * Returns the sample variance of the array values using
+	 * a one-pass algorithm.
+	 * 
+	 * @param fa - A vector of floats
+	 * @return - The variance of the vector
+	 */
+	
+	public static float variance(float[] fa) {
+		int n = 0;
+		float mean = 0;
+		float M2 = 0;
+
+		for (int i = 0; i < fa.length; i++) {
+			n = n + 1;
+			float delta = fa[i] - mean;
+			mean = mean + delta / (float) n;
+			M2 = M2 + delta * (fa[i] - mean);
+		}
+		float variance = M2 / (float) (n - 1);
+		return variance;
+	}
+	
+	public static float weighted_variance(float[] fa, float[] weights){
+
+	    float sumweight = 0;
+	    float mean = 0;
+	    float M2 = 0;
+	    int n = fa.length;
+	 
+	    for (int i = 0; i < n; i++){
+	        float temp = weights[i] + sumweight;
+	        float delta = fa[i] - mean;
+	        float R = delta * weights[i] / temp;
+	        mean = mean + R;
+	        M2 = M2 + sumweight * delta * R;
+	        sumweight = temp;
+
+	    }
+	 
+	    float variance_n = M2/sumweight;
+	    return variance_n * (float) n/((float)(n-1));
+	}
 }
