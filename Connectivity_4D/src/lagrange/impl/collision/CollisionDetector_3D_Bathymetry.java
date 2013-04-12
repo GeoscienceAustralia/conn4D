@@ -28,6 +28,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 	private Intersector_3D_Raster i3d = new Intersector_3D_Raster();
 	private double surfaceLevel = 0;
 	private PrjTransform pt = new PrjTransform_WGS2CEQD();
+	private final int bounceLimit = 50;
 
 	public CollisionDetector_3D_Bathymetry(Boundary bathym) {
 		this.bnd = (Boundary_NetCDF_Grid) bathym;
@@ -45,6 +46,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 		Coordinate end_prj = pt.project(end);
 
 		Coordinate tmpStart = start_prj;
+		Coordinate tmpEnd = end_prj;
 
 		// Get the vertices (x,y,z) of the four corners of the cell beneath the
 		// Particle's initial position
@@ -61,7 +63,6 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 		// Test for reflection at least once
 
 		trans = i3d.reflect_special(trans, box);
-		// trans = i3d.reflect(trans, box);
 
 		// Because we are using lats and lons for our horizontal reference
 		// system, we must convert on the fly to meters to ensure proper
@@ -101,7 +102,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 		// start is not the same as the previous start value)
 		// then continue loop
 
-		int breakpoint = 0;
+		int internal_bounces = 0;
 
 		while (!Arrays.equals(currentCell, endCell)
 				|| !trans.p0.equals2D(tmpStart)) {
@@ -109,7 +110,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 			// Compensate for a null start
 
 			if (Double.isNaN(trans.p0.x) && Double.isNaN(trans.p0.y)) {
-				System.out.println("\nWarning: NaN error.  Aborting particle "
+				System.out.println("\nWarning: Reflection start is a NaN value.  Aborting particle "
 						+ p.getID() + " at time= "
 						+ TimeConvert.millisToDays(p.getAge()) + ", track "
 						+ start + " " + end);
@@ -123,11 +124,19 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 			if (!trans.p0.equals2D(tmpStart)) {
 
 				if (dda.isOnEdge(backtrans.p0)) {
+					
+					// Correct by averaging with the reflection off next box.
+					
 					Coordinate[] peekbox = pt
 							.project(bnd.getVertices(VectorMath.add(
 									currentCell, dda.peek())));
+					
+					
+					
 					// LineSegment opposite = i3d.reflect_special(ls, peekbox);
 				}
+				
+				tmpEnd = trans.p1;
 
 				// Nibble to prevent re-reflection
 				CoordinateMath.nibble(trans, Double.MIN_VALUE);
@@ -152,7 +161,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 
 			// Sanity check
 
-			if (breakpoint > 100) {
+			if (internal_bounces > bounceLimit) {
 				System.out
 						.println("\nWarning:  Repetition break.  Aborting particle "
 								+ p.getID()
@@ -192,7 +201,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 			backtrans = new LineSegment(pt.inverse(trans.p0),
 					pt.inverse(trans.p1));
 
-			breakpoint++;
+			internal_bounces++;
 		}
 
 		// Temporary check to make sure we're not below the benthic layer

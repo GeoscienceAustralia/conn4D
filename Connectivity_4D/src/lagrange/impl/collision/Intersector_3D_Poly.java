@@ -149,6 +149,9 @@ public class Intersector_3D_Poly{
 		// Coincident with the plane
 		
 		if (Math.abs(b) < tolerance) {
+			if(ls.p1.z>0){
+				ls.p1.z=0;
+			}
 			return ls;
 		}
 		
@@ -156,6 +159,9 @@ public class Intersector_3D_Poly{
 
 		double r = a / b;
 		if (r < 0d) {
+			if(ls.p1.z>0){
+				ls.p1.z=0;
+			}
 			return ls;
 		}
 		
@@ -205,5 +211,13 @@ public class Intersector_3D_Poly{
 		Coordinate[] vertices = new Coordinate[polygon.getNumPoints()-1];
 		System.arraycopy(polygon.getCoordinates(), 0, vertices, 0, vertices.length);
 		return reflect(ls,vertices);
+	}
+	
+	public LineSegment reflect_special(LineSegment ls, Geometry polygon) {
+
+		Coordinate[] vertices = new Coordinate[polygon.getNumPoints()-1];
+		System.arraycopy(polygon.getCoordinates(), 0, vertices, 0, vertices.length);
+		LineSegment tmp = reflect_special(ls,vertices);
+		return tmp;
 	}
 }

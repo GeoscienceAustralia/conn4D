@@ -198,21 +198,6 @@ public class TestIntersector_3D_Poly {
 		}
 	}
 	
-	/*@Test
-	public void testXSurfaceRotationLineZ() {
-		int n = 100;
-		LineSegment line = linez;
-		for(int i = 0; i < n; i++){
-			double fraction = (double) i/(double) n;
-			//LinearRing lr = gf.createLinearRing(rotateX(rectangle.getCoordinates(),fraction));
-			LinearRing lr = gf.createLinearRing(rotateX(rectangle.getCoordinates(),0.25));
-			Geometry g = gf.createPolygon(lr,null);
-			LineSegment rfLine = lsi.reflect(line, g);
-			
-			////////////////////////////////////////////////
-		}
-	}*/
-	
 	@Test
 	public void testIntersection(){
 		Coordinate p0 = new Coordinate(-1,-1,-1);
@@ -235,6 +220,172 @@ public class TestIntersector_3D_Poly {
 		
 		Assert.assertArrayEquals(new double[]{0,0,-4.5},new double[]{isect.x,isect.y,isect.z},e);
 	}
+	
+	@Test
+	public void testXAxisRotationLineZ_special() {
+		int n = 100;
+		for (int i = 0; i < n; i++) {
+			double fraction = (double) i / (double) n;
+			LineSegment newLine = new LineSegment(
+					rotateX(linez.p0, fraction),
+					rotateX(linez.p1, fraction));
+			double x = 0;
+			double y = newLine.p1.y;
+			double z = -newLine.p1.z;
+			LineSegment rfLine = lsi.reflect_special(newLine, rectangle);
+			Assert.assertArrayEquals((new double[] { x, y, Math.min(z, 0) }),
+					c2arr(rfLine.p1), 1E-6);
+		}
+	}
+	
+	@Test
+	public void testXAxisRotationLineZ_ReversedVertices_special() {
+		int n = 100;
+		for (int i = 0; i < n; i++) {
+			double fraction = (double) i / (double) n;
+			LineSegment newLine = new LineSegment(
+					rotateX(linez.p0, fraction),
+					rotateX(linez.p1, fraction));
+			double x = 0;
+			double y = newLine.p1.y;
+			double z = -newLine.p1.z;
+			LineSegment rfLine = lsi.reflect_special(newLine, rectangle2);
+			Assert.assertArrayEquals(new double[] { x, y, Math.min(z, 0) },
+					c2arr(rfLine.p1), 1E-6);
+		}
+	}
+	
+	@Test
+	public void testXAxisRotationLineY_special() {
+		int n = 100;
+		for (int i = 0; i < n; i++) {
+			double fraction = (double) i / (double) n;
+			LineSegment newLine = new LineSegment(
+					rotateX(liney.p0, fraction),
+					rotateX(liney.p1, fraction));
+			double x = 0;
+			double y = -newLine.p1.y;
+			double z = newLine.p1.z;
+			LineSegment rfLine = lsi.reflect_special(newLine, rectangle4);
+			if(rfLine.p1.z==1.0){
+				System.out.println("??");
+				LineSegment tmp = lsi.reflect_special(newLine, rectangle4);
+				System.out.println(tmp);
+			}
+			Assert.assertArrayEquals(new double[] { x, y, Math.min(z, 0) },
+					c2arr(rfLine.p1), 1E-6);
+		}
+	}
+	
+	@Test
+	public void testYAxisRotationLineZ_special() {
+		int n = 100;
+		for (int i = 0; i < n; i++) {
+			double fraction = (double) i / (double) n;
+			LineSegment newLine = new LineSegment(
+					rotateY(linez.p0, fraction),
+					rotateY(linez.p1, fraction));
+			double x = newLine.p1.x;
+			double y = 0;
+			double z = -newLine.p1.z;
+			LineSegment rfLine = lsi.reflect_special(newLine, rectangle);
+			Assert.assertArrayEquals(new double[] { x, y, Math.min(z, 0) },
+					c2arr(rfLine.p1), 1E-6);
+		}
+	}
+	
+	@Test
+	public void testYAxisRotationLineZ_ReversedVertices_special() {
+		int n = 100;
+		for (int i = 0; i < n; i++) {
+			double fraction = (double) i / (double) n;
+			LineSegment newLine = new LineSegment(
+					rotateY(linez.p0, fraction),
+					rotateY(linez.p1, fraction));
+			double x = newLine.p1.x;
+			double y = 0;
+			double z = -newLine.p1.z;
+			LineSegment rfLine = lsi.reflect_special(newLine, rectangle2);
+			Assert.assertArrayEquals(new double[] { x, y, Math.min(z, 0) },
+					c2arr(rfLine.p1), 1E-6);
+		}
+	}
+	
+	@Test
+	public void testYAxisRotationLineX_special() {
+		int n = 100;
+		for (int i = 0; i < n; i++) {
+			double fraction = (double) i / (double) n;
+			LineSegment newLine = new LineSegment(
+					rotateY(linex.p0, fraction),
+					rotateY(linex.p1, fraction));
+			double x = -newLine.p1.x;
+			double y = 0;
+			double z = newLine.p1.z;
+			LineSegment rfLine = lsi.reflect_special(newLine, rectangle3);
+			Assert.assertArrayEquals(new double[] { x, y, Math.min(z,0) },
+					c2arr(rfLine.p1), 1E-6);
+		}
+	}
+	
+	@Test
+	public void testZAxisRotationLineX_special() {
+		int n = 100;
+		for (int i = 0; i < n; i++) {
+			double fraction = (double) i / (double) n;
+			LineSegment newLine = new LineSegment(
+					rotateZ(liney.p0, fraction),
+					rotateZ(liney.p1, fraction));
+			double x = newLine.p1.x;
+			double y = -newLine.p1.y;
+			double z = 0;
+			LineSegment rfLine = lsi.reflect_special(newLine, rectangle4);
+			Assert.assertArrayEquals(new double[] { x, y, Math.min(z, 0) },
+					c2arr(rfLine.p1), 1E-6);
+		}
+	}
+	
+	@Test
+	public void testZAxisRotationLineY_special() {
+		int n = 100;
+		for (int i = 0; i < n; i++) {
+			double fraction = (double) i / (double) n;
+			LineSegment newLine = new LineSegment(
+					rotateZ(linex.p0, fraction),
+					rotateZ(linex.p1, fraction));
+			double x = -newLine.p1.x;
+			double y = newLine.p1.y;
+			double z = 0;
+			LineSegment rfLine = lsi.reflect_special(newLine, rectangle3);
+			Assert.assertArrayEquals(new double[] { x, y, Math.min(z, 0) },
+					c2arr(rfLine.p1), 1E-6);
+		}
+	}
+		
+	@Test
+	public void testIntersection_special(){
+		Coordinate p0 = new Coordinate(-1,-1,-1);
+		Coordinate p1 = new Coordinate(1,-1,-1);
+		Coordinate p2 = new Coordinate(1,1,1);
+		Coordinate p3 = new Coordinate(-1,1,1);
+		Coordinate[] vertices = new Coordinate[] {p0,p1,p2,p3};
+		LineSegment ls = new LineSegment(new Coordinate(0,0,1),new Coordinate(0,0,-1));
+		Coordinate isect = lsi.intersection(ls, vertices);
+		
+		Assert.assertArrayEquals(new double[]{0,0,0},new double[]{isect.x,isect.y,isect.z},e);
+		
+		p0 = new Coordinate(-1,-1,-5);
+		p1 = new Coordinate(+1,-1,-5);
+		p2 = new Coordinate(+1,+1,-4);
+		p3 = new Coordinate(-1,+1,-4);
+		vertices = new Coordinate[] {p0,p1,p2,p3};
+		ls = new LineSegment(new Coordinate(0,0,1E6),new Coordinate(0,0,-1E6));
+		isect = lsi.intersection(ls, vertices);
+		
+		Assert.assertArrayEquals(new double[]{0,0,-4.5},new double[]{isect.x,isect.y,isect.z},e);
+	}
+	
+	
 
 	private double[] c2arr(Coordinate c) {
 		return new double[] { c.x, c.y, c.z };
