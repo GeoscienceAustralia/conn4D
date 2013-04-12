@@ -149,6 +149,15 @@ public class CoordinateMath {
 	    return ls;
 	}
 	
+	public Coordinate normal(Coordinate[] vertices){
+		Coordinate v0 = vertices[0];
+		Coordinate v1 = vertices[1];
+		Coordinate v2 = vertices[vertices.length-1];
+		Coordinate u = CoordinateMath.subtract(v1, v0);
+		Coordinate v = CoordinateMath.subtract(v2, v0);
+		return CoordinateMath.cross(u, v);
+	}
+	
 	/**
 	 * From: http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
 	 * 
@@ -249,5 +258,29 @@ public class CoordinateMath {
 	public static Coordinate ceqd2lonlat(Coordinate c){
 		double[] coords = GeometryUtils.ceqd2lonlat(new double[]{c.x,c.y,c.z});
 		return new Coordinate(coords[0],coords[1],coords[2]);
+	}
+	
+	public static Coordinate signum(Coordinate c){
+		return new Coordinate(Math.signum(c.x),Math.signum(c.y),Math.signum(c.z));
+	}
+	
+	public static double angle3DSigned(Coordinate p1, Coordinate vertex, Coordinate p2, Coordinate reference){
+		Coordinate v1 = subtract(p1,vertex);
+		Coordinate v2 = subtract(p2,vertex);
+		Coordinate v3 = subtract(reference,vertex);
+		Coordinate vn = cross(v1,v3);
+		
+		double denom = magnitude(v1)*magnitude(v2);
+		double sina = magnitude(cross(v1,v2))/denom;
+		double cosa = dot(v1,v2)/denom;
+		
+		double angle = Math.atan2(sina, cosa);
+		double sign = dot(vn,cross(v1,v2));
+		
+		return sign < 0d ? -angle:angle;
+	}
+	
+	public static double angle3DSigned(Coordinate p1, Coordinate vertex, Coordinate p2){
+		return angle3DSigned(p1,vertex,p2,p1);
 	}
 }

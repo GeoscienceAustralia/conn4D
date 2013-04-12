@@ -22,25 +22,27 @@ import lagrange.utils.PrjTransform_WGS2CEQD;
  * @param p
  */
 
-public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
+public class CollisionDetector_3D_Bathymetry_v2 implements CollisionDetector {
 
 	private Boundary_NetCDF_Grid bnd;
 	private Intersector_3D_Raster i3d = new Intersector_3D_Raster();
 	private double surfaceLevel = 0;
 	private PrjTransform pt = new PrjTransform_WGS2CEQD();
 
-	public CollisionDetector_3D_Bathymetry(Boundary bathym) {
+	public CollisionDetector_3D_Bathymetry_v2(Boundary bathym) {
 		this.bnd = (Boundary_NetCDF_Grid) bathym;
 	}
 
 	@Override
 	public void handleIntersection(Particle p) {
 
-		// In addition to reflecting, we may also want to consider triggering
-		// settling based on shear stress values
+		// Get the Particle's coordinates
 
 		Coordinate start = new Coordinate(p.getPX(), p.getPY(), p.getPZ());
 		Coordinate end = new Coordinate(p.getX(), p.getY(), p.getZ());
+		
+		// Project the coordinates
+		
 		Coordinate start_prj = pt.project(start);
 		Coordinate end_prj = pt.project(end);
 
@@ -61,7 +63,6 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 		// Test for reflection at least once
 
 		trans = i3d.reflect_special(trans, box);
-		// trans = i3d.reflect(trans, box);
 
 		// Because we are using lats and lons for our horizontal reference
 		// system, we must convert on the fly to meters to ensure proper
@@ -100,7 +101,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 		// or if a reflection took place(i.e. the reflected
 		// start is not the same as the previous start value)
 		// then continue loop
-
+		
 		int breakpoint = 0;
 
 		while (!Arrays.equals(currentCell, endCell)
@@ -121,13 +122,8 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 			// If there was a reflection
 
 			if (!trans.p0.equals2D(tmpStart)) {
-
-				if (dda.isOnEdge(backtrans.p0)) {
-					Coordinate[] peekbox = pt
-							.project(bnd.getVertices(VectorMath.add(
-									currentCell, dda.peek())));
-					// LineSegment opposite = i3d.reflect_special(ls, peekbox);
-				}
+				
+				//////////////////////////////////////////////////////////////////////////
 
 				// Nibble to prevent re-reflection
 				CoordinateMath.nibble(trans, Double.MIN_VALUE);
@@ -152,18 +148,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 
 			// Sanity check
 
-			if (breakpoint > 100) {
-				System.out
-						.println("\nWarning:  Repetition break.  Aborting particle "
-								+ p.getID()
-								+ " at time="
-								+ TimeConvert.millisToDays(p.getAge())
-								+ ", track " + start + " " + end);
-				p.setError(true);
-				return;
-			}
-
-			if (currentCell[0] < Math.min(startCell[0], endCell[0])
+			if (breakpoint>100 || currentCell[0] < Math.min(startCell[0], endCell[0])
 					|| currentCell[0] > Math.max(startCell[0], endCell[0])
 					|| currentCell[1] < Math.min(startCell[1], endCell[1])
 					|| currentCell[1] > Math.max(startCell[1], endCell[1])) {
@@ -191,7 +176,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 			trans = i3d.reflect_special(trans, box);
 			backtrans = new LineSegment(pt.inverse(trans.p0),
 					pt.inverse(trans.p1));
-
+			
 			breakpoint++;
 		}
 
@@ -231,8 +216,8 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 	 */
 
 	@Override
-	public CollisionDetector_3D_Bathymetry clone() {
-		CollisionDetector_3D_Bathymetry clone = new CollisionDetector_3D_Bathymetry(
+	public CollisionDetector_3D_Bathymetry_v2 clone() {
+		CollisionDetector_3D_Bathymetry_v2 clone = new CollisionDetector_3D_Bathymetry_v2(
 				bnd);
 		clone.setProjectionTransform(this.pt);
 		return clone;

@@ -1,5 +1,6 @@
 package lagrange.utils;
 
+import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.LineSegment;
 
 public class DigitalDifferentialAnalyzer {
@@ -10,12 +11,10 @@ public class DigitalDifferentialAnalyzer {
 	private int[] adjacency = new int[2];
 	private int[] displacement = new int[2];
 	private final double PRECISION = 1E-6;
-	//private boolean first = true;
 	private double x_linedist = Double.MAX_VALUE;
 	private double y_linedist = Double.MAX_VALUE;
 
-	@SuppressWarnings("unused")
-	private int x, y;
+	//private int x, y;
 	private double dx, dy;
 	private double dt_dx, dt_dy;
 	private double snap_x, snap_y, cellsize;
@@ -49,36 +48,35 @@ public class DigitalDifferentialAnalyzer {
 	}
 	
 	/**
+	 * Returns the next cell without incrementing
+	 * 
+	 * @return
+	 */
+	
+	public int[] peek(){
+		if (t_next_vertical < t_next_horizontal) {
+			return new int[]{0,y_inc};
+		}
+		
+		if (t_next_vertical > t_next_horizontal) {
+			adjacency[0] = x_inc;
+			adjacency[1] = 0;
+			return new int[] {x_inc, 0};
+		}
+		
+		return new int[]{x_inc, y_inc};
+	}
+	
+	/**
 	 * Identifies the relative position of the next adjacent cell
 	 * according to the direction of the LineString.  The horizontal 
 	 * is provided first, followed by the vertical.
 	 */
 
 	public void increment() {
-		/*if(first){
-			first = false;
-			if(edgeCheck()){
-				if(x_linedist<y_linedist){
-					adjacency[0] = x_inc;
-					adjacency[1] = 0;
-				}
-				if(x_linedist>y_linedist){
-					adjacency[0] = 0;
-					adjacency[1] = y_inc;
-				}
-				if(x_linedist==y_linedist){
-					adjacency[0] = x_inc;
-					adjacency[1] = y_inc;
-				}
-				displacement[0]+=adjacency[0];
-				displacement[1]+=displacement[1];
-				return;
-			}
-			increment();
-		}*/
 		
 		if (t_next_vertical < t_next_horizontal) {
-			y += y_inc;
+			//y += y_inc;
 			t_next_vertical += dt_dy;
 			adjacency[0] = 0;
 			adjacency[1] = y_inc;
@@ -88,7 +86,7 @@ public class DigitalDifferentialAnalyzer {
 		}
 
 		if (t_next_vertical > t_next_horizontal) {
-			x += x_inc;
+			//x += x_inc;
 			t_next_horizontal += dt_dx;
 			adjacency[0] = x_inc;
 			adjacency[1] = 0;
@@ -98,9 +96,9 @@ public class DigitalDifferentialAnalyzer {
 		}
 
 		if (t_next_vertical == t_next_horizontal) {
-			x += x_inc;
+			//x += x_inc;
 			t_next_horizontal += dt_dx;
-			y += y_inc;
+			//y += y_inc;
 			t_next_vertical += dt_dy;
 			adjacency[0] = x_inc;
 			adjacency[1] = y_inc;
@@ -134,6 +132,52 @@ public class DigitalDifferentialAnalyzer {
 		return false;
 	}
 	
+	/**
+	 * Identifies whether the coordinate is on a horizontal edge within precision
+	 * 
+	 * @param c
+	 * @return
+	 */
+	
+	public boolean isOnHorizontalEdge(Coordinate c){
+		if((c.y-snap_y)%cellsize-cellsize<PRECISION){return true;}
+		return false;
+	}
+	
+	/**
+	 * Identifies whether the coordinate is on a vertical edge within precision
+	 * 
+	 * @param c
+	 * @return
+	 */
+	
+	public boolean isOnVerticalEdge(Coordinate c){
+		if((c.y-snap_x)%cellsize-cellsize<PRECISION){return true;}
+		return false;
+	}
+	
+	/**
+	 * Identifies whether the coordinate is on an edge within precision
+	 * 
+	 * @param c
+	 * @return
+	 */
+	
+	public boolean isOnEdge(Coordinate c){
+		return isOnVerticalEdge(c)||isOnHorizontalEdge(c);
+	}
+	
+	/**
+	 * Identifies whether the coordinate is on a corner within precision
+	 * 
+	 * @param c
+	 * @return
+	 */
+	
+	public boolean isOnCorner(Coordinate c){
+		return isOnVerticalEdge(c)&&isOnHorizontalEdge(c);
+	}
+	
 	public void setLine(LineSegment ls) {
 		this.ls = ls;
 
@@ -145,8 +189,8 @@ public class DigitalDifferentialAnalyzer {
 		x_offset = (snap_x)%cellsize;
 		y_offset = (snap_y)%cellsize;
 
-		x = (int) (Math.floor(p0x));
-		y = (int) (Math.floor(p0y));
+		//x = (int) (Math.floor(p0x));
+		//y = (int) (Math.floor(p0y));
 		
 		x_linedist = (p0x-snap_x)%cellsize-cellsize;
 		y_linedist = (p0y-snap_y)%cellsize-cellsize;

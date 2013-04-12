@@ -76,7 +76,7 @@ public class TrajectoryWriter_Text implements TrajectoryWriter {
 	 */
 
 	@Override
-	public synchronized void apply(Particle p) {
+	public void apply(Particle p) {
 
 		StringBuffer sb = new StringBuffer();
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
