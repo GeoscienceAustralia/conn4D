@@ -241,6 +241,20 @@ public class CoordinateMath {
 		return dilate(add(a,b),1d/2d);
 	}
 	
+	public static final Coordinate average(Coordinate[] coordinates){
+		
+		if(coordinates==null||coordinates.length==0){
+			return NaN;
+		}
+		
+		int n = coordinates.length;
+		Coordinate c = new Coordinate(0,0,0);
+		for(int i = 0; i < n; i++){
+			c = add(c, coordinates[i]);
+		}
+		return dilate(c,1d/(double)n);
+	}
+	
 	public static final Coordinate[] midpoints(Coordinate[] ca){
 		if(ca.length < 2){throw new IllegalArgumentException("Coordinate array must contain 2 more more points");}
 		Coordinate[] out = new Coordinate[ca.length-1];

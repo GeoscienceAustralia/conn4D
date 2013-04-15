@@ -45,8 +45,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 		Coordinate start_prj = pt.project(start);
 		Coordinate end_prj = pt.project(end);
 
-		Coordinate tmpStart = start_prj;
-		Coordinate tmpEnd = end_prj;
+		LineSegment tmpln = new LineSegment(start_prj,end_prj);
 
 		// Get the vertices (x,y,z) of the four corners of the cell beneath the
 		// Particle's initial position
@@ -81,7 +80,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 		// If, after reflection the start end end cells match and there
 		// was no reflection (i.e. p0 hasn't changed) then halt
 
-		if (Arrays.equals(startCell, endCell) && trans.p0.equals2D(tmpStart)) {
+		if (Arrays.equals(startCell, endCell) && trans.p0.equals2D(tmpln.p0)) {
 			p.setX(backtrans.p1.x);
 			p.setY(backtrans.p1.y);
 			p.setZ(backtrans.p1.z);
@@ -105,7 +104,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 		int internal_bounces = 0;
 
 		while (!Arrays.equals(currentCell, endCell)
-				|| !trans.p0.equals2D(tmpStart)) {
+				|| !trans.p0.equals2D(tmpln.p0)) {
 
 			// Compensate for a null start
 
@@ -121,9 +120,13 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 
 			// If there was a reflection
 
-			if (!trans.p0.equals2D(tmpStart)) {
+			if (!trans.p0.equals2D(tmpln.p0)) {
+				
+				// Handle edge case
 
 				if (dda.isOnEdge(backtrans.p0)) {
+					
+					LineSegment opposite_reflection;
 					
 					// Correct by averaging with the reflection off next box.
 					
@@ -131,19 +134,25 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 							.project(bnd.getVertices(VectorMath.add(
 									currentCell, dda.peek())));
 					
-					
+					Coordinate centroid_1 = CoordinateMath.average(box);
+					Coordinate vertex = trans.p0;
+					Coordinate centroid_2 = CoordinateMath.average(peekbox);
+					double angle = CoordinateMath.angle3DSigned(centroid_1, vertex, centroid_2,tmpln.p0);
+					System.out.print(angle);
+					//if(angle<0){opposite_reflection = i3d.reflect_special(tmpln, peekbox);}
+					//else{opposite_reflection = i3d.reflect_special(tmpln, peekbox);}			
 					
 					// LineSegment opposite = i3d.reflect_special(ls, peekbox);
 				}
 				
-				tmpEnd = trans.p1;
+				tmpln.p1 = trans.p1;
 
 				// Nibble to prevent re-reflection
 				CoordinateMath.nibble(trans, Double.MIN_VALUE);
 				backtrans = new LineSegment(pt.inverse(trans.p0),
 						pt.inverse(trans.p1));
 				dda.setLine(backtrans);
-				tmpStart = trans.p0;
+				tmpln.p0 = trans.p0;
 				trans = i3d.reflect_special(trans, box);
 				continue;
 			}

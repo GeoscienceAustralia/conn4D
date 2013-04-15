@@ -63,6 +63,17 @@ public class TestIntersector_3D_Poly {
 	}
 
 	@Test
+	public void testReflectReverse(){
+		Coordinate[] ca = new Coordinate[]{new Coordinate(-1,-1,-1),
+				                           new Coordinate( 1,-1, 1),
+										   new Coordinate( 1, 1, 1),
+										   new Coordinate(-1, 1,-1)};
+		LineSegment rfline = lsi.reflect_reverse(linex, ca);
+		System.out.println(rfline);
+		
+	}
+	
+	@Test
 	public void testXAxisRotationLineZ() {
 		int n = 100;
 		for (int i = 0; i < n; i++) {
