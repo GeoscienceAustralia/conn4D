@@ -4,8 +4,8 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Iterator;
-
-import javolution.util.FastMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 import lagrange.Particle;
 import lagrange.output.DistanceWriter;
@@ -13,8 +13,8 @@ import lagrange.output.DistanceWriter;
 public class DistanceWriter_Floater_Text implements DistanceWriter{
 
 	BufferedWriter bw;
-	FastMap<String,Double> num = new FastMap<String,Double>();
-	FastMap<String,Double> dist = new FastMap<String,Double>();
+	Map<String,Double> num = new TreeMap<String,Double>();
+	Map<String,Double> dist = new TreeMap<String,Double>();
 
 	/**
 	 * Constructor that uses a String to generate the output file.
