@@ -18,12 +18,17 @@ import lagrange.utils.GeometryUtils;
 
 public class Diffusion_Simple_3D implements Diffusion, Cloneable {
 
-	private float TL = 21600f;
-	private float uK = (float) Math.sqrt(2 * 0.03f / TL); // The magic number in distance/seconds.  .03 is the variance in u, 21600 is 6 hours.
-	private float vK = (float) Math.sqrt(2 * 0.03f / TL); // The magic number in distance/seconds.  .03 is the variance in v, 21600 is 6 hours.
+	// from http://drs.nio.org/drs/bitstream/2264/503/1/Proc_AP_Akademi_Sci_7_123.pdf
+	// horizontal eddy diffusion coefficients are around 1E3 cm2/s.  Vertical coeffs are around 1 cm2/s
+	
+	//private float TL = 21600f;
+	//private float uK = (float) Math.sqrt(2 * 0.03f / TL); // The magic number in distance/seconds.  .03 is the variance in u, 21600 is 6 hours.
+	//private float vK = (float) Math.sqrt(2 * 0.03f / TL); // The magic number in distance/seconds.  .03 is the variance in v, 21600 is 6 hours.
+	private float uK = 2f;  // Open-ocean vertical eddy diffusivity coefficient in m/s from http://oceanworld.tamu.edu/resources/ocng_textbook/chapter08/chapter08_05.htm (Ledwell, Watson and Law 1991)
+	private float vK = 2f;  // Open-ocean vertical eddy diffusivity coefficient in m/s from http://oceanworld.tamu.edu/resources/ocng_textbook/chapter08/chapter08_05.htm (Ledwell, Watson and Law 1991)
 	private float wK = 1.0E-5f; // Open-ocean vertical eddy diffusivity coefficient in m/s from http://oceanworld.tamu.edu/resources/ocng_textbook/chapter08/chapter08_05.htm (Munk, 1966)
-	private float h; // Minimum integration time step (default=2hrs)
-	private float sqrt_h;
+	private float h = 7200; // Minimum integration time step (default=2hrs)
+	private float sqrt_h = (float) Math.sqrt(h);
 
 	// Seed the random number generator by randomly picking from a seed table.
 	
@@ -32,6 +37,8 @@ public class Diffusion_Simple_3D implements Diffusion, Cloneable {
 			Uniform.staticNextIntFromTo(0, RandomSeedTable.COLUMNS));
 	private RandomEngine re = new MersenneTwister64(seed);
 	private Normal norm = new Normal(0, 1, re);
+	
+	public Diffusion_Simple_3D(){}
 
 	public Diffusion_Simple_3D(float h) {
 		this.h = h / 1000; // convert h from milliseconds to seconds

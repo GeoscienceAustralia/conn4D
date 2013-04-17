@@ -117,6 +117,17 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 				p.setLost(true);
 				break;
 			}
+			
+			if (internal_bounces > bounceLimit) {
+				System.out
+						.println("\nWarning:  Repetition break.  Aborting particle "
+								+ p.getID()
+								+ " at time="
+								+ TimeConvert.millisToDays(p.getAge())
+								+ ", track " + start + " " + end);
+				p.setError(true);
+				return;
+			}
 
 			// If there was a reflection
 
@@ -124,26 +135,26 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 				
 				// Handle edge case
 
-				if (dda.isOnEdge(backtrans.p0)) {
+				//if (dda.isOnEdge(backtrans.p0)) {
 					
-					LineSegment opposite_reflection;
+					//LineSegment opposite_reflection;
 					
 					// Correct by averaging with the reflection off next box.
 					
-					Coordinate[] peekbox = pt
-							.project(bnd.getVertices(VectorMath.add(
-									currentCell, dda.peek())));
+					//Coordinate[] peekbox = pt
+					//		.project(bnd.getVertices(VectorMath.add(
+					//				currentCell, dda.peek())));
 					
-					Coordinate centroid_1 = CoordinateMath.average(box);
-					Coordinate vertex = trans.p0;
-					Coordinate centroid_2 = CoordinateMath.average(peekbox);
-					double angle = CoordinateMath.angle3DSigned(centroid_1, vertex, centroid_2,tmpln.p0);
-					System.out.print(angle);
+					//Coordinate centroid_1 = CoordinateMath.average(box);
+					//Coordinate vertex = trans.p0;
+					//Coordinate centroid_2 = CoordinateMath.average(peekbox);
+					//double angle = CoordinateMath.angle3DSigned(centroid_1, vertex, centroid_2,tmpln.p0);
+					//System.out.print(angle);
 					//if(angle<0){opposite_reflection = i3d.reflect_special(tmpln, peekbox);}
 					//else{opposite_reflection = i3d.reflect_special(tmpln, peekbox);}			
 					
 					// LineSegment opposite = i3d.reflect_special(ls, peekbox);
-				}
+				//}
 				
 				tmpln.p1 = trans.p1;
 
@@ -154,6 +165,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 				dda.setLine(backtrans);
 				tmpln.p0 = trans.p0;
 				trans = i3d.reflect_special(trans, box);
+				internal_bounces++;
 				continue;
 			}
 
