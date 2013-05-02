@@ -5,7 +5,7 @@ import java.io.IOException;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.LineSegment;
 
-import lagrange.Boundary;
+import lagrange.Boundary_Grid;
 import lagrange.impl.collision.Intersector_3D_Poly;
 import lagrange.utils.CoordinateMath;
 import lagrange.utils.IndexLookup_Nearest;
@@ -15,7 +15,7 @@ import ucar.ma2.Index;
 import ucar.nc2.NetcdfFile;
 import ucar.nc2.Variable;
 
-public class Boundary_NetCDF_Grid implements Boundary, Cloneable {
+public class Boundary_Grid_NetCDF implements Boundary_Grid, Cloneable {
 
 	private NetcdfFile boundary;
 	private Variable boundaryVar;
@@ -39,7 +39,7 @@ public class Boundary_NetCDF_Grid implements Boundary, Cloneable {
 
 	private int ncols;
 
-	public Boundary_NetCDF_Grid(String filename) {
+	public Boundary_Grid_NetCDF(String filename) {
 
 		try {
 			boundary = NetcdfFile.open(filename);
@@ -51,7 +51,7 @@ public class Boundary_NetCDF_Grid implements Boundary, Cloneable {
 		}
 	}
 
-	public Boundary_NetCDF_Grid(String bathname, String latName,
+	public Boundary_Grid_NetCDF(String bathname, String latName,
 			String lonName) throws IOException {
 
 		boundary = NetcdfFile.open(bathname);
@@ -64,9 +64,9 @@ public class Boundary_NetCDF_Grid implements Boundary, Cloneable {
 	}
 
 	@Override
-	public Boundary_NetCDF_Grid clone() {
-		Boundary_NetCDF_Grid ncb;
-		ncb = new Boundary_NetCDF_Grid(boundary.getLocation());
+	public Boundary_Grid_NetCDF clone() {
+		Boundary_Grid_NetCDF ncb;
+		ncb = new Boundary_Grid_NetCDF(boundary.getLocation());
 		// TODO FIX THIS UP!!!!
 		ncb.neglon = neglon;
 		return ncb;

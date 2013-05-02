@@ -6,9 +6,9 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.LineSegment;
 
 import lagrange.Boundary;
+import lagrange.Boundary_Grid;
 import lagrange.CollisionDetector;
 import lagrange.Particle;
-import lagrange.impl.readers.Boundary_NetCDF_Grid;
 import lagrange.utils.CoordinateMath;
 import lagrange.utils.DigitalDifferentialAnalyzer;
 import lagrange.utils.PrjTransform;
@@ -24,14 +24,14 @@ import lagrange.utils.PrjTransform_WGS2CEQD;
 
 public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 
-	private Boundary_NetCDF_Grid bnd;
+	private Boundary_Grid bnd;
 	private Intersector_3D_Raster i3d = new Intersector_3D_Raster();
 	private double surfaceLevel = 0;
 	private PrjTransform pt = new PrjTransform_WGS2CEQD();
 	private final int bounceLimit = 50;
 
 	public CollisionDetector_3D_Bathymetry(Boundary bathym) {
-		this.bnd = (Boundary_NetCDF_Grid) bathym;
+		this.bnd = (Boundary_Grid) bathym;
 	}
 
 	@Override
@@ -45,17 +45,24 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 		Coordinate start_prj = pt.project(start);
 		Coordinate end_prj = pt.project(end);
 
-		LineSegment tmpln = new LineSegment(start_prj,end_prj);
+		LineSegment tmpln = new LineSegment(start_prj, end_prj);
 
 		// Get the vertices (x,y,z) of the four corners of the cell beneath the
 		// Particle's initial position
 
 		Coordinate[] box = pt.project(bnd.getVertices(start));
 
+		// If we can't find coordinates for the starting position then
+		// we are most likely outside the data domain. Return Lost.
+
 		if (box == null) {
 			p.setLost(true);
 			return;
 		}
+
+		// Because we are using lats and lons for our horizontal reference
+		// system, we must convert on the fly to meters to ensure proper
+		// reflection in the vertical
 
 		LineSegment trans = new LineSegment(start_prj, end_prj);
 
@@ -63,22 +70,19 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 
 		trans = i3d.reflect_special(trans, box);
 
-		// Because we are using lats and lons for our horizontal reference
-		// system, we must convert on the fly to meters to ensure proper
-		// reflection in the vertical, and then back-convert.
+		// Back-converting the reflection
 
 		LineSegment backtrans = new LineSegment(pt.inverse(trans.p0),
 				pt.inverse(trans.p1));
 
-		// Get the indices of the current starting point (
-		// (after checking for reflection, in case it was
-		// reflected) as well as its end point
+		// Get the indices of the starting point and end point
+		// after checking for reflection
 
 		int[] startCell = bnd.getIndices(backtrans.p0.x, backtrans.p0.y);
 		int[] endCell = bnd.getIndices(backtrans.p1.x, backtrans.p1.y);
 
-		// If, after reflection the start end end cells match and there
-		// was no reflection (i.e. p0 hasn't changed) then halt
+		// If, the start and end cells match and p0 hasn't changed
+		// (i.e. there was no reflection) then halt
 
 		if (Arrays.equals(startCell, endCell) && trans.p0.equals2D(tmpln.p0)) {
 			p.setX(backtrans.p1.x);
@@ -87,38 +91,41 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 			return;
 		}
 
-		// Otherwise set up the grid path
-		// The above section ensures we don't create the DDA
-		// unless it is necessary to do so.
+		// Otherwise, set up the Digital Differential Analyzer to identify
+		// the grid path
 
 		DigitalDifferentialAnalyzer dda = new DigitalDifferentialAnalyzer(
 				bnd.getMinx(), bnd.getMiny(), bnd.getCellSize());
 		dda.setLine(backtrans);
 		int[] currentCell = new int[] { startCell[0], startCell[1] };
 
-		// While we haven't reached the end cell,
-		// or if a reflection took place(i.e. the reflected
-		// start is not the same as the previous start value)
-		// then continue loop
+		// Start keeping track of the number of internal reflections
 
-		int internal_bounces = 0;
+		int internal_reflections = 0;
+
+		// While the current cell is not the last cell in the path,
+		// or if the reflection line has been updated, keep looping
 
 		while (!Arrays.equals(currentCell, endCell)
 				|| !trans.p0.equals2D(tmpln.p0)) {
 
-			// Compensate for a null start
+			// Flag and kill particles with null coordinate values - (where do these come from?)
 
 			if (Double.isNaN(trans.p0.x) && Double.isNaN(trans.p0.y)) {
-				System.out.println("\nWarning: Reflection start is a NaN value.  Aborting particle "
-						+ p.getID() + " at time= "
-						+ TimeConvert.millisToDays(p.getAge()) + ", track "
-						+ start + " " + end);
+				System.out
+						.println("\nWarning: Reflection start is a NaN value.  Aborting particle "
+								+ p.getID()
+								+ " at time= "
+								+ TimeConvert.millisToDays(p.getAge())
+								+ ", track " + start + " " + end);
 				p.setError(true);
 				p.setLost(true);
 				break;
 			}
+
+			// Safety valve to prevent endless looping
 			
-			if (internal_bounces > bounceLimit) {
+			if (internal_reflections > bounceLimit) {
 				System.out
 						.println("\nWarning:  Repetition break.  Aborting particle "
 								+ p.getID()
@@ -131,31 +138,79 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 
 			// If there was a reflection
 
-			if (!trans.p0.equals2D(tmpln.p0)) {
-				
-				// Handle edge case
+			if (!trans.p0.equals3D(tmpln.p0)) {
 
-				//if (dda.isOnEdge(backtrans.p0)) {
+				// Check if the point of reflection is on the edge of a cell
+
+				if (dda.isOnEdge(backtrans.p0)) {
+
+					// Look at the adjacent cell
+
+					int[] peekdir = dda.peek();
+					VectorMath.flip(peekdir); // convert from Cartesian to ij
+												// order
+					int[] newCell = VectorMath.add(currentCell, peekdir);
+					Coordinate[] peekbox = bnd.getVertices(newCell);
+					Coordinate[] peekprj = pt.project(peekbox);
+
+					// Take the centroids of the cells and calculate the angle
+					// between them using the intersection point as the vertex,
+					// and the segment starting point as a reference for direction,
+					// dividing by 2 to get the bisecting line
 					
-					//LineSegment opposite_reflection;
+					Coordinate centroid_1 = CoordinateMath.average(box);
+					Coordinate vertex = trans.p0;
+					Coordinate centroid_2 = CoordinateMath.average(peekprj);
 					
-					// Correct by averaging with the reflection off next box.
+					double angle = CoordinateMath.angle3DSigned(centroid_1,
+							vertex, centroid_2, tmpln.p0) / 2;
 					
-					//Coordinate[] peekbox = pt
-					//		.project(bnd.getVertices(VectorMath.add(
-					//				currentCell, dda.peek())));
+					// If the angle is negative, the boundary is convex.
+					// Allow pass-through.
 					
-					//Coordinate centroid_1 = CoordinateMath.average(box);
-					//Coordinate vertex = trans.p0;
-					//Coordinate centroid_2 = CoordinateMath.average(peekbox);
-					//double angle = CoordinateMath.angle3DSigned(centroid_1, vertex, centroid_2,tmpln.p0);
-					//System.out.print(angle);
-					//if(angle<0){opposite_reflection = i3d.reflect_special(tmpln, peekbox);}
-					//else{opposite_reflection = i3d.reflect_special(tmpln, peekbox);}			
-					
-					// LineSegment opposite = i3d.reflect_special(ls, peekbox);
-				//}
-				
+					if (angle < 0) {
+						trans.p1 = tmpln.p1;
+						
+					} else {
+						
+						// Calculate the difference between the angle of incidence
+						// and the bisecting line
+						
+						double o_angle = CoordinateMath.angle3DSigned(tmpln.p0,
+								vertex, centroid_1, tmpln.p0);
+						
+						// Calculate the rotation angle by reversing direction
+						// (pi radians/180) and subtracting twice the angle from 
+						// the bisector.  Once to get to the bisector and again 
+						// to get to the reflection point.
+						
+						double r_angle = Math.PI - 2 * (angle - o_angle);
+						
+						// Determine the axis of rotation by taking the normal
+						// to the plane formed by the origin line segment, the
+						// intersection point and the original destination point
+						
+						Coordinate norm = CoordinateMath
+								.normal(new Coordinate[] { tmpln.p0, vertex,
+										trans.p1 });
+						Coordinate newaxis = CoordinateMath.add(norm, vertex);
+						
+						// Perform the rotation
+						
+						Coordinate new_loc = CoordinateMath.rotate3D(tmpln.p1,
+								newaxis, vertex, r_angle);
+						
+						// If rotation puts the point above the surface, bring it back
+						// down
+						
+						if(new_loc.z>surfaceLevel){
+							new_loc.z = surfaceLevel;
+						}
+						
+						trans.p1 = new_loc;
+					}
+				}
+
 				tmpln.p1 = trans.p1;
 
 				// Nibble to prevent re-reflection
@@ -165,7 +220,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 				dda.setLine(backtrans);
 				tmpln.p0 = trans.p0;
 				trans = i3d.reflect_special(trans, box);
-				internal_bounces++;
+				internal_reflections++;
 				continue;
 			}
 
@@ -174,7 +229,8 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 			// horizontal first, then vertical
 
 			int[] dir = dda.nextCell();
-			VectorMath.flip(dir);
+			VectorMath.flip(dir);  // convert from Cartesian to ij
+			                       // order
 
 			// Add the result to our current cell index to increment
 
@@ -182,7 +238,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 
 			// Sanity check
 
-			if (internal_bounces > bounceLimit) {
+			if (internal_reflections > bounceLimit) {
 				System.out
 						.println("\nWarning:  Repetition break.  Aborting particle "
 								+ p.getID()
@@ -222,7 +278,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 			backtrans = new LineSegment(pt.inverse(trans.p0),
 					pt.inverse(trans.p1));
 
-			internal_bounces++;
+			internal_reflections++;
 		}
 
 		// Temporary check to make sure we're not below the benthic layer
@@ -286,20 +342,46 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 	 */
 
 	public void setBoundary(Boundary bnd) {
-		this.bnd = (Boundary_NetCDF_Grid) bnd;
+		this.bnd = (Boundary_Grid) bnd;
 	}
+	
+	/**
+	 * Retrieves the surface level being used (e.g. 0)
+	 * 
+	 * @return
+	 */
 
 	public double getSurfaceLevel() {
 		return surfaceLevel;
 	}
 
+	/**
+	 * Sets the surface level being used (e.g. 0)
+	 * 
+	 * @return
+	 */
+	
 	public void setSurfaceLevel(double surfaceLevel) {
 		this.surfaceLevel = surfaceLevel;
 	}
 
+	/**
+	 * Retrieves the projection transformation being used to
+	 * convert geographic horizontal coordiantes into metres.
+	 *  
+	 * @return
+	 */
+	
 	public PrjTransform getProjectionTransform() {
 		return pt;
 	}
+	
+	/**
+	 * Sets the projection transformation being used to
+	 * convert geographic horizontal coordiantes into metres.
+	 *  
+	 * @return
+	 */
 
 	public void setProjectionTransform(PrjTransform pt) {
 		this.pt = pt;

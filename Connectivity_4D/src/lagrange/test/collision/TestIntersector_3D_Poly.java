@@ -18,6 +18,7 @@ public class TestIntersector_3D_Poly {
 	private LineSegment linex;
 	private LineSegment liney;
 	private LineSegment linez;
+	private double surfaceLevel = 0;
 	private double e = 1E-12;
 	Intersector_3D_Poly lsi = new Intersector_3D_Poly();
 	GeometryFactory gf = new GeometryFactory();
@@ -60,17 +61,6 @@ public class TestIntersector_3D_Poly {
 				0));
 		linez = new LineSegment(new Coordinate(0, 0, 1), new Coordinate(0, 0,
 				-1));
-	}
-
-	@Test
-	public void testReflectReverse(){
-		Coordinate[] ca = new Coordinate[]{new Coordinate(-1,-1,-1),
-				                           new Coordinate( 1,-1, 1),
-										   new Coordinate( 1, 1, 1),
-										   new Coordinate(-1, 1,-1)};
-		LineSegment rfline = lsi.reflect_reverse(linex, ca);
-		System.out.println(rfline);
-		
 	}
 	
 	@Test

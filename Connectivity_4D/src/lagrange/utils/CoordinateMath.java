@@ -27,17 +27,72 @@ public class CoordinateMath {
 		return new Coordinate(a.x + b.x, a.y + b.y, a.z + b.z);
 	}
 
+	public final static double angle3DSigned(Coordinate p1, Coordinate vertex, Coordinate p2){
+		return angle3DSigned(p1,vertex,p2,p1);
+	}
+	
+	public final static double angle3DSigned(Coordinate p1, Coordinate vertex, Coordinate p2, Coordinate reference){
+		Coordinate v1 = subtract(p1,vertex);
+		Coordinate v2 = subtract(p2,vertex);
+		Coordinate v3 = subtract(reference,vertex);
+		Coordinate vn = cross(v1,v3);
+		
+		double denom = magnitude(v1)*magnitude(v2);
+		double sina = magnitude(cross(v1,v2))/denom;
+		double cosa = dot(v1,v2)/denom;
+		
+		double angle = Math.atan2(sina, cosa);
+		double sign = dot(vn,cross(v1,v2));
+		
+		return sign < 0d ? -angle:angle;
+	}
+
+	public static final Coordinate average(Coordinate a, Coordinate b){
+		return dilate(add(a,b),1d/2d);
+	}
+	
+	public static final Coordinate average(Coordinate[] coordinates){
+		
+		if(coordinates==null||coordinates.length==0){
+			return NaN;
+		}
+		
+		int n = coordinates.length;
+		Coordinate c = new Coordinate(0,0,0);
+		for(int i = 0; i < n; i++){
+			c = add(c, coordinates[i]);
+		}
+		return dilate(c,1d/(double)n);
+	}
+	
+	public static Coordinate ceqd2lonlat(Coordinate c){
+		double[] coords = GeometryUtils.ceqd2lonlat(new double[]{c.x,c.y,c.z});
+		return new Coordinate(coords[0],coords[1],coords[2]);
+	}
+	
 	/**
-	 * Subtracts two coordinate locations
+	 * Returns the cross product of two coordinate positions/vectors
 	 * 
 	 * @param a - First coordinate/vector location
 	 * @param b - Second coordinate/vector location
 	 * @return
 	 */
 	
+	public final static Coordinate cross(Coordinate a, Coordinate b) {
+		return new Coordinate((a.y * b.z) - (b.y * a.z), (a.z * b.x)
+				- (b.z * a.x), (a.x * b.y) - (b.x * a.y));
+	}
 	
-	public final static Coordinate subtract(Coordinate a, Coordinate b) {
-		return new Coordinate(a.x - b.x, a.y - b.y, a.z - b.z);
+	/**
+	 * Returns the dilation/multiplication of a coordinate by a scale factor
+	 * 
+	 * @param c - Coordinate/vector location
+	 * @param factor - Scale factor
+	 * @return
+	 */
+	
+	public final static Coordinate dilate(Coordinate c, double factor){
+		return new Coordinate(c.x*factor, c.y*factor, c.z*factor);
 	}
 	
 	/**
@@ -56,56 +111,10 @@ public class CoordinateMath {
 			return (a.x * b.x) + (a.y * b.y) + (a.z * b.z);
 		}
 	}
-
-	/**
-	 * Returns the cross product of two coordinate positions/vectors
-	 * 
-	 * @param a - First coordinate/vector location
-	 * @param b - Second coordinate/vector location
-	 * @return
-	 */
 	
-	public final static Coordinate cross(Coordinate a, Coordinate b) {
-		return new Coordinate((a.y * b.z) - (b.y * a.z), (a.z * b.x)
-				- (b.z * a.x), (a.x * b.y) - (b.x * a.y));
-	}
-	
-	/**
-	 * Returns the normalized cross product of two coordinate positions/vectors
-	 * 
-	 * @param a - First coordinate/vector location
-	 * @param b - Second coordinate/vector location
-	 * @return
-	 */
-	
-	public final static Coordinate ncross(Coordinate a, Coordinate b) {
-		
-		return normalize(new Coordinate((a.y * b.z) - (b.y * a.z), (a.z * b.x)
-				- (b.z * a.x), (a.x * b.y) - (b.x * a.y)));
-	}
-	
-	/**
-	 * Returns the dilation/multiplication of a coordinate by a scale factor
-	 * 
-	 * @param c - Coordinate/vector location
-	 * @param factor - Scale factor
-	 * @return
-	 */
-	
-	public final static Coordinate dilate(Coordinate c, double factor){
-		return new Coordinate(c.x*factor, c.y*factor, c.z*factor);
-	}
-	
-	/**
-	 * Returns the negative of the coordinate position
-	 * 
-	 * @param a - First coordinate/vector location
-	 * @param b - Second coordinate/vector location
-	 * @return
-	 */
-	
-	public final static Coordinate negative(Coordinate c){
-		return new Coordinate(-c.x,-c.y,-c.z);
+	public static Coordinate lonlat2ceqd(Coordinate c){
+		double[] coords = GeometryUtils.lonlat2ceqd(new double[]{c.x,c.y,c.z});
+		return new Coordinate(coords[0],coords[1],coords[2]);
 	}
 	
 	/**
@@ -119,16 +128,38 @@ public class CoordinateMath {
 		return Math.sqrt(dot(c,c));
 	}
 	
+	public static final Coordinate[] midpoints(Coordinate[] ca){
+		if(ca.length < 2){throw new IllegalArgumentException("Coordinate array must contain 2 more more points");}
+		Coordinate[] out = new Coordinate[ca.length-1];
+		for(int i = 0; i < out.length; i++){
+			out[i]= average(ca[i],ca[i+1]);
+		}
+		return out;
+	}
+	
 	/**
-	 * Normalizes the coordinate values to have a unit magnitude (length equal to 1)
+	 * Returns the normalized cross product of two coordinate positions/vectors
 	 * 
-	 * @param c
+	 * @param a - First coordinate/vector location
+	 * @param b - Second coordinate/vector location
 	 * @return
 	 */
 	
-	public final static Coordinate normalize(Coordinate c){
-		double n = magnitude(c);
-		return new Coordinate(c.x/n,c.y/n,c.z/n);
+	public final static Coordinate ncross(Coordinate a, Coordinate b) {
+		
+		return normalize(cross(a,b));
+	}
+	
+	/**
+	 * Returns the negative of the coordinate position
+	 * 
+	 * @param a - First coordinate/vector location
+	 * @param b - Second coordinate/vector location
+	 * @return
+	 */
+	
+	public final static Coordinate negative(Coordinate c){
+		return new Coordinate(-c.x,-c.y,-c.z);
 	}
 	
 	/**
@@ -149,7 +180,7 @@ public class CoordinateMath {
 	    return ls;
 	}
 	
-	public Coordinate normal(Coordinate[] vertices){
+	public final static Coordinate normal(Coordinate[] vertices){
 		Coordinate v0 = vertices[0];
 		Coordinate v1 = vertices[1];
 		Coordinate v2 = vertices[vertices.length-1];
@@ -159,37 +190,15 @@ public class CoordinateMath {
 	}
 	
 	/**
-	 * From: http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+	 * Normalizes the coordinate values to have a unit magnitude (length equal to 1)
 	 * 
-	 * @param point
-	 * @param vertices
+	 * @param c
 	 * @return
 	 */
 	
-	public static final boolean pointInPoly2D(Coordinate point, Coordinate[] vertices)
-	{
-	  int nvert = vertices.length;
-	  boolean c = false;
-	  for (int i = 0, j = nvert-1; i < nvert; j = i++) {
-	    if (((vertices[i].y>point.y) != (vertices[j].y>point.y)) && (point.x < (vertices[j].x-vertices[i].x) * (point.y-vertices[i].y) / (vertices[j].y-vertices[i].y) + vertices[i].x))
-	       c = !c;
-	  }
-	  return c;
-	}
-	
-	public static final boolean pointInPoly3D(Coordinate point, Coordinate[] vertices)
-	{
-	  int nvert = vertices.length;
-	  boolean c1 = false,c2 = false,c3 = false;
-	  for (int i = 0, j = nvert-1; i < nvert; j = i++) {
-	    if (((vertices[i].y>point.y) != (vertices[j].y>point.y)) && (point.x < (vertices[j].x-vertices[i].x) * (point.y-vertices[i].y) / (vertices[j].y-vertices[i].y) + vertices[i].x)){
-	       c1 = !c1;}
-	    if (((vertices[i].z>point.z) != (vertices[j].z>point.z)) && (point.x < (vertices[j].x-vertices[i].x) * (point.z-vertices[i].z) / (vertices[j].z-vertices[i].z) + vertices[i].x))
-		   c2 = !c2;
-	    if (((vertices[i].y>point.y) != (vertices[j].y>point.y)) && (point.z < (vertices[j].z-vertices[i].z) * (point.y-vertices[i].y) / (vertices[j].y-vertices[i].y) + vertices[i].z))
-		   c3 = !c3;
-	  }
-	  return c1||c2||c3;
+	public final static Coordinate normalize(Coordinate c){
+		double n = magnitude(c);
+		return new Coordinate(c.x/n,c.y/n,c.z/n);
 	}
 	
 	/**
@@ -237,64 +246,119 @@ public class CoordinateMath {
 		return add(p0, dilate(dir, r));		
 	}
 	
-	public static final Coordinate average(Coordinate a, Coordinate b){
-		return dilate(add(a,b),1d/2d);
+	/**
+	 * From: http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+	 * Copyright (c) 1970-2003, Wm. Randolph Franklin
+	 * 
+	 * @param point
+	 * @param vertices
+	 * @return
+	 */
+	
+	public static final boolean pointInPoly2D(Coordinate point, Coordinate[] vertices)
+	{
+	  int nvert = vertices.length;
+	  boolean c = false;
+	  for (int i = 0, j = nvert-1; i < nvert; j = i++) {
+	    if (((vertices[i].y>point.y) != (vertices[j].y>point.y)) && (point.x < (vertices[j].x-vertices[i].x) * (point.y-vertices[i].y) / (vertices[j].y-vertices[i].y) + vertices[i].x))
+	       c = !c;
+	  }
+	  return c;
 	}
 	
-	public static final Coordinate average(Coordinate[] coordinates){
-		
-		if(coordinates==null||coordinates.length==0){
-			return NaN;
-		}
-		
-		int n = coordinates.length;
-		Coordinate c = new Coordinate(0,0,0);
-		for(int i = 0; i < n; i++){
-			c = add(c, coordinates[i]);
-		}
-		return dilate(c,1d/(double)n);
+	/**
+	 * Modified from: http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+	 * Copyright (c) 1970-2003, Wm. Randolph Franklin
+	 * 
+	 * @param point
+	 * @param vertices
+	 * @return
+	 */
+	
+	public static final boolean pointInPoly3D(Coordinate point, Coordinate[] vertices)
+	{
+	  int nvert = vertices.length;
+	  boolean c1 = false,c2 = false,c3 = false;
+	  for (int i = 0, j = nvert-1; i < nvert; j = i++) {
+	    if (((vertices[i].y>point.y) != (vertices[j].y>point.y)) && (point.x < (vertices[j].x-vertices[i].x) * (point.y-vertices[i].y) / (vertices[j].y-vertices[i].y) + vertices[i].x)){
+	       c1 = !c1;}
+	    if (((vertices[i].z>point.z) != (vertices[j].z>point.z)) && (point.x < (vertices[j].x-vertices[i].x) * (point.z-vertices[i].z) / (vertices[j].z-vertices[i].z) + vertices[i].x))
+		   c2 = !c2;
+	    if (((vertices[i].y>point.y) != (vertices[j].y>point.y)) && (point.z < (vertices[j].z-vertices[i].z) * (point.y-vertices[i].y) / (vertices[j].y-vertices[i].y) + vertices[i].z))
+		   c3 = !c3;
+	  }
+	  return c1||c2||c3;
 	}
 	
-	public static final Coordinate[] midpoints(Coordinate[] ca){
-		if(ca.length < 2){throw new IllegalArgumentException("Coordinate array must contain 2 more more points");}
-		Coordinate[] out = new Coordinate[ca.length-1];
-		for(int i = 0; i < out.length; i++){
-			out[i]= average(ca[i],ca[i+1]);
-		}
-		return out;
+	/**
+	 * From http://inside.mines.edu/~gmurray/ArbitraryAxisRotation/
+	 * 
+	 * @param point
+	 * @param axis
+	 * @param theta
+	 * @return
+	 */
+	
+	public final static Coordinate rotate3D(Coordinate point, Coordinate axis, double theta){
+		double x = point.x;
+		double y = point.y;
+		double z = point.z;
+		double u = axis.x;
+		double v = axis.y;
+		double w = axis.z;
+		double st = Math.sin(theta);
+		double ct = Math.cos(theta);
+		double u2v2w2 = u*u+v*v+w*w;
+		double ru2v2w2 = Math.sqrt(u2v2w2);
+		double out_x = (u*(u*x+v*y+w*z)*(1-ct)+u2v2w2*x*ct+ru2v2w2*(-w*y+v*z)*st)/u2v2w2;
+		double out_y = (v*(u*x+v*y+w*z)*(1-ct)+u2v2w2*y*ct+ru2v2w2*(w*x-u*z)*st)/u2v2w2;
+		double out_z = (w*(u*x+v*y+w*z)*(1-ct)+u2v2w2*z*ct+ru2v2w2*(-v*x+u*y)*st)/u2v2w2;
+		return new Coordinate(out_x, out_y, out_z);
 	}
 	
-	public static Coordinate lonlat2ceqd(Coordinate c){
-		double[] coords = GeometryUtils.lonlat2ceqd(new double[]{c.x,c.y,c.z});
-		return new Coordinate(coords[0],coords[1],coords[2]);
+	public final static Coordinate rotate3Dn(Coordinate point, Coordinate axis, double theta){
+		double x = point.x;
+		double y = point.y;
+		double z = point.z;
+		double u = axis.x;
+		double v = axis.y;
+		double w = axis.z;
+		double st = Math.sin(theta);
+		double ct = Math.cos(theta);
+		double out_x = u*(u*x+v*y+w*z)*(1-ct)+x*ct+(-w*y+v*z)*st;
+		double out_y = v*(u*x+v*y+w*z)*(1-ct)+y*ct+(w*x-u*z)*st;
+		double out_z = w*(u*x+v*y+w*z)*(1-ct)+z*ct+(-v*x+u*y)*st;
+		return new Coordinate(out_x, out_y, out_z);
 	}
 	
-	public static Coordinate ceqd2lonlat(Coordinate c){
-		double[] coords = GeometryUtils.ceqd2lonlat(new double[]{c.x,c.y,c.z});
-		return new Coordinate(coords[0],coords[1],coords[2]);
+	public final static Coordinate rotate3D(Coordinate point, Coordinate axis, Coordinate reference, double theta){
+		Coordinate t1 = subtract(point,reference);
+		Coordinate t2 = subtract(axis,reference);
+		Coordinate np = rotate3D(t1,t2,theta);
+		return add(np,reference);
 	}
 	
-	public static Coordinate signum(Coordinate c){
+	public final static Coordinate rotate3Dn(Coordinate point, Coordinate axis, Coordinate reference, double theta){
+		Coordinate t1 = subtract(point,reference);
+		Coordinate t2 = subtract(axis,reference);
+		Coordinate np = rotate3Dn(t1,t2,theta);
+		return add(np,reference);
+	}
+	
+	public final static Coordinate signum(Coordinate c){
 		return new Coordinate(Math.signum(c.x),Math.signum(c.y),Math.signum(c.z));
 	}
 	
-	public static double angle3DSigned(Coordinate p1, Coordinate vertex, Coordinate p2, Coordinate reference){
-		Coordinate v1 = subtract(p1,vertex);
-		Coordinate v2 = subtract(p2,vertex);
-		Coordinate v3 = subtract(reference,vertex);
-		Coordinate vn = cross(v1,v3);
-		
-		double denom = magnitude(v1)*magnitude(v2);
-		double sina = magnitude(cross(v1,v2))/denom;
-		double cosa = dot(v1,v2)/denom;
-		
-		double angle = Math.atan2(sina, cosa);
-		double sign = dot(vn,cross(v1,v2));
-		
-		return sign < 0d ? -angle:angle;
-	}
+	/**
+	 * Subtracts two coordinate locations
+	 * 
+	 * @param a - First coordinate/vector location
+	 * @param b - Second coordinate/vector location
+	 * @return
+	 */
 	
-	public static double angle3DSigned(Coordinate p1, Coordinate vertex, Coordinate p2){
-		return angle3DSigned(p1,vertex,p2,p1);
+	
+	public final static Coordinate subtract(Coordinate a, Coordinate b) {
+		return new Coordinate(a.x - b.x, a.y - b.y, a.z - b.z);
 	}
 }

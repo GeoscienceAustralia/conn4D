@@ -337,7 +337,7 @@ public class VectorMath {
      */
     public static void flip(int[] array) {
         if (array == null) {
-            return;
+        	return;
         }
         int i = 0;
         int j = array.length - 1;
@@ -360,7 +360,7 @@ public class VectorMath {
      */
     public static void flip(long[] array) {
         if (array == null) {
-            return;
+        	return;
         }
         int i = 0;
         int j = array.length - 1;
@@ -381,9 +381,9 @@ public class VectorMath {
      *
      * @param array  the array to reverse, may be <code>null</code>
      */
-    public static void flip(short[] array) {
+    public static short[] flip(short[] array) {
         if (array == null) {
-            return;
+            return null;
         }
         int i = 0;
         int j = array.length - 1;
@@ -395,6 +395,7 @@ public class VectorMath {
             j--;
             i++;
         }
+        return array;
     }
 
 	/**

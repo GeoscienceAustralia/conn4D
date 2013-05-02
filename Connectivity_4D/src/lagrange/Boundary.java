@@ -37,4 +37,6 @@ public interface Boundary {
 	 */
 	
 	public double getPreciseBoundaryDepth(double x, double y);
+	
+	public void setPositiveDown(boolean positiveDown);
 }

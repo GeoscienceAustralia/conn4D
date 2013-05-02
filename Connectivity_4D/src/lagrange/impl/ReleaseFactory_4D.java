@@ -127,7 +127,7 @@ public class ReleaseFactory_4D {
 
 			if (!lp.bathymetryFileName.isEmpty()) {
 				// Set up the land mask////////////////////////////
-				bathymetry = new Boundary_NetCDF_Grid(lp.bathymetryFileName,
+				bathymetry = new Boundary_Grid_NetCDF(lp.bathymetryFileName,
 						lp.latName, lp.lonName);
 				cd = new CollisionDetector_3D_Bathymetry(bathymetry);
 			}

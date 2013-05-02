@@ -12,10 +12,9 @@ import java.util.Set;
 public class Particle {
 
 	private long id;
-	private double x;
-	private double y;
-	private double z;
+	private double x,y,z;
 	private double px, py, pz;
+	private double x0, y0, z0;
 	private double u = 0d, v = 0d, w = 0d;
 	private long t;
 	private long birthday = 0;
@@ -136,6 +135,36 @@ public class Particle {
 
 	public boolean getNodata() {
 		return nodata;
+	}
+	
+	/**
+	 * Retrieve the original X Coordinate of the particle
+	 * 
+	 * @return
+	 */
+
+	public double getX0() {
+		return x0;
+	}
+
+	/**
+	 * Retrieve the Previous Y Coordinate of the particle
+	 * 
+	 * @return
+	 */
+
+	public double getY0() {
+		return y0;
+	}
+
+	/**
+	 * Retrieve the Previous Z Coordinate of the particle
+	 * 
+	 * @return
+	 */
+
+	public double getZ0() {
+		return z0;
 	}
 
 	/**
@@ -545,11 +574,41 @@ public class Particle {
 	}
 
 	/**
-	 * Sets the X coordinate of the particle
+	 * Sets the original X coordinate of the particle
 	 * 
 	 * @param x
 	 */
 
+	public void setX0(double x0) {
+		this.x0 = x0;
+	}
+
+	/**
+	 * Sets the original Y coordinate of the particle
+	 * 
+	 * @param y
+	 */
+
+	public void setY0(double y0) {
+		this.y0 = y0;
+	}
+
+	/**
+	 * Sets the original Z coordinate of the particle
+	 * 
+	 * @param z
+	 */
+
+	public void setZ0(double z0) {
+		this.z0 = z0;
+	}
+	
+	/**
+	 * Sets the X coordinate of the particle
+	 * 
+	 * @param x
+	 */
+	
 	public void setX(double x) {
 		this.x = x;
 	}

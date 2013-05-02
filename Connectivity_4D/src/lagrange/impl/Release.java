@@ -217,6 +217,10 @@ public class Release implements Runnable {
 			p.setY(c.y);
 			p.setPY(p.getY());
 			p.setZ(prm.getReleaseDepth());
+			p.setPZ(p.getZ());
+			p.setX0(p.getX());
+			p.setY0(p.getY());
+			p.setZ0(p.getZ());
 			
 			// Ensuring initial position is above the seafloor and in the
 			// water column.

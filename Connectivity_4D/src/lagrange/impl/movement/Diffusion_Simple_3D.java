@@ -71,12 +71,6 @@ public class Diffusion_Simple_3D implements Diffusion, Cloneable {
 		double dy = vsc * (float) norm.nextDouble();
 		double dz = wsc * (float) norm.nextDouble();
 
-		// Displacement equals velocity over time
-
-		//double dx = u * h;
-		//double dy = v * h;
-		//double dz = w * h;
-
 		// Determine the new coordinates
 
 		double[] coords = GeometryUtils.latLon(new double[] { p.getY(), p.getX() }, dy,

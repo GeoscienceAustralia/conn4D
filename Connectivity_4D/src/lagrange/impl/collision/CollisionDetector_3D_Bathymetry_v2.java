@@ -8,7 +8,7 @@ import com.vividsolutions.jts.geom.LineSegment;
 import lagrange.Boundary;
 import lagrange.CollisionDetector;
 import lagrange.Particle;
-import lagrange.impl.readers.Boundary_NetCDF_Grid;
+import lagrange.impl.readers.Boundary_Grid_NetCDF;
 import lagrange.utils.CoordinateMath;
 import lagrange.utils.DigitalDifferentialAnalyzer;
 import lagrange.utils.PrjTransform;
@@ -24,13 +24,13 @@ import lagrange.utils.PrjTransform_WGS2CEQD;
 
 public class CollisionDetector_3D_Bathymetry_v2 implements CollisionDetector {
 
-	private Boundary_NetCDF_Grid bnd;
+	private Boundary_Grid_NetCDF bnd;
 	private Intersector_3D_Raster i3d = new Intersector_3D_Raster();
 	private double surfaceLevel = 0;
 	private PrjTransform pt = new PrjTransform_WGS2CEQD();
 
 	public CollisionDetector_3D_Bathymetry_v2(Boundary bathym) {
-		this.bnd = (Boundary_NetCDF_Grid) bathym;
+		this.bnd = (Boundary_Grid_NetCDF) bathym;
 	}
 
 	@Override
@@ -241,7 +241,7 @@ public class CollisionDetector_3D_Bathymetry_v2 implements CollisionDetector {
 	 */
 
 	public void setBoundary(Boundary bnd) {
-		this.bnd = (Boundary_NetCDF_Grid) bnd;
+		this.bnd = (Boundary_Grid_NetCDF) bnd;
 	}
 
 	public double getSurfaceLevel() {

@@ -5,19 +5,19 @@ package lagrange.test.readers;
 import java.io.IOException;
 import java.util.Arrays;
 
-import lagrange.impl.readers.Boundary_NetCDF_Grid;
+import lagrange.impl.readers.Boundary_Grid_NetCDF;
 
 import org.junit.Before;
 import org.junit.Test;
 
 public class TestBoundary_NetCDF_Grid {
 
-	Boundary_NetCDF_Grid bng = null;
+	Boundary_Grid_NetCDF bng = null;
 	
 	@Before
 	public void setUp(){
 		try {
-			bng = new Boundary_NetCDF_Grid("C:/Temp/bath_index.nc","Latitude","Longitude");
+			bng = new Boundary_Grid_NetCDF("C:/Temp/bath_index.nc","Latitude","Longitude");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

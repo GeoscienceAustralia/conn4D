@@ -63,10 +63,36 @@ public class TestCoordinateMath {
 		Assert.assertEquals(90d,Math.toDegrees(CoordinateMath.angle3DSigned(new Coordinate(-1,-1,0), origin, new Coordinate(-1,1,0),y1)),1E-16);
 		Assert.assertEquals(-90d,Math.toDegrees(CoordinateMath.angle3DSigned(new Coordinate(-1,1,0), origin, new Coordinate(-1,-1,0),y1)),1E-16);
 		
-		System.out.println(Math.toDegrees(CoordinateMath.angle3DSigned(new Coordinate(1,0,0), origin, new Coordinate(-1,0,0),z1)));
-		System.out.println(Math.toDegrees(CoordinateMath.angle3DSigned(new Coordinate(-1,0,0), origin, new Coordinate(1,0,0),z1)));
-		System.out.println(Math.toDegrees(CoordinateMath.angle3DSigned(new Coordinate(1,0,0), origin, new Coordinate(-1,0,0),z2)));
-		System.out.println(Math.toDegrees(CoordinateMath.angle3DSigned(new Coordinate(-1,0,0), origin, new Coordinate(1,0,0),z2)));
+		//System.out.println(Math.toDegrees(CoordinateMath.angle3DSigned(new Coordinate(1,0,0), origin, new Coordinate(-1,0,0),z1)));
+		//System.out.println(Math.toDegrees(CoordinateMath.angle3DSigned(new Coordinate(-1,0,0), origin, new Coordinate(1,0,0),z1)));
+		//System.out.println(Math.toDegrees(CoordinateMath.angle3DSigned(new Coordinate(1,0,0), origin, new Coordinate(-1,0,0),z2)));
+		//System.out.println(Math.toDegrees(CoordinateMath.angle3DSigned(new Coordinate(-1,0,0), origin, new Coordinate(1,0,0),z2)));	
+	}
+	
+	//@Test
+	public void testNCross(){
+		System.out.println(CoordinateMath.ncross(new Coordinate(0,1,0),new Coordinate(1,0,0)));
+		System.out.println(CoordinateMath.ncross(new Coordinate(5,6,0),new Coordinate(6,5,0)));
+	}
+	
+	@Test
+	public void testRotation(){
 		
+		//System.out.println(CoordinateMath.rotate3D(new Coordinate(1,0,0), new Coordinate(0,0,1), Math.toRadians(90)));
+		//System.out.println(CoordinateMath.rotate3D(new Coordinate(1,0,0), new Coordinate(0,0,1), Math.toRadians(180)));
+		//System.out.println(CoordinateMath.rotate3D(new Coordinate(0,1,0), new Coordinate(0,0,1), Math.toRadians(90)));
+		//System.out.println(CoordinateMath.rotate3D(new Coordinate(0,-1,0), new Coordinate(0,0,1), Math.toRadians(90)));
+		//System.out.println(CoordinateMath.rotate3D(new Coordinate(0,-1,0), new Coordinate(0,0,1), Math.toRadians(-90)));
+		//System.out.println(CoordinateMath.rotate3D(new Coordinate(1,0,0), new Coordinate(0,1,0), Math.toRadians(90)));
+		//System.out.println(CoordinateMath.rotate3D(new Coordinate(1,0,0), new Coordinate(0,1,0), Math.toRadians(180)));
+		//System.out.println(CoordinateMath.rotate3D(new Coordinate(-1,0,0), new Coordinate(0,1,0), Math.toRadians(90)));
+		//System.out.println(CoordinateMath.rotate3D(new Coordinate(1,0,0), new Coordinate(0,1,0), Math.toRadians(-90)));
+		//System.out.println(CoordinateMath.rotate3D(new Coordinate(1,0,0), new Coordinate(0,1,0), Math.toRadians(180)));
+		//System.out.println(CoordinateMath.rotate3D(new Coordinate(0,0,1), new Coordinate(1,0,0), Math.toRadians(90)));
+		//System.out.println(CoordinateMath.rotate3D(new Coordinate(0,0,1), new Coordinate(0,1,0), Math.toRadians(90)));
+		//System.out.println(CoordinateMath.rotate3D(new Coordinate(11,10,0), new Coordinate(10,10,15), new Coordinate(10,10,0), Math.toRadians(-90)));
+		//System.out.println(CoordinateMath.rotate3Dn(new Coordinate(11,10,0), new Coordinate(10,10,15), new Coordinate(10,10,0), Math.toRadians(-90)));
+		System.out.println(CoordinateMath.rotate3D(new Coordinate(0,0,-1), new Coordinate(0,1,0), new Coordinate(0,0,0), Math.toRadians(90)));
+		System.out.println(CoordinateMath.rotate3D(new Coordinate(0,0.5,-1), new Coordinate(0,1.5,0), Math.toRadians(180)));
 	}
 }
