@@ -1,14 +1,17 @@
 package lagrange.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.LineSegment;
 
-public class DigitalDifferentialAnalyzer {
+public class ReferenceGrid {
 
 	private LineSegment ls;
 	private double x_offset;
 	private double y_offset;
-	private int[] adjacency = new int[2];
+	private int[] nextDirection = new int[2];
 	private int[] displacement = new int[2];
 	private final double PRECISION = 1E-6;
 	private double x_linedist = Double.MAX_VALUE;
@@ -30,7 +33,7 @@ public class DigitalDifferentialAnalyzer {
 	 * @param snap_y - y coordinate of the snap point
 	 */
 	
-	public DigitalDifferentialAnalyzer(double snap_x, double snap_y, double cellsize) {
+	public ReferenceGrid(double snap_x, double snap_y, double cellsize) {
 		this.snap_x = snap_x;
 		this.snap_y = snap_y;
 		this.cellsize = cellsize;
@@ -40,7 +43,7 @@ public class DigitalDifferentialAnalyzer {
 	 * Constructor taking both a LineSegment and a snap point.
 	 */
 		
-	public DigitalDifferentialAnalyzer(LineSegment ls, double snap_x, double snap_y, double cellsize) {
+	public ReferenceGrid(LineSegment ls, double snap_x, double snap_y, double cellsize) {
 		this.snap_x = snap_x;
 		this.snap_y = snap_y;
 		this.cellsize = cellsize;;
@@ -59,8 +62,8 @@ public class DigitalDifferentialAnalyzer {
 		}
 		
 		if (t_next_vertical > t_next_horizontal) {
-			adjacency[0] = x_inc;
-			adjacency[1] = 0;
+			nextDirection[0] = x_inc;
+			nextDirection[1] = 0;
 			return new int[] {x_inc, 0};
 		}
 		
@@ -78,9 +81,9 @@ public class DigitalDifferentialAnalyzer {
 		if (t_next_vertical < t_next_horizontal) {
 			//y += y_inc;
 			t_next_vertical += dt_dy;
-			adjacency[0] = 0;
-			adjacency[1] = y_inc;
-			displacement[0]+=adjacency[0];
+			nextDirection[0] = 0;
+			nextDirection[1] = y_inc;
+			displacement[0]+=nextDirection[0];
 			displacement[1]+=displacement[1];
 			return;
 		}
@@ -88,9 +91,9 @@ public class DigitalDifferentialAnalyzer {
 		if (t_next_vertical > t_next_horizontal) {
 			//x += x_inc;
 			t_next_horizontal += dt_dx;
-			adjacency[0] = x_inc;
-			adjacency[1] = 0;
-			displacement[0]+=adjacency[0];
+			nextDirection[0] = x_inc;
+			nextDirection[1] = 0;
+			displacement[0]+=nextDirection[0];
 			displacement[1]+=displacement[1];
 			return;
 		}
@@ -100,9 +103,9 @@ public class DigitalDifferentialAnalyzer {
 			t_next_horizontal += dt_dx;
 			//y += y_inc;
 			t_next_vertical += dt_dy;
-			adjacency[0] = x_inc;
-			adjacency[1] = y_inc;
-			displacement[0]+=adjacency[0];
+			nextDirection[0] = x_inc;
+			nextDirection[1] = y_inc;
+			displacement[0]+=nextDirection[0];
 			displacement[1]+=displacement[1];
 		}
 	}
@@ -117,7 +120,7 @@ public class DigitalDifferentialAnalyzer {
 
 	public int[] nextCell() {
 		increment();
-		return adjacency;
+		return nextDirection;
 	}
 
 	/**
@@ -140,7 +143,19 @@ public class DigitalDifferentialAnalyzer {
 	 */
 	
 	public boolean isOnHorizontalEdge(Coordinate c){
-		if((c.y-snap_y)%cellsize-cellsize<PRECISION){return true;}
+		if((0.5*cellsize)-Math.abs((c.y-snap_y)%cellsize-(0.5*cellsize))<PRECISION){return true;}
+		return false;
+	}
+	
+	/**
+	 * Identifies whether the LineString is on a horizontal seam within precision
+	 * 
+	 * @param c
+	 * @return
+	 */
+	
+	public boolean isOnHorizontalSeam(LineSegment ls){
+		if(Math.abs(ls.p1.y-ls.p0.y)<PRECISION&&(0.5*cellsize)-Math.abs(((ls.p0.y+ls.p1.y)/2-snap_y)%cellsize-(0.5*cellsize))<PRECISION){return true;}
 		return false;
 	}
 	
@@ -152,7 +167,19 @@ public class DigitalDifferentialAnalyzer {
 	 */
 	
 	public boolean isOnVerticalEdge(Coordinate c){
-		if((c.y-snap_x)%cellsize-cellsize<PRECISION){return true;}
+		if((0.5*cellsize)-Math.abs((c.x-snap_x)%cellsize-(0.5*cellsize))<PRECISION){return true;}
+		return false;
+	}
+	
+	/**
+	 * Identifies whether the coordinate is on a vertical seam within precision
+	 * 
+	 * @param c
+	 * @return
+	 */
+	
+	public boolean isOnVerticalSeam(LineSegment ls){
+		if(Math.abs(ls.p1.x-ls.p0.x)<PRECISION&&(0.5*cellsize)-Math.abs(((ls.p0.x+ls.p1.y)/2-snap_x)%cellsize-(0.5*cellsize))<PRECISION){return true;}
 		return false;
 	}
 	
@@ -165,6 +192,17 @@ public class DigitalDifferentialAnalyzer {
 	
 	public boolean isOnEdge(Coordinate c){
 		return isOnVerticalEdge(c)||isOnHorizontalEdge(c);
+	}
+	
+	/**
+	 * Identifies whether the coordinate is on an edge within precision
+	 * 
+	 * @param c
+	 * @return
+	 */
+	
+	public boolean isOnSeam(LineSegment ls){
+		return isOnVerticalSeam(ls)||isOnHorizontalSeam(ls);
 	}
 	
 	/**
@@ -233,13 +271,60 @@ public class DigitalDifferentialAnalyzer {
 		displacement = new int[2];
 	}
 	
+	public List<int[]> getCellList(Coordinate c){
+		List<int[]> list = new ArrayList<int[]>();
+		int[] principal = new int[] {(int) Math.floor((c.x-snap_x)/cellsize),(int) Math.floor((c.y-snap_y)/cellsize)};
+		list.add(principal);
+		if(!isOnEdge(c)){
+			return list;
+		}
+		
+		int x_neighbor = 0, y_neighbor = 0;
+		
+		if(isOnHorizontalEdge(c)){
+			y_neighbor = (int) (Math.signum(cellsize/2-c.y%cellsize)*(0.5*cellsize)-Math.abs((c.y-snap_y)%cellsize-(0.5*cellsize)));
+			if(y_neighbor==0){
+				int[] pos = new int[] {(int) Math.floor((c.x-snap_x)/cellsize),(int) Math.floor((c.y-snap_y-.25*cellsize)/cellsize)};
+				if(pos[1] == principal[1]){
+					y_neighbor=1;
+				}
+				else{y_neighbor=-1;}
+			}
+			list.add(new int[]{principal[0],principal[1]+y_neighbor});
+		}
+		
+		if(isOnVerticalEdge(c)){
+			x_neighbor = (int) (Math.signum(cellsize/2-c.x%cellsize)*(0.5*cellsize)-Math.abs((c.x-snap_x)%cellsize-(0.5*cellsize)));
+			if(x_neighbor==0){
+				int[] pos = new int[] {(int) Math.floor((c.x-snap_x-.25*cellsize)/cellsize),(int) Math.floor((c.y-snap_y)/cellsize)};
+				if(pos[0] == principal[0]){
+					x_neighbor=1;
+				}
+				else{x_neighbor=-1;}
+			}
+			list.add(new int[]{principal[0]+x_neighbor,principal[1]});
+		}
+		
+		if(isOnCorner(c)){
+			list.add(new int[]{principal[0]+x_neighbor,principal[1]+y_neighbor});
+		}
+		
+		return list;	
+	}
+	
+	public List<int[]> getAdjacencies(Coordinate c){
+		List<int[]> adjacencies = getCellList(c);
+		adjacencies.remove(0);
+		return adjacencies;
+	}
+	
 	/**
 	 * Retrieves the current adjacent cell (without incrementing position)
 	 * @return
 	 */
 	
-	public int[] getAdjacency() {
-		return adjacency;
+	public int[] getNextDirection() {
+		return nextDirection;
 	}
 	
 	/**

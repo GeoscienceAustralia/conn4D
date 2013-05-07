@@ -1,12 +1,11 @@
 package lagrange.test.readers;
 
-//import static org.junit.Assert.*;
-
 import java.io.IOException;
 import java.util.Arrays;
 
 import lagrange.impl.readers.Boundary_Grid_NetCDF;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,12 +23,21 @@ public class TestBoundary_NetCDF_Grid {
 	}
 
 	@Test
-	public void test() {
+	public void testVertices() {
+		Assert.assertNull(bng.getVertices(new int[]{0,0}));
 		System.out.println(Arrays.toString(bng.getVertices(new int[]{1,1})));
-		System.out.println("Pause");	
 	}
 	
 	@Test
+	public void testIndices() {
+		Assert.assertArrayEquals(new int[]{50, 50},bng.getIndices(0, 0));
+		Assert.assertArrayEquals(new int[]{0, 0},bng.getIndices(-2, -2));
+		Assert.assertArrayEquals(new int[]{0, 0},bng.getIndices(-1.96, -2));
+		Assert.assertArrayEquals(new int[]{0, 1},bng.getIndices(-1.96+1E-12, -2));
+		Assert.assertArrayEquals(new int[]{0, 1},bng.getIndices(-1.95, -2));
+	}
+	
+	//@Test
 	public void testRealDepth(){
 		System.out.println(bng.getRealDepth(-1.959, -1.96));
 	}

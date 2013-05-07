@@ -10,7 +10,7 @@ import lagrange.CollisionDetector;
 import lagrange.Particle;
 import lagrange.impl.readers.Boundary_Grid_NetCDF;
 import lagrange.utils.CoordinateMath;
-import lagrange.utils.DigitalDifferentialAnalyzer;
+import lagrange.utils.ReferenceGrid;
 import lagrange.utils.PrjTransform;
 import lagrange.utils.TimeConvert;
 import lagrange.utils.VectorMath;
@@ -92,7 +92,7 @@ public class CollisionDetector_3D_Bathymetry_v2 implements CollisionDetector {
 		// The above section ensures we don't create the DDA
 		// unless it is necessary to do so.
 
-		DigitalDifferentialAnalyzer dda = new DigitalDifferentialAnalyzer(
+		ReferenceGrid dda = new ReferenceGrid(
 				bnd.getMinx(), bnd.getMiny(), bnd.getCellSize());
 		dda.setLine(backtrans);
 		int[] currentCell = new int[] { startCell[0], startCell[1] };

@@ -10,7 +10,7 @@ import lagrange.Boundary_Grid;
 import lagrange.CollisionDetector;
 import lagrange.Particle;
 import lagrange.utils.CoordinateMath;
-import lagrange.utils.DigitalDifferentialAnalyzer;
+import lagrange.utils.ReferenceGrid;
 import lagrange.utils.PrjTransform;
 import lagrange.utils.TimeConvert;
 import lagrange.utils.VectorMath;
@@ -94,7 +94,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 		// Otherwise, set up the Digital Differential Analyzer to identify
 		// the grid path
 
-		DigitalDifferentialAnalyzer dda = new DigitalDifferentialAnalyzer(
+		ReferenceGrid dda = new ReferenceGrid(
 				bnd.getMinx(), bnd.getMiny(), bnd.getCellSize());
 		dda.setLine(backtrans);
 		int[] currentCell = new int[] { startCell[0], startCell[1] };
@@ -142,7 +142,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 
 				// Check if the point of reflection is on the edge of a cell
 
-				if (dda.isOnEdge(backtrans.p0)) {
+				if (!dda.isOnSeam(backtrans) && dda.isOnEdge(backtrans.p0)) {
 
 					// Look at the adjacent cell
 
@@ -213,8 +213,12 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 
 				tmpln.p1 = trans.p1;
 
-				// Nibble to prevent re-reflection
-				CoordinateMath.nibble(trans, Double.MIN_VALUE);
+				// Nibble to prevent re-reflection.  THIS IS IMPORTANT,
+				// and has been the subject of a lot of debugging.
+				// Using Double.MIN_VALUE or 1E-16 still creates problems, 
+				// so a larger value is needed, i.e. 1E-8.
+				
+				CoordinateMath.nibble(trans, 1E-8);
 				backtrans = new LineSegment(pt.inverse(trans.p0),
 						pt.inverse(trans.p1));
 				dda.setLine(backtrans);
