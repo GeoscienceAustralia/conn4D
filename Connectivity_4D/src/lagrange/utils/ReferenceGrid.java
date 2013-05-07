@@ -271,6 +271,12 @@ public class ReferenceGrid {
 		displacement = new int[2];
 	}
 	
+	/**
+	 * Returns a list of cell indices that are adjacent to the provided Coordinate
+	 * @param c
+	 * @return
+	 */
+	
 	public List<int[]> getCellList(Coordinate c){
 		List<int[]> list = new ArrayList<int[]>();
 		int[] principal = new int[] {(int) Math.floor((c.x-snap_x)/cellsize),(int) Math.floor((c.y-snap_y)/cellsize)};

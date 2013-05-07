@@ -44,6 +44,33 @@ public class TestReferenceGrid {
 	}
 	
 	@Test
+	public void testIsOnVerticalEdge(){
+		Assert.assertTrue(rg.isOnVerticalEdge(new Coordinate(0,0)));
+		Assert.assertTrue(rg.isOnVerticalEdge(new Coordinate(0,0.5)));
+		Assert.assertTrue(rg.isOnVerticalEdge(new Coordinate(1,0.5)));
+		Assert.assertFalse(rg.isOnVerticalEdge(new Coordinate(0.5,0)));
+		Assert.assertFalse(rg.isOnVerticalEdge(new Coordinate(0.2,0.2)));
+	}
+	
+	@Test
+	public void testIsOnHorizontalEdge(){
+		Assert.assertTrue(rg.isOnHorizontalEdge(new Coordinate(0,0)));
+		Assert.assertFalse(rg.isOnHorizontalEdge(new Coordinate(0,0.5)));
+		Assert.assertTrue(rg.isOnHorizontalEdge(new Coordinate(0.5,1)));
+		Assert.assertTrue(rg.isOnHorizontalEdge(new Coordinate(0.5,0)));
+		Assert.assertFalse(rg.isOnHorizontalEdge(new Coordinate(0.2,0.2)));
+	}
+	
+	@Test
+	public void testIsOnCorner(){
+		Assert.assertTrue(rg.isOnCorner(new Coordinate(0,0)));
+		Assert.assertFalse(rg.isOnCorner(new Coordinate(0,0.5)));
+		Assert.assertFalse(rg.isOnCorner(new Coordinate(0.5,1)));
+		Assert.assertTrue(rg.isOnCorner(new Coordinate(5,7)));
+		Assert.assertFalse(rg.isOnCorner(new Coordinate(0.2,0.2)));
+	}
+	
+	@Test
 	public void testGetCellList(){
 		Coordinate c = new Coordinate(1.5,0);
 		List<int[]> l = rg.getCellList(c);
