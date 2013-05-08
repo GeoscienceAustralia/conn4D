@@ -185,6 +185,7 @@ public class TriCubicSpline{
     	// Reset rounding error check option
     	// Default option: points outside the interpolation bounds by less than the potential rounding error rounded to the bounds limit
     	// This method causes this check to be ignored and an exception to be thrown if any point lies outside the interpolation bounds
+
     	public static void noRoundingErrorCheck(){
             TriCubicSpline.roundingCheck = false;
             BiCubicSpline.noRoundingErrorCheck();
@@ -195,6 +196,7 @@ public class TriCubicSpline{
         // Default option: points outside the interpolation bounds by less than the potential rounding error rounded to the bounds limit
         // The default value for the potential rounding error is 5e-15*times the 10^exponent of the value outside the bounds
 	    // This method allows the 5e-15 to be reset
+
     	public static void potentialRoundingError(double potentialRoundingError){
             TriCubicSpline.potentialRoundingError = potentialRoundingError;
             BiCubicSpline.potentialRoundingError(potentialRoundingError);
@@ -213,6 +215,7 @@ public class TriCubicSpline{
 
     	// Returns a new TriCubicSpline setting internal array size to nP x mP x lP and all array values to zero with natural spline default
     	// Primarily for use in this.oneDarray for QuadriCubicSpline
+
     	public static TriCubicSpline zero(int nP, int mP, int lP){
         	if(nP<3 || mP<3 || lP<3)throw new IllegalArgumentException("A minimum of three x three x three data points is needed");
         	TriCubicSpline aa = new TriCubicSpline(nP, mP, lP);
@@ -221,6 +224,7 @@ public class TriCubicSpline{
 
     	// Create a one dimensional array of TriCubicSpline objects of length nP each of internal array size mP x lP xkP
     	// Primarily for use in quadriCubicSpline
+
     	public static TriCubicSpline[] oneDarray(int nP, int mP, int lP, int kP){
         	if(mP<3 || lP<3 || kP<3)throw new IllegalArgumentException("A minimum of three x three x three data points is needed");
         	TriCubicSpline[] a = new TriCubicSpline[nP];
@@ -233,6 +237,7 @@ public class TriCubicSpline{
 
   	    // Resets the x1, x2, x3, y data arrays
   	    // Primarily for use in QuadriCubicSpline
+
     	public void resetData(double[] x1, double[] x2, double[] x3, double[][][] y){
         	if(x1.length!=y.length)throw new IllegalArgumentException("Arrays x1 and y row are of different length");
         	if(x2.length!=y[0].length)throw new IllegalArgumentException("Arrays x2 and y column are of different length");
@@ -349,15 +354,6 @@ public class TriCubicSpline{
     	public double[] getLimits(){
     	    double[] limits = {xMin[0], xMax[0], xMin[1], xMax[1], xMin[2], xMax[2]};
     	    return limits;
-    	}
-
-    	// Display limits to x
-    	public void displayLimits(){
-    	    System.out.println(" ");
-    	    for(int i=0; i<3; i++){
-    	        System.out.println("The limits to the x array " + i + " are " + xMin[i] + " and " + xMax[i]);
-    	    }
-    	    System.out.println(" ");
     	}
 
     	//	Returns an interpolated value of y for values of x1, x2 and x3

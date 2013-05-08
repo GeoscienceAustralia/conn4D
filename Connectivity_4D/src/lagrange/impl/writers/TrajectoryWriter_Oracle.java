@@ -9,8 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -27,13 +25,12 @@ public class TrajectoryWriter_Oracle implements TrajectoryWriter {
 	private Connection conn;
 	private String driver = "oracle.jdbc.driver.OracleDriver";
 	private String conString = "jdbc:oracle:thin:@sun-db-dev:1521:oradev";
-	private String user = "u83869";
 	private Statement stmt;
-	private DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private String durationUnits = "Days";
 	private String timeUnits = "Date";
 	private boolean overwrite = true;
 	private PreparedStatement ps1, ps2;
+	@SuppressWarnings("unused")
 	private boolean negCoord;
 
 	public TrajectoryWriter_Oracle(String releaseName) {
@@ -129,10 +126,8 @@ public class TrajectoryWriter_Oracle implements TrajectoryWriter {
 			ps2 = conn.prepareStatement(sql);
 
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -140,7 +135,6 @@ public class TrajectoryWriter_Oracle implements TrajectoryWriter {
 
 	@Override
 	public void apply(Particle p) {
-		// TODO Auto-generated method stub
 
 		/*
 		 * Write ID, Time (as an actual Date/Time stamp), Duration (Days),
@@ -208,7 +202,6 @@ public class TrajectoryWriter_Oracle implements TrajectoryWriter {
 
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -220,7 +213,6 @@ public class TrajectoryWriter_Oracle implements TrajectoryWriter {
 			ps2.close();
 			conn.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -254,7 +246,7 @@ public class TrajectoryWriter_Oracle implements TrajectoryWriter {
 		this.timeUnits = timeUnits;
 	}
 	
-	@Override
+	//@Override
 	public void setNegCoord(boolean negCoord){
 		this.negCoord = negCoord;
 	}

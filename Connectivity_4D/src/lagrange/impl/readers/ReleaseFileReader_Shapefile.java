@@ -29,11 +29,11 @@ public class ReleaseFileReader_Shapefile implements ReleaseFileReader{
 
 	protected long relID; // Release ID
 	protected Geometry position;
-	protected float z; // Longitude, Latitude and Depth
+	private float z; // Longitude, Latitude and Depth
 	protected int npart; // # of particles to be released
 	protected String locName; // Location name
 
-	protected boolean EOF = false; // Indicates whether the end of the file has
+	private boolean EOF = false; // Indicates whether the end of the file has
 									// been reached
 
 	protected ShapefileDataStore dataStore;
@@ -43,7 +43,7 @@ public class ReleaseFileReader_Shapefile implements ReleaseFileReader{
 	protected SimpleFeature feat;
 
 	protected String header_ID = "POLYNUM";
-	protected String header_Depth = "DEPTH";
+	private String header_Depth = "DEPTH";
 	protected String header_Npart = "NPART";
 	protected String header_locName = "FNAME";
 	
@@ -126,7 +126,6 @@ public class ReleaseFileReader_Shapefile implements ReleaseFileReader{
 			parse();
 
 		} catch (NoSuchElementException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

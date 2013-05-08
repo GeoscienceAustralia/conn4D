@@ -357,7 +357,6 @@ public class CoordinateMath {
 	 * @return
 	 */
 	
-	
 	public final static Coordinate subtract(Coordinate a, Coordinate b) {
 		return new Coordinate(a.x - b.x, a.y - b.y, a.z - b.z);
 	}

@@ -25,13 +25,13 @@ public class Shapefile implements Habitat{
 	private ShapefileDataStore dataStore;
 	private FeatureSource<SimpleFeatureType,SimpleFeature> source;
 	private Geometry geom;
-	boolean negLon;
+	private boolean negLon;
 	private String filename;
 	private int nPatches;
 	private String luField = "POLYNUM";
 	
 
-	protected SpatialIndex index = new STRtree();
+	private SpatialIndex index = new STRtree();
 
 	public Shapefile(){}
 	

@@ -4,7 +4,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 
 public class PrjTransform_WGS2CEQD implements PrjTransform{
 
-	final static double R_EARTH = 6378137d;
+	private final static double R_EARTH = 6378137d;
 
 	public double[] project(double[] coords) {
 		return function(coords);

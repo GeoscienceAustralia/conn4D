@@ -1,6 +1,5 @@
 package lagrange.impl.collision;
 
-import lagrange.Boundary;
 import lagrange.utils.CoordinateMath;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -25,7 +24,6 @@ public class Intersector_3D_Poly{
 	private double tolerance = 1E-8;
 	private double surfaceLevel = 0;
 	public Intersector_3D_Poly(){}
-	public Intersector_3D_Poly(Boundary bth){}
 	
 	public Coordinate intersection(LineSegment ls, Coordinate[] vertices) {
 
@@ -200,7 +198,7 @@ public class Intersector_3D_Poly{
 		
 		return r_line;
 	}
-		
+	
 	public LineSegment reflect(LineSegment ls, Geometry polygon) {
 
 		Coordinate[] vertices = new Coordinate[polygon.getNumPoints()-1];
@@ -213,7 +211,6 @@ public class Intersector_3D_Poly{
 	}
 	
 	public LineSegment reflect_special(LineSegment ls, Geometry polygon, double surfaceLevel) {
-
 		Coordinate[] vertices = new Coordinate[polygon.getNumPoints()-1];
 		System.arraycopy(polygon.getCoordinates(), 0, vertices, 0, vertices.length);
 		LineSegment tmp = reflect_special(ls,vertices, surfaceLevel);

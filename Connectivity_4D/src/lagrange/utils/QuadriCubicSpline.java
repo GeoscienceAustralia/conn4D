@@ -32,7 +32,6 @@ package lagrange.utils;
 *
 ***************************************************************************************/
 
-
 public class QuadriCubicSpline{
 
     	private int nPoints = 0;   	    // no. of x1 tabulated points

@@ -86,7 +86,7 @@ public class VectorUtils {
 	 *            int - The identifier of the column to be retrieved.
 	 * @return int[] - The column vector.
 	 */
-
+	
 	public static int[] getColumn(int[][] mtx, int col) {
 
 		int[] out = new int[mtx.length];
@@ -392,12 +392,12 @@ public class VectorUtils {
 		return out;
 	}
 	
-	public static double findScale(double[] values, double[][] coordinates, double lagsize){
-		return 0;
+	private static double findScale(double[] values, double[][] coordinates, double lagsize){
+		return 0;//TODO NOT YET IMPLEMENTED
 	}
 	
-	public static double findScale(double[] values, double[] coordinates, double lagsize){
-		 return 0;
+	private static double findScale(double[] values, double[] coordinates, double lagsize){
+		 return 0;//TODO NOT YET IMPLEMENTED
 	}
 	
 	/**

@@ -9,10 +9,10 @@ package lagrange.utils;
 
 public class GeometryUtils {
 
-	final static double R_EARTH = 6378137d; 
+	private final static double R_EARTH = 6378137d; 
 	//final static double R_EARTH = 6372795.477598f; // Quadratic mean radius of
 												   // the earth (meters)
-	final static double REINV = 1d / R_EARTH;// Inverse Radius of the Earth
+	private final static double REINV = 1d / R_EARTH;// Inverse Radius of the Earth
 
 	/**
 	 * Calculates the distance traveled along a sphere (great circle distance)

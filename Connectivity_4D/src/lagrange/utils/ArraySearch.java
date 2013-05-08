@@ -59,6 +59,7 @@ public class ArraySearch {
 	 *         that the return value will be &gt;= 0 if and only if the key is
 	 *         found.
 	 */
+
 	public static int binarySearch(long[] a, long key, int init) {
 		return binarySearch0(a, 0, a.length, key, init);
 	}
@@ -96,6 +97,7 @@ public class ArraySearch {
 	 *             if {@code fromIndex < 0 or toIndex > a.length}
 	 * @since 1.6
 	 */
+	
 	public static int binarySearch(long[] a, int fromIndex, int toIndex,
 			long key, int init) {
 		rangeCheck(a.length, fromIndex, toIndex);
@@ -295,6 +297,7 @@ public class ArraySearch {
 	 *             if {@code fromIndex < 0 or toIndex > a.length}
 	 * @since 1.6
 	 */
+	
 	public static int binarySearch(int[] a, int fromIndex, int toIndex,
 			int key, int init) {
 		rangeCheck(a.length, fromIndex, toIndex);

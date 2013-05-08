@@ -1,6 +1,9 @@
 package lagrange.impl.readers;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.LineSegment;
@@ -134,6 +137,10 @@ public class Boundary_Grid_NetCDF implements Boundary_Grid, Cloneable {
 		return new int[] {(int) Math.floor((y-miny)/cellsize),(int) Math.floor((x-minx)/cellsize)};
 	}
 
+	public int[] getIndices(Coordinate c){
+		return getIndices(c.x,c.y);
+	}
+	
 	public String getLatName() {
 		return latName;
 	}
@@ -293,6 +300,15 @@ public class Boundary_Grid_NetCDF implements Boundary_Grid, Cloneable {
 				(z + left + top + ulz) / 4f));
 			
 		return new Coordinate[] { ll, lr, ur, ul };
+	}
+	
+	public List<Coordinate[]> getVertices(List<int[]> indices){
+		List<Coordinate[]> list = new ArrayList<Coordinate[]>(indices.size());
+		Iterator<int[]> it = indices.iterator();
+		while(it.hasNext()){
+			list.add(getVertices(it.next()));
+		}
+		return list;
 	}
 
 

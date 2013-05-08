@@ -26,13 +26,10 @@ public class ConfigurationOverride extends ParameterReader {
 	public String polyKey = "ID"; // Index field of the settlement polygon file
 	public boolean negCoord = false; // Are negative coordinate values being used?
 	public String landFileName = "landmask.shp"; // Name of the land mask file
-	public String landKey = "ID";
 	public String bathymetryFileName = "bathymetry.asc";
 	public String trajOutputDir = ".\\";		// Output directory for trajectory files
 	public String vertFile = "vertical.vrt";	// Path and name of the vertical migration matrix.
-	public String matrixOutput = "output.mtx";	// Path and name of the output transition matrix.
 	public String velocityType = "IANN";		// Velocity type (IANN- Interannual or CLIM - climatological)
-	public int poolSize = 100;
 	public long timeOffset = -2177521200000l;   // Offset between velocity time (HYCOM-1900) and Java's base time (1970)
 	public String timeOffsetUnits = "milliseconds";
 

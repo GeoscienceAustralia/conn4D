@@ -145,7 +145,7 @@ public class TestCollisionDetection_3D_Bathymetry {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void testConcaveXEdgeZLine(){
 		Particle p1 = new Particle();
 		p1.setPX(0); p1.setPY(0.5);	p1.setPZ(1); p1.setX(0); p1.setY(0.5); p1.setZ(-1);
@@ -161,7 +161,7 @@ public class TestCollisionDetection_3D_Bathymetry {
 		p1.setPX(-0.5); p1.setPY(0.5);	p1.setPZ(1); p1.setX(0.5); p1.setY(0.5); p1.setZ(-1);
 		cdb_e1.setSurfaceLevel(100);
 		cdb_e1.handleIntersection(p1);
-		double[] da = new double[]{p1.getX(),p1.getY(),p1.getZ()};
+		//double[] da = new double[]{p1.getX(),p1.getY(),p1.getZ()};
 		//Assert.assertArrayEquals(new double[]{0.5,0.5,1},da ,1E-9);
 	}
 	
@@ -190,7 +190,7 @@ public class TestCollisionDetection_3D_Bathymetry {
 	 * positive slope in the X-direction.
 	 */
 	
-	//@Test
+	@Test
 	public void testEasyYEdgeZLine(){
 		Particle p1 = new Particle();
 		p1.setPX(0); p1.setPY(0.5);	p1.setPZ(-9); p1.setX(0); p1.setY(0.5); p1.setZ(-11); 

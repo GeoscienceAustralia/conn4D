@@ -5,6 +5,7 @@ package lagrange.impl.movement;
  * 		    Ashwanth Srinivasan, and Robert K. Cowen.
  */
 
+import lagrange.Advection;
 import lagrange.Movement;
 import lagrange.Particle;
 import lagrange.VelocityReader;
@@ -19,14 +20,14 @@ import lagrange.utils.GeometryUtils;
  * http://en.wikipedia.org/wiki/Cash%E2%80%93Karp_method
  */
 
-public class Advection_RK4_3D implements Movement, Cloneable {
+public class Advection_RK4_3D implements Advection, Movement, Cloneable {
 
 	private float h;
 	private VelocityReader vr = new VelocityReader_NetCDF_4D();
 
 	// Cash-Karp Butcher tableau
 
-	final double
+	private final double
 
 	B21 = 0.2f, B31 = 3.0f / 40.0f, B32 = 9.0f / 40.0f, B41 = 0.3f,
 			B42 = -0.9f, B43 = 1.2f, B51 = -11.0f / 54.0f, B52 = 2.5f,
@@ -313,7 +314,6 @@ public class Advection_RK4_3D implements Movement, Cloneable {
 			p.setV(akv6);
 			p.setW(akw6);
 		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

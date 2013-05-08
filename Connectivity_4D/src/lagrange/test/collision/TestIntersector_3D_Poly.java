@@ -18,7 +18,7 @@ public class TestIntersector_3D_Poly {
 	private LineSegment linex;
 	private LineSegment liney;
 	private LineSegment linez;
-	private double surfaceLevel = 0;
+	//private double surfaceLevel = 0;
 	private double e = 1E-12;
 	Intersector_3D_Poly lsi = new Intersector_3D_Poly();
 	GeometryFactory gf = new GeometryFactory();

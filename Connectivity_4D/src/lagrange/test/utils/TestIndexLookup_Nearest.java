@@ -3,7 +3,6 @@ package lagrange.test.utils;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import lagrange.utils.IndexLookup_Nearest;
 

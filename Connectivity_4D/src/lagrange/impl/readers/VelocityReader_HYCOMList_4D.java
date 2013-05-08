@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
@@ -31,8 +30,7 @@ import ucar.nc2.Variable;
 
 public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 
-	Calendar c = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-	SimpleDateFormat formatUTC = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ssZ");
+	private SimpleDateFormat formatUTC = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ssZ");
 	private double u, v, w;
 	private Map<Long, NetcdfFile> uFiles = new TreeMap<Long, NetcdfFile>();
 	private Map<Long, NetcdfFile> vFiles = new TreeMap<Long, NetcdfFile>();
@@ -203,7 +201,6 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 					.getDouble(0);
 			bounds[0][1] = TimeConvert.HYCOMToMillis((long) last);
 		} catch (InvalidRangeException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -796,7 +793,6 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 				}
 
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 

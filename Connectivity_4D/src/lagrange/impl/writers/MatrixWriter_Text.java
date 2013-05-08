@@ -18,10 +18,10 @@ import lagrange.output.ThreadWriter;
 
 public class MatrixWriter_Text implements MatrixWriter {
 
-	ThreadWriter bw;
-	Map<String, Long> m = new TreeMap<String, Long>();
-	String filename;
-	boolean deleteEmpty = true;
+	private ThreadWriter bw;
+	private Map<String, Long> m = new TreeMap<String, Long>();
+	private String filename;
+	private boolean deleteEmpty = true;
 
 	/**
 	 * Constructor that uses a String to generate the output file.

@@ -96,7 +96,7 @@ public class ParameterReader {
 	 * @throws IOException
 	 */
 	
-	public void read(String _parse) throws SecurityException,
+	private void read(String _parse) throws SecurityException,
 			NoSuchFieldException, IllegalAccessException, IOException {
 
 		StringTokenizer stk = new StringTokenizer(_parse);

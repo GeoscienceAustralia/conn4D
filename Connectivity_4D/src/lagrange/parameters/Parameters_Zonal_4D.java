@@ -30,7 +30,6 @@ public class Parameters_Zonal_4D implements Parameters {
 	private double[] mortalityParameters = { 1 / .0635, .7559 };
 	private boolean verticalMigration = false;
 	private boolean true3D = true;
-	private boolean centroid = true;
 	private String outputFolder = "Test";
 	private String settlementType = "Simple";
 	private String diffusionType = "Simple";

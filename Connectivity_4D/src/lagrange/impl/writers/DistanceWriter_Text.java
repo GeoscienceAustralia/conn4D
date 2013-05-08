@@ -12,11 +12,11 @@ import lagrange.output.ThreadWriter;
 
 public class DistanceWriter_Text implements DistanceWriter{
 
-	ThreadWriter bw;
-	String filename;
-	Map<String,Double> num = new TreeMap<String,Double>();
-	Map<String,Double> dist = new TreeMap<String,Double>();
-	boolean deleteEmpty = true;
+	private ThreadWriter bw;
+	private String filename;
+	private Map<String,Double> num = new TreeMap<String,Double>();
+	private Map<String,Double> dist = new TreeMap<String,Double>();
+	private boolean deleteEmpty = true;
 
 	/**
 	 * Constructor that uses a String to generate the output file.

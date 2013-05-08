@@ -1,7 +1,6 @@
 package lagrange.test.readers;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import lagrange.impl.readers.Boundary_Grid_NetCDF;
 

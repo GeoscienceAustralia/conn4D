@@ -1,14 +1,18 @@
 package lagrange.test.collision;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import com.vividsolutions.jts.geom.Coordinate;
 
 import lagrange.Boundary_Grid;
 
 public class Boundary_Grid_TestingGrid implements Boundary_Grid {
 
-	public double minx = -1;
-	public double miny = -1;
-	public double cellsize = 1;
+	private double minx = -1;
+	private double miny = -1;
+	private double cellsize = 1;
 	public Coordinate midpoint = new Coordinate(0,0,0);
 	
 	public Coordinate[][] ca;
@@ -49,38 +53,30 @@ public class Boundary_Grid_TestingGrid implements Boundary_Grid {
 	}
 
 	public Coordinate[] getVertices(Coordinate c) {
-		if (c.x < midpoint.x && c.y < midpoint.x) {
-			return ca[1];
-		} 
-		if (c.x < midpoint.x) {
-			return ca[0];
-		}
-		if(c.y < midpoint.x){
-			return ca[3];
-		}
-		return ca[2];
+		return getVertices(getIndices(c));
 	}
 
 	public Coordinate[] getVertices(int[] indices) {
-		if(indices[0] < 0 && indices[1] < 0){
-			return ca[1];
+		int len = ca.length;
+		int index = len*indices[0]+ indices[1];
+		return ca[index];
+	}
+	
+	public List<Coordinate[]> getVertices(List<int[]> indices){
+		List<Coordinate[]> list = new ArrayList<Coordinate[]>(indices.size());
+		Iterator<int[]> it = indices.iterator();
+		while(it.hasNext()){
+			list.add(getVertices(it.next()));
 		}
-		if (indices[1] < 0) {
-			return ca[0];
-		}
-		if (indices[0] < 0){
-			return ca[3];
-		}
-		return ca[2];
+		return list;
 	}
 
 	public int[] getIndices(double x, double y) {
-		if (x < 0 && y < 0) {
-			return new int[] { -1, -1 };
-		}
-		if (x < 0){return new int[] {0,-1};}
-		if (y < 0){return new int[] {-1,0};}
-		return new int[] {0,0};
+		return new int[] {(int) Math.floor((y-miny)/cellsize),(int) Math.floor((x-minx)/cellsize)};
+	}
+	
+	public int[] getIndices(Coordinate c){
+		return getIndices(c.x,c.y);
 	}
 
 	public double getRealDepth(double x, double y) {
@@ -89,5 +85,15 @@ public class Boundary_Grid_TestingGrid implements Boundary_Grid {
 	
 	public void setCells(Coordinate[][] ca){
 		this.ca = ca;
+	}
+	
+	public void setMinX(double minx){
+		this.minx = minx;
+	}
+	public void setMinY(double miny){
+		this.miny = miny;
+	}
+	public void setCellSize(double cellsize){
+		this.cellsize = cellsize;
 	}
 }

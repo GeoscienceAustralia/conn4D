@@ -559,11 +559,11 @@ public class Release implements Runnable {
 		return kill;
 	}
 
-	public boolean usesNegativeCoordinates() {
-		return negCoord;
-	}
+	//public boolean usesNegativeCoordinates() {
+	//	return negCoord;
+	//}
 
-	public boolean usesNegativeOceanCoordinates() {
-		return negOceanCoord;
-	}
+	//public boolean usesNegativeOceanCoordinates() {
+	//	return negOceanCoord;
+	//}
 }

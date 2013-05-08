@@ -157,6 +157,7 @@ public class VectorMath {
 	 * @param result
 	 *            Where to store the cross product
 	 **/
+
 	public static void cross(double[] p1, double[] p2, double[] result) {
 		result[0] = p1[1] * p2[2] - p2[1] * p1[2];
 		result[1] = p1[2] * p2[0] - p2[2] * p1[0];
@@ -173,6 +174,7 @@ public class VectorMath {
 	 * @param result
 	 *            Where to store the cross product
 	 **/
+
 	public static void cross(float[] p1, float[] p2, float[] result) {
 		result[0] = p1[1] * p2[2] - p2[1] * p1[2];
 		result[1] = p1[2] * p2[0] - p2[2] * p1[0];
@@ -275,6 +277,7 @@ public class VectorMath {
 	 *            The second vector
 	 * @return v1 dot v2
 	 **/
+
 	public static int dot(int[] v1, int[] v2) {
 		int res = 0;
 		for (int i = 0; i < v1.length; i++)
@@ -289,6 +292,7 @@ public class VectorMath {
      *
      * @param array  the array to reverse, may be <code>null</code>
      */
+
     public static void flip(double[] array) {
         if (array == null) {
             return;
@@ -312,6 +316,7 @@ public class VectorMath {
      *
      * @param array  the array to reverse, may be <code>null</code>
      */
+
     public static void flip(float[] array) {
         if (array == null) {
             return;
@@ -358,6 +363,7 @@ public class VectorMath {
      *
      * @param array  the array to reverse, may be <code>null</code>
      */
+    
     public static void flip(long[] array) {
         if (array == null) {
         	return;
@@ -381,6 +387,7 @@ public class VectorMath {
      *
      * @param array  the array to reverse, may be <code>null</code>
      */
+    
     public static short[] flip(short[] array) {
         if (array == null) {
             return null;
@@ -695,6 +702,7 @@ public class VectorMath {
 	 *            The vector
 	 * @return The magnitude of the vector
 	 **/
+
 	public static float magnitude(float[] vector) {
 		return (float) Math.sqrt(vector[0] * vector[0] + vector[1] * vector[1]
 				+ vector[2] * vector[2]);
@@ -707,6 +715,7 @@ public class VectorMath {
 	 *            The vector
 	 * @return The magnitude of the vector
 	 **/
+	
 	public static int magnitude(int[] vector) {
 		return FixedPointUtilities.sqrt(FixedPointUtilities.multiply(vector[0],
 				vector[0])

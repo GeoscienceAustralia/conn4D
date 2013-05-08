@@ -536,16 +536,6 @@ public class BiCubicSpline {
 		return limits;
 	}
 
-	// Display limits to x
-	public void displayLimits() {
-		System.out.println(" ");
-		for (int i = 0; i < 2; i++) {
-			System.out.println("The limits to the x array " + i + " are "
-					+ xMin[i] + " and " + xMax[i]);
-		}
-		System.out.println(" ");
-	}
-
 	// Set inner matrix of derivatives
 	// Primarily used by TriCubicSpline
 	public void setDeriv(double[][] d2ydx2) {

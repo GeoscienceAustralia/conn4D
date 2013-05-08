@@ -16,9 +16,9 @@ import com.vividsolutions.jts.geom.Point;
 
 public class Intersector_2D_Shapefile implements Intersector {
 
-	public final long NO_INTERSECTION = Long.MIN_VALUE;
-	Shapefile sh;
-	GeometryFactory gf = new GeometryFactory();
+	private final long NO_INTERSECTION = Long.MIN_VALUE;
+	private Shapefile sh;
+	private GeometryFactory gf = new GeometryFactory();
 
 	public Intersector_2D_Shapefile() {
 	}
@@ -122,7 +122,7 @@ public class Intersector_2D_Shapefile implements Intersector {
 		return false;
 	}
 
-	double cvt(double oldlon) {
+	private double cvt(double oldlon) {
 		if (oldlon > 180) {
 			return -(360d - oldlon);
 		} else

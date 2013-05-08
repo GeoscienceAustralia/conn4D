@@ -18,15 +18,6 @@ public interface Advection {
 	public void apply(Particle p);
 	
 	/**
-	 * Indicates whether the particle being moved is in proximity to NoData
-	 * (used in efficiently applying the land detection routine).
-	 * 
-	 * @return
-	 */
-	
-	public boolean isNearNoData(Particle p);
-	
-	/**
 	 * Generates a clone of the Advection instance 
 	 * @return
 	 */

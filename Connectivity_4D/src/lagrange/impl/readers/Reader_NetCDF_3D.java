@@ -26,7 +26,6 @@ public class Reader_NetCDF_3D {
 			netcdfFile = NetcdfFile.open(filename);
 			bndVar = netcdfFile.findVariable(varName);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -66,10 +65,8 @@ public class Reader_NetCDF_3D {
 		try {
 			bnd = bndVar.read(new int[]{tm,i,j},new int[]{1,1,1});
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvalidRangeException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return bnd.getDouble(0);

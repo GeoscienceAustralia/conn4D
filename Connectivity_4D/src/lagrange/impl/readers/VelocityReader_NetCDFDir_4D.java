@@ -246,7 +246,6 @@ public class VelocityReader_NetCDFDir_4D implements VelocityReader, Cloneable {
 			
 			return ndr;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			System.out
 					.println("WARNING:  Unexpected error.  NetCDFDirReader could not be cloned.\n");
 			return null;
@@ -767,7 +766,6 @@ public class VelocityReader_NetCDFDir_4D implements VelocityReader, Cloneable {
 				}
 
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -992,7 +990,7 @@ public class VelocityReader_NetCDFDir_4D implements VelocityReader, Cloneable {
 	}
 	
 	/**
-	 * Sets the w-velocity ffile to be used by this class
+	 * Sets the w-velocity file to be used by this class
 	 * 
 	 * @param _velocityFile
 	 *            - the w-velocity NetCDF object
