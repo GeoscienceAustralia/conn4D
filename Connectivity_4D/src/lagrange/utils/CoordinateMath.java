@@ -172,7 +172,7 @@ public class CoordinateMath {
 	
 	public final static LineSegment nibble(LineSegment ls, double distance){
 	    Coordinate coord = new Coordinate();
-	    double segmentLengthFraction = distance/ls.getLength();
+	    double segmentLengthFraction = distance/magnitude(subtract(ls.p0,ls.p1));
 	    coord.x = ls.p0.x + segmentLengthFraction * (ls.p1.x - ls.p0.x);
 	    coord.y = ls.p0.y + segmentLengthFraction * (ls.p1.y - ls.p0.y);
 	    coord.z = ls.p0.z + segmentLengthFraction * (ls.p1.z - ls.p0.z);
@@ -187,6 +187,12 @@ public class CoordinateMath {
 		Coordinate u = CoordinateMath.subtract(v1, v0);
 		Coordinate v = CoordinateMath.subtract(v2, v0);
 		return CoordinateMath.cross(u, v);
+	}
+	
+	public final static Coordinate normal_zplus(Coordinate[] vertices){
+		Coordinate tmp = normal(vertices);
+		if(tmp.z<0){return negative(tmp);}
+		return tmp;
 	}
 	
 	/**
@@ -289,6 +295,20 @@ public class CoordinateMath {
 	  }
 	  return c1||c2||c3;
 	}
+	
+	public final static Coordinate reflect(Coordinate point, Coordinate fulcrum, Coordinate norm){
+		Coordinate dir = subtract(point,fulcrum);
+		Coordinate nnorm = CoordinateMath.normalize(norm);
+		return add(subtract(dir, CoordinateMath.dilate(nnorm, 2 * CoordinateMath.dot(dir, nnorm))),fulcrum);	
+	}
+	
+	//public final static Coordinate angleSplit(Coordinate p0, Coordinate vertex, Coordinate p1, Coordinate reference){
+	//	double angle = angle3DSigned(p0,vertex,p1,reference);
+	//	Coordinate norm = CoordinateMath.normal(new Coordinate[] { p1, vertex, p0 });
+	//	
+	//	Coordinate newaxis = CoordinateMath.add(norm, vertex);
+	//	return CoordinateMath.rotate3D(p0, newaxis, vertex, angle/2);
+	//}
 	
 	/**
 	 * From http://inside.mines.edu/~gmurray/ArbitraryAxisRotation/

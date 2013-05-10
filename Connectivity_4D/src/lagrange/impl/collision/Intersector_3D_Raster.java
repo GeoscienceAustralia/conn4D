@@ -118,4 +118,7 @@ public class Intersector_3D_Raster {
 	public double getSurfaceLevel(){
 		return surfaceLevel;
 	}
+	public Coordinate getNaN(){
+		return i3p.getNaN();
+	}
 }

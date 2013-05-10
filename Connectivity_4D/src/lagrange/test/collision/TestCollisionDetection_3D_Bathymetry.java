@@ -145,38 +145,32 @@ public class TestCollisionDetection_3D_Bathymetry {
 		}
 	}
 	
-	//@Test
+	@Test
 	public void testConcaveXEdgeZLine(){
 		Particle p1 = new Particle();
 		p1.setPX(0); p1.setPY(0.5);	p1.setPZ(1); p1.setX(0); p1.setY(0.5); p1.setZ(-1);
 		cdb_e1.setSurfaceLevel(100);
 		cdb_e1.handleIntersection(p1);
 		double[] da = new double[]{p1.getX(),p1.getY(),p1.getZ()};
-		Assert.assertArrayEquals(new double[]{0,0,1},da ,1E-9);
+		Assert.assertArrayEquals(new double[]{0,0.5,1},da ,1E-9);
 	}
 	
-	//@Test
+	@Test
 	public void testConcaveXEdge45Line(){
 		Particle p1 = new Particle();
 		p1.setPX(-0.5); p1.setPY(0.5);	p1.setPZ(1); p1.setX(0.5); p1.setY(0.5); p1.setZ(-1);
 		cdb_e1.setSurfaceLevel(100);
 		cdb_e1.handleIntersection(p1);
-		//double[] da = new double[]{p1.getX(),p1.getY(),p1.getZ()};
-		//Assert.assertArrayEquals(new double[]{0.5,0.5,1},da ,1E-9);
+		double[] da = new double[]{p1.getX(),p1.getY(),p1.getZ()};
+		Assert.assertArrayEquals(new double[]{0.5,0.5,1},da ,1E-9);
 	}
-	
-	//@Test
-	public void testConvexXEdgeZLine(){}
-	
-	//@Test
-	public void testConvexXEdge45Line(){}
 	
 	/**
 	 * Tests reflection behavior off a horizontal edge when there is a simple
 	 * positive slope in the X-direction.
 	 */
 	
-	//@Test
+	@Test
 	public void testEasyXEdgeZLine(){
 		Particle p1 = new Particle();
 		p1.setPX(0.5); p1.setPY(0);	p1.setPZ(-8.5); p1.setX(0.5); p1.setY(0); p1.setZ(-10.5); 
@@ -204,7 +198,7 @@ public class TestCollisionDetection_3D_Bathymetry {
 	 * positive slope in the X-direction.
 	 */
 	
-	//@Test
+	@Test
 	public void testEasyCorner(){
 		Particle p1 = new Particle();
 		p1.setPX(0.5); p1.setPY(0.5);	p1.setPZ(-8.5); p1.setX(0.5); p1.setY(0.5); p1.setZ(-10.5); 
@@ -212,17 +206,6 @@ public class TestCollisionDetection_3D_Bathymetry {
 		double[] da = new double[]{p1.getX(),p1.getY(),p1.getZ()};
 	    Assert.assertArrayEquals(new double[]{-0.5,0.5,-9.5},da ,1E-1);// precision decrease due to use of meters
 	}	
-	
-	//@Test
-	public void testEdgeHit(){
-		Particle p1 = new Particle();
-		p1.setPX(-0.5); p1.setPY(0.5);	p1.setPZ(1); p1.setX(0.5); p1.setY(0.5); p1.setZ(-1);
-		cdb_e1.setSurfaceLevel(100);
-		cdb_e1.handleIntersection(p1);
-		double[] da = new double[]{p1.getX(),p1.getY(),p1.getZ()};
-		System.out.println(Arrays.toString(da));
-		//Assert.assertArrayEquals(new double[]{0,0,1},da ,1E-9);
-	}
 	
 	//@Test
 	public void testRealProblem(){
@@ -243,7 +226,7 @@ public class TestCollisionDetection_3D_Bathymetry {
 	 * Tests a vertical line against a negative slope in the X-direction
 	 */
 	
-	//@Test
+	@Test
 	public void testXReverseSlopeZLine() {
 		Particle p1 = new Particle();
 		p1.setPX(0); p1.setPY(0);	p1.setPZ(-9); p1.setX(0); p1.setY(0); p1.setZ(-11); 
@@ -257,7 +240,7 @@ public class TestCollisionDetection_3D_Bathymetry {
 	 * offset from 0 (at 5,5)
 	 */
 	
-	//@Test
+	@Test
 	public void testXSlopeOffsetZLine(){
 		Particle p1 = new Particle();
 		p1.setPX(5); p1.setPY(5);	p1.setPZ(-4); p1.setX(5); p1.setY(5); p1.setZ(-6); 
@@ -270,7 +253,7 @@ public class TestCollisionDetection_3D_Bathymetry {
 	 * Tests a vertical line against a positive slope in the X-direction
 	 */
 	
-	//@Test
+	@Test
 	public void testXSlopeZLine() {
 		Particle p1 = new Particle();
 		p1.setPX(0); p1.setPY(0);	p1.setPZ(-9); p1.setX(0); p1.setY(0); p1.setZ(-11); 
@@ -283,7 +266,7 @@ public class TestCollisionDetection_3D_Bathymetry {
 	 * Tests a vertical line against a positive slope in the Y-direction
 	 */
 	
-	//@Test
+	@Test
 	public void testYSlopeZLine() {
 		Particle p1 = new Particle();
 		p1.setPX(0); p1.setPY(0);	p1.setPZ(-9); p1.setX(0); p1.setY(0); p1.setZ(-11); 

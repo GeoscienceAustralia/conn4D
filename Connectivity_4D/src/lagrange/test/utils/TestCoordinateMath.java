@@ -23,12 +23,10 @@ public class TestCoordinateMath {
 	Coordinate xyz1 = new Coordinate(1,1,1);
 	Coordinate xyz2 = new Coordinate(1,-1,1);
 	
-	
-	
 	@Before
 	public void setUp(){}
 
-	@Test
+	//@Test
 	public void testAngle3DSigned() {
 		// 90° x and z direction
 		Assert.assertEquals(90d,Math.toDegrees(CoordinateMath.angle3DSigned(new Coordinate(-1,0,1), origin, new Coordinate(1,0,1),z1)),1E-16);
@@ -61,12 +59,7 @@ public class TestCoordinateMath {
 		Assert.assertEquals(-90d,Math.toDegrees(CoordinateMath.angle3DSigned(new Coordinate(-1,-1,0), origin, new Coordinate(-1,1,0),y2)),1E-16);
 		Assert.assertEquals(90d,Math.toDegrees(CoordinateMath.angle3DSigned(new Coordinate(-1,1,0), origin, new Coordinate(-1,-1,0),y2)),1E-16);
 		Assert.assertEquals(90d,Math.toDegrees(CoordinateMath.angle3DSigned(new Coordinate(-1,-1,0), origin, new Coordinate(-1,1,0),y1)),1E-16);
-		Assert.assertEquals(-90d,Math.toDegrees(CoordinateMath.angle3DSigned(new Coordinate(-1,1,0), origin, new Coordinate(-1,-1,0),y1)),1E-16);
-		
-		//System.out.println(Math.toDegrees(CoordinateMath.angle3DSigned(new Coordinate(1,0,0), origin, new Coordinate(-1,0,0),z1)));
-		//System.out.println(Math.toDegrees(CoordinateMath.angle3DSigned(new Coordinate(-1,0,0), origin, new Coordinate(1,0,0),z1)));
-		//System.out.println(Math.toDegrees(CoordinateMath.angle3DSigned(new Coordinate(1,0,0), origin, new Coordinate(-1,0,0),z2)));
-		//System.out.println(Math.toDegrees(CoordinateMath.angle3DSigned(new Coordinate(-1,0,0), origin, new Coordinate(1,0,0),z2)));	
+		Assert.assertEquals(-90d,Math.toDegrees(CoordinateMath.angle3DSigned(new Coordinate(-1,1,0), origin, new Coordinate(-1,-1,0),y1)),1E-16);	
 	}
 	
 	//@Test
@@ -75,7 +68,7 @@ public class TestCoordinateMath {
 		System.out.println(CoordinateMath.ncross(new Coordinate(5,6,0),new Coordinate(6,5,0)));
 	}
 	
-	@Test
+	//@Test
 	public void testRotation(){
 		
 		//System.out.println(CoordinateMath.rotate3D(new Coordinate(1,0,0), new Coordinate(0,0,1), Math.toRadians(90)));
@@ -94,5 +87,21 @@ public class TestCoordinateMath {
 		//System.out.println(CoordinateMath.rotate3Dn(new Coordinate(11,10,0), new Coordinate(10,10,15), new Coordinate(10,10,0), Math.toRadians(-90)));
 		System.out.println(CoordinateMath.rotate3D(new Coordinate(0,0,-1), new Coordinate(0,1,0), new Coordinate(0,0,0), Math.toRadians(90)));
 		System.out.println(CoordinateMath.rotate3D(new Coordinate(0,0.5,-1), new Coordinate(0,1.5,0), Math.toRadians(180)));
+	}
+	
+	//@Test
+	public void testReflection(){
+		Coordinate c = CoordinateMath.reflect(xyz1, origin, z1);
+		Assert.assertTrue(c.x == 1 && c.y == 1 && c.z == -1);
+		c = CoordinateMath.reflect(xyz1, origin, x1);
+		Assert.assertTrue(c.x == -1 && c.y == 1 && c.z == 1);
+		c = CoordinateMath.reflect(xyz1, origin, y1);
+		Assert.assertTrue(c.x == 1 && c.y == -1 && c.z == 1);
+		c = CoordinateMath.reflect(xyz1, origin, xyz1);
+		Assert.assertTrue(Math.abs(c.x-(-1))<1E-8 && Math.abs(c.y-(-1))<1E-8 && Math.abs(c.z-(-1))<1E-8);
+		c = CoordinateMath.reflect(xyz1, new Coordinate(0,0,-1), z1);
+		Assert.assertTrue(c.x == 1 && c.y == 1 && c.z == -3);
+		c = CoordinateMath.reflect(x1, new Coordinate(5,0,0), x1);
+		Assert.assertTrue(c.x == 9 && c.y == 0 && c.z == 0);		
 	}
 }

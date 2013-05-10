@@ -57,7 +57,7 @@ public class Boundary_Grid_TestingGrid implements Boundary_Grid {
 	}
 
 	public Coordinate[] getVertices(int[] indices) {
-		int len = ca.length;
+		int len = (int) Math.sqrt(indices.length);
 		int index = len*indices[0]+ indices[1];
 		return ca[index];
 	}

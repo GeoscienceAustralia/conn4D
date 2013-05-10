@@ -1,6 +1,7 @@
 package lagrange.utils;
 
 import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.LineSegment;
 
 public class PrjTransform_WGS2CEQD implements PrjTransform{
 
@@ -29,6 +30,11 @@ public class PrjTransform_WGS2CEQD implements PrjTransform{
 		return out;
 	}
 	
+	public LineSegment project(LineSegment ls){
+		if(ls==null){return null;}
+		return new LineSegment(project(ls.p0),project(ls.p1));	
+	}
+	
 	public double[] inverse(double[] coords) {
 		return function_inv(coords);
 	}
@@ -52,6 +58,11 @@ public class PrjTransform_WGS2CEQD implements PrjTransform{
 		return out;
 	}
 
+	
+	public LineSegment inverse(LineSegment ls){
+		if(ls==null){return null;}
+		return new LineSegment(inverse(ls.p0),inverse(ls.p1));	
+	}
 	private double[] function(double[] coords) {
 		if(coords==null){return null;}
 		double latitude_origin = Math.toRadians(0);

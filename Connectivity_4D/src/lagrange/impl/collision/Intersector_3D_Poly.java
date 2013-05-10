@@ -23,6 +23,7 @@ public class Intersector_3D_Poly{
 	 */
 	private double tolerance = 1E-8;
 	private double surfaceLevel = 0;
+	public static final Coordinate NaN = new Coordinate(Double.NaN,Double.NaN,Double.NaN);
 	public Intersector_3D_Poly(){}
 	
 	public Coordinate intersection(LineSegment ls, Coordinate[] vertices) {
@@ -50,14 +51,14 @@ public class Intersector_3D_Poly{
 		// Coincident with the plane
 		
 		if (Math.abs(b) < tolerance) {
-			return new Coordinate(Double.NaN, Double.NaN, Double.NaN);
+			return NaN;
 		}
 		
 		// Heading in the opposite direction
 
 		double r = a / b;
 		if (r < 0d) {
-			return new Coordinate(Double.NaN, Double.NaN, Double.NaN);
+			return NaN;
 		}
 		
 		return CoordinateMath.add(p0, CoordinateMath.dilate(dir, r));
@@ -215,5 +216,8 @@ public class Intersector_3D_Poly{
 		System.arraycopy(polygon.getCoordinates(), 0, vertices, 0, vertices.length);
 		LineSegment tmp = reflect_special(ls,vertices, surfaceLevel);
 		return tmp;
+	}
+	public Coordinate getNaN(){
+		return NaN;
 	}
 }
