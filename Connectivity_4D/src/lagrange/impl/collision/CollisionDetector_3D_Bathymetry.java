@@ -89,14 +89,17 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 
 			Coordinate isect = i3d.intersect(ln, bnd.getVertices(currentcell));
 
-			// If there was no intersection, advance to the next cell.
-			// If we're at the last cell (and there was no intersection)
-			// then break out of the loop.
+			// If there was no intersection...
 			
-			if (isNaN(isect)) { 
+			if (isNaN(isect)) {
+				
+				// If we're at the last cell then break out of the loop.
+				
 				if (Arrays.equals(currentcell, endcell)) {
 					break;
 				}
+				
+				// Otherwise advance to the next cell.
 				
 				int[] nc = rg.nextCell();
 				VectorMath.flip(nc);
@@ -108,16 +111,21 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 
 				List<int[]> cells = rg.getCellList(isect);
 				Coordinate cnorm;
+				
+				// If there is only one cell, use its norm
+				
 				if (cells.size() == 1) {
 					cnorm = CoordinateMath.normal_zplus(pt.project(bnd
 							.getVertices(cells.get(0))));
 				}
+				
+				// Otherwise determine the average of the norms
 
 				else {
 					Coordinate[] norms = new Coordinate[cells.size()];
 					for (int i = 0; i < cells.size(); i++) {
 						
-						//zplus ensures norms are facing up.
+						//z-plus ensures norms are facing up.
 						
 						norms[i] = CoordinateMath.normal_zplus(pt.project(bnd
 								.getVertices(cells.get(i))));
@@ -133,12 +141,28 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 
 				ln = new LineSegment(isect, update);
 				
+				// Prevent surface breaching
+				if(ln.p1.z > surfaceLevel){
+					ln.p1.z = surfaceLevel;
+				}
+
+				double rd = bnd.getRealDepth(ln.p1.x, ln.p1.y);
+				
+				if(ln.p1.z < rd){
+					p.setLost(true);
+					p.setX(ln.p1.x);
+					p.setY(ln.p1.y);
+					p.setZ(rd);
+					return;
+				}
+				
 				// Remove a small section from the beginning of the line
 				// to prevent re-reflection.  THIS IS IMPORTANT!
 				
 				CoordinateMath.nibble(ln, 1E-08);
 				rg.setLine(new LineSegment(ln));
-				endcell = (bnd.getIndices(update));
+				currentcell = bnd.getIndices(isect);
+				endcell = bnd.getIndices(update);
 				internal_reflections++;
 			}
 		}
@@ -237,6 +261,14 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 	public void setProjectionTransform(PrjTransform pt) {
 		this.pt = pt;
 	}
+	
+	/**
+	 * Used to perform NaN comparisons with coordinates since the
+	 * default method does not handle NaN values well.
+	 * 
+	 * @param c
+	 * @return
+	 */
 
 	private boolean isNaN(Coordinate c) {
 		if (Double.isNaN(c.x) && Double.isNaN(c.y) && Double.isNaN(c.z)) {

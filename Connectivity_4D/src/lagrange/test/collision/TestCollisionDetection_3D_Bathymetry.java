@@ -1,7 +1,6 @@
 package lagrange.test.collision;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import lagrange.Boundary;
 import lagrange.Particle;
@@ -17,17 +16,9 @@ import com.vividsolutions.jts.geom.Coordinate;
 
 public class TestCollisionDetection_3D_Bathymetry {
 	
-	public static void main(String[] args){
-		TestCollisionDetection_3D_Bathymetry t = new TestCollisionDetection_3D_Bathymetry();
-		t.setUp();
-		//t.testEdgeHit();
-		t.testXSlopeOffsetZLine();
-		//t.testRealProblem();
-	}
 	CollisionDetector_3D_Bathymetry cdb_x, cdb_xr, cdb_y, cdbreal;
 	CollisionDetector_3D_Bathymetry cdb_e1, cdb_e2, cdb_ex, cdb_eo;
 	Boundary gx, gy, gxr, greal;
-	
 	Boundary_Grid_TestingGrid f1,f2,fx, fo;
 	Coordinate a1 = new Coordinate(-1,1,1);
 	Coordinate a2 = new Coordinate(-1,0,1);
@@ -54,7 +45,6 @@ public class TestCollisionDetection_3D_Bathymetry {
 	Coordinate[] sq2_1 = new Coordinate[]{b1,b2,b5,b4};
 	Coordinate[] sq2_2 = new Coordinate[]{b2,b3,b6,b5};
 	Coordinate[] sq2_3 = new Coordinate[]{b4,b5,b8,b7};
-	
 	Coordinate[] sq2_4 = new Coordinate[]{b5,b6,b9,b8};
 	Coordinate c1 = new Coordinate(-1,1,-1);
 	Coordinate c2 = new Coordinate(-1,0,-1);
@@ -68,7 +58,6 @@ public class TestCollisionDetection_3D_Bathymetry {
 	Coordinate[] sq3_1 = new Coordinate[]{c1,c2,c5,c4};
 	Coordinate[] sq3_2 = new Coordinate[]{c2,c3,c6,c5};
 	Coordinate[] sq3_3 = new Coordinate[]{c4,c5,c8,c7};
-	
 	Coordinate[] sq3_4 = new Coordinate[]{c5,c6,c9,c8};
 	Coordinate d1 = new Coordinate(-1,1,1E6);
 	Coordinate d2 = new Coordinate(-1,0,1E6);
@@ -78,17 +67,14 @@ public class TestCollisionDetection_3D_Bathymetry {
 	Coordinate d6 = new Coordinate(0,-1,1E3);
 	Coordinate d7 = new Coordinate(1,1,0);
 	Coordinate d8 = new Coordinate(1,0,0);
-	
 	Coordinate d9 = new Coordinate(1,-1,0);
 	Coordinate[] sq4_1 = new Coordinate[]{d1,d2,d5,d4};
 	Coordinate[] sq4_2 = new Coordinate[]{d2,d3,d6,d5};
 	Coordinate[] sq4_3 = new Coordinate[]{d4,d5,d8,d7};	
-	
 	Coordinate[] sq4_4 = new Coordinate[]{d5,d6,d9,d8};
 	Coordinate[][] ca = new Coordinate[][]{sq1_1,sq1_2,sq1_3,sq1_4};
 	Coordinate[][] cb = new Coordinate[][]{sq2_1,sq2_2,sq2_3,sq2_4};
 	Coordinate[][] cc = new Coordinate[][]{sq3_1,sq3_2,sq3_3,sq3_4};
-
 	Coordinate[][] cd = new Coordinate[][]{sq4_1,sq4_2,sq4_3,sq4_4};
 	
 	/**
@@ -145,8 +131,43 @@ public class TestCollisionDetection_3D_Bathymetry {
 		}
 	}
 	
+	/**
+	 * Tests breaching using positive slope in the X direction and a
+	 * horizontal line.
+	 */
+	
 	@Test
-	public void testConcaveXEdgeZLine(){
+	public void testBreaching(){
+		Particle p1 = new Particle();
+		p1.setPX(-1.5); p1.setPY(0); p1.setPZ(-0.5); p1.setX(0.5); p1.setY(0); p1.setZ(-0.5);
+		cdb_ex.setSurfaceLevel(0);
+		cdb_ex.handleIntersection(p1);
+		double[] da = new double[]{p1.getX(),p1.getY(),p1.getZ()};
+		Assert.assertArrayEquals(new double[]{-0.5,0,0},da ,1E-9);
+	}	
+	
+	/**
+	 * Tests reflection off a concave edge (parallel to Y-axis) using a
+	 * 45° line
+	 */
+	
+	@Test
+	public void testConcaveEdgeLine(){
+		Particle p1 = new Particle();
+		p1.setPX(0); p1.setPY(0.5);	p1.setPZ(1); p1.setX(0); p1.setY(0.5); p1.setZ(-1);
+		cdb_ex.setSurfaceLevel(100);
+		cdb_ex.handleIntersection(p1);
+		double[] da = new double[]{p1.getX(),p1.getY(),p1.getZ()};
+		Assert.assertArrayEquals(new double[]{0,0.5,1},da ,1E-9);
+	}
+	
+	/**
+	 * Tests reflection off a concave edge (parallel to Y-axis) using a
+	 * vertical line
+	 */
+	
+	@Test
+	public void testConcaveYEdgeZLine(){
 		Particle p1 = new Particle();
 		p1.setPX(0); p1.setPY(0.5);	p1.setPZ(1); p1.setX(0); p1.setY(0.5); p1.setZ(-1);
 		cdb_e1.setSurfaceLevel(100);
@@ -155,14 +176,33 @@ public class TestCollisionDetection_3D_Bathymetry {
 		Assert.assertArrayEquals(new double[]{0,0.5,1},da ,1E-9);
 	}
 	
+	/**
+	 * Tests reflection off a convex edge (parallel to Y-axis) using a
+	 * vertical line
+	 */
+	
 	@Test
-	public void testConcaveXEdge45Line(){
+	public void testConvexYEdgeZLine(){
 		Particle p1 = new Particle();
-		p1.setPX(-0.5); p1.setPY(0.5);	p1.setPZ(1); p1.setX(0.5); p1.setY(0.5); p1.setZ(-1);
+		p1.setPX(0); p1.setPY(0.5);	p1.setPZ(1); p1.setX(0); p1.setY(0.5); p1.setZ(-1);
 		cdb_e1.setSurfaceLevel(100);
 		cdb_e1.handleIntersection(p1);
 		double[] da = new double[]{p1.getX(),p1.getY(),p1.getZ()};
-		Assert.assertArrayEquals(new double[]{0.5,0.5,1},da ,1E-9);
+		Assert.assertArrayEquals(new double[]{0,0.5,1},da ,1E-9);
+	}
+	
+	/**
+	 * Tests reflection behavior off a corner when there is a simple
+	 * positive slope in the X-direction.
+	 */
+	
+	@Test
+	public void testEasyCorner(){
+		Particle p1 = new Particle();
+		p1.setPX(0.5); p1.setPY(0.5);	p1.setPZ(-8.5); p1.setX(0.5); p1.setY(0.5); p1.setZ(-10.5); 
+		cdb_x.handleIntersection(p1);
+		double[] da = new double[]{p1.getX(),p1.getY(),p1.getZ()};
+	    Assert.assertArrayEquals(new double[]{-0.5,0.5,-9.5},da ,1E-1);// precision decrease due to use of meters
 	}
 	
 	/**
@@ -191,36 +231,21 @@ public class TestCollisionDetection_3D_Bathymetry {
 		cdb_x.handleIntersection(p1);
 		double[] da = new double[]{p1.getX(),p1.getY(),p1.getZ()};
 	    Assert.assertArrayEquals(new double[]{-1,0.5,-10},da ,1E-1);// precision decrease due to use of meters
-	}
+	}	
 	
 	/**
-	 * Tests reflection behavior off a corner when there is a simple
-	 * positive slope in the X-direction.
+	 * Tests shoaling behavior using a positive slope in the X-direction.
 	 */
 	
 	@Test
-	public void testEasyCorner(){
+	public void testShoaling(){
 		Particle p1 = new Particle();
-		p1.setPX(0.5); p1.setPY(0.5);	p1.setPZ(-8.5); p1.setX(0.5); p1.setY(0.5); p1.setZ(-10.5); 
+		p1.setPX(-1); p1.setPY(0);	p1.setPZ(-10); p1.setX(1); p1.setY(0); p1.setZ(-10);
+		cdb_x.setSurfaceLevel(-10);
 		cdb_x.handleIntersection(p1);
 		double[] da = new double[]{p1.getX(),p1.getY(),p1.getZ()};
-	    Assert.assertArrayEquals(new double[]{-0.5,0.5,-9.5},da ,1E-1);// precision decrease due to use of meters
+	    Assert.assertArrayEquals(new double[]{0,0,-10},da ,1E-1);// precision decrease due to use of meters
 	}	
-	
-	//@Test
-	public void testRealProblem(){
-		Particle p1 = new Particle();
-		
-		//p1.setPX(113.1314548954153); p1.setPY(-25.15381371021109); p1.setPZ(0.0); p1.setX(113.1206995353216); p1.setY(-25.1427262565772); p1.setZ(0.0);
-		//p1.setPX(119.2955883059722); p1.setPY(-19.967516812656964); p1.setPZ(0.0); p1.setX(119.28825081656038); p1.setY(-19.973046751359398); p1.setZ(0.0);
-		p1.setPX(118.90337209729493); p1.setPY(-19.924273157502153); p1.setPZ(0.0); p1.setX(118.92530884302202); p1.setY(-19.938343466933144); p1.setZ(-0.724323105532676);
-		//p1.setPX(119.6114368822359); p1.setPY(-20.0045209399733885); p1.setPZ(0.0); p1.setX(113.1206995353216); p1.setY(-25.1427262565772); p1.setZ(0.0);
-		
-		
-		//int[] indices = greal.getIndices(p1.getPX(), p1.getPY()); 
-		//System.out.println(Arrays.toString(indices));
-		cdbreal.handleIntersection(p1);
-	}
 	
 	/**
 	 * Tests a vertical line against a negative slope in the X-direction
