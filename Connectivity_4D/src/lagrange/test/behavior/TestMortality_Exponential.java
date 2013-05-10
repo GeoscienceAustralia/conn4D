@@ -20,27 +20,4 @@ public class TestMortality_Exponential {
 	 * @param args
 	 */
 	
-	public static void main(String[] args){
-		TestMortality_Exponential tmw = new TestMortality_Exponential();
-		tmw.go();
-		System.out.println("Complete.");
-	}
-	
-	public void go(){
-		
-		double ct = 0;
-		long time = TimeConvert.convertToMillis(t_units, t);
-		Mortality_Exponential me = new Mortality_Exponential(mrate/time);
-		me.setTimeInterval(time*5);
-		
-		for(int i = 0; i < reps; i++){
-			Particle p = new Particle();
-			p.setT(time);
-			me.apply(p);
-			if(!p.isDead()){
-				ct++;
-			}
-		}
-		System.out.println(ct/reps);	
-	}	
 }
