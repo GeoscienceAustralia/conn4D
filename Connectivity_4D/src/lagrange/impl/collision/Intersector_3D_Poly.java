@@ -26,7 +26,26 @@ public class Intersector_3D_Poly{
 	public static final Coordinate NaN = new Coordinate(Double.NaN,Double.NaN,Double.NaN);
 	public Intersector_3D_Poly(){}
 	
-	public Coordinate intersection(LineSegment ls, Coordinate[] vertices) {
+	public Coordinate intersection(LineSegment ls, Coordinate[] vertices){
+		Coordinate p_isect = plane_intersection(ls, vertices);
+		if(p_isect==NaN){return p_isect;}
+		
+		// If the intersection is not within the polygon, then return the line
+		
+		if(!CoordinateMath.pointInPoly3D(p_isect, vertices)){
+			return NaN;
+		}
+		
+		// If the intersection is not on the line, then return the line
+		
+		if(ls.distance(p_isect)>tolerance){
+			return NaN;
+		}
+		
+		return p_isect;
+	}
+	
+	public Coordinate plane_intersection(LineSegment ls, Coordinate[] vertices) {
 
 		Coordinate v0 = vertices[0];
 		Coordinate v1 = vertices[1];

@@ -16,7 +16,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 
 public class TestCollisionDetection_3D_Bathymetry {
 	
-	CollisionDetector_3D_Bathymetry cdb_x, cdb_xr, cdb_y, cdbreal;
+	CollisionDetector_3D_Bathymetry cdb_x, cdb_xr, cdb_y, cdb_real;
 	CollisionDetector_3D_Bathymetry cdb_e1, cdb_e2, cdb_ex, cdb_eo;
 	Boundary gx, gy, gxr, greal;
 	Boundary_Grid_TestingGrid f1,f2,fx, fo;
@@ -112,7 +112,7 @@ public class TestCollisionDetection_3D_Bathymetry {
 			cdb_y = new CollisionDetector_3D_Bathymetry(gy);
 			cdb_y.setProjectionTransform(new PrjTransform_None());
 
-			cdbreal = new CollisionDetector_3D_Bathymetry(greal);
+			cdb_real = new CollisionDetector_3D_Bathymetry(greal);
 			
 			cdb_e1 = new CollisionDetector_3D_Bathymetry(f1);
 			cdb_e1.setProjectionTransform(new PrjTransform_None());
@@ -231,6 +231,17 @@ public class TestCollisionDetection_3D_Bathymetry {
 		cdb_x.handleIntersection(p1);
 		double[] da = new double[]{p1.getX(),p1.getY(),p1.getZ()};
 	    Assert.assertArrayEquals(new double[]{-1,0.5,-10},da ,1E-1);// precision decrease due to use of meters
+	}	
+	
+	
+	@Test
+	public void testReal(){
+		Particle p1 = new Particle();
+		p1.setPX(112.97947830446645); p1.setPY(-23.847592881152067); p1.setPZ(-88.6788476720487); 
+		p1.setX(113.0228710759194); p1.setY(-23.724130771127665); p1.setZ(-88.62153352014751); 
+		cdb_real.handleIntersection(p1);
+		double[] da = new double[]{p1.getX(),p1.getY(),p1.getZ()};
+	    //Assert.assertArrayEquals(new double[]{-1,0.5,-10},da ,1E-1);// precision decrease due to use of meters
 	}	
 	
 	/**

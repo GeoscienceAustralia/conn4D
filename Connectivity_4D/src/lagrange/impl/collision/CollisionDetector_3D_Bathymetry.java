@@ -42,134 +42,134 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 	@Override
 	public void handleIntersection(Particle p) {
 
-		ReferenceGrid rg = new ReferenceGrid(bnd.getMinx(), bnd.getMiny(),
-				bnd.getCellSize());
+			ReferenceGrid rg = new ReferenceGrid(bnd.getMinx(), bnd.getMiny(),
+					bnd.getCellSize());
 
-		Coordinate start = new Coordinate(p.getPX(), p.getPY(), p.getPZ());
-		Coordinate end = new Coordinate(p.getX(), p.getY(), p.getZ());
+			Coordinate start = new Coordinate(p.getPX(), p.getPY(), p.getPZ());
+			Coordinate end = new Coordinate(p.getX(), p.getY(), p.getZ());
 
-		// check if start/end/position are out of bounds...
+			// check if start/end/position are out of bounds...
 
-		LineSegment ln = new LineSegment(start, end);
-		rg.setLine(ln);
+			LineSegment ln = new LineSegment(start, end);
+			rg.setLine(ln);
 
-		int[] startcell = bnd.getIndices(ln.p0.x, ln.p0.y);
-		int[] currentcell = new int[] { startcell[0], startcell[1] };
-		int[] endcell = bnd.getIndices(ln.p1.x, ln.p1.y);
+			int[] startcell = bnd.getIndices(ln.p0.x, ln.p0.y);
+			int[] currentcell = new int[] { startcell[0], startcell[1] };
+			int[] endcell = bnd.getIndices(ln.p1.x, ln.p1.y);
 
-		int internal_reflections = 0;
+			int internal_reflections = 0;
 
-		while (true) {
-			// Error checking
-			if (Double.isNaN(ln.p0.x) && Double.isNaN(ln.p0.y)) {
-				System.out
-						.println("\nWarning: Reflection start is a NaN value.  Aborting particle "
-								+ p.getID()
-								+ " at time= "
-								+ TimeConvert.millisToDays(p.getAge())
-								+ ", track " + start + " " + end);
-				p.setError(true);
-				p.setLost(true);
-				return;
-			}
-
-			// Preventing infinite loops
-			if (internal_reflections > bounceLimit) {
-				System.out
-						.println("\nWarning:  Repetition break.  Aborting particle "
-								+ p.getID()
-								+ " at time="
-								+ TimeConvert.millisToDays(p.getAge())
-								+ ", track " + start + " " + end);
-				p.setError(true);
-				return;
-			}
-
-			// Check whether an intersection has occurred
-
-			Coordinate isect = i3d.intersect(ln, bnd.getVertices(currentcell));
-
-			// If there was no intersection...
-			
-			if (isNaN(isect)) {
-				
-				// If we're at the last cell then break out of the loop.
-				
-				if (Arrays.equals(currentcell, endcell)) {
-					break;
-				}
-				
-				// Otherwise advance to the next cell.
-				
-				int[] nc = rg.nextCell();
-				VectorMath.flip(nc);
-				currentcell = VectorMath.add(currentcell, nc);
-				
-			// Otherwise reflect about the collective norm.
-				
-			} else {		
-
-				List<int[]> cells = rg.getCellList(isect);
-				Coordinate cnorm;
-				
-				// If there is only one cell, use its norm
-				
-				if (cells.size() == 1) {
-					cnorm = CoordinateMath.normal_zplus(pt.project(bnd
-							.getVertices(cells.get(0))));
-				}
-				
-				// Otherwise determine the average of the norms
-
-				else {
-					Coordinate[] norms = new Coordinate[cells.size()];
-					for (int i = 0; i < cells.size(); i++) {
-						
-						//z-plus ensures norms are facing up.
-						
-						norms[i] = CoordinateMath.normal_zplus(pt.project(bnd
-								.getVertices(cells.get(i))));
-					}
-					cnorm = CoordinateMath.average(norms);
-				}
-				
-				// Project into meters to ensure properly scaled rotation
-				// and then invert the projection to return to gcs.
-
-				Coordinate update = pt.inverse(CoordinateMath.reflect(
-						pt.project(ln.p1), pt.project(isect), cnorm));
-
-				ln = new LineSegment(isect, update);
-				
-				// Prevent surface breaching
-				if(ln.p1.z > surfaceLevel){
-					ln.p1.z = surfaceLevel;
-				}
-
-				double rd = bnd.getRealDepth(ln.p1.x, ln.p1.y);
-				
-				if(ln.p1.z < rd){
+			while (true) {
+				// Error checking
+				if (Double.isNaN(ln.p0.x) && Double.isNaN(ln.p0.y)) {
+					System.out
+							.println("\nWarning: Reflection start is a NaN value.  Aborting particle "
+									+ p.getID()
+									+ " at time= "
+									+ TimeConvert.millisToDays(p.getAge())
+									+ ", track " + start + " " + end);
+					p.setError(true);
 					p.setLost(true);
-					p.setX(ln.p1.x);
-					p.setY(ln.p1.y);
-					p.setZ(rd);
 					return;
 				}
-				
-				// Remove a small section from the beginning of the line
-				// to prevent re-reflection.  THIS IS IMPORTANT!
-				
-				CoordinateMath.nibble(ln, 1E-08);
-				rg.setLine(new LineSegment(ln));
-				currentcell = bnd.getIndices(isect);
-				endcell = bnd.getIndices(update);
-				internal_reflections++;
-			}
-		}
 
-		p.setX(ln.p1.x);
-		p.setY(ln.p1.y);
-		p.setZ(ln.p1.z);
+				// Preventing infinite loops
+				if (internal_reflections > bounceLimit) {
+					System.out
+							.println("\nWarning:  Repetition break.  Aborting particle "
+									+ p.getID()
+									+ " at time="
+									+ TimeConvert.millisToDays(p.getAge())
+									+ ", track " + start + " " + end);
+					p.setError(true);
+					return;
+				}
+
+				// Check whether an intersection has occurred
+
+				Coordinate isect = i3d.intersect(ln, bnd.getVertices(currentcell));
+
+				// If there was no intersection...
+				
+				if (isNaN(isect)) {
+					
+					// If we're at the last cell then break out of the loop.
+					
+					if (Arrays.equals(currentcell, endcell)) {
+						break;
+					}
+					
+					// Otherwise advance to the next cell.
+					
+					int[] nc = rg.nextCell();
+					VectorMath.flip(nc);
+					currentcell = VectorMath.add(currentcell, nc);
+					
+				// Otherwise reflect about the collective norm.
+					
+				} else {		
+
+					List<int[]> cells = rg.getCellList(isect);
+					Coordinate cnorm;
+					
+					// If there is only one cell, use its norm
+					
+					if (cells.size() == 1) {
+						cnorm = CoordinateMath.normal_zplus(pt.project(bnd
+								.getVertices(cells.get(0))));
+					}
+					
+					// Otherwise determine the average of the norms
+
+					else {
+						Coordinate[] norms = new Coordinate[cells.size()];
+						for (int i = 0; i < cells.size(); i++) {
+							
+							//z-plus ensures norms are facing up.
+							
+							Coordinate[] v = bnd.getVertices(cells.get(i));						
+							norms[i] = CoordinateMath.normal_zplus(pt.project(v));
+						}
+						cnorm = CoordinateMath.average(norms);
+					}
+					
+					// Project into meters to ensure properly scaled rotation
+					// and then invert the projection to return to gcs.
+
+					Coordinate update = pt.inverse(CoordinateMath.reflect(
+							pt.project(ln.p1), pt.project(isect), cnorm));
+
+					ln = new LineSegment(isect, update);
+					
+					// Prevent surface breaching
+					if(ln.p1.z > surfaceLevel){
+						ln.p1.z = surfaceLevel;
+					}
+
+					double rd = bnd.getRealDepth(ln.p1.x, ln.p1.y);
+					
+					if(ln.p1.z < rd){
+						p.setLost(true);
+						p.setX(ln.p1.x);
+						p.setY(ln.p1.y);
+						p.setZ(rd);
+						return;
+					}
+					
+					// Remove a small section from the beginning of the line
+					// to prevent re-reflection.  THIS IS IMPORTANT!
+					
+					CoordinateMath.nibble(ln, 1E-08);
+					rg.setLine(new LineSegment(ln));
+					currentcell = bnd.getIndices(isect);
+					endcell = bnd.getIndices(update);
+					internal_reflections++;
+				}
+			}
+
+			p.setX(ln.p1.x);
+			p.setY(ln.p1.y);
+			p.setZ(ln.p1.z);
 	}
 
 	/**

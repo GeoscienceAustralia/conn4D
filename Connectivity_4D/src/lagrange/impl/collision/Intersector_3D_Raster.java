@@ -29,7 +29,14 @@ public class Intersector_3D_Raster {
 		Coordinate isect1 = i3p.intersection(ls,t1);
 		Coordinate isect2 = i3p.intersection(ls,t2);
 		
-		if(isect1.distance(ls.p0)<isect1.distance(ls.p0))
+		if(isect1==getNaN() && isect2==getNaN()){
+			return isect1;
+		}
+		
+		if(isect1==getNaN()){return isect2;}
+		if(isect2==getNaN()){return isect1;}
+		
+		if(isect1.distance(ls.p0)<isect2.distance(ls.p0))
 			{return isect1;}
 		return isect2;
 	}
