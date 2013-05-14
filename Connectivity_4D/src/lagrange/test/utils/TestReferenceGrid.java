@@ -3,13 +3,13 @@ package lagrange.test.utils;
 import java.util.Arrays;
 import java.util.List;
 
+import lagrange.utils.ReferenceGrid;
+
 import org.junit.Assert;
 import org.junit.Test;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.LineSegment;
-
-import lagrange.utils.ReferenceGrid;
 
 public class TestReferenceGrid {
 	//ReferenceGrid rg = new ReferenceGrid(91.992620468,-60.0074367,.0099983215);

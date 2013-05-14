@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.vividsolutions.jts.geom.Coordinate;
-
 import lagrange.Boundary_Grid;
+
+import com.vividsolutions.jts.geom.Coordinate;
 
 public class Boundary_Grid_TestingGrid implements Boundary_Grid {
 
@@ -21,10 +21,12 @@ public class Boundary_Grid_TestingGrid implements Boundary_Grid {
 		return 1.207107;
 	}
 
+	@Override
 	public double getBoundaryDepth(double a, double b) {
 		return 1.207107;
 	}
 
+	@Override
 	public Boundary_Grid_TestingGrid clone() {
 		return this;
 	}
@@ -33,35 +35,43 @@ public class Boundary_Grid_TestingGrid implements Boundary_Grid {
 		return 0;
 	}
 
+	@Override
 	public double getPreciseBoundaryDepth(double a, double b) {
 		return 0;
 	}
 
+	@Override
 	public void setPositiveDown(boolean down) {
 	}
 
+	@Override
 	public double getMinx() {
 		return minx;
 	}
 
+	@Override
 	public double getMiny() {
 		return miny;
 	}
 
+	@Override
 	public double getCellSize() {
 		return cellsize;
 	}
 
+	@Override
 	public Coordinate[] getVertices(Coordinate c) {
 		return getVertices(getIndices(c));
 	}
 
+	@Override
 	public Coordinate[] getVertices(int[] indices) {
 		int len = (int) Math.sqrt(indices.length);
 		int index = len*indices[0]+ indices[1];
 		return ca[index];
 	}
 	
+	@Override
 	public List<Coordinate[]> getVertices(List<int[]> indices){
 		List<Coordinate[]> list = new ArrayList<Coordinate[]>(indices.size());
 		Iterator<int[]> it = indices.iterator();
@@ -71,14 +81,17 @@ public class Boundary_Grid_TestingGrid implements Boundary_Grid {
 		return list;
 	}
 
+	@Override
 	public int[] getIndices(double x, double y) {
 		return new int[] {(int) Math.floor((y-miny)/cellsize),(int) Math.floor((x-minx)/cellsize)};
 	}
 	
+	@Override
 	public int[] getIndices(Coordinate c){
 		return getIndices(c.x,c.y);
 	}
 
+	@Override
 	public double getRealDepth(double x, double y) {
 		return getPreciseBoundaryDepth();
 	}

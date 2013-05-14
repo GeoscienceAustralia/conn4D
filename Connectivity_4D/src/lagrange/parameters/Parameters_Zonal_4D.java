@@ -1,13 +1,12 @@
 package lagrange.parameters;
 
+import lagrange.Parameters;
+import lagrange.utils.TimeConvert;
 import cern.jet.random.Uniform;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.shape.random.RandomPointsBuilder;
-
-import lagrange.Parameters;
-import lagrange.utils.TimeConvert;
 
 public class Parameters_Zonal_4D implements Parameters {
 

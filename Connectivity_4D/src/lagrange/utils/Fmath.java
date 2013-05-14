@@ -37,12 +37,12 @@ package lagrange.utils;
 
 //package flanagan.math;
 
-import java.util.ArrayList;
-import java.util.Vector;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 
 public class Fmath{
 

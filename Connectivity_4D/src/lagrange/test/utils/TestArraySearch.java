@@ -1,10 +1,10 @@
 package lagrange.test.utils;
 
+import junit.framework.Assert;
+import lagrange.utils.ArraySearch;
+
 import org.junit.Before;
 import org.junit.Test;
-import junit.framework.Assert;
-
-import lagrange.utils.ArraySearch;
 
 public class TestArraySearch {
 

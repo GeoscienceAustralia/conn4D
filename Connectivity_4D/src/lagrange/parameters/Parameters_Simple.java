@@ -1,11 +1,11 @@
 package lagrange.parameters;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
-
-//import cern.jet.random.Uniform;
 import lagrange.Parameters;
 import lagrange.utils.TimeConvert;
+
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
+//import cern.jet.random.Uniform;
 
 public class Parameters_Simple implements Parameters {
 

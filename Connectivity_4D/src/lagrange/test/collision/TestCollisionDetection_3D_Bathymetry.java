@@ -12,8 +12,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import cern.colt.Arrays;
-
 import com.vividsolutions.jts.geom.Coordinate;
 
 public class TestCollisionDetection_3D_Bathymetry {

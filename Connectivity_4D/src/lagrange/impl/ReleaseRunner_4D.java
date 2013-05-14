@@ -52,9 +52,8 @@ public class ReleaseRunner_4D implements ReleaseRunner {
 				prm.getMaxReleaseDepth(), prm.getCoordinates().x,
 				prm.getCoordinates().y)) {
 			System.out
-					.print("\t Initial depth/range ("
-							+ prm.getMaxReleaseDepth()
-							+ ") is not in the water column. Continuing to the next release site.");
+					.print("\t"	+ prm.getMaxReleaseDepth()
+							+ " is not in the water column\t");
 			relFactory.shutdown();
 			return;
 		}

@@ -1,6 +1,5 @@
 package lagrange.test.collision;
 
-import static org.junit.Assert.*;
 import lagrange.impl.collision.Intersector_3D_Raster;
 
 import org.junit.Before;

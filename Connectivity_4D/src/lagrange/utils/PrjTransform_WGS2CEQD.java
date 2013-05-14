@@ -7,20 +7,24 @@ public class PrjTransform_WGS2CEQD implements PrjTransform{
 
 	private final static double R_EARTH = 6378137d;
 
+	@Override
 	public double[] project(double[] coords) {
 		return function(coords);
 	}
 
+	@Override
 	public double[] project(double x, double y) {
 		return function(new double[] { x, y });
 	}
 
+	@Override
 	public Coordinate project(Coordinate c) {
 		if (c==null){return null;}
 		double[] tmp = function(new double[] { c.x, c.y });
 		return new Coordinate(tmp[0], tmp[1], c.z);
 	}
 	
+	@Override
 	public Coordinate[] project(Coordinate[] ca){
 		if(ca==null){return null;}
 		Coordinate[] out = new Coordinate[ca.length];
@@ -30,25 +34,30 @@ public class PrjTransform_WGS2CEQD implements PrjTransform{
 		return out;
 	}
 	
+	@Override
 	public LineSegment project(LineSegment ls){
 		if(ls==null){return null;}
 		return new LineSegment(project(ls.p0),project(ls.p1));	
 	}
 	
+	@Override
 	public double[] inverse(double[] coords) {
 		return function_inv(coords);
 	}
 
+	@Override
 	public double[] inverse(double x, double y) {
 		return function_inv(new double[] { x, y });
 	}
 
+	@Override
 	public Coordinate inverse(Coordinate c) {
 		if(c==null){return null;}
 		double[] tmp = function_inv(new double[] { c.x, c.y });
 		return new Coordinate(tmp[0], tmp[1], c.z);
 	}
 	
+	@Override
 	public Coordinate[] inverse(Coordinate[] ca){
 		if(ca==null){return null;}
 		Coordinate[] out = new Coordinate[ca.length];
@@ -59,6 +68,7 @@ public class PrjTransform_WGS2CEQD implements PrjTransform{
 	}
 
 	
+	@Override
 	public LineSegment inverse(LineSegment ls){
 		if(ls==null){return null;}
 		return new LineSegment(inverse(ls.p0),inverse(ls.p1));	

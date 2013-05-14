@@ -7,9 +7,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-import cern.jet.random.Normal;
-
 import lagrange.test.utils.Filter;
+import cern.jet.random.Normal;
 
 public class VectorUtils {
 
@@ -253,7 +252,7 @@ public class VectorUtils {
 			sum += vals[i];
 		}
 		
-		double mean = sum/(double)n;
+		double mean = sum/n;
 		double[] z = new double[vals.length];
 		
 		for(int i = 0; i < n; i++){
@@ -298,7 +297,7 @@ public class VectorUtils {
 			sum += vals[i];
 		}
 		
-		double mean = sum/(double)n;
+		double mean = sum/n;
 		double[] z = new double[vals.length];
 		double Dnum = 0;
 		double Ddenom = 0;
@@ -334,7 +333,7 @@ public class VectorUtils {
 		}
 		
 		S1/=2;
-		double scale = (double) n/(double) S0;
+		double scale = n/S0;
 		double I = scale * (num/denom);
 		
 		double EI = -1/(n-1);

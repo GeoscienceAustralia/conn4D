@@ -19,6 +19,13 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.index.SpatialIndex;
 import com.vividsolutions.jts.index.strtree.STRtree;
 
+/**
+ * Provides basic capability for reading Shapefiles given
+ * a path location.  A STRtree is built for the data
+ * upon construction.
+ * 
+ * @author Johnathan Kool
+ */
 
 public class Shapefile implements Habitat{
 
@@ -29,8 +36,11 @@ public class Shapefile implements Habitat{
 	private String filename;
 	private int nPatches;
 	private String luField = "POLYNUM";
+	private double minx = Double.MAX_VALUE;
+	private double miny = Double.MAX_VALUE;
+	private double maxx = -Double.MAX_VALUE;
+	private double maxy = -Double.MAX_VALUE;
 	
-
 	private SpatialIndex index = new STRtree();
 
 	public Shapefile(){}
@@ -43,6 +53,11 @@ public class Shapefile implements Habitat{
 		}
 		this.filename = filename;
 	}
+	
+	/**
+	 * Sets the data source of the Shapefile using a String
+	 * containing the path of the resource.
+	 */
 	
 	@Override
 	public void setDataSource(String filename) throws IOException {
@@ -63,6 +78,10 @@ public class Shapefile implements Habitat{
 		buildSearchTree();
 	}
 	
+	/**
+	 * Builds a spatial search index for the data
+	 */
+	
 	private void buildSearchTree() {
 
 		FeatureIterator<SimpleFeature> iterator = null;
@@ -70,10 +89,13 @@ public class Shapefile implements Habitat{
 		try {
 			FeatureCollection<SimpleFeatureType,SimpleFeature> collection = source.getFeatures();
 			iterator = collection.features();
-
 			while (iterator.hasNext()) {
 				SimpleFeature feature = iterator.next();
 				geom = (Geometry) feature.getDefaultGeometry();
+				minx = Math.min(minx, geom.getEnvelopeInternal().getMinX());
+				miny = Math.min(miny, geom.getEnvelopeInternal().getMinY());
+				maxx = Math.max(maxx, geom.getEnvelopeInternal().getMaxX());
+				maxy = Math.max(maxy, geom.getEnvelopeInternal().getMaxY());
 				index.insert(geom.getEnvelopeInternal(), feature);
 			}
 
@@ -88,6 +110,12 @@ public class Shapefile implements Habitat{
 		}
 	}
 	
+	/**
+	 * Retrieves a FeatureIterator for the data set
+	 * 
+	 * @return
+	 */
+	
 	public FeatureIterator<SimpleFeature> getIterator(){
 		try {
 			FeatureCollection<SimpleFeatureType,SimpleFeature> collection = source.getFeatures();
@@ -98,38 +126,118 @@ public class Shapefile implements Habitat{
 		return null;
 	}
 	
+	/**
+	 * Retrieves the spatial index of the data set
+	 * 
+	 * @return
+	 */
+	
 	public SpatialIndex getSpatialIndex(){
 		return index;
 	}
 	
+	/**
+	 * Identifies whether the data set uses negative longitude values.
+	 * 
+	 * @return
+	 */
+	
 	public boolean isNegLon(){
 		return negLon;
 	}
+	
+	/**
+	 * Sets whether the data set uses negative longitude values.
+	 * 
+	 * @return
+	 */
 	
 	@Override
 	public void setNegLon(boolean negLon){
 		this.negLon = negLon;
 	}
 	
+	/**
+	 * Retrieves the number of patches/polygons in the data set
+	 * 
+	 * @return
+	 */
+	
 	public int getNPatches() {
 		return nPatches;
 	}
 	
+	/**
+	 * Retrieves the name of the source data file being used.
+	 * 
+	 * @return
+	 */
+	
 	public String getFilename(){
 		return filename;
 	}
+	
+	/**
+	 * Sets the name of the lookup (index) field to be used
+	 * when retrieving data.
+	 */
 	
 	@Override
 	public void setLookupField(String lookupField) {
 		luField = lookupField;
 	}
 	
+	/**
+	 * Gets the name of the lookup (index) field to be used
+	 * when retrieving data.
+	 */
+	
 	public String getLookupField() {
 		return luField;
 	}
 	
+	/**
+	 * Closes resources associated with this instance
+	 */
+	
 	public void close(){
 		geom = null;
 		dataStore.dispose();
+	}
+
+	/**
+	 * Retrieves the minimum east-west value of the data set
+	 * @return
+	 */
+	
+	public double getMinx() {
+		return minx;
+	}
+
+	/**
+	 * Retrieves the minimum north-south value of the data set
+	 * @return
+	 */
+	
+	public double getMiny() {
+		return miny;
+	}
+
+	/**
+	 * Retrieves the maximum east-west value of the data set
+	 * @return
+	 */
+	
+	public double getMaxx() {
+		return maxx;
+	}
+
+	/**
+	 * Retrieves the maximum north-south value of the data set
+	 * @return
+	 */
+	
+	public double getMaxy() {
+		return maxy;
 	}
 }

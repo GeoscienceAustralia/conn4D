@@ -62,7 +62,7 @@ public class CoordinateMath {
 		for(int i = 0; i < n; i++){
 			c = add(c, coordinates[i]);
 		}
-		return dilate(c,1d/(double)n);
+		return dilate(c,1d/n);
 	}
 	
 	public static Coordinate ceqd2lonlat(Coordinate c){

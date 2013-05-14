@@ -3,7 +3,6 @@ package lagrange.impl.readers;
 import java.io.IOException;
 
 import lagrange.utils.IndexLookup_Nearest;
-
 import ucar.ma2.Array;
 import ucar.ma2.InvalidRangeException;
 import ucar.nc2.NetcdfFile;

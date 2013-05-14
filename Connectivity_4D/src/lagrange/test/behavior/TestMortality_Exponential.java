@@ -1,9 +1,5 @@
 package lagrange.test.behavior;
 
-import lagrange.Particle;
-import lagrange.impl.behavior.Mortality_Exponential;
-import lagrange.utils.TimeConvert;
-
 public class TestMortality_Exponential {
 	
 	private final double reps = 1E6;

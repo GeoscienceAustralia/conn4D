@@ -247,6 +247,7 @@ public class TrajectoryWriter_Oracle implements TrajectoryWriter {
 	}
 	
 	//@Override
+	@Override
 	public void setNegCoord(boolean negCoord){
 		this.negCoord = negCoord;
 	}

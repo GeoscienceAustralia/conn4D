@@ -1,7 +1,6 @@
 package lagrange.test.movement;
 
 import junit.framework.Assert;
-
 import lagrange.Particle;
 import lagrange.impl.movement.Advection_RK4_3D;
 import lagrange.impl.readers.VelocityReader_NetCDF_4D;

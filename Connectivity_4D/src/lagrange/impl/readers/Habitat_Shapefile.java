@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import lagrange.Habitat;
+
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
 import org.geotools.data.shapefile.ShapefileDataStore;
@@ -15,8 +17,6 @@ import org.geotools.feature.FeatureIterator;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
-
-import lagrange.Habitat;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
@@ -48,43 +48,6 @@ public class Habitat_Shapefile implements Habitat, Cloneable{
 
 	protected SpatialIndex index = new STRtree();
 
-	@Override
-	public void setDataSource(String filename) throws IOException {
-
-		this.fileName = filename;
-		File f = new File(filename);
-		URL shapeURL = f.toURI().toURL();
-
-		store = new ShapefileDataStore(shapeURL);
-		String name = store.getTypeNames()[0];
-		source = store.getFeatureSource(name);
-		collection = source.getFeatures();
-	
-		SimpleFeatureType schema = source.getSchema();
-		Query query = new Query( schema.getTypeName(), Filter.INCLUDE );
-		nPatches = source.getCount(query);
-		
-		buildSearchTree();
-	}
-
-	/**
-	 * Searches the feature set to see if the given coordinates lie within any
-	 * of the polygons. If so, the polygon's unique identifier is returned. If
-	 * not, NODATA is returned
-	 * 
-	 * @param lon
-	 * @param lat
-	 * @return
-	 * @throws IOException
-	 * @throws IllegalAttributeException
-	 */
-
-	@Override
-	public void setLookupField(String field) {
-		
-		luField = field;
-	}
-
 	/**
 	 * Creates a pyramid of bounding boxes in order to perform fast intersect
 	 * searching.
@@ -109,6 +72,45 @@ public class Habitat_Shapefile implements Habitat, Cloneable{
 		} catch (NoSuchElementException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public Habitat_Shapefile clone(){
+		Habitat_Shapefile out = new Habitat_Shapefile();
+		try {
+			out.setDataSource(fileName);
+			out.neglon=neglon;
+			out.luField=luField;
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return out;
+	}
+
+	/**
+	 * Converts from positive Longitude coordinates to negative Longitude
+	 * coordinates
+	 * 
+	 * @param oldlon
+	 * @return
+	 */
+
+	protected synchronized double cvt(double oldlon) {
+		if (oldlon > 180) {
+			return -(360d - oldlon);
+		} else
+			return oldlon;
+	}
+
+	/**
+	 * Returns the number of patches (polygons) in the shapefile.
+	 * 
+	 * @return
+	 */
+
+	public int getNPatches() {
+		return nPatches;
 	}
 
 	/**
@@ -147,7 +149,7 @@ public class Habitat_Shapefile implements Habitat, Cloneable{
 		
 		return NO_INTERSECTION;
 	}
-
+	
 	/**
 	 * Detects whether the line between the two coordinate points intersect the
 	 * shapefile
@@ -189,7 +191,7 @@ public class Habitat_Shapefile implements Habitat, Cloneable{
 		return (Integer) f.getAttribute(luField);
 
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public synchronized boolean intersects(double x, double y){
 		
@@ -207,16 +209,43 @@ public class Habitat_Shapefile implements Habitat, Cloneable{
 		return false;
 	}
 
-	/**
-	 * Returns the number of patches (polygons) in the shapefile.
-	 * 
-	 * @return
-	 */
+	@Override
+	public void setDataSource(String filename) throws IOException {
 
-	public int getNPatches() {
-		return nPatches;
+		this.fileName = filename;
+		File f = new File(filename);
+		URL shapeURL = f.toURI().toURL();
+
+		store = new ShapefileDataStore(shapeURL);
+		String name = store.getTypeNames()[0];
+		source = store.getFeatureSource(name);
+		collection = source.getFeatures();
+	
+		SimpleFeatureType schema = source.getSchema();
+		Query query = new Query( schema.getTypeName(), Filter.INCLUDE );
+		nPatches = source.getCount(query);
+		
+		buildSearchTree();
 	}
 
+	/**
+	 * Searches the feature set to see if the given coordinates lie within any
+	 * of the polygons. If so, the polygon's unique identifier is returned. If
+	 * not, NODATA is returned
+	 * 
+	 * @param lon
+	 * @param lat
+	 * @return
+	 * @throws IOException
+	 * @throws IllegalAttributeException
+	 */
+
+	@Override
+	public void setLookupField(String field) {
+		
+		luField = field;
+	}
+	
 	/**
 	 * Indicates whether the coordinates use negative Longitude values.
 	 * 
@@ -226,35 +255,6 @@ public class Habitat_Shapefile implements Habitat, Cloneable{
 	@Override
 	public void setNegLon(boolean neglon) {
 		this.neglon = neglon;
-	}
-
-	/**
-	 * Converts from positive Longitude coordinates to negative Longitude
-	 * coordinates
-	 * 
-	 * @param oldlon
-	 * @return
-	 */
-
-	protected synchronized double cvt(double oldlon) {
-		if (oldlon > 180) {
-			return -(360d - oldlon);
-		} else
-			return oldlon;
-	}
-	
-	@Override
-	public Habitat_Shapefile clone(){
-		Habitat_Shapefile out = new Habitat_Shapefile();
-		try {
-			out.setDataSource(fileName);
-			out.neglon=neglon;
-			out.luField=luField;
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return out;
 	}
 	
 	

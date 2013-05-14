@@ -6,12 +6,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
+import lagrange.Parameters;
+import lagrange.input.ReleaseFileReader;
+
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
-
-import lagrange.Parameters;
-import lagrange.input.ReleaseFileReader;
 
 /**
  * 

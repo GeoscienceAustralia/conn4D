@@ -109,6 +109,12 @@ public class Mortality_Weibull implements Mortality {
 		mw.setTimeInterval(timeInterval);
 		return mw;
 	}
+	
+	/**
+	 * Retrieves the differential time over which mortality is being checked
+	 * 
+	 * @return
+	 */
 
 	public double getDelta_t() {
 		return delta_t;
@@ -135,7 +141,7 @@ public class Mortality_Weibull implements Mortality {
 	}
 
 	/**
-	 * Returns the time interval over which the mortality is being applied
+	 * Returns the total time interval over which the mortality is being applied
 	 * 
 	 * @return
 	 */
@@ -143,6 +149,12 @@ public class Mortality_Weibull implements Mortality {
 	public long getTimeIntervalMillis() {
 		return timeInterval;
 	}
+	
+	/**
+	 * Sets the time interval since last checking for mortality
+	 * 
+	 * @param delta_t
+	 */
 
 	public void setDelta_t(long delta_t) {
 		this.delta_t = delta_t;

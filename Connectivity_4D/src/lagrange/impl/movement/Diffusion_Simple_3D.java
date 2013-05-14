@@ -1,13 +1,13 @@
 package lagrange.impl.movement;
 
+import lagrange.Diffusion;
+import lagrange.Particle;
+import lagrange.utils.GeometryUtils;
 import cern.jet.random.Normal;
 import cern.jet.random.Uniform;
 import cern.jet.random.engine.MersenneTwister64;
 import cern.jet.random.engine.RandomEngine;
 import cern.jet.random.engine.RandomSeedTable;
-import lagrange.Particle;
-import lagrange.Diffusion;
-import lagrange.utils.GeometryUtils;
 
 /**
  * Performs simple anisotropic diffusion in three dimensions.
@@ -63,9 +63,9 @@ public class Diffusion_Simple_3D implements Diffusion, Cloneable {
 	@Override
 	public void apply(Particle p) {
 
-		float usc = uK * (float) sqrt_h;
-		float vsc = vK * (float) sqrt_h;
-		float wsc = wK * (float) sqrt_h;
+		float usc = uK * sqrt_h;
+		float vsc = vK * sqrt_h;
+		float wsc = wK * sqrt_h;
 
 		double dx = usc * (float) norm.nextDouble();
 		double dy = vsc * (float) norm.nextDouble();

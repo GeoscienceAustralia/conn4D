@@ -2,8 +2,6 @@ package lagrange.impl;
 
 import java.util.concurrent.CountDownLatch;
 
-import com.vividsolutions.jts.geom.Coordinate;
-
 import lagrange.CollisionDetector;
 import lagrange.Diffusion;
 import lagrange.Mortality;
@@ -17,6 +15,8 @@ import lagrange.output.DistanceWriter;
 import lagrange.output.MatrixWriter;
 import lagrange.output.TrajectoryWriter;
 import lagrange.utils.GeometryUtils;
+
+import com.vividsolutions.jts.geom.Coordinate;
 
 /**
  * 

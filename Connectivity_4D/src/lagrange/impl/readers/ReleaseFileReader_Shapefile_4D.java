@@ -6,11 +6,11 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import lagrange.Parameters;
+
 import org.geotools.data.shapefile.ShapefileDataStore;
 
 import com.vividsolutions.jts.geom.Geometry;
-
-import lagrange.Parameters;
 
 /**
  * 

@@ -4,12 +4,14 @@ import lagrange.Parameters;
 import lagrange.impl.Release;
 import lagrange.impl.behavior.Settlement_None;
 import lagrange.impl.collision.CollisionDetector_None;
-import lagrange.impl.movement.Diffusion_None;
 import lagrange.impl.movement.Advection_RK4_3D;
+import lagrange.impl.movement.Diffusion_None;
 import lagrange.impl.readers.VelocityReader_NetCDF_4D;
 import lagrange.parameters.Parameters_Simple;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;

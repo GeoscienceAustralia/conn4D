@@ -12,7 +12,6 @@ import lagrange.impl.readers.Boundary_Grid_NetCDF;
 import lagrange.utils.TimeConvert;
 import lagrange.utils.VectorMath;
 import lagrange.utils.VectorUtils;
-
 import cern.jet.random.Empirical;
 import cern.jet.random.EmpiricalWalker;
 import cern.jet.random.Uniform;

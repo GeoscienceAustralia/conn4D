@@ -1,6 +1,7 @@
 package lagrange.input;
 
 import lagrange.Parameters;
+
 import com.vividsolutions.jts.geom.Geometry;
 
 /**

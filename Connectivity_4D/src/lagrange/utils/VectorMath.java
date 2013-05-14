@@ -1,5 +1,5 @@
 package lagrange.utils;
-import java.util.*;
+import java.util.Arrays;
 
 /**
  * <p>
@@ -1014,10 +1014,10 @@ public class VectorMath {
 		for (int i = 0; i < fa.length; i++) {
 			n = n + 1;
 			float delta = fa[i] - mean;
-			mean = mean + delta / (float) n;
+			mean = mean + delta / n;
 			M2 = M2 + delta * (fa[i] - mean);
 		}
-		float variance = M2 / (float) (n - 1);
+		float variance = M2 / (n - 1);
 		return variance;
 	}
 	
@@ -1039,6 +1039,6 @@ public class VectorMath {
 	    }
 	 
 	    float variance_n = M2/sumweight;
-	    return variance_n * (float) n/((float)(n-1));
+	    return variance_n * n/(n-1);
 	}
 }

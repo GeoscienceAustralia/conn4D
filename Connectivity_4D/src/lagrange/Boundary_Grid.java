@@ -1,7 +1,8 @@
 package lagrange;
 
-import com.vividsolutions.jts.geom.Coordinate;
 import java.util.List;
+
+import com.vividsolutions.jts.geom.Coordinate;
 
 public interface Boundary_Grid extends Boundary {
 	public Coordinate[] getVertices(Coordinate c);

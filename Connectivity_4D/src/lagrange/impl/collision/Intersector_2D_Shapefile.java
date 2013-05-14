@@ -14,6 +14,12 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.Point;
 
+/**
+ * Performs basic intersection operations associated with a shapefile.
+ * 
+ * @author Johnathan Kool
+ */
+
 public class Intersector_2D_Shapefile implements Intersector {
 
 	private final long NO_INTERSECTION = Long.MIN_VALUE;
@@ -27,6 +33,13 @@ public class Intersector_2D_Shapefile implements Intersector {
 		this.sh = sh;
 	}
 
+	/**
+	 * Intersects the position given by the x,y pair with the shapefile and
+	 * returns the long value corresponding to the ID of the intersected
+	 * polygon.  If no intersection was detected, the value of NO_INTERSECTION
+	 * is returned, currently implemented as Long.MIN_VALUE.
+	 */
+	
 	@Override
 	@SuppressWarnings("unchecked")
 	public long intersect(double x, double y) {
@@ -60,7 +73,7 @@ public class Intersector_2D_Shapefile implements Intersector {
 	}
 
 	/**
-	 * Detects whether the line between the two coordinate points intersect the
+	 * Detects whether the line between the two x,y pairs intersects the
 	 * shapefile
 	 * 
 	 * @param x1
@@ -103,6 +116,11 @@ public class Intersector_2D_Shapefile implements Intersector {
 
 	}
 
+	/**
+	 * Identifies whether a given x,y position intersects the provided
+	 * shapefile.
+	 */
+	
 	@Override
 	@SuppressWarnings("unchecked")
 	public boolean intersects(double x, double y) {
@@ -122,6 +140,13 @@ public class Intersector_2D_Shapefile implements Intersector {
 		return false;
 	}
 
+	/**
+	 * Converts longitude values greater than 180 into negative values
+	 * 
+	 * @param oldlon
+	 * @return
+	 */
+	
 	private double cvt(double oldlon) {
 		if (oldlon > 180) {
 			return -(360d - oldlon);

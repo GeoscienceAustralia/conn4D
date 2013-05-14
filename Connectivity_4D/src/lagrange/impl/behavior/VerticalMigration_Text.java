@@ -7,17 +7,17 @@ import lagrange.Particle;
 import lagrange.VerticalMigration;
 import lagrange.utils.TimeConvert;
 import lagrange.utils.VectorMath;
-
+import lagrange.utils.VectorUtils;
 import cern.jet.random.Empirical;
 import cern.jet.random.EmpiricalWalker;
 import cern.jet.random.Uniform;
 import cern.jet.random.engine.MersenneTwister64;
 import cern.jet.random.engine.RandomEngine;
 import cern.jet.random.engine.RandomSeedTable;
-import lagrange.utils.VectorUtils;
 
 /**
- * 
+ * Uses a text-based file to obtain probability values of being at a certain
+ * depth level (out-of-date class).
  * 
  * @author Johnathan Kool
  */
@@ -106,21 +106,49 @@ public class VerticalMigration_Text implements VerticalMigration,Cloneable {
 		this.timeIntervalUnits = timeIntervalUnits;
 	}
 
+	/**
+	 * Retrieves the transition matrix for vertical movement
+	 * 
+	 * @param vmtx
+	 */
+	
 	public double[][] getVmtx() {
 		return vmtx;
 	}
+	
+	/**
+	 * Sets the transition matrix for vertical movement
+	 * 
+	 * @param vmtx
+	 */
 
 	public void setVmtx(double[][] vmtx) {
 		this.vmtx = vmtx;
 	}
+	
+	/**
+	 * Retrieves the depth bins
+	 * 
+	 * @return
+	 */
 
 	public double[] getBins() {
 		return bins;
 	}
 
+	/**
+	 * Sets the depth bins
+	 * 
+	 * @param bins
+	 */
+	
 	public void setBins(double[] bins) {
 		this.bins = bins;
 	}
+	
+	/**
+	 * Returns a clone of the class instance
+	 */
 	
 	@Override
 	public VerticalMigration_Text clone(){

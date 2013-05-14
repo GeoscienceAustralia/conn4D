@@ -4,7 +4,6 @@ import junit.framework.Assert;
 import lagrange.utils.CoordinateMath;
 
 import org.junit.Before;
-import org.junit.Test;
 
 import com.vividsolutions.jts.geom.Coordinate;
 

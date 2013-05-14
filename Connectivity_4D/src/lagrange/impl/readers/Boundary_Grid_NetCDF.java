@@ -5,18 +5,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.LineSegment;
-
 import lagrange.Boundary_Grid;
 import lagrange.impl.collision.Intersector_3D_Poly;
 import lagrange.utils.CoordinateMath;
 import lagrange.utils.IndexLookup_Nearest;
-
 import ucar.ma2.Array;
 import ucar.ma2.Index;
 import ucar.nc2.NetcdfFile;
 import ucar.nc2.Variable;
+
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.LineSegment;
 
 public class Boundary_Grid_NetCDF implements Boundary_Grid, Cloneable {
 
@@ -75,6 +74,7 @@ public class Boundary_Grid_NetCDF implements Boundary_Grid, Cloneable {
 		return ncb;
 	}
 
+	@Override
 	public double getCellSize() {
 		return cellsize;
 	}
@@ -120,11 +120,13 @@ public class Boundary_Grid_NetCDF implements Boundary_Grid, Cloneable {
 		return bnd.getDouble(bndInd)*pd; // Corrects if bathymetry is in positive units.
 	}
 	
+	@Override
 	public double getRealDepth(double x, double y){
 		LineSegment ls = new LineSegment(new Coordinate(x,y,1E6),new Coordinate(x,y,-1E6));
 		return (i3d.intersection(ls, getVertices(getIndices(x,y)))).z;
 	}
 	
+	@Override
 	public int[] getIndices(double x, double y){
 		if (neglon) {
 			x = (x + 180) % 360 - 180;
@@ -137,6 +139,7 @@ public class Boundary_Grid_NetCDF implements Boundary_Grid, Cloneable {
 		return new int[] {(int) Math.floor((y-miny)/cellsize),(int) Math.floor((x-minx)/cellsize)};
 	}
 
+	@Override
 	public int[] getIndices(Coordinate c){
 		return getIndices(c.x,c.y);
 	}
@@ -225,6 +228,7 @@ public class Boundary_Grid_NetCDF implements Boundary_Grid, Cloneable {
 		return boundaryName;
 	}
 
+	@Override
 	public Coordinate[] getVertices(Coordinate c) {
 		return getVertices(getIndices(c.x,c.y));
 	}
@@ -233,6 +237,7 @@ public class Boundary_Grid_NetCDF implements Boundary_Grid, Cloneable {
 		return getCeqdVertices(getIndices(c.x,c.y));
 	}
 
+	@Override
 	public Coordinate[] getVertices(int[] indices){
 		int i = indices[0];
 		int j = indices[1];
@@ -302,6 +307,7 @@ public class Boundary_Grid_NetCDF implements Boundary_Grid, Cloneable {
 		return new Coordinate[] { ll, lr, ur, ul };
 	}
 	
+	@Override
 	public List<Coordinate[]> getVertices(List<int[]> indices){
 		List<Coordinate[]> list = new ArrayList<Coordinate[]>(indices.size());
 		Iterator<int[]> it = indices.iterator();
@@ -394,6 +400,7 @@ public class Boundary_Grid_NetCDF implements Boundary_Grid, Cloneable {
 		this.cellsize = cellsize;
 	}
 
+	@Override
 	public double getMinx() {
 		return minx;
 	}
@@ -402,6 +409,7 @@ public class Boundary_Grid_NetCDF implements Boundary_Grid, Cloneable {
 		this.minx = minx;
 	}
 
+	@Override
 	public double getMiny() {
 		return miny;
 	}
@@ -442,6 +450,7 @@ public class Boundary_Grid_NetCDF implements Boundary_Grid, Cloneable {
 		this.ncols = ncols;
 	}
 	
+	@Override
 	public void setPositiveDown(boolean positiveDown){
 		this.positiveDown = positiveDown;
 		pd=positiveDown?-1f:1f;

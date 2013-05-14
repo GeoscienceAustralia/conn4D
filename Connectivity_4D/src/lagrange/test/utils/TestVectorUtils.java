@@ -1,9 +1,10 @@
 package lagrange.test.utils;
 
+import lagrange.utils.VectorUtils;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import lagrange.utils.VectorUtils;
 
 public class TestVectorUtils {
 
@@ -55,6 +56,7 @@ class BandFilter implements Filter {
 		max = _max;
 	}
 
+	@Override
 	public boolean accept(Number n) {
 		if (n.doubleValue() > min && n.doubleValue() <= max) {
 			return true;

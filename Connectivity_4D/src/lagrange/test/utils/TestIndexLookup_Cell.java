@@ -3,7 +3,6 @@ package lagrange.test.utils;
 import java.io.IOException;
 
 import junit.framework.Assert;
-
 import lagrange.utils.IndexLookup_Cell;
 
 import org.junit.Test;

@@ -2,24 +2,24 @@ package lagrange.test;
 
 import java.util.concurrent.CountDownLatch;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.GeometryFactory;
-
 import lagrange.Parameters;
 import lagrange.impl.Release;
 import lagrange.impl.ReleaseFactory_4D;
 import lagrange.impl.behavior.Mortality_None;
 import lagrange.impl.behavior.Settlement_None;
 import lagrange.impl.collision.CollisionDetector_None;
-import lagrange.impl.movement.Diffusion_None;
 import lagrange.impl.movement.Advection_RK4_3D;
+import lagrange.impl.movement.Diffusion_None;
 import lagrange.impl.readers.VelocityReader_NetCDF_4D;
 import lagrange.impl.writers.TrajectoryWriter_Text;
 import lagrange.input.ConfigurationOverride;
 import lagrange.parameters.Parameters_Test;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.GeometryFactory;
 
 public class TestReleaseFactory {
 	
