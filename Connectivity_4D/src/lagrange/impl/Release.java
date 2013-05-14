@@ -221,26 +221,22 @@ public class Release implements Runnable {
 			p.setX0(p.getX());
 			p.setY0(p.getY());
 			p.setZ0(p.getZ());
-			
+
 			// Ensuring initial position is above the seafloor and in the
 			// water column.
 
-			try {
-				if (!(collisionDetect instanceof CollisionDetector_None)) {
-					double floor = collisionDetect.getBoundary()
-							.getPreciseBoundaryDepth(p.getX(), p.getY());
+			if (!(collisionDetect instanceof CollisionDetector_None)) {
+				double floor = collisionDetect.getBoundary()
+						.getPreciseBoundaryDepth(p.getX(), p.getY());
 
-					if (p.getZ() < floor) {
-						if (floor + 1 > 0) {
-							p.setLost(true);
-							p.setError(true);
-						} else {
-							p.setZ(floor + 1);
-						}
+				if (p.getZ() < floor) {
+					if (floor + 1 > 0) {
+						p.setLost(true);
+						p.setError(true);
+					} else {
+						p.setZ(floor + 1);
 					}
 				}
-			} catch (NullPointerException e) {
-				e.printStackTrace();
 			}
 
 			p.setBirthday(time);
@@ -248,7 +244,7 @@ public class Release implements Runnable {
 			p.setCompetencyStart(prm.getCompetencyStart());
 			p.setT(time);
 
-			if(writeInitial){
+			if (writeInitial) {
 				tw.apply(p);
 				mw.apply(p);
 				dw.apply(p);
@@ -328,12 +324,14 @@ public class Release implements Runnable {
 				// Can the particle settle?
 
 				sm.apply(p);
-				
-				// Update the Particle's time reference after processes are complete
-				// so that the time reflects state upon completion of the processes.
 
-				p.setT(p.getT()+prm.getH());
-				
+				// Update the Particle's time reference after processes are
+				// complete
+				// so that the time reflects state upon completion of the
+				// processes.
+
+				p.setT(p.getT() + prm.getH());
+
 				// If we have exceeded the output frequency threshold,
 				// or if settling has occurred, then write.
 
@@ -366,6 +364,19 @@ public class Release implements Runnable {
 
 		} catch (StackOverflowError e) {
 			e.printStackTrace();
+		} catch (NullPointerException npe){
+			System.out.println(
+			"Null Pointer Error - \n" +
+			"mort: " + mort + "\n" +
+			"sm: " + sm + "\n" +
+			"mv: " + mv + "\n" +
+			"df: " + df + "\n" +
+			"collisionDetect: " + collisionDetect + "\n" +
+			"tw: " + tw + "\n" +
+			"dw: " + dw + "\n" +
+			"mw: " + mw + "\n" + 
+			p.toString() + "\n");
+			npe.printStackTrace();
 		} catch (Exception e) {
 			p.setError(true);
 			System.out.println("ERROR: " + e.toString());
@@ -559,11 +570,11 @@ public class Release implements Runnable {
 		return kill;
 	}
 
-	//public boolean usesNegativeCoordinates() {
-	//	return negCoord;
-	//}
+	// public boolean usesNegativeCoordinates() {
+	// return negCoord;
+	// }
 
-	//public boolean usesNegativeOceanCoordinates() {
-	//	return negOceanCoord;
-	//}
+	// public boolean usesNegativeOceanCoordinates() {
+	// return negOceanCoord;
+	// }
 }

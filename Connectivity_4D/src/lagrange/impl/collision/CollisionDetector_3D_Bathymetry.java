@@ -138,6 +138,21 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 
 					Coordinate update = pt.inverse(CoordinateMath.reflect(
 							pt.project(ln.p1), pt.project(isect), cnorm));
+					
+					// If the length of the reflection is below the tolerance
+					// threshold, then set as lost.  This could probably be
+					// handled better, but only seems to be an issue in very
+					// shallow areas where results are questionable anyways.
+					
+					double rd = bnd.getRealDepth(update.x, update.y);
+					
+					if(CoordinateMath.length3D(isect, update)<=1E-8){
+						p.setLost(true);
+						p.setX(isect.x);
+						p.setY(isect.y);
+						p.setZ(rd);
+						return;
+					}
 
 					ln = new LineSegment(isect, update);
 					
@@ -146,7 +161,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 						ln.p1.z = surfaceLevel;
 					}
 
-					double rd = bnd.getRealDepth(ln.p1.x, ln.p1.y);
+
 					
 					if(ln.p1.z < rd){
 						p.setLost(true);
@@ -157,9 +172,10 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 					}
 					
 					// Remove a small section from the beginning of the line
-					// to prevent re-reflection.  THIS IS IMPORTANT!
+					// to prevent re-reflection.  THIS IS IMPORTANT!				
 					
 					CoordinateMath.nibble(ln, 1E-08);
+					
 					rg.setLine(new LineSegment(ln));
 					currentcell = bnd.getIndices(isect);
 					endcell = bnd.getIndices(update);

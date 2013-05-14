@@ -112,6 +112,10 @@ public class CoordinateMath {
 		}
 	}
 	
+	public static final double length3D(Coordinate c1, Coordinate c2){
+		return magnitude(subtract(c2,c1));
+	}
+	
 	public static Coordinate lonlat2ceqd(Coordinate c){
 		double[] coords = GeometryUtils.lonlat2ceqd(new double[]{c.x,c.y,c.z});
 		return new Coordinate(coords[0],coords[1],coords[2]);
