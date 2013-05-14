@@ -66,7 +66,6 @@ public class ReleaseFactory_4D {
 		rel.setParameters(prm);
 		rel.setTime(time);
 		rel.setMortality(mort.clone());
-		rel.setCollisionDetect(cd.clone());
 
 		if (rel.preKill()) {
 			return rel;
@@ -78,7 +77,7 @@ public class ReleaseFactory_4D {
 		rel.setDiffusion(df.clone());
 		
 		if (cd != null) {
-			rel.setBoundaryHandler(cd.clone());
+			rel.setCollisionDetector(cd.clone());
 		}
 
 		if (sm != null) {

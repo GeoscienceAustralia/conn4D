@@ -59,7 +59,7 @@ public class TestRelease {
 		// Set the more complex release components - Null here for testing.
 		
 		r.setParameters(prm);
-		r.setBoundaryHandler(new CollisionDetector_None());
+		r.setCollisionDetector(new CollisionDetector_None());
 		r.setDiffusion(new Diffusion_None());
 		r.setMortality(new NullPlug());
 		r.setDistanceWriter(new NullPlug());

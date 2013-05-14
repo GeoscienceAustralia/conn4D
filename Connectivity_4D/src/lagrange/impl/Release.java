@@ -34,7 +34,7 @@ public class Release implements Runnable {
 	private Settlement sm;
 	private Movement mv;
 	private Diffusion df;
-	private CollisionDetector collisionDetect;
+	private CollisionDetector collisionDetector;
 	private CountDownLatch doneSignal;
 	private TrajectoryWriter tw;
 	private DistanceWriter dw;
@@ -48,17 +48,13 @@ public class Release implements Runnable {
 	private boolean writeInitial = true;
 
 	/**
-	 * Retrieves the BoundaryHandler associated with this instance
+	 * Retrieves the CollisionDetector associated with this instance
 	 * 
 	 * @return
 	 */
 
-	public CollisionDetector getBoundaryHandler() {
-		return collisionDetect;
-	}
-
-	public CollisionDetector getCollisionDetect() {
-		return collisionDetect;
+	public CollisionDetector getCollisionDetector() {
+		return collisionDetector;
 	}
 
 	/**
@@ -170,6 +166,13 @@ public class Release implements Runnable {
 	public VerticalMigration getVerticalMigration() {
 		return vm;
 	}
+	
+	/**
+	 * Flags whether the release will be killed before effective
+	 * activity (pre-processing mortality to save on computation)
+	 * 
+	 * @return
+	 */
 
 	public boolean preKill() {
 		if (prm == null) {
@@ -225,8 +228,8 @@ public class Release implements Runnable {
 			// Ensuring initial position is above the seafloor and in the
 			// water column.
 
-			if (!(collisionDetect instanceof CollisionDetector_None)) {
-				double floor = collisionDetect.getBoundary()
+			if (!(collisionDetector instanceof CollisionDetector_None)) {
+				double floor = collisionDetector.getBoundary()
 						.getPreciseBoundaryDepth(p.getX(), p.getY());
 
 				if (p.getZ() < floor) {
@@ -269,7 +272,7 @@ public class Release implements Runnable {
 						}
 					}
 
-					// Or, go about it the traditional way.
+				// Or, go about it the traditional way.
 
 				} else {
 					mort.apply(p);
@@ -318,7 +321,7 @@ public class Release implements Runnable {
 				// interpolation range)
 
 				if (p.isNearNoData()) {
-					collisionDetect.handleIntersection(p);
+					collisionDetector.handleIntersection(p);
 				}
 
 				// Can the particle settle?
@@ -371,7 +374,7 @@ public class Release implements Runnable {
 			"sm: " + sm + "\n" +
 			"mv: " + mv + "\n" +
 			"df: " + df + "\n" +
-			"collisionDetect: " + collisionDetect + "\n" +
+			"collisionDetect: " + collisionDetector + "\n" +
 			"tw: " + tw + "\n" +
 			"dw: " + dw + "\n" +
 			"mw: " + mw + "\n" + 
@@ -399,13 +402,9 @@ public class Release implements Runnable {
 	 * @param bh
 	 *            - The BoundaryHandler object
 	 */
-
-	public void setBoundaryHandler(CollisionDetector bh) {
-		this.collisionDetect = bh;
-	}
-
-	public void setCollisionDetect(CollisionDetector collisionDetect) {
-		this.collisionDetect = collisionDetect;
+	
+	public void setCollisionDetector(CollisionDetector collisionDetector) {
+		this.collisionDetector = collisionDetector;
 	}
 
 	/**
@@ -497,10 +496,24 @@ public class Release implements Runnable {
 		this.mv = mv;
 	}
 
+	/**
+	 * Sets whether negative coordinates are being used by the
+	 * geographic frame of reference
+	 * 
+	 * @param negCoord
+	 */
+	
 	public void setNegativeCoordinates(boolean negCoord) {
 		this.negCoord = negCoord;
 	}
 
+	/**
+	 * Sets whether negative coordinates are being used by the
+	 * oceanographic data
+	 * 
+	 * @param negCoord
+	 */
+	
 	public void setNegativeOceanCoordinates(boolean negOceanCoord) {
 		this.negOceanCoord = negOceanCoord;
 	}
@@ -569,12 +582,4 @@ public class Release implements Runnable {
 	public boolean toBeKilled() {
 		return kill;
 	}
-
-	// public boolean usesNegativeCoordinates() {
-	// return negCoord;
-	// }
-
-	// public boolean usesNegativeOceanCoordinates() {
-	// return negOceanCoord;
-	// }
 }
