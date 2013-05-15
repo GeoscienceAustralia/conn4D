@@ -304,18 +304,6 @@ public class VelocityReader_NetCDFDir_4D implements VelocityReader, Cloneable {
 			tloc = null;
 		}
 	}
-	
-	public boolean verify(){
-		boolean pass = true;
-		
-		
-		
-		return false;
-	}
-	
-	private boolean verifyFileSet(String variableName){
-		return false;
-	}
 
 	/**
 	 * Retrieves average velocity values associated with the last queried

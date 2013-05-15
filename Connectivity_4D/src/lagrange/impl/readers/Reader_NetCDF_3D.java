@@ -6,7 +6,6 @@ import lagrange.utils.IndexLookup_Nearest;
 import ucar.ma2.Array;
 import ucar.ma2.InvalidRangeException;
 import ucar.nc2.NetcdfFile;
-import ucar.nc2.Variable;
 
 /**
  * Retrieves values from a 3D NetCDF File (time,y,x)

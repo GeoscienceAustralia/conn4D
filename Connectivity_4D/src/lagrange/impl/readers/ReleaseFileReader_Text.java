@@ -14,12 +14,13 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 
 /**
+ * Reads release information from a text file. Very old class - may not be
+ * functioning properly.
  * 
  * @author Johnathan Kool
- * 
  */
 
-public class ReleaseFileReader_Text implements ReleaseFileReader{
+public class ReleaseFileReader_Text implements ReleaseFileReader {
 
 	private int relID; // Release ID
 	private float lon, lat, z; // Longitude, Latitude and Depth
@@ -42,6 +43,108 @@ public class ReleaseFileReader_Text implements ReleaseFileReader{
 		FileReader fr = new FileReader(filename);
 		br = new BufferedReader(fr);
 		readNext();
+	}
+
+	/**
+	 * Retrieves the depth of the initial release.
+	 * 
+	 * @return - the depth of the initial release.
+	 */
+
+	@Override
+	public float getDepth() {
+		return z;
+	}
+
+	/**
+	 * Retrieves the latitude of the initial release.
+	 * 
+	 * @return - the latitude of the initial release.
+	 */
+
+	public float getLat() {
+		return lat;
+	}
+
+	/**
+	 * Retrieves the text name of the release location.
+	 */
+
+	@Override
+	public String getLocName() {
+		return locName;
+	}
+
+	/**
+	 * Retrieves the longitude of the initial release.
+	 * 
+	 * @return - the longitude of the initial release.
+	 */
+
+	public float getLon() {
+		return lon;
+	}
+
+	/**
+	 * Retrieves the number of particles to be released.
+	 */
+
+	@Override
+	public long getNpart() {
+		return npart;
+	}
+
+	// Getters and Setters
+
+	/**
+	 * Retrieves a Geometry corresponding to the initial release.
+	 * 
+	 * @return - a Geometry corresponding to the initial release.
+	 */
+
+	@Override
+	public Geometry getPosition() {
+		return gf.createPoint(new Coordinate(lon, lat));
+	}
+
+	/**
+	 * Retrieves the release day.
+	 * 
+	 * @return
+	 */
+
+	public int getRdd() {
+		return rdd;
+	}
+
+	/**
+	 * Retrieves the release month.
+	 * 
+	 * @return
+	 */
+
+	public int getRmm() {
+		return rmm;
+	}
+
+	/**
+	 * Retrieves the release year.
+	 * 
+	 * @return
+	 */
+
+	public int getRyyyy() {
+		return ryyyy;
+	}
+
+	/**
+	 * Retrieves the source ID of the release
+	 * 
+	 * @return - the source ID of the release
+	 */
+
+	public long getSourceID() {
+		return relID;
 	}
 
 	/**
@@ -76,7 +179,9 @@ public class ReleaseFileReader_Text implements ReleaseFileReader{
 
 		if (stk.countTokens() != 9) {
 			throw new IllegalArgumentException(
-					"Invalid number of fields in the release file (Line " + lineNumber +") - must equal 9.\n\nRelID, Lon, Lat, Layer, nParticles, Year, Month, Day, Name.\nEnsure there are no extra carriage returns in the file.\n\n");
+					"Invalid number of fields in the release file (Line "
+							+ lineNumber
+							+ ") - must equal 9.\n\nRelID, Lon, Lat, Layer, nParticles, Year, Month, Day, Name.\nEnsure there are no extra carriage returns in the file.\n\n");
 		}
 
 		relID = Integer.parseInt(stk.nextToken());
@@ -112,61 +217,18 @@ public class ReleaseFileReader_Text implements ReleaseFileReader{
 		}
 
 		parse();
-
 	}
-	
+
+	/**
+	 * Sets the values of the passed-in Parameters object
+	 */
+
 	@Override
-	public Parameters setParameters(Parameters prm){
+	public Parameters setParameters(Parameters prm) {
 		prm.setLocName(locName);
 		prm.setNPart(npart);
-		prm.setPosition(gf.createPoint(new Coordinate(lon,lat)));
+		prm.setPosition(gf.createPoint(new Coordinate(lon, lat)));
 		prm.setDepth(z);
 		return prm;
-	}
-
-	// Getters and Setters
-
-	public long getSourceID() {
-		return relID;
-	}
-
-	public float getLon() {
-		return lon;
-	}
-
-	public float getLat() {
-		return lat;
-	}
-	
-	@Override
-	public Geometry getPosition() {
-		return gf.createPoint(new Coordinate(lon,lat));
-	}
-
-	@Override
-	public float getDepth() {
-		return z;
-	}
-
-	@Override
-	public long getNpart() {
-		return npart;
-	}
-
-	public int getRyyyy() {
-		return ryyyy;
-	}
-
-	public int getRmm() {
-		return rmm;
-	}
-
-	public int getRdd() {
-		return rdd;
-	}
-
-	@Override
-	public String getLocName() {
-		return locName;
 	}
 }

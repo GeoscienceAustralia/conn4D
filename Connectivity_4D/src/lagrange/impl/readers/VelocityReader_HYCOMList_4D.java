@@ -354,6 +354,16 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 	public double[][] getBounds() {
 		return bounds;
 	}
+	
+	/**
+	 * Retrieves the dimensions of the list
+	 * @return
+	 */
+	
+	public double[][] getDims() {
+		return new double[][] { tloc.getJavaArray(), zloc.getJavaArray(),
+				yloc.getJavaArray(), xloc.getJavaArray() };
+	}
 
 	/**
 	 * Retrieves the name of the Latitude variable
@@ -1120,10 +1130,5 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 
 	public void setZName(String zname) {
 		this.zName = zname;
-	}
-
-	public double[][] getDims() {
-		return new double[][] { tloc.getJavaArray(), zloc.getJavaArray(),
-				yloc.getJavaArray(), xloc.getJavaArray() };
 	}
 }

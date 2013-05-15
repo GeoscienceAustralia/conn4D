@@ -49,7 +49,8 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 	/**
 	 * Constructor accepting a path name provided as a String.
 	 * 
-	 * @param filename - path name of the raster resource as a String
+	 * @param filename
+	 *            - path name of the raster resource as a String
 	 */
 
 	public Boundary_Raster_NetCDF(String fileName) {
@@ -73,8 +74,8 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 	 * @param
 	 */
 
-	public Boundary_Raster_NetCDF(String fileName, String latName, String lonName)
-			throws IOException {
+	public Boundary_Raster_NetCDF(String fileName, String latName,
+			String lonName) throws IOException {
 
 		boundary = NetcdfFile.open(fileName);
 		boundaryVar = boundary.findVariable(boundaryName);
@@ -251,7 +252,7 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 	}
 
 	/**
- 	 * Retrieves the indices of the grid (lower left start) associated with the
+	 * Retrieves the indices of the grid (lower left start) associated with the
 	 * provided Coordinate
 	 */
 
@@ -323,8 +324,8 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 	}
 
 	/**
-	 * Retrieves the maximum x value of the raster. This value corresponds to the
-	 * right edge position of the right-most cell.
+	 * Retrieves the maximum x value of the raster. This value corresponds to
+	 * the right edge position of the right-most cell.
 	 * 
 	 * @return
 	 */
@@ -334,8 +335,8 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 	}
 
 	/**
-	 * Retrieves the maximum y value of the raster. This value corresponds to the
-	 * upper edge position of the upper-most cell.
+	 * Retrieves the maximum y value of the raster. This value corresponds to
+	 * the upper edge position of the upper-most cell.
 	 * 
 	 * @return
 	 */
@@ -345,8 +346,8 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 	}
 
 	/**
-	 * Retrieves the minimum x value of the raster. This value corresponds to the
-	 * left edge position of the left-most cell.
+	 * Retrieves the minimum x value of the raster. This value corresponds to
+	 * the left edge position of the left-most cell.
 	 * 
 	 * @return
 	 */
@@ -357,8 +358,8 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 	}
 
 	/**
-	 * Retrieves the minimum y value of the raster. This value corresponds to the
-	 * bottom edge position of the bottom-most cell.
+	 * Retrieves the minimum y value of the raster. This value corresponds to
+	 * the bottom edge position of the bottom-most cell.
 	 * 
 	 * @return
 	 */
@@ -627,11 +628,11 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 
 		return true;
 	}
-	
+
 	/**
 	 * Initializes the class by generating the latitude and longitude arrays,
-	 * determining the minimum and maximum extents and calculating the
-	 * cell size of the raster.
+	 * determining the minimum and maximum extents and calculating the cell size
+	 * of the raster.
 	 * 
 	 * @throws IOException
 	 */
@@ -654,10 +655,10 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 			maxy = lats.getMaxVal() + cellsize;
 		}
 	}
-	
+
 	/**
-	 * Retrieves whether the longitude values used by the raster are
-	 * intended to include negative values.
+	 * Retrieves whether the longitude values used by the raster are intended to
+	 * include negative values.
 	 * 
 	 * @return
 	 */
@@ -665,9 +666,10 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 	public boolean isNeglon() {
 		return neglon;
 	}
-	
+
 	/**
-	 * Sets the cell size of the raster. 
+	 * Sets the cell size of the raster.
+	 * 
 	 * @param cellsize
 	 */
 
@@ -677,25 +679,40 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 
 	/**
 	 * Sets the name of the variable used to provide latitude values.
+	 * 
 	 * @param latName
 	 */
-	
+
 	public void setLatName(String latName) {
 		this.latName = latName;
 	}
-	
+
 	/**
 	 * Sets the name of the variable used to provide longitude values.
+	 * 
 	 * @param lonName
 	 */
 
 	public void setLonName(String lonName) {
 		this.lonName = lonName;
 	}
-	
+
+	/**
+	 * Sets whether the class uses negative longitude values.
+	 * 
+	 * @param neglon
+	 */
+
 	public void setNeglon(boolean neglon) {
 		this.neglon = neglon;
 	}
+
+	/**
+	 * Sets whether depth values are increasingly positive in a downwards
+	 * direction (i.e. depth values are positive).
+	 * 
+	 * @param positiveDown
+	 */
 
 	@Override
 	public void setPositiveDown(boolean positiveDown) {
@@ -703,14 +720,34 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 		pd = positiveDown ? -1f : 1f;
 	}
 
+	/**
+	 * Sets whether the coordinate system is referenced to the center of the
+	 * centroid or the lower left edge.
+	 * 
+	 * @param centroid_reference
+	 */
+
 	public void setReferenceByCentroid(boolean centroid_reference) {
 		this.centroid_reference = centroid_reference;
 	}
+	
+	/**
+	 * Sets the name of the variable being used as the data content source.
+	 * 
+	 * @param variableName
+	 */
 
 	public void setVariableName(String variableName) {
 		this.boundaryName = variableName;
 	}
 
+	/**
+	 * Retrieves whether the coordinate system is referenced to the center of the
+	 * centroid or the lower left edge.
+	 * 
+	 * @param centroid_reference
+	 */
+	
 	public boolean usesCentroidReference() {
 		return centroid_reference;
 	}

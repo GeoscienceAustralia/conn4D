@@ -1,7 +1,7 @@
 package lagrange;
 
 /**
- * Reads depth values from a data source
+ * Reads boundary (e.g. bathymetry) values from a data source
  * 
  * @author Johnathan Kool
  *
@@ -37,6 +37,13 @@ public interface Boundary {
 	 */
 	
 	public double getPreciseBoundaryDepth(double x, double y);
+	
+	/**
+	 * Sets whether depth values are increasingly positive in a downwards
+	 * direction (i.e. depth values are positive).
+	 * 
+	 * @param positiveDown
+	 */
 	
 	public void setPositiveDown(boolean positiveDown);
 }

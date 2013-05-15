@@ -64,9 +64,20 @@ public class ReleaseFactory_4D {
 	private long time;
 	private long counter = -1;
 
+	/**
+	 * No-argument constructor
+	 */
+	
 	public ReleaseFactory_4D() {
 	}
 
+	/**
+	 * Constructor accepting a String containing the path of
+	 * a configuration text file.
+	 * 
+	 * @param local_config
+	 */
+	
 	public ReleaseFactory_4D(String local_config) {
 		initialize(local_config);
 	}

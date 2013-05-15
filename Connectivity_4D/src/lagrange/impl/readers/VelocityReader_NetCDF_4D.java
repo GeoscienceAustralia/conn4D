@@ -458,7 +458,6 @@ public class VelocityReader_NetCDF_4D implements VelocityReader, Cloneable {
 				}
 
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -881,7 +880,6 @@ public class VelocityReader_NetCDF_4D implements VelocityReader, Cloneable {
 			ncv.vFile = NetcdfFile.open(vFile.getLocation());
 			ncv.wFile = NetcdfFile.open(wFile.getLocation());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

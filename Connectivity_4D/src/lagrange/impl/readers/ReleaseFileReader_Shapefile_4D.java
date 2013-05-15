@@ -13,9 +13,11 @@ import org.geotools.data.shapefile.ShapefileDataStore;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
- * 
+ * ReleaseFileReader using a shapefile (.shp) to provide release parameters at
+ * each location.  Extended for 4D releases where initial depth range
+ * is important.
+ *  
  * @author Johnathan Kool
- * 
  */
 
 public class ReleaseFileReader_Shapefile_4D extends ReleaseFileReader_Shapefile{
@@ -40,6 +42,10 @@ public class ReleaseFileReader_Shapefile_4D extends ReleaseFileReader_Shapefile{
 		  readNext();	  
 	}
 	
+	/**
+	 * Parses the data contained by a single record
+	 */
+	
 	@Override
 	protected void parse() {
 
@@ -63,6 +69,10 @@ public class ReleaseFileReader_Shapefile_4D extends ReleaseFileReader_Shapefile{
 		npart = (Integer) feat.getAttribute(header_Npart);
 		locName = (String) feat.getAttribute(header_locName);
 	}
+	
+	/**
+	 * Updates the values in the provided Parameters file.
+	 */
 
 	@Override
 	public Parameters setParameters(Parameters d) {
@@ -72,15 +82,30 @@ public class ReleaseFileReader_Shapefile_4D extends ReleaseFileReader_Shapefile{
 		d.setDepthRange(minDepth, maxDepth);
 		return d;
 	}
+	
+	/**
+	 * Normally used to retrieve a depth from the class, however, here depth
+	 * is provided as a range, therefore an IllegalArgumentException is thrown.
+	 */
 
 	@Override
 	public float getDepth() {
 		throw new IllegalArgumentException("Depth is provided as a range by this class");
 	}
 	
+	/**
+	 * Retrieves the minimum release depth
+	 * @return
+	 */
+	
 	public double getMinDepth(){
 		return minDepth;
 	}
+	
+	/**
+	 * Retrieves the maximum release depth
+	 * @return
+	 */
 	
 	public double getMaxDepth(){
 		return maxDepth;

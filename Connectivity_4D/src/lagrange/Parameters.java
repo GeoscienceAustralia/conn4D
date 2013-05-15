@@ -4,7 +4,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
- * Class used for shuttling parameters between the Client and
+ * Class used for shuttling parameters between a Client and
  * Server.
  */
 

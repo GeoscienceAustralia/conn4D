@@ -1,5 +1,7 @@
 package lagrange.test.behavior;
 
+import org.junit.Test;
+
 import lagrange.Particle;
 import lagrange.impl.behavior.Mortality_Weibull;
 import lagrange.utils.TimeConvert;
@@ -21,13 +23,8 @@ public class TestMortality_Weibull {
 	 * @param args
 	 */
 	
-	public static void main(String[] args){
-		TestMortality_Weibull tmw = new TestMortality_Weibull();
-		tmw.go();
-		System.out.println("Complete.");
-	}
-	
-	public void go(){
+	@Test
+	public void testDistribution(){
 		
 		double ct = 0;
 		Mortality_Weibull mw = new Mortality_Weibull(lambda,k);
@@ -41,8 +38,7 @@ public class TestMortality_Weibull {
 			if(!p.isDead()){
 				ct++;
 			}
-		}
-		
+		}	
 		System.out.println(ct/reps);	
 	}
 	

@@ -1,5 +1,8 @@
 package lagrange.test.behavior;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import junit.framework.TestCase;
 import lagrange.Particle;
 import lagrange.impl.behavior.VerticalMigration_Text;
@@ -17,7 +20,10 @@ public class TestVerticalMigration_Text extends TestCase {
 						{.0, .05}};
 	double[] bins = {5,15,25,40,62.5,87.5,112.5,137.5};
 	
-	@Override
+	/**
+	 * Sets up the test class
+	 */
+	@Before
 	protected void setUp() throws Exception {
 		super.setUp();
 		p = new Particle();
@@ -27,13 +33,17 @@ public class TestVerticalMigration_Text extends TestCase {
 		vm.setTimeIntervalUnits("Days");
 		vm.setVmtx(m1);
 	}
-
-	public void testApply() {
+	
+	/**
+	 * Incomplete
+	 */
+	
+	@Test
+	public void testMovement() {
 		
 		for(int i = 1; i < 31; i++){
-		
 			vm.apply(p);
-			System.out.print(p.getZ() + " ");
+			//System.out.print(p.getZ() + " ");
 			if(i%15 == 0){System.out.print("\n");}
 		
 		}
