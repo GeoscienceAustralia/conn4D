@@ -9,36 +9,23 @@ import ucar.nc2.NetcdfFile;
 import ucar.nc2.Variable;
 
 /**
- * Retrieves values from a 3D NetCDF File (x,y and time)
+ * Retrieves values from a 3D NetCDF File (time,y,x)
  * 
  * @author Johnathan Kool
  */
 
-public class Reader_NetCDF_3D {
+public class Reader_NetCDF_3D extends Reader_NetCDF {
 
-	private NetcdfFile netcdfFile;
-	private Variable bndVar;
-	private String varName = "mld";
-	private String latName = "Latitude";
-	private String lonName = "Longitude";
-	private String timeName = "Time";
-	private boolean neglon = false;
 	private IndexLookup_Nearest lats, lons, time;
 
 	/**
 	 * Constructor accepting a String containing the path of the resource.
 	 * 
-	 * @param filename
+	 * @param fileName - the path of the resource
 	 */
 
-	public Reader_NetCDF_3D(String filename) {
-
-		try {
-			netcdfFile = NetcdfFile.open(filename);
-			bndVar = netcdfFile.findVariable(varName);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public Reader_NetCDF_3D(String fileName) {
+		super(fileName);
 	}
 
 	/**
@@ -46,18 +33,18 @@ public class Reader_NetCDF_3D {
 	 * well as Strings containing the variable names for latitude, longitude,
 	 * time, and the data content.
 	 * 
-	 * @param filename
-	 * @param varname
-	 * @param timeName
-	 * @param latName
-	 * @param lonName
+	 * @param fileName - the path of the resource
+	 * @param varName - the name of the data content variable
+	 * @param timeName - the name of the time variable
+	 * @param latName - the name of the latitude variable
+	 * @param lonName - the name of the longitude variable
 	 * @throws IOException
 	 */
 
-	public Reader_NetCDF_3D(String filename, String varname, String timeName,
+	public Reader_NetCDF_3D(String fileName, String varName, String timeName,
 			String latName, String lonName) throws IOException {
 
-		netcdfFile = NetcdfFile.open(filename);
+		netcdfFile = NetcdfFile.open(fileName);
 		bndVar = netcdfFile.findVariable(varName);
 		this.latName = latName;
 		this.lonName = lonName;
@@ -68,7 +55,7 @@ public class Reader_NetCDF_3D {
 	/**
 	 * Returns a clone of the class instance
 	 */
-	
+
 	@Override
 	public Reader_NetCDF_3D clone() {
 		Reader_NetCDF_3D ncb;
@@ -79,17 +66,17 @@ public class Reader_NetCDF_3D {
 	}
 
 	/**
+	 * Retrieves the value from the NetCDF file corresponding to the variable
+	 * name set in varName.
 	 * 
+	 * @param t
+	 *            - time lookup value
+	 * @param x
+	 *            - x lookup value
+	 * @param y
+	 *            - y lookup value
 	 * @return
 	 */
-	
-	public String getLatName() {
-		return latName;
-	}
-
-	public String getLonName() {
-		return lonName;
-	}
 
 	public double getValue(double t, double x, double y) {
 
@@ -116,34 +103,16 @@ public class Reader_NetCDF_3D {
 		}
 		return bnd.getDouble(0);
 	}
-
-	public String getVariableName() {
-		return varName;
-	}
-
+	
+	/**
+	 * Initializes the class by generating index lookups.
+	 * 
+	 * @throws IOException
+	 */
+	
 	public void initialize() throws IOException {
 		lats = new IndexLookup_Nearest(netcdfFile.findVariable(latName));
 		lons = new IndexLookup_Nearest(netcdfFile.findVariable(lonName));
 		time = new IndexLookup_Nearest(netcdfFile.findVariable(timeName));
-	}
-
-	public boolean isNeglon() {
-		return neglon;
-	}
-
-	public void setLatName(String latName) {
-		this.latName = latName;
-	}
-
-	public void setLonName(String lonName) {
-		this.lonName = lonName;
-	}
-
-	public void setNeglon(boolean neglon) {
-		this.neglon = neglon;
-	}
-
-	public void setVariableName(String variableName) {
-		this.varName = variableName;
 	}
 }
