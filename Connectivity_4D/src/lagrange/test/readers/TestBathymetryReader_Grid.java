@@ -2,7 +2,7 @@ package lagrange.test.readers;
 
 import java.io.IOException;
 
-import lagrange.impl.readers.Boundary_Grid_NetCDF;
+import lagrange.impl.readers.Boundary_Raster_NetCDF;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,7 +10,7 @@ import org.junit.Test;
 
 public class TestBathymetryReader_Grid {
 
-	Boundary_Grid_NetCDF xbr,ybr,rbr;
+	Boundary_Raster_NetCDF xbr,ybr,rbr;
 	String xpath = "C:/Temp/bath_xmap.nc";
 	String ypath = "C:/Temp/bath_ymap.nc";
 	String realpath = "C:/Temp/aus_bath_lite2.nc";
@@ -18,9 +18,9 @@ public class TestBathymetryReader_Grid {
 	@Before
 	public void setUp(){
 		try {
-			xbr = new Boundary_Grid_NetCDF(xpath,"Latitude","Longitude");
-			ybr = new Boundary_Grid_NetCDF(ypath,"Latitude","Longitude");
-			rbr = new Boundary_Grid_NetCDF(realpath,"Latitude","Longitude");
+			xbr = new Boundary_Raster_NetCDF(xpath,"Latitude","Longitude");
+			ybr = new Boundary_Raster_NetCDF(ypath,"Latitude","Longitude");
+			rbr = new Boundary_Raster_NetCDF(realpath,"Latitude","Longitude");
 			xbr.setPositiveDown(false);
 			ybr.setPositiveDown(false);
 			rbr.setPositiveDown(false);		

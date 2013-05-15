@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import lagrange.Boundary;
-import lagrange.Boundary_Grid;
+import lagrange.Boundary_Raster;
 import lagrange.CollisionDetector;
 import lagrange.Particle;
 import lagrange.utils.CoordinateMath;
@@ -25,7 +25,7 @@ import com.vividsolutions.jts.geom.LineSegment;
 
 public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 
-	private Boundary_Grid bnd;
+	private Boundary_Raster bnd;
 	private Intersector_3D_Raster i3d = new Intersector_3D_Raster();
 	private double surfaceLevel = 0;
 	private PrjTransform pt = new PrjTransform_WGS2CEQD();
@@ -33,7 +33,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 	private final int bounceLimit = 50;
 
 	public CollisionDetector_3D_Bathymetry(Boundary bathym) {
-		this.bnd = (Boundary_Grid) bathym;
+		this.bnd = (Boundary_Raster) bathym;
 	}
 
 	/**
@@ -269,7 +269,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 	 */
 
 	public void setBoundary(Boundary bnd) {
-		this.bnd = (Boundary_Grid) bnd;
+		this.bnd = (Boundary_Raster) bnd;
 	}
 
 	/**

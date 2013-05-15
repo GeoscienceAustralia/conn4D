@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import lagrange.Boundary_Grid;
+import lagrange.Boundary_Raster;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
-public class Boundary_Grid_TestingGrid implements Boundary_Grid {
+public class Boundary_Grid_TestingGrid implements Boundary_Raster {
 
 	private double minx = -1;
 	private double miny = -1;

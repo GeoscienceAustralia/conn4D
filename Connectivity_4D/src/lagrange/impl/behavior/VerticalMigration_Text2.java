@@ -8,7 +8,7 @@ import java.util.Date;
 import lagrange.Boundary;
 import lagrange.Particle;
 import lagrange.VerticalMigration;
-import lagrange.impl.readers.Boundary_Grid_NetCDF;
+import lagrange.impl.readers.Boundary_Raster_NetCDF;
 import lagrange.utils.TimeConvert;
 import lagrange.utils.VectorMath;
 import lagrange.utils.VectorUtils;
@@ -247,7 +247,7 @@ public class VerticalMigration_Text2 implements VerticalMigration, Cloneable {
 
 	public void setBathymetry(String filename) {
 		try {
-			Boundary_Grid_NetCDF ncb = new Boundary_Grid_NetCDF(filename);
+			Boundary_Raster_NetCDF ncb = new Boundary_Raster_NetCDF(filename);
 			ncb.setLatName("Latitude");
 			ncb.setLonName("Longitude");
 			ncb.initialize();

@@ -3,7 +3,7 @@ package lagrange.test.readers;
 import java.io.IOException;
 import java.util.Arrays;
 
-import lagrange.impl.readers.Boundary_Grid_NetCDF;
+import lagrange.impl.readers.Boundary_Raster_NetCDF;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,12 +11,12 @@ import org.junit.Test;
 
 public class TestBoundary_NetCDF_Grid {
 
-	Boundary_Grid_NetCDF bng = null;
+	Boundary_Raster_NetCDF bng = null;
 	
 	@Before
 	public void setUp(){
 		try {
-			bng = new Boundary_Grid_NetCDF("C:/Temp/bath_index.nc","Latitude","Longitude");
+			bng = new Boundary_Raster_NetCDF("C:/Temp/bath_index.nc","Latitude","Longitude");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

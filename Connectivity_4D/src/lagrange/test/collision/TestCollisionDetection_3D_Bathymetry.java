@@ -5,7 +5,7 @@ import java.io.IOException;
 import lagrange.Boundary;
 import lagrange.Particle;
 import lagrange.impl.collision.CollisionDetector_3D_Bathymetry;
-import lagrange.impl.readers.Boundary_Grid_NetCDF;
+import lagrange.impl.readers.Boundary_Raster_NetCDF;
 import lagrange.utils.PrjTransform_None;
 
 import org.junit.Assert;
@@ -85,10 +85,10 @@ public class TestCollisionDetection_3D_Bathymetry {
 	public void setUp(){
 		
 		try {
-			gx = new Boundary_Grid_NetCDF("C:/Temp/bathym_increasing_x.nc","Latitude","Longitude");
-			gxr = new Boundary_Grid_NetCDF("C:/Temp/bathym_decreasing_x.nc","Latitude","Longitude");
-			gy = new Boundary_Grid_NetCDF("C:/Temp/bathym_increasing_y.nc","Latitude","Longitude");
-			greal = new Boundary_Grid_NetCDF("C:/Temp/aus_bath_lite.nc","Latitude","Longitude");
+			gx = new Boundary_Raster_NetCDF("C:/Temp/bathym_increasing_x.nc","Latitude","Longitude");
+			gxr = new Boundary_Raster_NetCDF("C:/Temp/bathym_decreasing_x.nc","Latitude","Longitude");
+			gy = new Boundary_Raster_NetCDF("C:/Temp/bathym_increasing_y.nc","Latitude","Longitude");
+			greal = new Boundary_Raster_NetCDF("C:/Temp/aus_bath_lite.nc","Latitude","Longitude");
 			greal.setPositiveDown(false);
 			
 			f1 = new Boundary_Grid_TestingGrid();

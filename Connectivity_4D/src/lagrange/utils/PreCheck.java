@@ -3,10 +3,10 @@ package lagrange.utils;
 import java.io.File;
 import java.io.IOException;
 
-import lagrange.Boundary_Grid;
+import lagrange.Boundary_Raster;
 import lagrange.CollisionDetector;
 import lagrange.impl.collision.CollisionDetector_3D_Bathymetry;
-import lagrange.impl.readers.Boundary_Grid_NetCDF;
+import lagrange.impl.readers.Boundary_Raster_NetCDF;
 import lagrange.impl.readers.Shapefile;
 import lagrange.input.ConfigurationOverride;
 
@@ -105,13 +105,13 @@ public class PreCheck {
 		System.out.println("Max Y = " + set_mxy);
 		System.out.println();
 
-		Boundary_Grid bathymetry;
+		Boundary_Raster bathymetry;
 		CollisionDetector cd;
 
 		try {
 
 			if (!cfg.bathymetryFileName.isEmpty()) {
-				bathymetry = new Boundary_Grid_NetCDF(cfg.bathymetryFileName,
+				bathymetry = new Boundary_Raster_NetCDF(cfg.bathymetryFileName,
 						cfg.latName, cfg.lonName);
 				cd = new CollisionDetector_3D_Bathymetry(bathymetry);
 			}

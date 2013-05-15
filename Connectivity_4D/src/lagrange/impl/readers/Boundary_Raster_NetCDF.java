@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import lagrange.Boundary_Grid;
+import lagrange.Boundary_Raster;
 import lagrange.impl.collision.Intersector_3D_Poly;
 import lagrange.utils.CoordinateMath;
 import lagrange.utils.IndexLookup_Nearest;
@@ -21,10 +21,9 @@ import com.vividsolutions.jts.geom.LineSegment;
  * Reads 2-dimensional surface values from a NetCDF Grid source.
  * 
  * @author Johnathan Kool
- * 
  */
 
-public class Boundary_Grid_NetCDF implements Boundary_Grid, Cloneable {
+public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 
 	private NetcdfFile boundary;
 	private Variable boundaryVar;
@@ -50,13 +49,13 @@ public class Boundary_Grid_NetCDF implements Boundary_Grid, Cloneable {
 	/**
 	 * Constructor accepting a path name provided as a String.
 	 * 
-	 * @param filename
+	 * @param filename - path name of the raster resource as a String
 	 */
 
-	public Boundary_Grid_NetCDF(String filename) {
+	public Boundary_Raster_NetCDF(String fileName) {
 
 		try {
-			boundary = NetcdfFile.open(filename);
+			boundary = NetcdfFile.open(fileName);
 			boundaryVar = boundary.findVariable(boundaryName);
 			bnd = boundaryVar.read();
 			bndInd = bnd.getIndex();
@@ -71,12 +70,13 @@ public class Boundary_Grid_NetCDF implements Boundary_Grid, Cloneable {
 	 * longitude dimensions.
 	 * 
 	 * @param filename
+	 * @param
 	 */
 
-	public Boundary_Grid_NetCDF(String bathname, String latName, String lonName)
+	public Boundary_Raster_NetCDF(String fileName, String latName, String lonName)
 			throws IOException {
 
-		boundary = NetcdfFile.open(bathname);
+		boundary = NetcdfFile.open(fileName);
 		boundaryVar = boundary.findVariable(boundaryName);
 		bnd = boundaryVar.read();
 		bndInd = bnd.getIndex();
@@ -90,9 +90,9 @@ public class Boundary_Grid_NetCDF implements Boundary_Grid, Cloneable {
 	 */
 
 	@Override
-	public Boundary_Grid_NetCDF clone() {
-		Boundary_Grid_NetCDF ncb;
-		ncb = new Boundary_Grid_NetCDF(boundary.getLocation());
+	public Boundary_Raster_NetCDF clone() {
+		Boundary_Raster_NetCDF ncb;
+		ncb = new Boundary_Raster_NetCDF(boundary.getLocation());
 		// TODO FIX THIS UP!!!!
 		ncb.neglon = neglon;
 		return ncb;
@@ -192,16 +192,6 @@ public class Boundary_Grid_NetCDF implements Boundary_Grid, Cloneable {
 	}
 
 	/**
-	 * Retrieves the cellsize (assumed to be square) of the grid.
-	 * 
-	 * @return
-	 */
-
-	public double getCellsize() {
-		return cellsize;
-	}
-
-	/**
 	 * Returns the cell size (assumed to be square) of the grid
 	 */
 
@@ -261,7 +251,7 @@ public class Boundary_Grid_NetCDF implements Boundary_Grid, Cloneable {
 	}
 
 	/**
-	 * Retrieves the indices of the grid (lower left start) associated with the
+ 	 * Retrieves the indices of the grid (lower left start) associated with the
 	 * provided Coordinate
 	 */
 
@@ -333,7 +323,7 @@ public class Boundary_Grid_NetCDF implements Boundary_Grid, Cloneable {
 	}
 
 	/**
-	 * Retrieves the maximum x value of the array. This value corresponds to the
+	 * Retrieves the maximum x value of the raster. This value corresponds to the
 	 * right edge position of the right-most cell.
 	 * 
 	 * @return
@@ -344,7 +334,7 @@ public class Boundary_Grid_NetCDF implements Boundary_Grid, Cloneable {
 	}
 
 	/**
-	 * Retrieves the maximum y value of the array. This value corresponds to the
+	 * Retrieves the maximum y value of the raster. This value corresponds to the
 	 * upper edge position of the upper-most cell.
 	 * 
 	 * @return
@@ -355,7 +345,7 @@ public class Boundary_Grid_NetCDF implements Boundary_Grid, Cloneable {
 	}
 
 	/**
-	 * Retrieves the minimum x value of the array. This value corresponds to the
+	 * Retrieves the minimum x value of the raster. This value corresponds to the
 	 * left edge position of the left-most cell.
 	 * 
 	 * @return
@@ -367,7 +357,7 @@ public class Boundary_Grid_NetCDF implements Boundary_Grid, Cloneable {
 	}
 
 	/**
-	 * Retrieves the minimum y value of the array. This value corresponds to the
+	 * Retrieves the minimum y value of the raster. This value corresponds to the
 	 * bottom edge position of the bottom-most cell.
 	 * 
 	 * @return

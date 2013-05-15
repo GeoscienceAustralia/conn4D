@@ -22,7 +22,7 @@ import lagrange.impl.collision.Intersector_2D_Shapefile;
 import lagrange.impl.movement.Advection_RK4_3D;
 import lagrange.impl.movement.Diffusion_None;
 import lagrange.impl.movement.Diffusion_Simple_3D;
-import lagrange.impl.readers.Boundary_Grid_NetCDF;
+import lagrange.impl.readers.Boundary_Raster_NetCDF;
 import lagrange.impl.readers.Shapefile;
 import lagrange.impl.readers.VelocityReader_HYCOMList_4D;
 import lagrange.impl.readers.VelocityReader_NetCDFDir_4D;
@@ -149,7 +149,7 @@ public class ReleaseFactory_4D {
 
 			if (!lp.bathymetryFileName.isEmpty()) {
 				// Set up the land mask////////////////////////////
-				bathymetry = new Boundary_Grid_NetCDF(lp.bathymetryFileName,
+				bathymetry = new Boundary_Raster_NetCDF(lp.bathymetryFileName,
 						lp.latName, lp.lonName);
 				cd = new CollisionDetector_3D_Bathymetry(bathymetry);
 			}

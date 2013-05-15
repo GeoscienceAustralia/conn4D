@@ -6,7 +6,7 @@ import java.io.IOException;
 import lagrange.Boundary;
 import lagrange.Particle;
 import lagrange.VerticalMigration;
-import lagrange.impl.readers.Boundary_Grid_NetCDF;
+import lagrange.impl.readers.Boundary_Raster_NetCDF;
 import lagrange.utils.VectorUtils;
 
 public class VerticalSettling_Text implements VerticalMigration, Cloneable {
@@ -80,7 +80,7 @@ public class VerticalSettling_Text implements VerticalMigration, Cloneable {
 
 	public void setBathymetry(String filename) {
 		try {
-			Boundary_Grid_NetCDF ncb = new Boundary_Grid_NetCDF(filename);
+			Boundary_Raster_NetCDF ncb = new Boundary_Raster_NetCDF(filename);
 			ncb.setLatName("Latitude");
 			ncb.setLonName("Longitude");
 			ncb.initialize();
