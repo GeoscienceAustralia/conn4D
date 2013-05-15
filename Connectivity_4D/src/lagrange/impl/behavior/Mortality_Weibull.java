@@ -9,7 +9,8 @@ import cern.jet.random.engine.RandomEngine;
 import cern.jet.random.engine.RandomSeedTable;
 
 /**
- * Implements mortality using an exponential function.
+ * Implements mortality using a Weibull distribution.
+ * See: http://en.wikipedia.org/wiki/Weibull_distribution
  * 
  * @author Johnathan Kool
  */
@@ -28,6 +29,13 @@ public class Mortality_Weibull implements Mortality {
 	private RandomEngine re = new MersenneTwister64(seed);
 	private Uniform uni = new Uniform(re);
 
+	/**
+	 * Constructor requiring shape parameters as input.
+	 * 
+	 * @param lambda - lambda shape parameter
+	 * @param k - k shape parameter
+	 */
+	
 	public Mortality_Weibull(double lambda, double k) {
 		this.lambda = lambda;
 		this.k = k;
@@ -109,11 +117,11 @@ public class Mortality_Weibull implements Mortality {
 		mw.setTimeInterval(timeInterval);
 		return mw;
 	}
-	
+
 	/**
 	 * Retrieves the differential time over which mortality is being checked
 	 * 
-	 * @return
+	 * @return - the differential time over which mortality is being checked
 	 */
 
 	public double getDelta_t() {
@@ -123,7 +131,7 @@ public class Mortality_Weibull implements Mortality {
 	/**
 	 * Returns the k parameter being used by the function
 	 * 
-	 * @return
+	 * @return - the k parameter being used by the function
 	 */
 
 	public double getK() {
@@ -133,7 +141,7 @@ public class Mortality_Weibull implements Mortality {
 	/**
 	 * Returns the lambda parameter being used by the function
 	 * 
-	 * @return
+	 * @return - the lambda parameter being used by the function
 	 */
 
 	public double getLambda() {
@@ -143,17 +151,19 @@ public class Mortality_Weibull implements Mortality {
 	/**
 	 * Returns the total time interval over which the mortality is being applied
 	 * 
-	 * @return
+	 * @return - the total time interval over which the mortality is being
+	 *         applied
 	 */
 
 	public long getTimeIntervalMillis() {
 		return timeInterval;
 	}
-	
+
 	/**
 	 * Sets the time interval since last checking for mortality
 	 * 
 	 * @param delta_t
+	 *            - the time interval since last checking for mortality
 	 */
 
 	public void setDelta_t(long delta_t) {
@@ -163,7 +173,7 @@ public class Mortality_Weibull implements Mortality {
 	/**
 	 * Sets the k parameter being used by the function
 	 * 
-	 * @return
+	 * @return - the k parameter being used by the function
 	 */
 
 	public void setK(double k) {
@@ -174,6 +184,7 @@ public class Mortality_Weibull implements Mortality {
 	 * Sets the value of the lambda parameter being used by the function
 	 * 
 	 * @param lambda
+	 *            - the value of the lambda parameter being used by the function
 	 */
 
 	public void setLambda(double lambda) {
@@ -182,6 +193,9 @@ public class Mortality_Weibull implements Mortality {
 
 	/**
 	 * Sets the time interval over which mortality occurs
+	 * 
+	 * @param millis
+	 *            - the time interval over which mortality occurs
 	 */
 
 	@Override

@@ -45,7 +45,6 @@ public class Habitat_Shapefile implements Habitat, Cloneable{
 	private Geometry geom;
 	protected boolean neglon;
 	protected String fileName;
-
 	protected SpatialIndex index = new STRtree();
 
 	/**
@@ -73,6 +72,10 @@ public class Habitat_Shapefile implements Habitat, Cloneable{
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Returns a clone of the class instance.
+	 */
 
 	@Override
 	public Habitat_Shapefile clone(){
@@ -191,6 +194,13 @@ public class Habitat_Shapefile implements Habitat, Cloneable{
 		return (Integer) f.getAttribute(luField);
 
 	}
+	
+	/**
+	 * Identifies whether the given x,y pair intersects the shapefile 
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 
 	@SuppressWarnings("unchecked")
 	public synchronized boolean intersects(double x, double y){
@@ -208,6 +218,11 @@ public class Habitat_Shapefile implements Habitat, Cloneable{
 		}
 		return false;
 	}
+	
+	/**
+	 * Sets the shapefile data source used by the class and builds the
+	 * search tree.
+	 */
 
 	@Override
 	public void setDataSource(String filename) throws IOException {

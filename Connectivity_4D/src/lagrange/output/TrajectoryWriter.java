@@ -41,5 +41,12 @@ public interface TrajectoryWriter {
 	
 	public void setDurationUnits(String units);
 	
+	/**
+	 * Sets whether the output coordinate system should use
+	 * negative longitude values.
+	 * 
+	 * @param negCoord
+	 */
+	
 	public void setNegCoord(boolean negCoord);
 }

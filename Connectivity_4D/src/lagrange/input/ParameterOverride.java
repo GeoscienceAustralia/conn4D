@@ -8,7 +8,6 @@ import lagrange.utils.TimeConvert;
  * packaging the values into a Datagram.
  * 
  * @author Johnathan Kool
- * 
  */
 
 public class ParameterOverride extends ParameterReader {

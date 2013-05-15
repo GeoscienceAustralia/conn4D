@@ -50,24 +50,24 @@ public class Mortality_Exponential implements Mortality {
 			p.setDead(true);
 		}
 	}
-	
+
 	/**
 	 * Retrieves the mortality rate
 	 * 
-	 * @return
+	 * @return - the mortality rate
 	 */
 
 	public double getMrate() {
 		return mrate;
 	}
-	
+
 	/**
 	 * Returns the time interval over which mortality occurs
 	 * 
-	 * @return
+	 * @return - the time interval over which mortality occurs
 	 */
-	
-	public long getTimeIntervalMillis(){
+
+	public long getTimeIntervalMillis() {
 		return timeInterval;
 	}
 
@@ -75,25 +75,26 @@ public class Mortality_Exponential implements Mortality {
 	 * Sets the mortality rate
 	 * 
 	 * @param mrate
+	 *            - the mortality rate
 	 */
 
 	public void setMrate(double mrate) {
 		this.mrate = mrate;
 	}
-	
+
 	/**
 	 * Sets the time interval over which mortality occurs
 	 */
-	
+
 	@Override
-	public void setTimeInterval(long millis){
+	public void setTimeInterval(long millis) {
 		this.timeInterval = millis;
 	}
 
 	/**
 	 * Generates a copy of the class instance
 	 */
-	
+
 	@Override
 	public Mortality_Exponential clone() {
 		Mortality_Exponential me = new Mortality_Exponential(mrate);
