@@ -39,7 +39,7 @@ public class ArraySearch {
 	/**
 	 * Searches the specified array of longs for the specified value using the
 	 * binary search algorithm. The array must be sorted (as by the
-	 * {@link #sort(long[])} method) prior to making this call. If it is not
+	 * Arrays.sort(long[]) method) prior to making this call. If it is not
 	 * sorted, the results are undefined. If the array contains multiple
 	 * elements with the specified value, there is no guarantee which one will
 	 * be found.
@@ -67,7 +67,7 @@ public class ArraySearch {
 	/**
 	 * Searches a range of the specified array of longs for the specified value
 	 * using the binary search algorithm. The range must be sorted (as by the
-	 * {@link #sort(long[], int, int)} method) prior to making this call. If it
+	 * Arrays.sort(long[],int,int) method) prior to making this call. If it
 	 * is not sorted, the results are undefined. If the range contains multiple
 	 * elements with the specified value, there is no guarantee which one will
 	 * be found.
@@ -107,7 +107,7 @@ public class ArraySearch {
 	/**
 	 * Searches a range of the specified array of longs for the specified value
 	 * using the binary search algorithm. The range must be sorted (as by the
-	 * {@link #sort(long[], int, int)} method) prior to making this call. If it
+	 * Arrays.sort(long[],int,int) method) prior to making this call. If it
 	 * is not sorted, the results are undefined. If the range contains multiple
 	 * elements with the specified value, there is no guarantee which one will
 	 * be found.
@@ -235,7 +235,7 @@ public class ArraySearch {
 	/**
 	 * Searches the specified array of ints for the specified value using the
 	 * binary search algorithm. The array must be sorted (as by the
-	 * {@link #sort(int[])} method) prior to making this call. If it is not
+	 * Arrays.sort(int[]) method) prior to making this call. If it is not
 	 * sorted, the results are undefined. If the array contains multiple
 	 * elements with the specified value, there is no guarantee which one will
 	 * be found.
@@ -267,7 +267,7 @@ public class ArraySearch {
 	/**
 	 * Searches a range of the specified array of ints for the specified value
 	 * using the binary search algorithm. The range must be sorted (as by the
-	 * {@link #sort(int[], int, int)} method) prior to making this call. If it
+	 * Arrays.sort(int[],int,int) method) prior to making this call. If it
 	 * is not sorted, the results are undefined. If the range contains multiple
 	 * elements with the specified value, there is no guarantee which one will
 	 * be found.
@@ -391,7 +391,7 @@ public class ArraySearch {
 	/**
 	 * Searches the specified array of shorts for the specified value using the
 	 * binary search algorithm. The array must be sorted (as by the
-	 * {@link #sort(short[])} method) prior to making this call. If it is not
+	 * Arrays.sort(short[]) method) prior to making this call. If it is not
 	 * sorted, the results are undefined. If the array contains multiple
 	 * elements with the specified value, there is no guarantee which one will
 	 * be found.
@@ -423,7 +423,7 @@ public class ArraySearch {
 	/**
 	 * Searches a range of the specified array of shorts for the specified value
 	 * using the binary search algorithm. The range must be sorted (as by the
-	 * {@link #sort(short[], int, int)} method) prior to making this call. If it
+	 * Arrays.sort(short[],int,int) method) prior to making this call. If it
 	 * is not sorted, the results are undefined. If the range contains multiple
 	 * elements with the specified value, there is no guarantee which one will
 	 * be found.
@@ -553,7 +553,7 @@ public class ArraySearch {
 	/**
 	 * Searches the specified array of chars for the specified value using the
 	 * binary search algorithm. The array must be sorted (as by the
-	 * {@link #sort(char[])} method) prior to making this call. If it is not
+	 * Arrays.sort(char[]) method) prior to making this call. If it is not
 	 * sorted, the results are undefined. If the array contains multiple
 	 * elements with the specified value, there is no guarantee which one will
 	 * be found.
@@ -585,7 +585,7 @@ public class ArraySearch {
 	/**
 	 * Searches a range of the specified array of chars for the specified value
 	 * using the binary search algorithm. The range must be sorted (as by the
-	 * {@link #sort(char[], int, int)} method) prior to making this call. If it
+	 * Arrays.sort(char[],int,int) method) prior to making this call. If it
 	 * is not sorted, the results are undefined. If the range contains multiple
 	 * elements with the specified value, there is no guarantee which one will
 	 * be found.
@@ -715,7 +715,7 @@ public class ArraySearch {
 	/**
 	 * Searches the specified array of bytes for the specified value using the
 	 * binary search algorithm. The array must be sorted (as by the
-	 * {@link #sort(byte[])} method) prior to making this call. If it is not
+	 * Arrays.sort(byte[]) method) prior to making this call. If it is not
 	 * sorted, the results are undefined. If the array contains multiple
 	 * elements with the specified value, there is no guarantee which one will
 	 * be found.
@@ -746,7 +746,7 @@ public class ArraySearch {
 	/**
 	 * Searches a range of the specified array of bytes for the specified value
 	 * using the binary search algorithm. The range must be sorted (as by the
-	 * {@link #sort(byte[], int, int)} method) prior to making this call. If it
+	 * Arrays.sort(byte[],int,int) method) prior to making this call. If it
 	 * is not sorted, the results are undefined. If the range contains multiple
 	 * elements with the specified value, there is no guarantee which one will
 	 * be found.
@@ -875,7 +875,7 @@ public class ArraySearch {
 	/**
 	 * Searches the specified array of doubles for the specified value using the
 	 * binary search algorithm. The array must be sorted (as by the
-	 * {@link #sort(double[])} method) prior to making this call. If it is not
+	 * Arrays.sort(double[]) method) prior to making this call. If it is not
 	 * sorted, the results are undefined. If the array contains multiple
 	 * elements with the specified value, there is no guarantee which one will
 	 * be found. This method considers all NaN values to be equivalent and
@@ -907,7 +907,7 @@ public class ArraySearch {
 	/**
 	 * Searches a range of the specified array of doubles for the specified
 	 * value using the binary search algorithm. The range must be sorted (as by
-	 * the {@link #sort(double[], int, int)} method) prior to making this call.
+	 * the Arrays.sort(double[],int,int) method) prior to making this call.
 	 * If it is not sorted, the results are undefined. If the range contains
 	 * multiple elements with the specified value, there is no guarantee which
 	 * one will be found. This method considers all NaN values to be equivalent
@@ -1055,7 +1055,7 @@ public class ArraySearch {
 	/**
 	 * Searches the specified array of floats for the specified value using the
 	 * binary search algorithm. The array must be sorted (as by the
-	 * {@link #sort(float[])} method) prior to making this call. If it is not
+	 * Arrays.sort(float[]) method) prior to making this call. If it is not
 	 * sorted, the results are undefined. If the array contains multiple
 	 * elements with the specified value, there is no guarantee which one will
 	 * be found. This method considers all NaN values to be equivalent and
@@ -1087,7 +1087,7 @@ public class ArraySearch {
 	/**
 	 * Searches a range of the specified array of floats for the specified value
 	 * using the binary search algorithm. The range must be sorted (as by the
-	 * {@link #sort(float[], int, int)} method) prior to making this call. If it
+	 * Arrays.sort(float[],int,int) method) prior to making this call. If it
 	 * is not sorted, the results are undefined. If the range contains multiple
 	 * elements with the specified value, there is no guarantee which one will
 	 * be found. This method considers all NaN values to be equivalent and
@@ -1236,7 +1236,7 @@ public class ArraySearch {
 	 * Searches the specified array for the specified object using the binary
 	 * search algorithm. The array must be sorted into ascending order according
 	 * to the {@linkplain Comparable natural ordering} of its elements (as by
-	 * the {@link #sort(Object[])} method) prior to making this call. If it is
+	 * the Arrays.sort(Object[]) method) prior to making this call. If it is
 	 * not sorted, the results are undefined. (If the array contains elements
 	 * that are not mutually comparable (for example, strings and integers), it
 	 * <i>cannot</i> be sorted according to the natural ordering of its
@@ -1274,7 +1274,7 @@ public class ArraySearch {
 	 * Searches a range of the specified array for the specified object using
 	 * the binary search algorithm. The range must be sorted into ascending
 	 * order according to the {@linkplain Comparable natural ordering} of its
-	 * elements (as by the {@link #sort(Object[], int, int)} method) prior to
+	 * elements (as by the Arrays.sort(Object[],int,int) method) prior to
 	 * making this call. If it is not sorted, the results are undefined. (If the
 	 * range contains elements that are not mutually comparable (for example,
 	 * strings and integers), it <i>cannot</i> be sorted according to the
@@ -1410,7 +1410,7 @@ public class ArraySearch {
 	 * Searches the specified array for the specified object using the binary
 	 * search algorithm. The array must be sorted into ascending order according
 	 * to the specified comparator (as by the
-	 * {@link #sort(Object[], Comparator) sort(T[], Comparator)} method) prior
+	 * Arrays.sort(Object[], Comparator) method) prior
 	 * to making this call. If it is not sorted, the results are undefined. If
 	 * the array contains multiple elements equal to the specified object, there
 	 * is no guarantee which one will be found.
@@ -1453,8 +1453,7 @@ public class ArraySearch {
 	 * Searches a range of the specified array for the specified object using
 	 * the binary search algorithm. The range must be sorted into ascending
 	 * order according to the specified comparator (as by the
-	 * {@link #sort(Object[], int, int, Comparator) sort(T[], int, int,
-	 * Comparator)} method) prior to making this call. If it is not sorted, the
+	 * Arrays.sort(Object[],int,int,Comparator) method) prior to making this call. If it is not sorted, the
 	 * results are undefined. If the range contains multiple elements equal to
 	 * the specified object, there is no guarantee which one will be found.
 	 * 

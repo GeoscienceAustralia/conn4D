@@ -36,11 +36,10 @@ public class IndexLookup_Grid {
 		}
 
 		/**
-		 * Retrieves the indices at the designated coordinates.
+		 * Retrieves the indices at the designated x,y pair.
 		 * 
-		 * @param x
-		 * @param y
-		 * @return
+		 * @param x - the x position
+		 * @param y - the y position
 		 */
 		
 		public int[] getIndices(double x, double y) {

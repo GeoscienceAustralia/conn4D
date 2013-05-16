@@ -24,7 +24,7 @@ public class Reader_NetCDF_4D extends Reader_NetCDF {
 	/**
 	 * Constructor accepting a String containing the path of the resource.
 	 * 
-	 * @param filename - the path of the resource
+	 * @param fileName - the path of the resource
 	 */
 
 	public Reader_NetCDF_4D(String fileName) {
@@ -83,7 +83,6 @@ public class Reader_NetCDF_4D extends Reader_NetCDF {
 	 *            - x lookup value
 	 * @param y
 	 *            - y lookup value
-	 * @return
 	 */
 	
 	public double getValue(double t, double z, double x, double y) {

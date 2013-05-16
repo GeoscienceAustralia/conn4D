@@ -511,7 +511,7 @@ public class ReleaseFactory_4D {
 	/**
 	 * Sets the CollisionDetection object for this instance.
 	 * 
-	 * @param df
+	 * @param cd
 	 *            - The CollisionDetection object
 	 */
 
@@ -544,7 +544,7 @@ public class ReleaseFactory_4D {
 	/**
 	 * Sets the LocalParameters object for this instance.
 	 * 
-	 * @param df
+	 * @param lp
 	 *            - The LocalParameters object
 	 */
 

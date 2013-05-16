@@ -38,8 +38,6 @@ public class Boundary_Grid_TestingGrid implements Boundary_Raster {
 
 	/**
 	 * Retrieves a boundary depth. Set as a constant.
-	 * 
-	 * @return
 	 */
 
 	public double getBoundaryDepth() {
@@ -48,8 +46,6 @@ public class Boundary_Grid_TestingGrid implements Boundary_Raster {
 
 	/**
 	 * Retrieves a boundary depth given an x,y pair. Set as a constant.
-	 * 
-	 * @return
 	 */
 
 	@Override
@@ -105,8 +101,6 @@ public class Boundary_Grid_TestingGrid implements Boundary_Raster {
 
 	/**
 	 * Retrieves the precise boundary depth. Set as a constant 0.
-	 * 
-	 * @return
 	 */
 
 	public double getPreciseBoundaryDepth() {
@@ -116,8 +110,6 @@ public class Boundary_Grid_TestingGrid implements Boundary_Raster {
 	/**
 	 * Retrieves the precise boundary depth given an x,y pair. Set as a constant
 	 * 0.
-	 * 
-	 * @return
 	 */
 
 	@Override
@@ -128,8 +120,6 @@ public class Boundary_Grid_TestingGrid implements Boundary_Raster {
 	/**
 	 * Retrieves the precise boundary depth given an x,y pair. Set as a constant
 	 * 0. Duplicate?
-	 * 
-	 * @return
 	 */
 	
 	@Override
@@ -137,17 +127,29 @@ public class Boundary_Grid_TestingGrid implements Boundary_Raster {
 		return getPreciseBoundaryDepth();
 	}
 
+	/**
+	 * Retrieves the vertices of the cell intersecting the provided Coordinate.
+	 */
+	
 	@Override
 	public Coordinate[] getVertices(Coordinate c) {
 		return getVertices(getIndices(c));
 	}
 
+	/**
+	 * Retrieves the vertices of the cell intersecting the provided index values.
+	 */
+	
 	@Override
 	public Coordinate[] getVertices(int[] indices) {
 		int len = (int) Math.sqrt(indices.length);
 		int index = len * indices[0] + indices[1];
 		return ca[index];
 	}
+	
+	/**
+	 * Retrieves a List of vertices of the cells intersecting the provided List of index values.
+	 */
 
 	@Override
 	public List<Coordinate[]> getVertices(List<int[]> indices) {
@@ -158,15 +160,31 @@ public class Boundary_Grid_TestingGrid implements Boundary_Raster {
 		}
 		return list;
 	}
+	
+	/**
+	 * Explicitly sets the vertices of the test cells
+	 * 
+	 * @param ca - An array of Coordinate arrays representing the vertices of the
+	 * test cells.
+	 */
 
 	public void setCells(Coordinate[][] ca) {
 		this.ca = ca;
 	}
 
+	/**
+	 * Sets the cell size of the test cells.
+	 */
+	
 	public void setCellSize(double cellsize) {
 		this.cellsize = cellsize;
 	}
 
+	/**
+	 * Sets the minimum
+	 * @param minx
+	 */
+	
 	public void setMinX(double minx) {
 		this.minx = minx;
 	}

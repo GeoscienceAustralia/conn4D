@@ -27,7 +27,6 @@ public class Intersector_3D_Raster {
 	 * 
 	 * @param ls
 	 * @param vertices
-	 * @return
 	 */
 
 	public Coordinate intersect(LineSegment ls, Coordinate[] vertices) {
@@ -75,7 +74,6 @@ public class Intersector_3D_Raster {
 	 * 
 	 * @param ls
 	 * @param vertices
-	 * @return
 	 */
 
 	public LineSegment reflect(LineSegment ls, Coordinate[] vertices) {
@@ -134,7 +132,6 @@ public class Intersector_3D_Raster {
 	 *            - the LineSegment indicating the path of an object.
 	 * @param vertices
 	 *            - Coordinates indicating vertices of a flat polygon
-	 * @return
 	 */
 
 	public LineSegment reflect_special(LineSegment ls, Coordinate[] vertices) {
@@ -196,8 +193,6 @@ public class Intersector_3D_Raster {
 
 	/**
 	 * Retrieves the surface level being used as a maximum value by the class
-	 * 
-	 * @param surface
 	 */
 
 	public double getSurfaceLevel() {

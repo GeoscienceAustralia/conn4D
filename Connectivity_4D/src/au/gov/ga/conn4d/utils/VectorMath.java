@@ -151,9 +151,9 @@ public class VectorMath {
 	/**
 	 * Compute the cross product of two vectors
 	 * 
-	 * @param v1
+	 * @param p1
 	 *            The first vector
-	 * @param v2
+	 * @param p2
 	 *            The second vector
 	 * @param result
 	 *            Where to store the cross product
@@ -168,9 +168,9 @@ public class VectorMath {
 	/**
 	 * Compute the cross product of two vectors
 	 * 
-	 * @param v1
+	 * @param p1
 	 *            The first vector
-	 * @param v2
+	 * @param p2
 	 *            The second vector
 	 * @param result
 	 *            Where to store the cross product
@@ -752,7 +752,6 @@ public class VectorMath {
 	 * Returns a vector with negative values relative to the original
 	 * 
 	 * @param vector
-	 * @return
 	 */
 
 	public static double[] negate(double[] vector) {
@@ -766,7 +765,6 @@ public class VectorMath {
 	 * Returns a vector with negative values relative to the original
 	 * 
 	 * @param vector
-	 * @return
 	 */
 
 	public static float[] negate(float[] vector) {
@@ -780,7 +778,6 @@ public class VectorMath {
 	 * Returns a vector with negative values relative to the original
 	 * 
 	 * @param vector
-	 * @return
 	 */
 
 	public static int[] negate(int[] vector) {
@@ -794,7 +791,6 @@ public class VectorMath {
 	 * Returns a vector with negative values relative to the original
 	 * 
 	 * @param vector
-	 * @return
 	 */
 
 	public static long[] negate(long[] vector) {
@@ -808,7 +804,6 @@ public class VectorMath {
 	 * Divides the vector by its sum to return a 1-norm of the vector
 	 * 
 	 * @param vector
-	 * @return
 	 */
 
 	public static double[] norm1(double[] vector) {
@@ -824,7 +819,6 @@ public class VectorMath {
 	 * Divides the vector by its sum to return a 1-norm of the vector
 	 * 
 	 * @param vector
-	 * @return
 	 */
 
 	public static float[] norm1(float[] vector) {
@@ -965,7 +959,7 @@ public class VectorMath {
 	/**
 	 * Returns the sum of the supplied vector as a float
 	 * 
-	 * @param intArray
+	 * @param floatArray
 	 *            long[] - A vector of longs
 	 * @return float - The sum of the vector.
 	 */
@@ -1051,7 +1045,6 @@ public class VectorMath {
 	 * @param weights
 	 *            - the relative weight of the value in fa at the corresponding
 	 *            position.
-	 * @return
 	 */
 
 	public static float weighted_variance(float[] fa, float[] weights) {

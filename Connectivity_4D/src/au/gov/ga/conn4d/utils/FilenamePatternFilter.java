@@ -14,7 +14,7 @@ public class FilenamePatternFilter implements FilenameFilter {
 	/**
 	 * Constructor accepting string input representing the file extension to include.
 	 * 
-	 * @param extension
+	 * @param pattern
 	 */
 	
 	public FilenamePatternFilter(String pattern) {

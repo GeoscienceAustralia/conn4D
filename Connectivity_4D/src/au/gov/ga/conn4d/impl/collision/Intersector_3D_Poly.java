@@ -31,7 +31,6 @@ public class Intersector_3D_Poly {
 	 * 
 	 * @param ls
 	 * @param vertices
-	 * @return
 	 */
 	
 	public Coordinate intersection(LineSegment ls, Coordinate[] vertices) {
@@ -62,7 +61,6 @@ public class Intersector_3D_Poly {
 	 * 
 	 * @param ls
 	 * @param vertices
-	 * @return
 	 */
 
 	public Coordinate plane_intersection(LineSegment ls, Coordinate[] vertices) {
@@ -111,7 +109,6 @@ public class Intersector_3D_Poly {
 	 * 
 	 * @param ls
 	 * @param vertices
-	 * @return
 	 */
 
 	public LineSegment reflect(LineSegment ls, Coordinate[] vertices) {
@@ -184,7 +181,6 @@ public class Intersector_3D_Poly {
 	 * 
 	 * @param ls - the LineSegment indicating the path of an object.
 	 * @param polygon - a Geometry describing the reflection surface
-	 * @return
 	 */
 
 	public LineSegment reflect(LineSegment ls, Geometry polygon) {
@@ -213,7 +209,6 @@ public class Intersector_3D_Poly {
 	 *            - Coordinates indicating vertices of a flat polygon
 	 * @param surfaceLevel
 	 *            - a double value indicating maximum possible vertical values.
-	 * @return
 	 */
 
 	public LineSegment reflect_special(LineSegment ls, Coordinate[] vertices,
@@ -302,7 +297,6 @@ public class Intersector_3D_Poly {
 	 * 
 	 * @param ls - the LineSegment indicating the path of an object.
 	 * @param polygon - a Geometry describing the reflection surface
-	 * @return
 	 */
 
 	public LineSegment reflect_special(LineSegment ls, Geometry polygon) {
@@ -321,7 +315,6 @@ public class Intersector_3D_Poly {
 	 * @param ls - the LineSegment indicating the path of an object.
 	 * @param polygon - a Geometry describing the reflection surface
 	 * @param surfaceLevel - a double value indicating maximum possible vertical values.
-	 * @return
 	 */
 
 	public LineSegment reflect_special(LineSegment ls, Geometry polygon,
@@ -345,7 +338,6 @@ public class Intersector_3D_Poly {
 
 	/**
 	 * Retrieves the surface level being used as a maximum value by the class
-	 * @param surface
 	 */
 	
 	public double getSurfaceLevel(){

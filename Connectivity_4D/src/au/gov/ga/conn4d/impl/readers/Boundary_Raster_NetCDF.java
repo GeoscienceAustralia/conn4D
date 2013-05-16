@@ -51,7 +51,7 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 	/**
 	 * Constructor accepting a path name provided as a String.
 	 * 
-	 * @param filename
+	 * @param fileName
 	 *            - path name of the raster resource as a String
 	 */
 
@@ -103,7 +103,7 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 	/**
 	 * Retrieves the aspect of the cell at the given Coordinate
 	 * 
-	 * @param p
+	 * @param c
 	 */
 
 	public double getAspect(Coordinate c) {
@@ -280,8 +280,6 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 
 	/**
 	 * Retrieves the name of the Latitude variable used by this class
-	 * 
-	 * @return
 	 */
 
 	public String getLatName() {
@@ -291,8 +289,6 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 	/**
 	 * Retrieves an array of values corresponding to the latitude values
 	 * associated with each row of the grid.
-	 * 
-	 * @return
 	 */
 
 	public double[] getLats() {
@@ -301,8 +297,6 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 
 	/**
 	 * Retrieves the name of the Longitude variable used by this class
-	 * 
-	 * @return
 	 */
 
 	public String getLonName() {
@@ -312,8 +306,6 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 	/**
 	 * Retrieves an array of values corresponding to the longitude values
 	 * associated with each column of the grid.
-	 * 
-	 * @return
 	 */
 
 	public double[] getLons() {
@@ -323,8 +315,6 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 	/**
 	 * Retrieves the maximum x value of the raster. This value corresponds to
 	 * the right edge position of the right-most cell.
-	 * 
-	 * @return
 	 */
 
 	public double getMaxx() {
@@ -334,8 +324,6 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 	/**
 	 * Retrieves the maximum y value of the raster. This value corresponds to
 	 * the upper edge position of the upper-most cell.
-	 * 
-	 * @return
 	 */
 
 	public double getMaxy() {
@@ -345,8 +333,6 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 	/**
 	 * Retrieves the minimum x value of the raster. This value corresponds to
 	 * the left edge position of the left-most cell.
-	 * 
-	 * @return
 	 */
 
 	@Override
@@ -357,8 +343,6 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 	/**
 	 * Retrieves the minimum y value of the raster. This value corresponds to
 	 * the bottom edge position of the bottom-most cell.
-	 * 
-	 * @return
 	 */
 
 	@Override
@@ -368,8 +352,6 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 
 	/**
 	 * Retrieves the number of columns in the raster
-	 * 
-	 * @return
 	 */
 
 	public int getNcols() {
@@ -378,8 +360,6 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 
 	/**
 	 * Retrieves the number of rows in the raster
-	 * 
-	 * @return
 	 */
 
 	public int getNrows() {
@@ -389,8 +369,6 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 	/**
 	 * Indicates whether the grid is oriented such that positive values are
 	 * increasing in a downward direction (e.g. depth values are positive)
-	 * 
-	 * @return
 	 */
 
 	public boolean getPositiveDown() {
@@ -444,8 +422,7 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 	/**
 	 * Retrieves the slope of the cell at the given Coordinate
 	 * 
-	 * @param p
-	 * @return
+	 * @param c - the Coordinate
 	 */
 
 	public double getSlope(Coordinate c) {
@@ -456,9 +433,8 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 	 * Retrieves the slope of the cell at the given x,y pair Formula obtained
 	 * from ArcGIS.
 	 * 
-	 * @param x
-	 * @param y
-	 * @return
+	 * @param x - the x position
+	 * @param y - the y position
 	 */
 
 	public double getSlope(double x, double y) {
@@ -473,22 +449,19 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 	 * Retrieves the slope of the cell at the given Coordinate, projecting into
 	 * Cylindrical Equidistant projection.
 	 * 
-	 * @param x
-	 * @param y
-	 * @return
+	 * @param c - the Coordinate
 	 */
 
-	public double getSlopeC(Coordinate p) {
-		return getSlopeC(p.x, p.y);
+	public double getSlopeC(Coordinate c) {
+		return getSlopeC(c.x, c.y);
 	}
 
 	/**
 	 * Retrieves the slope of the cell at the given x,y pair, projecting into
 	 * Cylindrical Equidistant projection.
 	 * 
-	 * @param x
-	 * @param y
-	 * @return
+	 * @param x - the x position
+	 * @param y - the y position
 	 */
 
 	// Formula from ArcGIS
@@ -502,8 +475,6 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 
 	/**
 	 * Retrieves the name of the variable being used to look up values.
-	 * 
-	 * @return
 	 */
 
 	public String getVariableName() {
@@ -580,7 +551,6 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 	 *            - x position
 	 * @param y
 	 *            - y position
-	 * @return
 	 */
 
 	public boolean inBounds(double x, double y) {
@@ -606,7 +576,6 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 	 * 
 	 * @param x
 	 * @param y
-	 * @return
 	 */
 
 	public boolean inCollarBounds(double x, double y) {
@@ -656,8 +625,6 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 	/**
 	 * Retrieves whether the longitude values used by the raster are intended to
 	 * include negative values.
-	 * 
-	 * @return
 	 */
 
 	public boolean isNeglon() {
@@ -741,8 +708,6 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 	/**
 	 * Retrieves whether the coordinate system is referenced to the center of the
 	 * centroid or the lower left edge.
-	 * 
-	 * @param centroid_reference
 	 */
 	
 	public boolean usesCentroidReference() {

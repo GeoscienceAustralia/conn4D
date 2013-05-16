@@ -26,7 +26,7 @@ public abstract class Reader_NetCDF {
 	/**
 	 * Constructor accepting a String containing the path of the resource.
 	 * 
-	 * @param filename - the path of the resource
+	 * @param fileName - the path of the resource
 	 */
 
 	public Reader_NetCDF(String fileName) {
@@ -68,8 +68,6 @@ public abstract class Reader_NetCDF {
 
 	/**
 	 * Retrieves the name of the variable being used as the data content source.
-	 * 
-	 * @return
 	 */
 	
 	public String getVariableName() {

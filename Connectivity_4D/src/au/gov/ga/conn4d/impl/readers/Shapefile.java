@@ -114,8 +114,6 @@ public class Shapefile implements Habitat{
 	
 	/**
 	 * Retrieves a FeatureIterator for the data set
-	 * 
-	 * @return
 	 */
 	
 	public FeatureIterator<SimpleFeature> getIterator(){
@@ -130,8 +128,6 @@ public class Shapefile implements Habitat{
 	
 	/**
 	 * Retrieves the spatial index of the data set
-	 * 
-	 * @return
 	 */
 	
 	public SpatialIndex getSpatialIndex(){
@@ -140,8 +136,6 @@ public class Shapefile implements Habitat{
 	
 	/**
 	 * Identifies whether the data set uses negative longitude values.
-	 * 
-	 * @return
 	 */
 	
 	public boolean isNegLon(){
@@ -150,8 +144,6 @@ public class Shapefile implements Habitat{
 	
 	/**
 	 * Sets whether the data set uses negative longitude values.
-	 * 
-	 * @return
 	 */
 	
 	@Override
@@ -161,8 +153,6 @@ public class Shapefile implements Habitat{
 	
 	/**
 	 * Retrieves the number of patches/polygons in the data set
-	 * 
-	 * @return
 	 */
 	
 	public int getNPatches() {
@@ -171,8 +161,6 @@ public class Shapefile implements Habitat{
 	
 	/**
 	 * Retrieves the name of the source data file being used.
-	 * 
-	 * @return
 	 */
 	
 	public String getFilename(){
@@ -209,7 +197,6 @@ public class Shapefile implements Habitat{
 
 	/**
 	 * Retrieves the minimum east-west value of the data set
-	 * @return
 	 */
 	
 	public double getMinx() {
@@ -218,7 +205,6 @@ public class Shapefile implements Habitat{
 
 	/**
 	 * Retrieves the minimum north-south value of the data set
-	 * @return
 	 */
 	
 	public double getMiny() {
@@ -227,7 +213,6 @@ public class Shapefile implements Habitat{
 
 	/**
 	 * Retrieves the maximum east-west value of the data set
-	 * @return
 	 */
 	
 	public double getMaxx() {
@@ -236,7 +221,6 @@ public class Shapefile implements Habitat{
 
 	/**
 	 * Retrieves the maximum north-south value of the data set
-	 * @return
 	 */
 	
 	public double getMaxy() {

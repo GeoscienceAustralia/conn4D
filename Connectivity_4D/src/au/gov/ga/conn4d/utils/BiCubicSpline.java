@@ -523,7 +523,6 @@ public class BiCubicSpline {
 
 	/**
 	 * Get maximum limits
-	 * @return
 	 */
 	
 	public double[] getXmax() {
@@ -555,7 +554,6 @@ public class BiCubicSpline {
 	 * from a tabulated function y=f(x1,x2)
 	 * @param xx1
 	 * @param xx2
-	 * @return
 	 */
 	
 	public double interpolate(double xx1, double xx2) {

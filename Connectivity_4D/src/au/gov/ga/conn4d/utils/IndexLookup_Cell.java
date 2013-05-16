@@ -74,7 +74,6 @@ public class IndexLookup_Cell implements Cloneable {
 	 * maximum side.
 	 * 
 	 * @param val
-	 * @return
 	 */
 
 	public synchronized int lookup(double val) {
@@ -124,16 +123,12 @@ public class IndexLookup_Cell implements Cloneable {
 	
 	/**
 	 * Retrieves variable values as a Java array
-	 * 
-	 * @return
 	 */
 	
 	public double[] getJavaArray(){return java_array;}
 	
 	/**
 	 * Retrieves the size of the variable
-	 * 
-	 * @return
 	 */
 	
 	public int arraySize(){
@@ -144,7 +139,6 @@ public class IndexLookup_Cell implements Cloneable {
 	 * Identifies whether the last queried value was within the bounds
 	 * of the variable.
 	 * 
-	 * @return 
 	 * 			-1 means the searched value was below the minimum variable value
 	 * 			0 means the searched value was within variable bounds
 	 * 			+1 means the searched value was above the maximum variable value

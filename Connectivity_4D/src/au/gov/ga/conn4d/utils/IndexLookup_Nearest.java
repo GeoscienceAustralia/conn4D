@@ -117,7 +117,6 @@ public class IndexLookup_Nearest implements Cloneable {
 	 * associated with the class instance.
 	 * 
 	 * @param val
-	 * @return
 	 */
 
 	public synchronized int lookup(double val) {
@@ -217,8 +216,6 @@ public class IndexLookup_Nearest implements Cloneable {
 
 	/**
 	 * Retrieves variable values as a Java array
-	 * 
-	 * @return
 	 */
 
 	public double[] getJavaArray() {
@@ -234,8 +231,6 @@ public class IndexLookup_Nearest implements Cloneable {
 
 	/**
 	 * Retrieves the size of the variable
-	 * 
-	 * @return
 	 */
 
 	public int arraySize() {
@@ -287,8 +282,6 @@ public class IndexLookup_Nearest implements Cloneable {
 	/**
 	 * Sets whether the values need to be negated or not (e.g. negating
 	 * bathymetry values)
-	 * 
-	 * @param negate
 	 */
 
 	public void setNegate(boolean negate) {
@@ -298,8 +291,6 @@ public class IndexLookup_Nearest implements Cloneable {
 	/**
 	 * Indicates whether the values are being negated or not (e.g. negating
 	 * bathymetry values)
-	 * 
-	 * @param negate
 	 */
 
 	public boolean getNegate() {

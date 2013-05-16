@@ -77,7 +77,6 @@ public class Reader_NetCDF_3D extends Reader_NetCDF {
 	 *            - x lookup value
 	 * @param y
 	 *            - y lookup value
-	 * @return
 	 */
 
 	public double getValue(double t, double x, double y) {

@@ -86,7 +86,6 @@ public class Intersector_2D_Shapefile implements Intersector {
 	 *            - the terminal x coordinate
 	 * @param y2
 	 *            - the terminal y coordinate
-	 * @return
 	 */
 
 	@Override
@@ -146,7 +145,6 @@ public class Intersector_2D_Shapefile implements Intersector {
 	 * Converts longitude values greater than 180 into negative values
 	 * 
 	 * @param oldlon
-	 * @return
 	 */
 	
 	private double cvt(double oldlon) {

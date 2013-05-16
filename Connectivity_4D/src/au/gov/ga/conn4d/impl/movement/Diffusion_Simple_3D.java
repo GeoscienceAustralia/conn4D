@@ -85,8 +85,6 @@ public class Diffusion_Simple_3D implements Diffusion, Cloneable {
 
 	/**
 	 * Gets the minimum integration time step currently being used (in seconds)
-	 * 
-	 * @return
 	 */
 
 	public float getH() {

@@ -17,7 +17,6 @@ public class VectorUtils {
 	 * Creates a copy of a 2-dimensional matrix of doubles
 	 * 
 	 * @param mtx
-	 * @return
 	 */
 
 	public static double[][] copy(double[][] mtx) {
@@ -237,7 +236,6 @@ public class VectorUtils {
 	 * 
 	 * @param vals
 	 * @param weights
-	 * @return
 	 */
 	
 	public static double moransI(double[] vals, double[][] weights){
@@ -283,8 +281,6 @@ public class VectorUtils {
 	 * 
 	 * @param vals
 	 * @param weights
-	 * @param alpha
-	 * @return
 	 */
 	
 	public static double moransI_percentile(double[] vals, double[][] weights){
@@ -359,7 +355,6 @@ public class VectorUtils {
 	 * @param vals
 	 * @param weights
 	 * @param alpha
-	 * @return
 	 */
 	
 	public static boolean moransI_test(double[] vals, double[][] weights, double alpha){
@@ -404,7 +399,6 @@ public class VectorUtils {
 	 * Generates a distance matrix from a vector of values
 	 * 
 	 * @param values
-	 * @return
 	 */
 	
 	public static double[][] pdist(double[] values){
@@ -423,7 +417,6 @@ public class VectorUtils {
 	 * Generates a Euclidean distance matrix from a list of coordinates
 	 * 
 	 * @param coordinates
-	 * @return
 	 */
 	
 	public static double[][] eucdist(double[][] coordinates){
@@ -439,11 +432,10 @@ public class VectorUtils {
 	}
 	
 	/**
-	 * Calculates Euclidian distance for a pair of coordinates
+	 * Calculates Euclidean distance for a pair of coordinates
 	 * 
 	 * @param a
 	 * @param b
-	 * @return
 	 */
 	
 	public static double euclidean(double[] a, double[] b){

@@ -311,7 +311,6 @@ public class TriCubicSpline {
 	 * @param nP
 	 * @param mP
 	 * @param lP
-	 * @return
 	 */
 
 	public static TriCubicSpline zero(int nP, int mP, int lP) {
@@ -331,7 +330,6 @@ public class TriCubicSpline {
 	 * @param mP
 	 * @param lP
 	 * @param kP
-	 * @return
 	 */
 
 	public static TriCubicSpline[] oneDarray(int nP, int mP, int lP, int kP) {
@@ -508,8 +506,6 @@ public class TriCubicSpline {
 
 	/**
 	 * Get maximum limits
-	 * 
-	 * @return
 	 */
 	public double[] getXmax() {
 		return this.xMax;
@@ -517,8 +513,6 @@ public class TriCubicSpline {
 
 	/**
 	 * Retrieve the limits to x
-	 * 
-	 * @return
 	 */
 
 	public double[] getLimits() {
@@ -534,7 +528,6 @@ public class TriCubicSpline {
 	 * @param xx1
 	 * @param xx2
 	 * @param xx3
-	 * @return
 	 */
 
 	public double interpolate(double xx1, double xx2, double xx3) {
@@ -599,8 +592,6 @@ public class TriCubicSpline {
 
 	/**
 	 * Retrieves the dimension of the values being used for interpolation.
-	 * 
-	 * @return
 	 */
 
 	public int[] getDim() {

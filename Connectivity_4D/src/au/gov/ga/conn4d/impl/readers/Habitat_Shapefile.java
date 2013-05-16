@@ -245,8 +245,7 @@ public class Habitat_Shapefile implements Habitat, Cloneable{
 	 * of the polygons. If so, the polygon's unique identifier is returned. If
 	 * not, NODATA is returned
 	 * 
-	 * @param lon
-	 * @param lat
+	 * @param field
 	 * @throws IOException
 	 * @throws IllegalAttributeException
 	 */

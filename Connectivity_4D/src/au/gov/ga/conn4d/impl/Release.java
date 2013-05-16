@@ -51,8 +51,6 @@ public class Release implements Runnable {
 
 	/**
 	 * Retrieves the CollisionDetector associated with this instance
-	 * 
-	 * @return
 	 */
 
 	public CollisionDetector getCollisionDetector() {
@@ -61,8 +59,6 @@ public class Release implements Runnable {
 
 	/**
 	 * Retrieves the Diffusion object associated with this instance
-	 * 
-	 * @return
 	 */
 
 	public Diffusion getDiffusion() {
@@ -71,8 +67,6 @@ public class Release implements Runnable {
 
 	/**
 	 * Retrieves the DistanceWriter associated with this instance
-	 * 
-	 * @return
 	 */
 
 	public DistanceWriter getDistanceWriter() {
@@ -81,8 +75,6 @@ public class Release implements Runnable {
 
 	/**
 	 * Retrieves the ID of the Particle
-	 * 
-	 * @return
 	 */
 
 	public long getId() {
@@ -91,8 +83,6 @@ public class Release implements Runnable {
 
 	/**
 	 * Retrieves the MatrixWriter associated with this instance
-	 * 
-	 * @return
 	 */
 
 	public MatrixWriter getMatrixWriter() {
@@ -101,8 +91,6 @@ public class Release implements Runnable {
 
 	/**
 	 * Retrieves the Mortality object associated with this instance
-	 * 
-	 * @return
 	 */
 
 	public Mortality getMortality() {
@@ -111,8 +99,6 @@ public class Release implements Runnable {
 
 	/**
 	 * Retrieves the Movement object associated with this instance
-	 * 
-	 * @return
 	 */
 
 	public Movement getMovement() {
@@ -121,8 +107,6 @@ public class Release implements Runnable {
 
 	/**
 	 * Retrieves the Parameter object associated with this instance.
-	 * 
-	 * @return
 	 */
 
 	public Parameters getParameters() {
@@ -131,8 +115,6 @@ public class Release implements Runnable {
 
 	/**
 	 * Retrieves the Settlement object associated with this instance.
-	 * 
-	 * @return
 	 */
 
 	public Settlement getSettlement() {
@@ -141,8 +123,6 @@ public class Release implements Runnable {
 
 	/**
 	 * Retrieves the timestamp (in milliseconds) of this instance.
-	 * 
-	 * @return
 	 */
 
 	public long getTime() {
@@ -151,8 +131,6 @@ public class Release implements Runnable {
 
 	/**
 	 * Retrieves the TrajectoryWriter associated with this instance.
-	 * 
-	 * @return
 	 */
 
 	public TrajectoryWriter getTrajectoryWriter() {
@@ -161,8 +139,6 @@ public class Release implements Runnable {
 
 	/**
 	 * Retrieves the VerticalMigration object associated with this instance.
-	 * 
-	 * @return
 	 */
 
 	public VerticalMigration getVerticalMigration() {
@@ -172,8 +148,6 @@ public class Release implements Runnable {
 	/**
 	 * Flags whether the release will be killed before effective
 	 * activity (pre-processing mortality to save on computation)
-	 * 
-	 * @return
 	 */
 
 	public boolean preKill() {
@@ -401,8 +375,8 @@ public class Release implements Runnable {
 	/**
 	 * Sets the BoundaryHandler object for this instance.
 	 * 
-	 * @param bh
-	 *            - The BoundaryHandler object
+	 * @param collisionDetector
+	 *            - The CollisionDetector object
 	 */
 	
 	public void setCollisionDetector(CollisionDetector collisionDetector) {
@@ -513,7 +487,7 @@ public class Release implements Runnable {
 	 * Sets whether negative coordinates are being used by the
 	 * oceanographic data
 	 * 
-	 * @param negCoord
+	 * @param negOceanCoord
 	 */
 	
 	public void setNegativeOceanCoordinates(boolean negOceanCoord) {
@@ -577,8 +551,6 @@ public class Release implements Runnable {
 
 	/**
 	 * Sets whether this instance should be terminated
-	 * 
-	 * @return
 	 */
 
 	public boolean toBeKilled() {

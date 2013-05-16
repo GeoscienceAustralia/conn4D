@@ -97,7 +97,6 @@ public class ReleaseFileReader_Shapefile_4D extends ReleaseFileReader_Shapefile{
 	
 	/**
 	 * Retrieves the minimum release depth
-	 * @return
 	 */
 	
 	public double getMinDepth(){
@@ -106,7 +105,6 @@ public class ReleaseFileReader_Shapefile_4D extends ReleaseFileReader_Shapefile{
 	
 	/**
 	 * Retrieves the maximum release depth
-	 * @return
 	 */
 	
 	public double getMaxDepth(){

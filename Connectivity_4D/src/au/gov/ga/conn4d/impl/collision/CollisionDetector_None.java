@@ -22,8 +22,6 @@ public class CollisionDetector_None implements CollisionDetector {
 	
 	/**
 	 * Generates a clone of the CollisionDetection instance.
-	 * 
-	 * @return
 	 */
 	@Override
 	public CollisionDetector_None clone(){
@@ -39,8 +37,6 @@ public class CollisionDetector_None implements CollisionDetector {
 	
 	/**
 	 * Returns the Boundary object associated with this Class.
-	 * 
-	 * @return
 	 */
 	@Override
 	public Boundary getBoundary(){return null;}

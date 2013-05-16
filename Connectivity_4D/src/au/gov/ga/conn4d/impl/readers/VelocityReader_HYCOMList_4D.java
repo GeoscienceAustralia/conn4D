@@ -76,10 +76,6 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 	/**
 	 * Reads velocities from a collection of u, v and w NetCDF file collection
 	 * within a single directory.
-	 * 
-	 * @param dir
-	 *            - The directory path containing the NetCDF velocity files
-	 * @throws IOException
 	 */
 
 	public VelocityReader_HYCOMList_4D() {
@@ -339,8 +335,6 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 	/**
 	 * Retrieves average velocity values associated with the last queried
 	 * position.
-	 * 
-	 * @return
 	 */
 
 	public double[] getAverages() {
@@ -349,8 +343,6 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 
 	/**
 	 * Retrieves the minimum and maximum values of the t, z, y and x dimensions
-	 * 
-	 * @return
 	 */
 
 	@Override
@@ -360,7 +352,6 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 	
 	/**
 	 * Retrieves the dimensions of the list
-	 * @return
 	 */
 	
 	public double[][] getDims() {
@@ -370,8 +361,6 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 
 	/**
 	 * Retrieves the name of the Latitude variable
-	 * 
-	 * @return
 	 */
 
 	public String getLatName() {
@@ -380,8 +369,6 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 
 	/**
 	 * Retrieves the name of the Longitude variable
-	 * 
-	 * @return
 	 */
 
 	public String getLonName() {
@@ -408,8 +395,6 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 
 	/**
 	 * Retrieves the name of the Time variable
-	 * 
-	 * @return
 	 */
 
 	public String getTName() {
@@ -427,8 +412,6 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 
 	/**
 	 * Retrieves variance values associated with the last queried position
-	 * 
-	 * @return
 	 */
 
 	public double[] getVariances() {
@@ -878,8 +861,6 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 
 	/**
 	 * Retrieves the name of the Depth variable
-	 * 
-	 * @return
 	 */
 
 	public String getZName() {
@@ -908,7 +889,7 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 	/**
 	 * Sets the name of the longitude variable
 	 * 
-	 * @param latName
+	 * @param lonName
 	 */
 
 	public void setLonName(String lonName) {
@@ -944,20 +925,20 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 	/**
 	 * Sets the name of the time variable
 	 * 
-	 * @param latName
+	 * @param tName
 	 */
 
-	public void setTName(String name) {
-		tName = name;
+	public void setTName(String tName) {
+		this.tName = tName;
 	}
 
 	/**
 	 * Sets the u-velocity file to be used by this class
 	 * 
 	 * @param _velocityFile
-	 *            - the v-velocity NetCDF object
+	 *            - the u-velocity NetCDF object
 	 * @param uName
-	 *            - the name of the v variable
+	 *            - the name of the u variable
 	 * @throws IOException
 	 */
 
@@ -991,7 +972,7 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 	 * 
 	 * @param _velocityFile
 	 *            - the v-velocity NetCDF object
-	 * @param uName
+	 * @param vName
 	 *            - the name of the v variable
 	 * @throws IOException
 	 */
@@ -1007,7 +988,7 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 	/**
 	 * Sets the name of the velocity field to be used by this class
 	 * 
-	 * @param uName
+	 * @param vName
 	 *            - the name of the v variable
 	 * @throws IOException
 	 */
@@ -1102,8 +1083,6 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 
 	/**
 	 * Sets the name of the lookup variable for vertical position
-	 * 
-	 * @param name
 	 */
 
 	public void setZLookup(String name) {
@@ -1128,10 +1107,10 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 	/**
 	 * Sets the name of the depth variable
 	 * 
-	 * @param latName
+	 * @param zName
 	 */
 
-	public void setZName(String zname) {
-		this.zName = zname;
+	public void setZName(String zName) {
+		this.zName = zName;
 	}
 }

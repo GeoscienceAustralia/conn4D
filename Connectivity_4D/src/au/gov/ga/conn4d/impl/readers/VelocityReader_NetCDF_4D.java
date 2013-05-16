@@ -545,8 +545,6 @@ public class VelocityReader_NetCDF_4D implements VelocityReader, Cloneable {
 	 * Indicates whether negative latitude and longitude coordinates are being
 	 * used. Used to back-transform coordinate values into the original
 	 * reference frame if required.
-	 * 
-	 * @return
 	 */
 
 	// public boolean isNegOceanCoord() {
@@ -560,8 +558,6 @@ public class VelocityReader_NetCDF_4D implements VelocityReader, Cloneable {
 	/**
 	 * Retrieves average velocity values associated with the last queried
 	 * position.
-	 * 
-	 * @return
 	 */
 
 	public double[] getAverages() {
@@ -570,8 +566,6 @@ public class VelocityReader_NetCDF_4D implements VelocityReader, Cloneable {
 	
 	/**
 	 * Retrieves the minimum and maximum values of the t, z, y and x dimensions
-	 * 
-	 * @return
 	 */
 
 	@Override
@@ -581,8 +575,6 @@ public class VelocityReader_NetCDF_4D implements VelocityReader, Cloneable {
 
 	/**
 	 * Retrieves the name of the Depth variable
-	 * 
-	 * @return
 	 */
 
 	public String getKName() {
@@ -591,8 +583,6 @@ public class VelocityReader_NetCDF_4D implements VelocityReader, Cloneable {
 
 	/**
 	 * Retrieves the name of the Latitude variable
-	 * 
-	 * @return
 	 */
 
 	public String getLatName() {
@@ -601,8 +591,6 @@ public class VelocityReader_NetCDF_4D implements VelocityReader, Cloneable {
 
 	/**
 	 * Retrieves the name of the Longitude variable
-	 * 
-	 * @return
 	 */
 
 	public String getLonName() {
@@ -629,8 +617,6 @@ public class VelocityReader_NetCDF_4D implements VelocityReader, Cloneable {
 
 	/**
 	 * Retrieves the name of the Time variable
-	 * 
-	 * @return
 	 */
 
 	public String getTName() {
@@ -648,8 +634,6 @@ public class VelocityReader_NetCDF_4D implements VelocityReader, Cloneable {
 
 	/**
 	 * Retrieves variance values associated with the last queried position
-	 * 
-	 * @return
 	 */
 
 	public double[] getVariances() {
@@ -659,7 +643,7 @@ public class VelocityReader_NetCDF_4D implements VelocityReader, Cloneable {
 	/**
 	 * Sets the average values for the velocities (u,v,w)
 	 * 
-	 * @param variances
+	 * @param averages
 	 */
 	
 	public void setAverages(double[] averages) {
@@ -669,11 +653,11 @@ public class VelocityReader_NetCDF_4D implements VelocityReader, Cloneable {
 	/**
 	 * Sets the name of the depth variable
 	 * 
-	 * @param latName
+	 * @param kName
 	 */	
 
-	public void setKName(String name) {
-		kName = name;
+	public void setKName(String kName) {
+		this.kName = kName;
 	}
 
 	/**
@@ -689,7 +673,7 @@ public class VelocityReader_NetCDF_4D implements VelocityReader, Cloneable {
 	/**
 	 * Sets the name of the longitude variable
 	 * 
-	 * @param latName
+	 * @param lonName
 	 */
 	
 	public void setLonName(String lonName) {
@@ -739,11 +723,11 @@ public class VelocityReader_NetCDF_4D implements VelocityReader, Cloneable {
 	/**
 	 * Sets the name of the time variable
 	 * 
-	 * @param latName
+	 * @param tName
 	 */
 	
-	public void setTName(String name) {
-		tName = name;
+	public void setTName(String tName) {
+		this.tName = tName;
 	}
 
 	/**
@@ -782,7 +766,7 @@ public class VelocityReader_NetCDF_4D implements VelocityReader, Cloneable {
 	 * 
 	 * @param _velocityFile
 	 *            - the v-velocity NetCDF object
-	 * @param uName
+	 * @param vName
 	 *            - the name of the v variable
 	 * @throws IOException
 	 */

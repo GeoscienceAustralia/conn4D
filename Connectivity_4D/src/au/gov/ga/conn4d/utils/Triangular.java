@@ -34,8 +34,6 @@ public class Triangular {
 	
 	/**
 	 * Returns the next random value
-	 * 
-	 * @return
 	 */
 	
 	public double nextDouble(){

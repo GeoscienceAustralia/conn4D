@@ -40,8 +40,6 @@ public class CollisionDetector_3D_Raster implements CollisionDetector {
 
 	/**
 	 * Generates a clone of the CollisionDetection instance.
-	 * 
-	 * @return
 	 */
 
 	@Override
@@ -205,8 +203,6 @@ public class CollisionDetector_3D_Raster implements CollisionDetector {
 	
 	/**
 	 * Returns the Boundary object associated with this Class.
-	 * 
-	 * @return
 	 */
 
 	@Override
@@ -217,8 +213,6 @@ public class CollisionDetector_3D_Raster implements CollisionDetector {
 	/**
 	 * Retrieves the projection transformation being used to convert geographic
 	 * horizontal coordiantes into metres.
-	 * 
-	 * @return
 	 */
 
 	public PrjTransform getProjectionTransform() {
@@ -227,8 +221,6 @@ public class CollisionDetector_3D_Raster implements CollisionDetector {
 
 	/**
 	 * Retrieves the surface level being used (e.g. 0)
-	 * 
-	 * @return
 	 */
 
 	public double getSurfaceLevel() {
@@ -252,9 +244,6 @@ public class CollisionDetector_3D_Raster implements CollisionDetector {
 	/**
 	 * Used to perform NaN comparisons with coordinates since the default method
 	 * does not handle NaN values well.
-	 * 
-	 * @param c
-	 * @return
 	 */
 
 	private boolean isNaN(Coordinate c) {
@@ -266,8 +255,6 @@ public class CollisionDetector_3D_Raster implements CollisionDetector {
 
 	/**
 	 * Sets the Boundary object associated with this Class.
-	 * 
-	 * @return
 	 */
 
 	public void setBoundary(Boundary bnd) {
@@ -277,8 +264,6 @@ public class CollisionDetector_3D_Raster implements CollisionDetector {
 	/**
 	 * Sets the projection transformation being used to convert geographic
 	 * horizontal coordiantes into metres.
-	 * 
-	 * @return
 	 */
 
 	public void setProjectionTransform(PrjTransform pt) {
@@ -287,8 +272,6 @@ public class CollisionDetector_3D_Raster implements CollisionDetector {
 
 	/**
 	 * Sets the surface level being used (e.g. 0)
-	 * 
-	 * @return
 	 */
 
 	public void setSurfaceLevel(double surfaceLevel) {

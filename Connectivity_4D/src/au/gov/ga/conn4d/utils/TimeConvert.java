@@ -317,7 +317,6 @@ public class TimeConvert {
 	 * Converts from milliseconds to a simple String representation.
 	 * 
 	 * @param millis
-	 * @return
 	 */
 
 	public static String millisToString(double millis) {
@@ -355,7 +354,6 @@ public class TimeConvert {
 	 * Converts from minutes to milliseconds
 	 * 
 	 * @param minutes
-	 * @return
 	 */
 
 	public static long minutesToMillis(double minutes) {
@@ -368,7 +366,6 @@ public class TimeConvert {
 	 * @param minutes
 	 *            - String representation of the number of minutes to be
 	 *            converted.
-	 * @return
 	 */
 
 	public static long minutesToMillis(String minutes) {
@@ -380,7 +377,6 @@ public class TimeConvert {
 	 * Converts from seconds to milliseconds
 	 * 
 	 * @param seconds
-	 * @return
 	 */
 
 	public static long secondsToMillis(double seconds) {
@@ -392,7 +388,6 @@ public class TimeConvert {
 	 * by 1000).
 	 * 
 	 * @param seconds
-	 * @return
 	 */
 
 	public static long secondsToMillis(String seconds) {
