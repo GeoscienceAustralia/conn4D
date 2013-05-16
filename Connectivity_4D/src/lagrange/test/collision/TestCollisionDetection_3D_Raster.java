@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import lagrange.Boundary;
 import lagrange.Particle;
-import lagrange.impl.collision.CollisionDetector_3D_Bathymetry;
+import lagrange.impl.collision.CollisionDetector_3D_Raster;
 import lagrange.impl.readers.Boundary_Raster_NetCDF;
 import lagrange.utils.PrjTransform_None;
 
@@ -14,10 +14,10 @@ import org.junit.Test;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
-public class TestCollisionDetection_3D_Bathymetry {
+public class TestCollisionDetection_3D_Raster {
 	
-	CollisionDetector_3D_Bathymetry cdb_x, cdb_xr, cdb_y, cdb_real;
-	CollisionDetector_3D_Bathymetry cdb_e1, cdb_e2, cdb_ex, cdb_eo;
+	CollisionDetector_3D_Raster cdb_x, cdb_xr, cdb_y, cdb_real;
+	CollisionDetector_3D_Raster cdb_e1, cdb_e2, cdb_ex, cdb_eo;
 	Boundary gx, gy, gxr, greal;
 	Boundary_Grid_TestingGrid f1,f2,fx, fo;
 	Coordinate a1 = new Coordinate(-1,1,1);
@@ -103,27 +103,27 @@ public class TestCollisionDetection_3D_Bathymetry {
 			fo = new Boundary_Grid_TestingGrid();
 			fo.setCells(cd);
 
-			cdb_x = new CollisionDetector_3D_Bathymetry(gx);
+			cdb_x = new CollisionDetector_3D_Raster(gx);
 			cdb_x.setProjectionTransform(new PrjTransform_None());
 			
-			cdb_xr = new CollisionDetector_3D_Bathymetry(gxr);
+			cdb_xr = new CollisionDetector_3D_Raster(gxr);
 			cdb_xr.setProjectionTransform(new PrjTransform_None());
 			
-			cdb_y = new CollisionDetector_3D_Bathymetry(gy);
+			cdb_y = new CollisionDetector_3D_Raster(gy);
 			cdb_y.setProjectionTransform(new PrjTransform_None());
 
-			cdb_real = new CollisionDetector_3D_Bathymetry(greal);
+			cdb_real = new CollisionDetector_3D_Raster(greal);
 			
-			cdb_e1 = new CollisionDetector_3D_Bathymetry(f1);
+			cdb_e1 = new CollisionDetector_3D_Raster(f1);
 			cdb_e1.setProjectionTransform(new PrjTransform_None());
 			
-			cdb_e2 = new CollisionDetector_3D_Bathymetry(f2);
+			cdb_e2 = new CollisionDetector_3D_Raster(f2);
 			cdb_e2.setProjectionTransform(new PrjTransform_None());
 			
-			cdb_ex = new CollisionDetector_3D_Bathymetry(fx);
+			cdb_ex = new CollisionDetector_3D_Raster(fx);
 			cdb_ex.setProjectionTransform(new PrjTransform_None());
 			
-			cdb_eo = new CollisionDetector_3D_Bathymetry(fo);
+			cdb_eo = new CollisionDetector_3D_Raster(fo);
 			cdb_eo.setProjectionTransform(new PrjTransform_None());
 			
 		} catch (IOException e) {

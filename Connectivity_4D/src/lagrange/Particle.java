@@ -3,16 +3,17 @@ package lagrange;
 import java.text.NumberFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
  * Generic particle class.
  */
 
-public class Particle {
+public class Particle implements Cloneable {
 
 	private long id;
-	private double x,y,z;
+	private double x, y, z;
 	private double px, py, pz;
 	private double x0, y0, z0;
 	private double u = 0d, v = 0d, w = 0d;
@@ -43,6 +44,101 @@ public class Particle {
 
 	public boolean canSettle() {
 		return settling;
+	}
+
+	/**
+	 * Returns an independent copy of the class instance
+	 */
+
+	public Particle clone() {
+		Particle p = new Particle();
+		p.id = this.id;
+		p.x = this.x;
+		p.y = this.y;
+		p.z = this.z;
+		p.px = this.px;
+		p.py = this.py;
+		p.pz = this.pz;
+		p.x0 = this.x0;
+		p.y0 = this.y0;
+		p.z0 = this.z0;
+		p.u = this.u;
+		p.v = this.v;
+		p.w = this.w;
+		p.t = this.t;
+		p.birthday = this.birthday;
+		p.tm = this.tm;
+		p.i = this.i;
+		p.j = this.j;
+		p.k = this.k;
+		p.competencyStart = this.competencyStart;
+		p.settling = this.settling;
+		p.dead = this.dead;
+		p.error = this.error;
+		p.finished = this.finished;
+		p.recording = this.recording;
+		p.nodata = this.nodata;
+		p.nearNoData = this.nearNoData;
+		p.hadNoData = this.hadNoData;
+		p.distance = this.distance;
+		p.source = this.source;
+		p.destination = this.destination;
+		p.visited = new HashSet<Long>(this.visited);
+		p.comments = this.comments;
+		return p;
+	}
+
+	/**
+	 * Performs deep comparison of fields
+	 */
+
+	public boolean deepEquals(Particle p) {
+		boolean equals = true;
+		equals &= p.id == this.id;
+		equals &= p.x == this.x;
+		equals &= p.y == this.y;
+		equals &= p.z == this.z;
+		equals &= p.px == this.px;
+		equals &= p.py == this.py;
+		equals &= p.pz == this.pz;
+		equals &= p.x0 == this.x0;
+		equals &= p.y0 == this.y0;
+		equals &= p.z0 == this.z0;
+		equals &= p.u == this.u;
+		equals &= p.v == this.v;
+		equals &= p.w == this.w;
+		equals &= p.t == this.t;
+		equals &= p.birthday == this.birthday;
+		equals &= p.tm == this.tm;
+		equals &= p.i == this.i;
+		equals &= p.j == this.j;
+		equals &= p.k == this.k;
+		equals &= p.competencyStart == this.competencyStart;
+		equals &= p.settling == this.settling;
+		equals &= p.dead == this.dead;
+		equals &= p.error == this.error;
+		equals &= p.finished == this.finished;
+		equals &= p.recording == this.recording;
+		equals &= p.nodata == this.nodata;
+		equals &= p.nearNoData == this.nearNoData;
+		equals &= p.hadNoData == this.hadNoData;
+		equals &= p.distance == this.distance;
+		equals &= p.source == this.source;
+		equals &= p.destination == this.destination;
+		
+		if(p.visited==null && this.visited==null){}
+		else if (p.visited.size() != this.visited.size()) {
+			equals = false;
+		} else {
+			Iterator<Long> it1 = p.visited.iterator();
+			Iterator<Long> it2 = this.visited.iterator();
+			while (it1.hasNext()) {
+				equals &= it1.equals(it2);
+			}
+		}
+
+		equals &= p.comments.equals(this.comments);
+		return equals;
 	}
 
 	/**
@@ -136,7 +232,7 @@ public class Particle {
 	public boolean getNodata() {
 		return nodata;
 	}
-	
+
 	/**
 	 * Retrieve the original X Coordinate of the particle
 	 * 
@@ -602,13 +698,13 @@ public class Particle {
 	public void setZ0(double z0) {
 		this.z0 = z0;
 	}
-	
+
 	/**
 	 * Sets the X coordinate of the particle
 	 * 
 	 * @param x
 	 */
-	
+
 	public void setX(double x) {
 		this.x = x;
 	}

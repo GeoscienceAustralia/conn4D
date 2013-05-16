@@ -23,7 +23,7 @@ import com.vividsolutions.jts.geom.LineSegment;
  * @param p
  */
 
-public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
+public class CollisionDetector_3D_Raster implements CollisionDetector {
 
 	private Boundary_Raster bnd;
 	private Intersector_3D_Raster i3d = new Intersector_3D_Raster();
@@ -32,7 +32,7 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 	private final double tolerance = 1E-8;
 	private final int bounceLimit = 50;
 
-	public CollisionDetector_3D_Bathymetry(Boundary bathym) {
+	public CollisionDetector_3D_Raster(Boundary bathym) {
 		this.bnd = (Boundary_Raster) bathym;
 	}
 
@@ -43,8 +43,8 @@ public class CollisionDetector_3D_Bathymetry implements CollisionDetector {
 	 */
 
 	@Override
-	public CollisionDetector_3D_Bathymetry clone() {
-		CollisionDetector_3D_Bathymetry clone = new CollisionDetector_3D_Bathymetry(
+	public CollisionDetector_3D_Raster clone() {
+		CollisionDetector_3D_Raster clone = new CollisionDetector_3D_Raster(
 				bnd);
 		clone.setProjectionTransform(this.pt);
 		return clone;

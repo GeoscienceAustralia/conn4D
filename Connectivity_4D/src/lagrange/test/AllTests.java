@@ -1,6 +1,7 @@
 package lagrange.test;
 
-import lagrange.test.collision.TestCollisionDetection_3D_Bathymetry;
+import lagrange.test.behavior.TestMortality_None;
+import lagrange.test.collision.TestCollisionDetection_3D_Raster;
 import lagrange.test.collision.TestIntersector_3D_Poly;
 import lagrange.test.movement.TestMovement_RK4_3D;
 import lagrange.test.readers.TestBathymetryReader_Grid;
@@ -17,10 +18,11 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ TestArraySearch.class, TestBathymetryReader_Grid.class,
-		TestCollisionDetection_3D_Bathymetry.class, TestIndexLookup_Cell.class,
+		TestCollisionDetection_3D_Raster.class, TestIndexLookup_Cell.class,
 		TestIndexLookup_Nearest.class, TestIntersector_3D_Poly.class,
-		TestMovement_RK4_3D.class, TestTriCubicSpline.class, TestRelease.class,
-		TestReleaseFactory.class, TestVelocityReader_NetCDF_4D.class,
+		TestMortality_None.class, TestMovement_RK4_3D.class,
+		TestTriCubicSpline.class, TestRelease.class, TestReleaseFactory.class,
+		TestVelocityReader_NetCDF_4D.class,
 		TestVelocityReader_HYCOMList_4D.class })
 public class AllTests {
 }

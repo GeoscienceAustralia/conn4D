@@ -15,7 +15,6 @@ import lagrange.utils.TimeConvert;
  * Writes trajectory data to a DBase (.dbf) file.
  * 
  * @author Johnathan Kool
- * 
  */
 
 public class TrajectoryWriter_Dbase implements TrajectoryWriter {
@@ -30,8 +29,8 @@ public class TrajectoryWriter_Dbase implements TrajectoryWriter {
 	/**
 	 * Constructor that uses a String to generate the output file.
 	 * 
-	 * @param outputFile
-	 *            - The path and name of the output file
+	 * @param connection
+	 *            - The database connection string
 	 */
 
 	public TrajectoryWriter_Dbase(String connection) {
@@ -72,7 +71,7 @@ public class TrajectoryWriter_Dbase implements TrajectoryWriter {
 					TimeConvert.convertFromMillis(durationUnits, p.getAge()));
 			tps.setDouble(3, p.getZ());
 			double val;
-			if (p.getX() > 180) {
+			if (negCoord && p.getX() > 180) {
 				val = (-(360d - p.getX()));
 			} else {
 				val = (p.getX());
@@ -118,13 +117,8 @@ public class TrajectoryWriter_Dbase implements TrajectoryWriter {
 		}
 	}
 
-	public void flush() {
-	}
-
 	/**
 	 * Retrieves the database driver being used by the class
-	 * 
-	 * @return - the database driver being used by the class
 	 */
 
 	public String getDriver() {
@@ -133,7 +127,6 @@ public class TrajectoryWriter_Dbase implements TrajectoryWriter {
 	
 	/**
 	 * Retrieves the units of the duration data (e.g. days)
-	 * @return - the units of the duration data (e.g. days)
 	 */
 
 	public String getDurationUnits() {
@@ -141,8 +134,7 @@ public class TrajectoryWriter_Dbase implements TrajectoryWriter {
 	}
 
 	/**
-	 * Ret
-	 * @return
+	 * Retrieves the units in which the Time stamp is stored.
 	 */
 	
 	public String getTimeUnits() {
@@ -160,21 +152,39 @@ public class TrajectoryWriter_Dbase implements TrajectoryWriter {
 	public void setDriver(String driver) {
 		this.driver = driver;
 	}
+	
+	/**
+	 * Sets the units of the duration values.
+	 */
 
 	@Override
 	public void setDurationUnits(String durationUnits) {
 		this.durationUnits = durationUnits;
 	}
 
+	/**
+	 * Sets whether longitude values should be written.
+	 */
+	
 	@Override
 	public void setNegCoord(boolean negCoord) {
 		this.negCoord = negCoord;
 	}
 
+	/**
+	 * Sets the time units for the output time field.
+	 */
+	
 	@Override
 	public void setTimeUnits(String timeUnits) {
 		this.timeUnits = timeUnits;
 	}
+	
+	/**
+	 * Writes a single record to the settlement PreparedStatement
+	 * @param p - the Particle containing the information to be written.
+	 * @throws SQLException
+	 */
 
 	private void writeSPS(Particle p) throws SQLException {
 		sps.setLong(0, p.getID());

@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import lagrange.Boundary_Raster;
 import lagrange.CollisionDetector;
-import lagrange.impl.collision.CollisionDetector_3D_Bathymetry;
+import lagrange.impl.collision.CollisionDetector_3D_Raster;
 import lagrange.impl.readers.Boundary_Raster_NetCDF;
 import lagrange.impl.readers.Shapefile;
 import lagrange.input.ConfigurationOverride;
@@ -113,7 +113,7 @@ public class PreCheck {
 			if (!cfg.bathymetryFileName.isEmpty()) {
 				bathymetry = new Boundary_Raster_NetCDF(cfg.bathymetryFileName,
 						cfg.latName, cfg.lonName);
-				cd = new CollisionDetector_3D_Bathymetry(bathymetry);
+				cd = new CollisionDetector_3D_Raster(bathymetry);
 			}
 
 		} catch (IOException e) {

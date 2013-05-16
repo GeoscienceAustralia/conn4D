@@ -1,4 +1,5 @@
 package lagrange.utils;
+
 import java.util.Arrays;
 
 /**
@@ -59,7 +60,7 @@ public class VectorMath {
 
 		return sum;
 	}
-	
+
 	/**
 	 * Adds two vectors of equal dimension together.
 	 * 
@@ -81,7 +82,7 @@ public class VectorMath {
 
 		return sum;
 	}
-	
+
 	/**
 	 * Adds two vectors of equal dimension together.
 	 * 
@@ -232,8 +233,8 @@ public class VectorMath {
 
 		return output;
 	}
-	
-    /**
+
+	/**
 	 * Compute the dot product of two vectors
 	 * 
 	 * @param v1
@@ -249,7 +250,6 @@ public class VectorMath {
 			res += v1[i] * v2[i];
 		return res;
 	}
-
 
 	/**
 	 * Compute the dot product of two vectors
@@ -286,124 +286,149 @@ public class VectorMath {
 	}
 
 	/**
-     * <p>Reverses the order of the given array.</p>
-     *
-     * <p>This method does nothing for a <code>null</code> input array.</p>
-     *
-     * @param array  the array to reverse, may be <code>null</code>
-     */
+	 * <p>
+	 * Reverses the order of the given array.
+	 * </p>
+	 * 
+	 * <p>
+	 * This method does nothing for a <code>null</code> input array.
+	 * </p>
+	 * 
+	 * @param array
+	 *            the array to reverse, may be <code>null</code>
+	 */
 
-    public static void flip(double[] array) {
-        if (array == null) {
-            return;
-        }
-        int i = 0;
-        int j = array.length - 1;
-        double tmp;
-        while (j > i) {
-            tmp = array[j];
-            array[j] = array[i];
-            array[i] = tmp;
-            j--;
-            i++;
-        }
-    }
-
-	/**
-     * <p>Reverses the order of the given array.</p>
-     *
-     * <p>This method does nothing for a <code>null</code> input array.</p>
-     *
-     * @param array  the array to reverse, may be <code>null</code>
-     */
-
-    public static void flip(float[] array) {
-        if (array == null) {
-            return;
-        }
-        int i = 0;
-        int j = array.length - 1;
-        float tmp;
-        while (j > i) {
-            tmp = array[j];
-            array[j] = array[i];
-            array[i] = tmp;
-            j--;
-            i++;
-        }
-    }
+	public static void flip(double[] array) {
+		if (array == null) {
+			return;
+		}
+		int i = 0;
+		int j = array.length - 1;
+		double tmp;
+		while (j > i) {
+			tmp = array[j];
+			array[j] = array[i];
+			array[i] = tmp;
+			j--;
+			i++;
+		}
+	}
 
 	/**
-     * <p>Reverses the order of the given array.</p>
-     *
-     * <p>This method does nothing for a <code>null</code> input array.</p>
-     *
-     * @param array  the array to reverse, may be <code>null</code>
-     */
-    public static void flip(int[] array) {
-        if (array == null) {
-        	return;
-        }
-        int i = 0;
-        int j = array.length - 1;
-        int tmp;
-        while (j > i) {
-            tmp = array[j];
-            array[j] = array[i];
-            array[i] = tmp;
-            j--;
-            i++;
-        }
-    }
+	 * <p>
+	 * Reverses the order of the given array.
+	 * </p>
+	 * 
+	 * <p>
+	 * This method does nothing for a <code>null</code> input array.
+	 * </p>
+	 * 
+	 * @param array
+	 *            the array to reverse, may be <code>null</code>
+	 */
+
+	public static void flip(float[] array) {
+		if (array == null) {
+			return;
+		}
+		int i = 0;
+		int j = array.length - 1;
+		float tmp;
+		while (j > i) {
+			tmp = array[j];
+			array[j] = array[i];
+			array[i] = tmp;
+			j--;
+			i++;
+		}
+	}
 
 	/**
-     * <p>Reverses the order of the given array.</p>
-     *
-     * <p>This method does nothing for a <code>null</code> input array.</p>
-     *
-     * @param array  the array to reverse, may be <code>null</code>
-     */
-    
-    public static void flip(long[] array) {
-        if (array == null) {
-        	return;
-        }
-        int i = 0;
-        int j = array.length - 1;
-        long tmp;
-        while (j > i) {
-            tmp = array[j];
-            array[j] = array[i];
-            array[i] = tmp;
-            j--;
-            i++;
-        }
-    }
+	 * <p>
+	 * Reverses the order of the given array.
+	 * </p>
+	 * 
+	 * <p>
+	 * This method does nothing for a <code>null</code> input array.
+	 * </p>
+	 * 
+	 * @param array
+	 *            the array to reverse, may be <code>null</code>
+	 */
+	public static void flip(int[] array) {
+		if (array == null) {
+			return;
+		}
+		int i = 0;
+		int j = array.length - 1;
+		int tmp;
+		while (j > i) {
+			tmp = array[j];
+			array[j] = array[i];
+			array[i] = tmp;
+			j--;
+			i++;
+		}
+	}
 
 	/**
-     * <p>Reverses the order of the given array.</p>
-     *
-     * <p>This method does nothing for a <code>null</code> input array.</p>
-     *
-     * @param array  the array to reverse, may be <code>null</code>
-     */
-    
-    public static short[] flip(short[] array) {
-        if (array == null) {
-            return null;
-        }
-        int i = 0;
-        int j = array.length - 1;
-        short tmp;
-        while (j > i) {
-            tmp = array[j];
-            array[j] = array[i];
-            array[i] = tmp;
-            j--;
-            i++;
-        }
-        return array;
-    }
+	 * <p>
+	 * Reverses the order of the given array.
+	 * </p>
+	 * 
+	 * <p>
+	 * This method does nothing for a <code>null</code> input array.
+	 * </p>
+	 * 
+	 * @param array
+	 *            the array to reverse, may be <code>null</code>
+	 */
+
+	public static void flip(long[] array) {
+		if (array == null) {
+			return;
+		}
+		int i = 0;
+		int j = array.length - 1;
+		long tmp;
+		while (j > i) {
+			tmp = array[j];
+			array[j] = array[i];
+			array[i] = tmp;
+			j--;
+			i++;
+		}
+	}
+
+	/**
+	 * <p>
+	 * Reverses the order of the given array.
+	 * </p>
+	 * 
+	 * <p>
+	 * This method does nothing for a <code>null</code> input array.
+	 * </p>
+	 * 
+	 * @param array
+	 *            the array to reverse, may be <code>null</code>
+	 */
+
+	public static short[] flip(short[] array) {
+		if (array == null) {
+			return null;
+		}
+		int i = 0;
+		int j = array.length - 1;
+		short tmp;
+		while (j > i) {
+			tmp = array[j];
+			array[j] = array[i];
+			array[i] = tmp;
+			j--;
+			i++;
+		}
+		return array;
+	}
 
 	/**
 	 * Guaranteed upper bound for a binary search of an array. If values are
@@ -615,7 +640,7 @@ public class VectorMath {
 
 		return out;
 	}
-	
+
 	/**
 	 * Creates a vector of linearly spaced values
 	 * 
@@ -708,113 +733,109 @@ public class VectorMath {
 				+ vector[2] * vector[2]);
 	}
 
-    /**
+	/**
 	 * Compute the magnitude (length) of a vector
 	 * 
 	 * @param vector
 	 *            The vector
 	 * @return The magnitude of the vector
 	 **/
-	
+
 	public static int magnitude(int[] vector) {
 		return FixedPointUtilities.sqrt(FixedPointUtilities.multiply(vector[0],
 				vector[0])
 				+ FixedPointUtilities.multiply(vector[1], vector[1])
 				+ FixedPointUtilities.multiply(vector[2], vector[2]));
 	}
-    
-    /**
-	 * Returns a vector with negative values relative to the original
-	 * 
-	 * @param vector
-	 * @return
-	 */
-	
-	public static double[] negate(double[] vector){
-		for (int i = 0; i < vector.length; i++){
-			vector[i]=-vector[i];
-		}
-		return vector;
-	}
-    
-    /**
-	 * Returns a vector with negative values relative to the original
-	 * 
-	 * @param vector
-	 * @return
-	 */
 
-	
-	public static float[] negate(float[] vector){
-		for (int i = 0; i < vector.length; i++){
-			vector[i]=-vector[i];
-		}
-		return vector;
-	}
-    
-    /**
-	 * Returns a vector with negative values relative to the original
-	 * 
-	 * @param vector
-	 * @return
-	 */
-
-	
-	public static int[] negate(int[] vector){
-		for (int i = 0; i < vector.length; i++){
-			vector[i]=-vector[i];
-		}
-		return vector;
-	}
-
-    /**
-	 * Returns a vector with negative values relative to the original
-	 * 
-	 * @param vector
-	 * @return
-	 */
-	
-	public static long[] negate(long[] vector){
-		for (int i = 0; i < vector.length; i++){
-			vector[i]=-vector[i];
-		}
-		return vector;
-	}
-	
 	/**
-	 * Divides the vector by its sum to return a 1-norm of the
-	 * vector
+	 * Returns a vector with negative values relative to the original
 	 * 
 	 * @param vector
 	 * @return
 	 */
-	
-	public static double[] norm1(double[] vector){
+
+	public static double[] negate(double[] vector) {
+		for (int i = 0; i < vector.length; i++) {
+			vector[i] = -vector[i];
+		}
+		return vector;
+	}
+
+	/**
+	 * Returns a vector with negative values relative to the original
+	 * 
+	 * @param vector
+	 * @return
+	 */
+
+	public static float[] negate(float[] vector) {
+		for (int i = 0; i < vector.length; i++) {
+			vector[i] = -vector[i];
+		}
+		return vector;
+	}
+
+	/**
+	 * Returns a vector with negative values relative to the original
+	 * 
+	 * @param vector
+	 * @return
+	 */
+
+	public static int[] negate(int[] vector) {
+		for (int i = 0; i < vector.length; i++) {
+			vector[i] = -vector[i];
+		}
+		return vector;
+	}
+
+	/**
+	 * Returns a vector with negative values relative to the original
+	 * 
+	 * @param vector
+	 * @return
+	 */
+
+	public static long[] negate(long[] vector) {
+		for (int i = 0; i < vector.length; i++) {
+			vector[i] = -vector[i];
+		}
+		return vector;
+	}
+
+	/**
+	 * Divides the vector by its sum to return a 1-norm of the vector
+	 * 
+	 * @param vector
+	 * @return
+	 */
+
+	public static double[] norm1(double[] vector) {
 		double sum = sumAsDouble(vector);
 		double[] out = new double[vector.length];
-		for(int i = 0; i < vector.length; i++){
-			out[i] = vector[i]/sum;
+		for (int i = 0; i < vector.length; i++) {
+			out[i] = vector[i] / sum;
 		}
 		return out;
 	}
-	
+
 	/**
-	 * Divides the vector by its sum to return a 1-norm of the
-	 * vector
+	 * Divides the vector by its sum to return a 1-norm of the vector
 	 * 
 	 * @param vector
 	 * @return
 	 */
-	
-	public static float[] norm1(float[] vector){
+
+	public static float[] norm1(float[] vector) {
 		float sum = sumAsFloat(vector);
 		float[] out = new float[vector.length];
-		for(int i = 0; i < vector.length; i++){
-			out[i] = vector[i]/sum;
+		for (int i = 0; i < vector.length; i++) {
+			out[i] = vector[i] / sum;
 		}
 		return out;
 	}
-	
+
 	/**
 	 * Subtracts two vectors of equal dimension.
 	 * 
@@ -836,7 +857,7 @@ public class VectorMath {
 
 		return sum;
 	}
-	
+
 	/**
 	 * Subtracts two vectors of equal dimension.
 	 * 
@@ -858,7 +879,7 @@ public class VectorMath {
 
 		return sum;
 	}
-	
+
 	/**
 	 * Subtracts two vectors of equal dimension.
 	 * 
@@ -880,7 +901,7 @@ public class VectorMath {
 
 		return sum;
 	}
-	
+
 	/**
 	 * Subtracts two vectors of equal dimension.
 	 * 
@@ -902,7 +923,6 @@ public class VectorMath {
 
 		return sum;
 	}
-
 
 	/**
 	 * Returns the sum of the supplied vector as a double
@@ -997,15 +1017,16 @@ public class VectorMath {
 
 		return sum;
 	}
-	
+
 	/**
-	 * Returns the sample variance of the array values using
-	 * a one-pass algorithm.
+	 * Returns the sample variance of the array values using a one-pass
+	 * algorithm.
 	 * 
-	 * @param fa - A vector of floats
+	 * @param fa
+	 *            - A vector of floats
 	 * @return - The variance of the vector
 	 */
-	
+
 	public static float variance(float[] fa) {
 		int n = 0;
 		float mean = 0;
@@ -1020,25 +1041,37 @@ public class VectorMath {
 		float variance = M2 / (n - 1);
 		return variance;
 	}
-	
-	public static float weighted_variance(float[] fa, float[] weights){
 
-	    float sumweight = 0;
-	    float mean = 0;
-	    float M2 = 0;
-	    int n = fa.length;
-	 
-	    for (int i = 0; i < n; i++){
-	        float temp = weights[i] + sumweight;
-	        float delta = fa[i] - mean;
-	        float R = delta * weights[i] / temp;
-	        mean = mean + R;
-	        M2 = M2 + sumweight * delta * R;
-	        sumweight = temp;
+	/**
+	 * Retrieves the weighted variance given an array of float values and their
+	 * corresponding weight.
+	 * 
+	 * @param fa
+	 *            - an array of float values
+	 * @param weights
+	 *            - the relative weight of the value in fa at the corresponding
+	 *            position.
+	 * @return
+	 */
 
-	    }
-	 
-	    float variance_n = M2/sumweight;
-	    return variance_n * n/(n-1);
+	public static float weighted_variance(float[] fa, float[] weights) {
+
+		float sumweight = 0;
+		float mean = 0;
+		float M2 = 0;
+		int n = fa.length;
+
+		for (int i = 0; i < n; i++) {
+			float temp = weights[i] + sumweight;
+			float delta = fa[i] - mean;
+			float R = delta * weights[i] / temp;
+			mean = mean + R;
+			M2 = M2 + sumweight * delta * R;
+			sumweight = temp;
+
+		}
+
+		float variance_n = M2 / sumweight;
+		return variance_n * n / (n - 1);
 	}
 }

@@ -27,9 +27,31 @@ public class CoordinateMath {
 		return new Coordinate(a.x + b.x, a.y + b.y, a.z + b.z);
 	}
 
+	/**
+	 * Returns the angle between two lines in 3D space.  In this case, the
+	 * direction of the angle is relative to the sweep from the first arm
+	 * to the second.  
+	 * 
+	 * @param p1 - the terminus of one angle arm
+	 * @param vertex - the vertex of the angle
+	 * @param p2 - the terminus of the second angle arm.
+	 * @return
+	 */
+	
 	public final static double angle3DSigned(Coordinate p1, Coordinate vertex, Coordinate p2){
 		return angle3DSigned(p1,vertex,p2,p1);
 	}
+	
+	/**
+	 * Returns the angle between two lines in 3D space.  In this case, the
+	 * direction of the angle is relative to the reference Coordinate.  
+	 * 
+	 * @param p1 - the terminus of one angle arm
+	 * @param vertex - the vertex of the angle
+	 * @param p2 - the terminus of the second angle arm.
+	 * @param reference - the reference coordinate
+	 * @return
+	 */
 	
 	public final static double angle3DSigned(Coordinate p1, Coordinate vertex, Coordinate p2, Coordinate reference){
 		Coordinate v1 = subtract(p1,vertex);
@@ -47,9 +69,25 @@ public class CoordinateMath {
 		return sign < 0d ? -angle:angle;
 	}
 
+	/**
+	 * Returns the average position of two Coordinates.
+	 * 
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	
 	public static final Coordinate average(Coordinate a, Coordinate b){
 		return dilate(add(a,b),1d/2d);
 	}
+	
+	/**
+	 * Returns the average position (centroid) of an array of Coordinates.
+	 * 
+	 * @param a
+	 * @param b
+	 * @return
+	 */
 	
 	public static final Coordinate average(Coordinate[] coordinates){
 		
@@ -65,7 +103,13 @@ public class CoordinateMath {
 		return dilate(c,1d/n);
 	}
 	
-	public static Coordinate ceqd2lonlat(Coordinate c){
+	/**
+	 * Transforms a Coordinate from Cylindrical Equidistant Projection to
+	 * Geographic (longitude/latitude).
+	 * @param c - The Coordinate to be projected.
+	 */
+	
+	public static final Coordinate ceqd2lonlat(Coordinate c){
 		double[] coords = GeometryUtils.ceqd2lonlat(new double[]{c.x,c.y,c.z});
 		return new Coordinate(coords[0],coords[1],coords[2]);
 	}
@@ -75,7 +119,6 @@ public class CoordinateMath {
 	 * 
 	 * @param a - First coordinate/vector location
 	 * @param b - Second coordinate/vector location
-	 * @return
 	 */
 	
 	public final static Coordinate cross(Coordinate a, Coordinate b) {
@@ -100,7 +143,6 @@ public class CoordinateMath {
 	 * 
 	 * @param a - First coordinate/vector location
 	 * @param b - Second coordinate/vector location
-	 * @return
 	 */
 
 
@@ -112,25 +154,40 @@ public class CoordinateMath {
 		}
 	}
 	
+	/**
+	 * Returns the length between two Coordinates in 3D space.
+	 * @param c1 - The first Coordinate
+	 * @param c2 - The second Coordinate
+	 */
+	
 	public static final double length3D(Coordinate c1, Coordinate c2){
 		return magnitude(subtract(c2,c1));
 	}
 	
-	public static Coordinate lonlat2ceqd(Coordinate c){
+	/**
+	 * Transforms a Coordinate from Geographic projection (longitude/latitude)
+	 * to Cylindrical Equidistant Projection.
+	 * @param c - The Coordinate to be projected.
+	 */
+	
+	public static final Coordinate lonlat2ceqd(Coordinate c){
 		double[] coords = GeometryUtils.lonlat2ceqd(new double[]{c.x,c.y,c.z});
 		return new Coordinate(coords[0],coords[1],coords[2]);
 	}
 	
 	/**
-	 * Returns the distance from the origin/magnitude of the coordinate/vector 
-	 * 
-	 * @param c - Coordinate/vector location
-	 * @return
+	 * Returns the distance from the origin/magnitude of the coordinate/vector.
+	 * @param c - Coordinate/vector location.
 	 */
 	
 	public final static double magnitude(Coordinate c){
 		return Math.sqrt(dot(c,c));
 	}
+	
+	/**
+	 * Returns an array of midpoints from an array of Coordinate values.
+	 * @param ca - an array of Coordinate values.
+	 */
 	
 	public static final Coordinate[] midpoints(Coordinate[] ca){
 		if(ca.length < 2){throw new IllegalArgumentException("Coordinate array must contain 2 more more points");}
@@ -144,9 +201,8 @@ public class CoordinateMath {
 	/**
 	 * Returns the normalized cross product of two coordinate positions/vectors
 	 * 
-	 * @param a - First coordinate/vector location
-	 * @param b - Second coordinate/vector location
-	 * @return
+	 * @param a - First coordinate/vector location.
+	 * @param b - Second coordinate/vector location.
 	 */
 	
 	public final static Coordinate ncross(Coordinate a, Coordinate b) {
@@ -157,9 +213,8 @@ public class CoordinateMath {
 	/**
 	 * Returns the negative of the coordinate position
 	 * 
-	 * @param a - First coordinate/vector location
-	 * @param b - Second coordinate/vector location
-	 * @return
+	 * @param a - First coordinate/vector location.
+	 * @param b - Second coordinate/vector location.
 	 */
 	
 	public final static Coordinate negative(Coordinate c){
@@ -167,11 +222,10 @@ public class CoordinateMath {
 	}
 	
 	/**
-	 * Reduces a LineSegment by a given distance from the back to the front
+	 * Reduces a LineSegment by a given distance from the start towards the end
 	 * 
-	 * @param ls
-	 * @param distance
-	 * @return
+	 * @param ls - the LineSegment requiring reduction
+	 * @param distance - the distance the LineSegment should be reduced
 	 */
 	
 	public final static LineSegment nibble(LineSegment ls, double distance){
@@ -184,6 +238,11 @@ public class CoordinateMath {
 	    return ls;
 	}
 	
+	/**
+	 * Returns the normal (3D perpendicular) to a set of vertices.
+	 * @param vertices
+	 */
+	
 	public final static Coordinate normal(Coordinate[] vertices){
 		Coordinate v0 = vertices[0];
 		Coordinate v1 = vertices[1];
@@ -192,6 +251,12 @@ public class CoordinateMath {
 		Coordinate v = CoordinateMath.subtract(v2, v0);
 		return CoordinateMath.cross(u, v);
 	}
+	
+	/**
+	 * Returns the normal (3D perpendicular) to a set of vertices such that
+	 * the result always faces upwards in the z-direction.
+	 * @param vertices
+	 */
 	
 	public final static Coordinate normal_zplus(Coordinate[] vertices){
 		Coordinate tmp = normal(vertices);

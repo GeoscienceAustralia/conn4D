@@ -19,8 +19,6 @@ public interface VerticalMigration {
 	
 	/**
 	 * Generates a clone of the VerticalMigration object
-	 * 
-	 * @return
 	 */
 	
 	public VerticalMigration clone();

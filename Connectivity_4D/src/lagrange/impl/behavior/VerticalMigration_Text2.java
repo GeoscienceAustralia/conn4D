@@ -164,8 +164,6 @@ public class VerticalMigration_Text2 implements VerticalMigration, Cloneable {
 
 	/**
 	 * Retrieves the time interval units (e.g. Hours, Days)
-	 * 
-	 * @return
 	 */
 
 	public String getTimeIntervalUnits() {
@@ -184,8 +182,6 @@ public class VerticalMigration_Text2 implements VerticalMigration, Cloneable {
 
 	/**
 	 * Retrieves the vertical transition matrix as an array of doubles.
-	 * 
-	 * @return
 	 */
 
 	public double[][] getVmtx() {
@@ -204,8 +200,6 @@ public class VerticalMigration_Text2 implements VerticalMigration, Cloneable {
 
 	/**
 	 * Get the boundaries of the depth bins.
-	 * 
-	 * @return
 	 */
 
 	public double[] getBinBnds() {
@@ -224,7 +218,7 @@ public class VerticalMigration_Text2 implements VerticalMigration, Cloneable {
 	}
 
 	/**
-	 * Retrieves the bin that the particle is currently situated in.
+	 * Retrieves the depth bin that the particle is currently situated in.
 	 * 
 	 * @param depth
 	 * @return

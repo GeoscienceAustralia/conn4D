@@ -153,7 +153,7 @@ public class VerticalMigration_Text implements VerticalMigration, Cloneable {
 	/**
 	 * Retrieves the transition matrix for vertical movement
 	 * 
-	 * @param vmtx
+	 * @return vmtx
 	 *            - the transition matrix for vertical movement
 	 */
 
@@ -164,7 +164,7 @@ public class VerticalMigration_Text implements VerticalMigration, Cloneable {
 	/**
 	 * Sets the depth bins
 	 * 
-	 * @param bins
+	 * @return bins
 	 *            - depth bins as an array of doubles
 	 */
 

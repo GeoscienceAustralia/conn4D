@@ -17,7 +17,7 @@ import lagrange.impl.behavior.Mortality_Weibull;
 import lagrange.impl.behavior.Settlement_FloatOver;
 import lagrange.impl.behavior.Settlement_Simple;
 import lagrange.impl.behavior.VerticalSettling_Text;
-import lagrange.impl.collision.CollisionDetector_3D_Bathymetry;
+import lagrange.impl.collision.CollisionDetector_3D_Raster;
 import lagrange.impl.collision.Intersector_2D_Shapefile;
 import lagrange.impl.movement.Advection_RK4_3D;
 import lagrange.impl.movement.Diffusion_None;
@@ -162,7 +162,7 @@ public class ReleaseFactory_4D {
 				// Set up the land mask////////////////////////////
 				bathymetry = new Boundary_Raster_NetCDF(lp.bathymetryFileName,
 						lp.latName, lp.lonName);
-				cd = new CollisionDetector_3D_Bathymetry(bathymetry);
+				cd = new CollisionDetector_3D_Raster(bathymetry);
 			}
 
 		} catch (IOException e) {

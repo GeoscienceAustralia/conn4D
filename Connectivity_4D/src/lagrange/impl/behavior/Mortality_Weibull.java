@@ -9,8 +9,8 @@ import cern.jet.random.engine.RandomEngine;
 import cern.jet.random.engine.RandomSeedTable;
 
 /**
- * Implements mortality using a Weibull distribution.
- * See: http://en.wikipedia.org/wiki/Weibull_distribution
+ * Implements mortality using a Weibull distribution. See:
+ * http://en.wikipedia.org/wiki/Weibull_distribution
  * 
  * @author Johnathan Kool
  */
@@ -32,10 +32,12 @@ public class Mortality_Weibull implements Mortality {
 	/**
 	 * Constructor requiring shape parameters as input.
 	 * 
-	 * @param lambda - lambda shape parameter
-	 * @param k - k shape parameter
+	 * @param lambda
+	 *            - lambda shape parameter
+	 * @param k
+	 *            - k shape parameter
 	 */
-	
+
 	public Mortality_Weibull(double lambda, double k) {
 		this.lambda = lambda;
 		this.k = k;
@@ -171,9 +173,10 @@ public class Mortality_Weibull implements Mortality {
 	}
 
 	/**
-	 * Sets the k parameter being used by the function
+	 * Sets the k parameter being used by the function.
 	 * 
-	 * @return - the k parameter being used by the function
+	 * @param k
+	 *            - the k parameter to be used by the function.
 	 */
 
 	public void setK(double k) {
@@ -181,10 +184,11 @@ public class Mortality_Weibull implements Mortality {
 	}
 
 	/**
-	 * Sets the value of the lambda parameter being used by the function
+	 * Sets the value of the lambda parameter being used by the function.
 	 * 
 	 * @param lambda
-	 *            - the value of the lambda parameter being used by the function
+	 *            - the value of the lambda parameter being used by the
+	 *            function.
 	 */
 
 	public void setLambda(double lambda) {
@@ -192,10 +196,10 @@ public class Mortality_Weibull implements Mortality {
 	}
 
 	/**
-	 * Sets the time interval over which mortality occurs
+	 * Sets the time interval over which mortality occurs.
 	 * 
 	 * @param millis
-	 *            - the time interval over which mortality occurs
+	 *            - the time interval over which mortality occurs.
 	 */
 
 	@Override
