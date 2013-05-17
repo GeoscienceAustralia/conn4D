@@ -81,14 +81,4 @@ public class TestRelease {
 	public void test() {
 		r.run();
 	}
-	
-	public static void main(String[] args){
-		TestRelease tr = new TestRelease();
-		try {
-			tr.setUp();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		tr.test();
-	}
 }

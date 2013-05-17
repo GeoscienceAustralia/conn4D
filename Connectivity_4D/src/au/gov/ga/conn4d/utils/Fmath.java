@@ -46,7 +46,7 @@ import java.util.Vector;
 
 public class Fmath{
 
-        // HashMap for 'arithmetic integer' recognition nmethod
+        // HashMap for 'arithmetic integer' recognition method
         private static final Map<Object,Object> integers = new HashMap<Object,Object>();
         static{
             integers.put(Integer.class, BigDecimal.valueOf(Integer.MAX_VALUE));

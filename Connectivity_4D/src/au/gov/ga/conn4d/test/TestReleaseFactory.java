@@ -28,17 +28,6 @@ public class TestReleaseFactory {
 	ReleaseFactory_4D rf = new ReleaseFactory_4D();
 	GeometryFactory gf = new GeometryFactory();
 	
-	public static void main(String[] args){
-		TestReleaseFactory trf = new TestReleaseFactory();
-		try {
-			trf.setup();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		trf.test();
-		
-	}
-	
 	@Before
 	public void setup() throws Exception{
 				
@@ -107,7 +96,6 @@ public class TestReleaseFactory {
 		try {
 			doneSignal.await();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		rf.shutdown();

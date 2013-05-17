@@ -85,12 +85,14 @@ public class TestVelocityReader_NetCDF_4D {
 		Assert.assertNull(v3.getVelocities(0, 1, 1, 5));
 	}
 
+	//@Test
 	public void testOutOfBoundsUp() {
 		// Value at x=0, y=0, z = 5 (beyond surface)
 		Assert.assertArrayEquals(null, new double[] { 100.0, 100.0, 0.0 },
 				v3.getVelocities(0, -5, 1, 1), 1E-6);
 	}
 
+	@Test
 	public void testOutOfBoundsDown() {
 		// Value at x=0, y=0, z = -5
 		Assert.assertNull(v3.getVelocities(0, 5, 1, 1));

@@ -10,7 +10,7 @@ import au.gov.ga.conn4d.impl.readers.Reader_NetCDF_3D;
 public class TestReader_NetCDF_4D {
 
 	Reader_NetCDF_3D n3;
-	String filename = "E:/HPC/Modeling/AUS/Input/NetCDF/AUS_mld_2009.nc";
+	String filename = "Z:/NetCDF/AUS_u_2005.nc";
 	String varName = "mld";
 	String timeName = "Time";
 	String latName = "Latitude";
@@ -21,7 +21,7 @@ public class TestReader_NetCDF_4D {
 		n3 = new Reader_NetCDF_3D(filename, varName, timeName, latName, lonName);
 	}
 	
-	@Test
+	//@Test
 	public void test() {
 		Assert.assertEquals(23.5252,n3.getValue(39448, 100, -50),1E-4);
 		Assert.assertEquals(24.2172,n3.getValue(39448, 100.08, -50),1E-4);
