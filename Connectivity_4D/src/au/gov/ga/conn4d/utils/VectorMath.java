@@ -218,7 +218,6 @@ public class VectorMath {
 	public static double[] div(long[] num, long[] denom) {
 
 		int len = num.length;
-		assert len == denom.length;
 		if (len != denom.length) {
 			throw new IllegalArgumentException(
 					"Arrays must be of equal size for division");
@@ -686,12 +685,12 @@ public class VectorMath {
 	public static int[] linspace(int start, int end, int intervals) {
 
 		double range = end - start;
-		double spacing = range / intervals + 1;
-		int[] out = new int[intervals + 1];
+		double spacing = range / (intervals - 1);
+		int[] out = new int[intervals];
 
 		out[0] = start;
 
-		for (int i = 1; i < intervals + 1; i++) {
+		for (int i = 1; i < intervals; i++) {
 
 			out[i] = (int) (Math.round(out[i - 1] + spacing));
 
@@ -728,8 +727,8 @@ public class VectorMath {
 	 * @return The magnitude of the vector
 	 **/
 
-	public static float magnitude(float[] vector) {
-		return (float) Math.sqrt(vector[0] * vector[0] + vector[1] * vector[1]
+	public static double magnitude(float[] vector) {
+		return Math.sqrt(vector[0] * vector[0] + vector[1] * vector[1]
 				+ vector[2] * vector[2]);
 	}
 
@@ -741,11 +740,9 @@ public class VectorMath {
 	 * @return The magnitude of the vector
 	 **/
 
-	public static int magnitude(int[] vector) {
-		return FixedPointUtilities.sqrt(FixedPointUtilities.multiply(vector[0],
-				vector[0])
-				+ FixedPointUtilities.multiply(vector[1], vector[1])
-				+ FixedPointUtilities.multiply(vector[2], vector[2]));
+	public static double magnitude(int[] vector) {
+		return Math.sqrt(vector[0] * vector[0] + vector[1] * vector[1]
+				+ vector[2] * vector[2]);
 	}
 
 	/**

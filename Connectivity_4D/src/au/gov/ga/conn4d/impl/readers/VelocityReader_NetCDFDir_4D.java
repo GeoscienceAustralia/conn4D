@@ -16,7 +16,6 @@ import au.gov.ga.conn4d.utils.TimeConvert;
 import au.gov.ga.conn4d.utils.TriCubicSpline;
 import au.gov.ga.conn4d.utils.VectorMath;
 
-
 import ucar.ma2.Array;
 import ucar.ma2.InvalidRangeException;
 import ucar.nc2.NetcdfFile;
