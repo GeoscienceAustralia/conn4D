@@ -92,6 +92,5 @@ public class TestReferenceGrid {
 		Assert.assertArrayEquals(l.get(1),new int[]{1,0});
 		Assert.assertArrayEquals(l.get(2),new int[]{0,1});
 		Assert.assertArrayEquals(l.get(3),new int[]{0,0});
-		
 	}
 }

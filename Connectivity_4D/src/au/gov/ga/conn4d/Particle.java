@@ -673,6 +673,12 @@ public class Particle implements Cloneable {
 		sb.append("\t");
 		sb.append(x);
 		sb.append("\t");
+		sb.append(pz);
+		sb.append("\t");
+		sb.append(py);
+		sb.append("\t");
+		sb.append(px);
+		sb.append("\t");
 		sb.append(nf.format(u) + "," + nf.format(v) + "," + nf.format(w) + "\t");
 		sb.append(source);
 		return sb.toString();

@@ -3,7 +3,6 @@ package au.gov.ga.conn4d.impl.collision;
 import java.util.Arrays;
 import java.util.List;
 
-
 import au.gov.ga.conn4d.Boundary;
 import au.gov.ga.conn4d.Boundary_Raster;
 import au.gov.ga.conn4d.CollisionDetector;
@@ -17,7 +16,6 @@ import au.gov.ga.conn4d.utils.VectorMath;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.LineSegment;
-
 
 /**
  * Adjusts Particle position and condition upon encountering a Barrier.
@@ -44,8 +42,7 @@ public class CollisionDetector_3D_Raster implements CollisionDetector {
 
 	@Override
 	public CollisionDetector_3D_Raster clone() {
-		CollisionDetector_3D_Raster clone = new CollisionDetector_3D_Raster(
-				bnd);
+		CollisionDetector_3D_Raster clone = new CollisionDetector_3D_Raster(bnd);
 		clone.setProjectionTransform(this.pt);
 		return clone;
 	}
@@ -69,6 +66,18 @@ public class CollisionDetector_3D_Raster implements CollisionDetector {
 		rg.setLine(ln);
 
 		int[] startcell = bnd.getIndices(ln.p0.x, ln.p0.y);
+
+		if (startcell == null) {
+			p.setLost(true);
+			p.setX(ln.p1.x);
+			p.setY(ln.p1.y);
+			if (ln.p1.z > surfaceLevel) {
+				ln.p1.z = surfaceLevel;
+			}
+			p.setZ(ln.p1.z);
+			return;
+		}
+
 		int[] currentcell = new int[] { startcell[0], startcell[1] };
 		int[] endcell = bnd.getIndices(ln.p1.x, ln.p1.y);
 
@@ -102,7 +111,22 @@ public class CollisionDetector_3D_Raster implements CollisionDetector {
 
 			// Check whether an intersection has occurred
 
-			Coordinate isect = i3d.intersect(ln, bnd.getVertices(currentcell));
+			Coordinate[] vertices = bnd.getVertices(currentcell);
+			
+			// if no vertices are returned, we are out of bounds.  Set as Lost and terminate.
+			
+			if(vertices == null){
+				p.setLost(true);
+				p.setX(ln.p1.x);
+				p.setY(ln.p1.y);
+				if(ln.p1.z > surfaceLevel){
+					ln.p1.z = surfaceLevel;
+				}
+				p.setZ(ln.p1.z);
+				return;
+			}
+			
+			Coordinate isect = i3d.intersect(ln, vertices);
 
 			// If there was no intersection...
 
@@ -130,8 +154,19 @@ public class CollisionDetector_3D_Raster implements CollisionDetector {
 				// If there is only one cell, use its norm
 
 				if (cells.size() == 1) {
-					cnorm = CoordinateMath.normal_zplus(pt.project(bnd
-							.getVertices(cells.get(0))));
+					Coordinate[] verts = bnd
+							.getVertices(cells.get(0));
+					if(verts == null){
+						p.setLost(true);
+						p.setX(ln.p1.x);
+						p.setY(ln.p1.y);
+						if(ln.p1.z > surfaceLevel){
+							ln.p1.z = surfaceLevel;
+						}
+						p.setZ(ln.p1.z);
+						return;
+					}
+					cnorm = CoordinateMath.normal_zplus(pt.project(verts));
 				}
 
 				// Otherwise determine the average of the norms
@@ -143,6 +178,16 @@ public class CollisionDetector_3D_Raster implements CollisionDetector {
 						// z-plus ensures norms are facing up.
 
 						Coordinate[] v = bnd.getVertices(cells.get(i));
+						if(v == null){
+							p.setLost(true);
+							p.setX(ln.p1.x);
+							p.setY(ln.p1.y);
+							if(ln.p1.z > surfaceLevel){
+								ln.p1.z = surfaceLevel;
+							}
+							p.setZ(ln.p1.z);
+							return;
+						}
 						norms[i] = CoordinateMath.normal_zplus(pt.project(v));
 					}
 					cnorm = CoordinateMath.average(norms);
@@ -226,7 +271,6 @@ public class CollisionDetector_3D_Raster implements CollisionDetector {
 	public double getSurfaceLevel() {
 		return surfaceLevel;
 	}
-
 
 	/**
 	 * Identifies whether a 4-dimensional coordinate (x,y,z,t) is within bounds

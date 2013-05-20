@@ -1,11 +1,9 @@
 package au.gov.ga.conn4d.impl.collision;
 
-
 import au.gov.ga.conn4d.utils.CoordinateMath;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.LineSegment;
-
 
 /**
  * Performs intersection and reflection operations associated with a raster
@@ -31,10 +29,22 @@ public class Intersector_3D_Raster {
 
 	public Coordinate intersect(LineSegment ls, Coordinate[] vertices) {
 		// Better criteria might be combined distance to the centroid?
-		double d1 = CoordinateMath.magnitude(CoordinateMath.subtract(
-				vertices[0], vertices[2]));
-		double d2 = CoordinateMath.magnitude(CoordinateMath.subtract(
-				vertices[1], vertices[3]));
+		// double d1 = CoordinateMath.magnitude(CoordinateMath.subtract(
+		// vertices[0], vertices[2]));
+		// double d2 = CoordinateMath.magnitude(CoordinateMath.subtract(
+		// vertices[1], vertices[3]));
+
+		double d1 = 0;
+		double d2 = 0;
+
+		try {
+			d1 = CoordinateMath.magnitude(CoordinateMath.subtract(vertices[0],
+					vertices[2]));
+			d2 = CoordinateMath.magnitude(CoordinateMath.subtract(vertices[1],
+					vertices[3]));
+		} catch (NullPointerException npe) {
+			intersect(ls, vertices);
+		}
 
 		Coordinate[] t1, t2;
 
