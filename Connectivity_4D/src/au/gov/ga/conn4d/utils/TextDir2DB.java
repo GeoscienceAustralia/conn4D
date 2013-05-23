@@ -199,7 +199,6 @@ public class TextDir2DB {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public void writeTRJTree(String root) {
@@ -224,7 +223,11 @@ public class TextDir2DB {
 			System.out.println(dirname + " is not a directory.  Skipping.");
 			return;
 		}
+		
+		System.out.println("Reading files.");
 		File[] files = dir.listFiles();
+		System.out.println("Sorting files.");
+		Arrays.sort(files);
 
 		for (File f : files) {
 			for (File f2 : f.listFiles(new FileExtensionFilter(".txt"))) {
@@ -356,11 +359,20 @@ public class TextDir2DB {
 	// }
 
 	public static void main(String[] args) {
+		if(args.length!=2){
+			System.out.println("Usage:  TextDir2DB <path location> <table name>");
+			System.exit(0);
+		}
 		System.out.println("Starting...");
 		TextDir2DB td = new TextDir2DB();
-		td.makeTable("T3_D5");
+		td.makeTable(args[1]);
 		// writeTRJTree("E:/Temp/Output_test");
-		td.writeTRJDir("E:/Temp/Output_test/Pilot_D50-75/2009-03-02", 5);
+		String path = args[0];
+		String sub = path.substring(path.indexOf("_D"+2));
+		sub = sub.substring(0,sub.indexOf(File.separator));
+		int depth = td.depthvals.indexOf(sub);
+		//"E:/Temp/Output_test/Pilot_D50-75/2009-03-02"
+		td.writeTRJDir(path, depth);
 		System.out.println("Complete");
 	}
 }

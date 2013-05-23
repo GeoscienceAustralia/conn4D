@@ -316,11 +316,20 @@ public class TestVectorMath {
 				VectorMath.sumAsLong(new long[] { 0l, 1l, 2l, 3l, 4l }));
 	}
 
-	/*
-	 * @Test public void testVariance() { fail("Not yet implemented"); }
-	 * 
-	 * @Test public void testWeighted_variance() { fail("Not yet implemented");
-	 * }
-	 */
+	@Test
+	public void testVariance() {
+		Assert.assertEquals(3.5,
+				VectorMath.variance(new float[] { 1, 2, 3, 4, 5, 6 }), eps);
+		Assert.assertEquals(Float.NaN, VectorMath.variance(new float[] {}),
+				Float.MIN_VALUE);
+		Assert.assertEquals(Float.NaN, VectorMath.variance(new float[] { 1 }),
+				Float.MIN_VALUE);
+		Assert.assertEquals(0.5, VectorMath.variance(new float[] { 1, 2 }), eps);
+	}
+
+	@Test
+	public void testWeighted_variance() {
+		Assert.assertEquals(1.8, VectorMath.weighted_variance(new float[] { 1, 2, 3, 4, 5, 6 },new float[]{1,2,5,5,2,1}), 1E-6);
+	}
 
 }

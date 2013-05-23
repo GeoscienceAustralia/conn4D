@@ -23,7 +23,6 @@ public class TestIndexLookup_Cell{
 		try {
 			ncFile = NetcdfFile.open("C://Temp//xmap.nc");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		var = ncFile.findVariable("Longitude");
@@ -46,10 +45,5 @@ public class TestIndexLookup_Cell{
 		Assert.assertEquals(201,loc.lookup(1.05));
 		Assert.assertEquals(201,loc.lookup(1.07));
 		Assert.assertEquals(201,loc.lookup(18));
-	}
-	
-	public static void main(String[] args){
-		TestIndexLookup_Cell tl = new TestIndexLookup_Cell();
-		tl.testLocate();
 	}
 }

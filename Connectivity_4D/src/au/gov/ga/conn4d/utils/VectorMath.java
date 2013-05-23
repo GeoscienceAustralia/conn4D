@@ -1023,6 +1023,10 @@ public class VectorMath {
 		float mean = 0;
 		float M2 = 0;
 
+		if(fa == null || fa.length==0){
+			return Float.NaN;
+		}
+		
 		for (int i = 0; i < fa.length; i++) {
 			n = n + 1;
 			float delta = fa[i] - mean;
@@ -1045,7 +1049,7 @@ public class VectorMath {
 	 */
 
 	public static float weighted_variance(float[] fa, float[] weights) {
-
+		
 		float sumweight = 0;
 		float mean = 0;
 		float M2 = 0;
@@ -1058,7 +1062,6 @@ public class VectorMath {
 			mean = mean + R;
 			M2 = M2 + sumweight * delta * R;
 			sumweight = temp;
-
 		}
 
 		float variance_n = M2 / sumweight;
