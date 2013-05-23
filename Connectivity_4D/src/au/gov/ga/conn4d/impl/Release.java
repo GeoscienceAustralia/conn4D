@@ -4,7 +4,7 @@ import java.util.concurrent.CountDownLatch;
 
 
 import au.gov.ga.conn4d.CollisionDetector;
-import au.gov.ga.conn4d.Diffusion;
+import au.gov.ga.conn4d.Diffuser;
 import au.gov.ga.conn4d.Mortality;
 import au.gov.ga.conn4d.Movement;
 import au.gov.ga.conn4d.Parameters;
@@ -35,7 +35,7 @@ public class Release implements Runnable {
 	private VerticalMigration vm;
 	private Settlement sm;
 	private Movement mv;
-	private Diffusion df;
+	private Diffuser df;
 	private CollisionDetector collisionDetector;
 	private CountDownLatch doneSignal;
 	private TrajectoryWriter tw;
@@ -61,7 +61,7 @@ public class Release implements Runnable {
 	 * Retrieves the Diffusion object associated with this instance
 	 */
 
-	public Diffusion getDiffusion() {
+	public Diffuser getDiffusion() {
 		return df;
 	}
 
@@ -390,7 +390,7 @@ public class Release implements Runnable {
 	 *            - The Diffusion object
 	 */
 
-	public void setDiffusion(Diffusion df) {
+	public void setDiffusion(Diffuser df) {
 		this.df = df;
 	}
 

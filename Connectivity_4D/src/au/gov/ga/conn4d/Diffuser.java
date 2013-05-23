@@ -7,7 +7,7 @@ package au.gov.ga.conn4d;
  *
  */
 
-public interface Diffusion {
+public interface Diffuser {
 
 	/**
 	 * This method changes the properties of the particle object accordingly.
@@ -21,6 +21,6 @@ public interface Diffusion {
 	 * Returns a clone of the Diffusion object
 	 */
 	
-	public abstract Diffusion clone();
+	public abstract Diffuser clone();
 
 }

@@ -1,4 +1,4 @@
-package au.gov.ga.conn4d.test;
+package au.gov.ga.conn4d.test.impl;
 
 
 import org.junit.After;
@@ -17,6 +17,7 @@ import au.gov.ga.conn4d.impl.movement.Advection_RK4_3D;
 import au.gov.ga.conn4d.impl.movement.Diffusion_None;
 import au.gov.ga.conn4d.impl.readers.VelocityReader_NetCDF_4D;
 import au.gov.ga.conn4d.parameters.Parameters_Simple;
+import au.gov.ga.conn4d.test.NullPlug;
 
 public class TestRelease {
 

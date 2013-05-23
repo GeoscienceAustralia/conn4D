@@ -1,4 +1,4 @@
-package au.gov.ga.conn4d.test;
+package au.gov.ga.conn4d.test.impl;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -22,6 +22,7 @@ import au.gov.ga.conn4d.impl.readers.VelocityReader_NetCDF_4D;
 import au.gov.ga.conn4d.impl.writers.TrajectoryWriter_Text;
 import au.gov.ga.conn4d.input.ConfigurationOverride;
 import au.gov.ga.conn4d.parameters.Parameters_Test;
+import au.gov.ga.conn4d.test.NullPlug;
 
 public class TestReleaseFactory {
 	

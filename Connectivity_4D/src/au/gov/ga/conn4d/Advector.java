@@ -7,7 +7,7 @@ package au.gov.ga.conn4d;
  *
  */
 
-public interface Advection {
+public interface Advector {
 	
 	/**
 	 * This method changes the properties of the particle object accordingly.
@@ -21,7 +21,7 @@ public interface Advection {
 	 * Generates a clone of the Advection instance 
 	 */
 	
-	public Advection clone();
+	public Advector clone();
 	
 	/**
 	 * Releases resources associated with the object

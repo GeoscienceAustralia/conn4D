@@ -5,7 +5,7 @@ package au.gov.ga.conn4d.impl.movement;
  * 		    Ashwanth Srinivasan, and Robert K. Cowen.
  */
 
-import au.gov.ga.conn4d.Advection;
+import au.gov.ga.conn4d.Advector;
 import au.gov.ga.conn4d.Movement;
 import au.gov.ga.conn4d.Particle;
 import au.gov.ga.conn4d.VelocityReader;
@@ -20,7 +20,7 @@ import au.gov.ga.conn4d.utils.GeometryUtils;
  * http://en.wikipedia.org/wiki/Cash%E2%80%93Karp_method
  */
 
-public class Advection_RK4_3D implements Advection, Movement, Cloneable {
+public class Advection_RK4_3D implements Advector, Movement, Cloneable {
 
 	private float h;
 	private VelocityReader vr = new VelocityReader_NetCDF_4D();

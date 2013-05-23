@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import au.gov.ga.conn4d.Boundary;
 import au.gov.ga.conn4d.CollisionDetector;
-import au.gov.ga.conn4d.Diffusion;
+import au.gov.ga.conn4d.Diffuser;
 import au.gov.ga.conn4d.Mortality;
 import au.gov.ga.conn4d.Movement;
 import au.gov.ga.conn4d.Parameters;
@@ -60,7 +60,7 @@ public class ReleaseFactory_4D {
 	private Movement mv;
 	private Shapefile sh;
 	private CollisionDetector cd;
-	private Diffusion df;
+	private Diffuser df;
 	private Parameters prm;
 	private Boundary bathymetry;
 	private long time;
@@ -392,7 +392,7 @@ public class ReleaseFactory_4D {
 	 * @return - The Diffusion object
 	 */
 
-	public Diffusion getDiffusion() {
+	public Diffuser getDiffusion() {
 		return df;
 	}
 
@@ -526,7 +526,7 @@ public class ReleaseFactory_4D {
 	 *            - The Diffusion object
 	 */
 
-	public void setDiffusion(Diffusion df) {
+	public void setDiffusion(Diffuser df) {
 		this.df = df;
 	}
 

@@ -1,6 +1,6 @@
 package au.gov.ga.conn4d.impl.movement;
 
-import au.gov.ga.conn4d.Diffusion;
+import au.gov.ga.conn4d.Diffuser;
 import au.gov.ga.conn4d.Particle;
 import au.gov.ga.conn4d.utils.GeometryUtils;
 import cern.jet.random.Normal;
@@ -16,7 +16,7 @@ import cern.jet.random.engine.RandomSeedTable;
  *         Claire Paris and Ashwanth Srinivasan.
  */
 
-public class Diffusion_Simple_3D implements Diffusion, Cloneable {
+public class Diffusion_Simple_3D implements Diffuser, Cloneable {
 
 	// from http://drs.nio.org/drs/bitstream/2264/503/1/Proc_AP_Akademi_Sci_7_123.pdf
 	// horizontal eddy diffusion coefficients are around 1E3 cm2/s.  Vertical coeffs are around 1 cm2/s

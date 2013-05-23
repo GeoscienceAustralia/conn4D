@@ -5,6 +5,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+import au.gov.ga.conn4d.test.impl.TestRelease;
+import au.gov.ga.conn4d.test.impl.TestReleaseFactory;
 import au.gov.ga.conn4d.test.impl.behavior.TestMortality_None;
 import au.gov.ga.conn4d.test.impl.collision.TestCollisionDetection_3D_Raster;
 import au.gov.ga.conn4d.test.impl.collision.TestIntersector_3D_Poly;
