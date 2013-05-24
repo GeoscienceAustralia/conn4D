@@ -54,7 +54,7 @@ public class ParameterReader {
 					read(parse);
 				} catch (SecurityException ex) {
 					System.out.println("WARNING: Security violation.  Field "
-							+ tk + "cannot be altered.");
+							+ tk + " cannot be altered.");
 					parse = br.readLine();
 					continue;
 				} catch (NoSuchFieldException ex) {
@@ -63,13 +63,12 @@ public class ParameterReader {
 					parse = br.readLine();
 					continue;
 				} catch (IllegalAccessException ex) {
-					System.out.println("WARNING: Field + " + tk
-							+ "could not be modified (Possibly inappropriate "
+					System.out.println("WARNING: Field " + tk
+							+ " could not be modified (Possibly inappropriate "
 							+ "input form).  Continuing...");
 					parse = br.readLine();
 					continue;
 				}
-
 			}
 		}
 

@@ -16,7 +16,7 @@ import au.gov.ga.conn4d.impl.collision.CollisionDetector_None;
 import au.gov.ga.conn4d.impl.movement.Advection_RK4_3D;
 import au.gov.ga.conn4d.impl.movement.Diffusion_None;
 import au.gov.ga.conn4d.impl.readers.VelocityReader_NetCDF_4D;
-import au.gov.ga.conn4d.parameters.Parameters_Simple;
+import au.gov.ga.conn4d.parameters.Parameters_Test;
 import au.gov.ga.conn4d.test.NullPlug;
 
 public class TestRelease {
@@ -27,7 +27,7 @@ public class TestRelease {
 	String uFile = "C:/Temp/Ones.nc";//"C:/Temp/im_y.nc";
 	String vFile = "C:/Temp/Ones.nc";//"C:/Temp/im_x.nc";
 	String wFile = "C:/Temp/Ones.nc";//"C:/Temp/im_z.nc";
-	Parameters prm = new Parameters_Simple();
+	Parameters prm = new Parameters_Test();
 	GeometryFactory gf = new GeometryFactory();
 	
 	@Before
