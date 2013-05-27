@@ -28,7 +28,7 @@ public class TrajectoryWriter_Text implements TrajectoryWriter {
 	private String timeUnits = "Date";
 	private String durationUnits = "Days";
 	private boolean negCoord = false;
-	private boolean isEmpty = true;
+	private boolean emptyFile = true;
 
 	/**
 	 * Constructor that uses a String to generate the output file.
@@ -62,10 +62,8 @@ public class TrajectoryWriter_Text implements TrajectoryWriter {
 			stl.write("ID\tTIME\tDURATION\tDEPTH\tLON\tLAT\tDIST\tLOCATION\n");
 
 		} catch (IOException e) {
-			System.out
-					.println("\n\nCould not create/access trajectory output file: "
-							+ outputFile + ".\n\n");
-			System.out.println("Please ensure that the output directory given in the configuration file exists.");
+			throw new IllegalArgumentException("\n\nCould not create/access trajectory output file: "
+					+ outputFile + ".\n\nPlease ensure that the output directory given in the configuration file exists.");
 		}
 
 	}
@@ -123,7 +121,7 @@ public class TrajectoryWriter_Text implements TrajectoryWriter {
 		sb.append("\n");
 
 		tw.write(sb.toString());
-		isEmpty = false;
+		emptyFile = false;
 		}
 	}
 
@@ -143,7 +141,7 @@ public class TrajectoryWriter_Text implements TrajectoryWriter {
 
 		stl.close();
 		
-		if(isEmpty){
+		if(emptyFile){
 			File file = new File(filename);
 			file.delete();
 			File sfile = new File(filename.substring(0, filename.lastIndexOf("."))+ ".set");
@@ -172,5 +170,9 @@ public class TrajectoryWriter_Text implements TrajectoryWriter {
 	@Override
 	public void setNegCoord(boolean negCoord){
 		this.negCoord = negCoord;
+	}
+	
+	public boolean isEmptyFile(){
+		return emptyFile;
 	}
 }

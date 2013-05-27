@@ -575,16 +575,6 @@ public class Particle implements Cloneable {
 	}
 
 	/**
-	 * Assigns the set of visited destinations
-	 * 
-	 * @param visited
-	 */
-
-	public void setVisited(Set<Long> visited) {
-		this.visited = visited;
-	}
-
-	/**
 	 * Sets the W (vertical velocity) value of the Particle
 	 * 
 	 * @param w
