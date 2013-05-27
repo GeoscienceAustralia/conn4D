@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import au.gov.ga.conn4d.Boundary_Raster;
 import au.gov.ga.conn4d.CollisionDetector;
-
 import au.gov.ga.conn4d.impl.collision.CollisionDetector_3D_Raster;
 import au.gov.ga.conn4d.impl.readers.Boundary_Raster_NetCDF;
 import au.gov.ga.conn4d.impl.readers.Shapefile;

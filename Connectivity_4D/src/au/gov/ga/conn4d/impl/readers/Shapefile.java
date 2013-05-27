@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.NoSuchElementException;
 
-
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
 import org.geotools.data.shapefile.ShapefileDataStore;

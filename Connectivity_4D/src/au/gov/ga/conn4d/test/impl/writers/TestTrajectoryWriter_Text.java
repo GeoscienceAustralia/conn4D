@@ -1,6 +1,7 @@
 package au.gov.ga.conn4d.test.impl.writers;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 

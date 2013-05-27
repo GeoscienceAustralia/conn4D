@@ -6,10 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import au.gov.ga.conn4d.Parameters;
-
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.GeometryFactory;
-
 import au.gov.ga.conn4d.impl.Release;
 import au.gov.ga.conn4d.impl.behavior.Settlement_None;
 import au.gov.ga.conn4d.impl.collision.CollisionDetector_None;
@@ -18,6 +14,9 @@ import au.gov.ga.conn4d.impl.movement.Diffusion_None;
 import au.gov.ga.conn4d.impl.readers.VelocityReader_NetCDF_4D;
 import au.gov.ga.conn4d.parameters.Parameters_Test;
 import au.gov.ga.conn4d.test.NullPlug;
+
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.GeometryFactory;
 
 public class TestRelease {
 

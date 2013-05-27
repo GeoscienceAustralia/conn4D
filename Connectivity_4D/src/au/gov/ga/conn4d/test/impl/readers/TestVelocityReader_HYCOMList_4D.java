@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-
 import org.junit.Before;
 import org.junit.Test;
 

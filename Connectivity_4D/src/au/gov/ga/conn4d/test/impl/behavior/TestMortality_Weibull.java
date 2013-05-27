@@ -3,7 +3,6 @@ package au.gov.ga.conn4d.test.impl.behavior;
 import org.junit.Test;
 
 import au.gov.ga.conn4d.Particle;
-
 import au.gov.ga.conn4d.impl.behavior.Mortality_Weibull;
 import au.gov.ga.conn4d.utils.TimeConvert;
 

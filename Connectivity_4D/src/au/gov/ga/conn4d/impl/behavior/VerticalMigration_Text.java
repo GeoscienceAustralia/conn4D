@@ -8,8 +8,6 @@ import au.gov.ga.conn4d.VerticalMigration;
 import au.gov.ga.conn4d.utils.TimeConvert;
 import au.gov.ga.conn4d.utils.VectorMath;
 import au.gov.ga.conn4d.utils.VectorUtils;
-
-
 import cern.jet.random.Empirical;
 import cern.jet.random.EmpiricalWalker;
 import cern.jet.random.Uniform;

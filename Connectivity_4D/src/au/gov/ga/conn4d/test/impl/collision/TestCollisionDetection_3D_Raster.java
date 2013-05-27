@@ -3,19 +3,17 @@ package au.gov.ga.conn4d.test.impl.collision;
 import java.io.IOException;
 import java.util.Arrays;
 
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import au.gov.ga.conn4d.Boundary;
 import au.gov.ga.conn4d.Particle;
-
-import com.vividsolutions.jts.geom.Coordinate;
-
 import au.gov.ga.conn4d.impl.collision.CollisionDetector_3D_Raster;
 import au.gov.ga.conn4d.impl.readers.Boundary_Raster_NetCDF;
 import au.gov.ga.conn4d.utils.PrjTransform_None;
+
+import com.vividsolutions.jts.geom.Coordinate;
 
 public class TestCollisionDetection_3D_Raster {
 	

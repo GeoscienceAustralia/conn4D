@@ -1,13 +1,11 @@
 package au.gov.ga.conn4d.test.impl.behavior;
 
-import static org.junit.Assert.*;
 import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import au.gov.ga.conn4d.Particle;
-
 import au.gov.ga.conn4d.impl.behavior.Mortality_None;
 
 

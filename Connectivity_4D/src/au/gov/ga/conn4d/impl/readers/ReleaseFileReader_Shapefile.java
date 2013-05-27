@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.NoSuchElementException;
 
-
 import org.geotools.data.FeatureSource;
 import org.geotools.data.shapefile.ShapefileDataStore;
 import org.geotools.feature.FeatureCollection;
@@ -14,10 +13,9 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 import au.gov.ga.conn4d.Parameters;
+import au.gov.ga.conn4d.input.ReleaseFileReader;
 
 import com.vividsolutions.jts.geom.Geometry;
-
-import au.gov.ga.conn4d.input.ReleaseFileReader;
 
 /**
  * ReleaseFileReader using a shapefile (.shp) to provide release parameters at

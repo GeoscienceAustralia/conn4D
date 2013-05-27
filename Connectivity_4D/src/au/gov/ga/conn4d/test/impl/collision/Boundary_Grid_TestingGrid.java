@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
 import au.gov.ga.conn4d.Boundary_Raster;
 
 import com.vividsolutions.jts.geom.Coordinate;

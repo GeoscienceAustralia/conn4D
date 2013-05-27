@@ -3,7 +3,6 @@ package au.gov.ga.conn4d.test.impl.readers;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 import au.gov.ga.conn4d.impl.readers.Reader_NetCDF_3D;
 

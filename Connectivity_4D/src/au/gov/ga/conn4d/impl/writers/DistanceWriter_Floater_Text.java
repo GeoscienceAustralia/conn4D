@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import au.gov.ga.conn4d.Particle;
-
 import au.gov.ga.conn4d.output.DistanceWriter;
 
 

@@ -3,14 +3,13 @@ package au.gov.ga.conn4d.test.utils;
 import java.util.Arrays;
 import java.util.List;
 
-
 import org.junit.Assert;
 import org.junit.Test;
 
+import au.gov.ga.conn4d.utils.ReferenceGrid;
+
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.LineSegment;
-
-import au.gov.ga.conn4d.utils.ReferenceGrid;
 
 public class TestReferenceGrid {
 	//ReferenceGrid rg = new ReferenceGrid(91.992620468,-60.0074367,.0099983215);

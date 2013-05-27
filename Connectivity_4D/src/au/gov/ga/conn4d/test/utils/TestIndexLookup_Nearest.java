@@ -4,14 +4,12 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 
-
 import org.junit.Before;
 import org.junit.Test;
 
-import au.gov.ga.conn4d.utils.IndexLookup_Nearest;
-
 import ucar.nc2.NetcdfFile;
 import ucar.nc2.Variable;
+import au.gov.ga.conn4d.utils.IndexLookup_Nearest;
 
 public class TestIndexLookup_Nearest {
 

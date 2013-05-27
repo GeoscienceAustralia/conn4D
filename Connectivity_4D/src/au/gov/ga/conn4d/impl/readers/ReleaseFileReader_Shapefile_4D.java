@@ -6,10 +6,9 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import au.gov.ga.conn4d.Parameters;
-import au.gov.ga.conn4d.impl.readers.ReleaseFileReader_Shapefile;
-
 import org.geotools.data.shapefile.ShapefileDataStore;
+
+import au.gov.ga.conn4d.Parameters;
 
 import com.vividsolutions.jts.geom.Geometry;
 

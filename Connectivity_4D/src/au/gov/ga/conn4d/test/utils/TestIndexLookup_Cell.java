@@ -6,10 +6,9 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import au.gov.ga.conn4d.utils.IndexLookup_Cell;
-
 import ucar.nc2.NetcdfFile;
 import ucar.nc2.Variable;
+import au.gov.ga.conn4d.utils.IndexLookup_Cell;
 
 public class TestIndexLookup_Cell{
 	

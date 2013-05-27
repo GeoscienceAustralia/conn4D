@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.StringTokenizer;
 
 import au.gov.ga.conn4d.test.utils.Filter;
-
 import cern.jet.random.Normal;
 
 public class VectorUtils {

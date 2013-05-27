@@ -5,13 +5,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import au.gov.ga.conn4d.impl.collision.Intersector_3D_Poly;
+
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineSegment;
 //import com.vividsolutions.jts.geom.LinearRing;
-
-import au.gov.ga.conn4d.impl.collision.Intersector_3D_Poly;
 
 public class TestIntersector_3D_Poly {
 

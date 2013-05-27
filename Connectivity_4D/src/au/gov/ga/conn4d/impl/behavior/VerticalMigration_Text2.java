@@ -12,8 +12,6 @@ import au.gov.ga.conn4d.impl.readers.Boundary_Raster_NetCDF;
 import au.gov.ga.conn4d.utils.TimeConvert;
 import au.gov.ga.conn4d.utils.VectorMath;
 import au.gov.ga.conn4d.utils.VectorUtils;
-
-
 import cern.jet.random.Empirical;
 import cern.jet.random.EmpiricalWalker;
 import cern.jet.random.Uniform;

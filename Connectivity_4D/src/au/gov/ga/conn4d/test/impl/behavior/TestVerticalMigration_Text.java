@@ -1,13 +1,12 @@
 package au.gov.ga.conn4d.test.impl.behavior;
 
+import junit.framework.TestCase;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import au.gov.ga.conn4d.Particle;
-
 import au.gov.ga.conn4d.impl.behavior.VerticalMigration_Text;
-
-import junit.framework.TestCase;
 
 public class TestVerticalMigration_Text extends TestCase {
 

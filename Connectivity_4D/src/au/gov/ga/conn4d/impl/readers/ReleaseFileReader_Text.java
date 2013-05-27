@@ -6,14 +6,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-
 import au.gov.ga.conn4d.Parameters;
+import au.gov.ga.conn4d.input.ReleaseFileReader;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
-
-import au.gov.ga.conn4d.input.ReleaseFileReader;
 
 /**
  * Reads release information from a text file. Very old class - may not be

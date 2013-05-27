@@ -2,7 +2,6 @@ package au.gov.ga.conn4d.impl;
 
 import java.util.concurrent.CountDownLatch;
 
-
 import au.gov.ga.conn4d.CollisionDetector;
 import au.gov.ga.conn4d.Diffuser;
 import au.gov.ga.conn4d.Mortality;

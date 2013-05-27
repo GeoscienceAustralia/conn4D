@@ -2,13 +2,10 @@ package au.gov.ga.conn4d.impl.readers;
 
 import java.io.IOException;
 
-import au.gov.ga.conn4d.impl.readers.Reader_NetCDF_3D;
-import au.gov.ga.conn4d.utils.IndexLookup_Nearest;
-
-
 import ucar.ma2.Array;
 import ucar.ma2.InvalidRangeException;
 import ucar.nc2.NetcdfFile;
+import au.gov.ga.conn4d.utils.IndexLookup_Nearest;
 
 /**
  * Retrieves values from a 3D NetCDF File (time,y,x)

@@ -8,9 +8,8 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 
 import au.gov.ga.conn4d.Particle;
-import au.gov.ga.conn4d.utils.TimeConvert;
-
 import au.gov.ga.conn4d.output.TrajectoryWriter;
+import au.gov.ga.conn4d.utils.TimeConvert;
 
 
 /**

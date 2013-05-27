@@ -30,13 +30,12 @@ import au.gov.ga.conn4d.impl.readers.VelocityReader_NetCDF_4D;
 import au.gov.ga.conn4d.impl.writers.DistanceWriter_Text;
 import au.gov.ga.conn4d.impl.writers.MatrixWriter_Text;
 import au.gov.ga.conn4d.impl.writers.TrajectoryWriter_Text;
+import au.gov.ga.conn4d.input.ConfigurationOverride;
 import au.gov.ga.conn4d.output.DistanceWriter;
 import au.gov.ga.conn4d.output.MatrixWriter;
 import au.gov.ga.conn4d.output.TrajectoryWriter;
 import au.gov.ga.conn4d.utils.TimeConvert;
 import au.gov.ga.conn4d.utils.VectorUtils;
-
-import au.gov.ga.conn4d.input.ConfigurationOverride;
 
 
 /**

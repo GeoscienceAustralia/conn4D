@@ -2,7 +2,6 @@ package au.gov.ga.conn4d.test.impl.readers;
 
 import java.io.IOException;
 
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

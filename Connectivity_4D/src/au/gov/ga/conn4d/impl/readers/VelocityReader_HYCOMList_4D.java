@@ -11,18 +11,15 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.TreeMap;
 
-import au.gov.ga.conn4d.VelocityReader;
-import au.gov.ga.conn4d.impl.readers.VelocityReader_HYCOMList_4D;
-import au.gov.ga.conn4d.utils.FilenamePatternFilter;
-import au.gov.ga.conn4d.utils.IndexLookup_Nearest;
-import au.gov.ga.conn4d.utils.TimeConvert;
-import au.gov.ga.conn4d.utils.TriCubicSpline;
-
-
 import ucar.ma2.Array;
 import ucar.ma2.InvalidRangeException;
 import ucar.nc2.NetcdfFile;
 import ucar.nc2.Variable;
+import au.gov.ga.conn4d.VelocityReader;
+import au.gov.ga.conn4d.utils.FilenamePatternFilter;
+import au.gov.ga.conn4d.utils.IndexLookup_Nearest;
+import au.gov.ga.conn4d.utils.TimeConvert;
+import au.gov.ga.conn4d.utils.TriCubicSpline;
 
 /**
  * Reads 3D Velocity values from a collection of 3 NetCDF files (u,v,w)

@@ -4,10 +4,10 @@ package au.gov.ga.conn4d.test.impl.collision;
 import org.junit.Before;
 import org.junit.Test;
 
+import au.gov.ga.conn4d.impl.collision.Intersector_3D_Raster;
+
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.LineSegment;
-
-import au.gov.ga.conn4d.impl.collision.Intersector_3D_Raster;
 
 public class TestIntersector_3D_Raster {
 

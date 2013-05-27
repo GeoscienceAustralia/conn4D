@@ -17,9 +17,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import au.gov.ga.conn4d.Particle;
-import au.gov.ga.conn4d.utils.TimeConvert;
-
 import au.gov.ga.conn4d.output.TrajectoryWriter;
+import au.gov.ga.conn4d.utils.TimeConvert;
 
 
 public class TrajectoryWriter_Oracle implements TrajectoryWriter {

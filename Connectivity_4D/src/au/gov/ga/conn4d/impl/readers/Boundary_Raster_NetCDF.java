@@ -9,7 +9,6 @@ import ucar.ma2.Array;
 import ucar.ma2.Index;
 import ucar.nc2.NetcdfFile;
 import ucar.nc2.Variable;
-
 import au.gov.ga.conn4d.Boundary_Raster;
 import au.gov.ga.conn4d.impl.collision.Intersector_3D_Poly;
 import au.gov.ga.conn4d.utils.CoordinateMath;

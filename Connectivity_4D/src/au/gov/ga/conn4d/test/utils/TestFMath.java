@@ -1,6 +1,5 @@
 package au.gov.ga.conn4d.test.utils;
 
-import static org.junit.Assert.*;
 import junit.framework.Assert;
 
 import org.junit.Test;

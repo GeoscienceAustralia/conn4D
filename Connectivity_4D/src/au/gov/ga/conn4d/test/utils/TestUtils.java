@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 
-
 import org.junit.Test;
 
 import au.gov.ga.conn4d.utils.GeometryUtils;

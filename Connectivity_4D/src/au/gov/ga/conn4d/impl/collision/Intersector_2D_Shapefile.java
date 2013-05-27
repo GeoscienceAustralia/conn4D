@@ -3,7 +3,6 @@ package au.gov.ga.conn4d.impl.collision;
 import java.util.Iterator;
 import java.util.List;
 
-
 import org.opengis.feature.simple.SimpleFeature;
 
 import au.gov.ga.conn4d.Intersector;

@@ -12,9 +12,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import au.gov.ga.conn4d.Particle;
-import au.gov.ga.conn4d.utils.TimeConvert;
-
 import au.gov.ga.conn4d.output.TrajectoryWriter;
+import au.gov.ga.conn4d.utils.TimeConvert;
 
 
 public class TrajectoryWriter_MSSQLServer implements TrajectoryWriter {

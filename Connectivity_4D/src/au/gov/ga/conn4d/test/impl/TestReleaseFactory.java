@@ -2,15 +2,10 @@ package au.gov.ga.conn4d.test.impl;
 
 import java.util.concurrent.CountDownLatch;
 
-
 import org.junit.Before;
 import org.junit.Test;
 
 import au.gov.ga.conn4d.Parameters;
-
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.GeometryFactory;
-
 import au.gov.ga.conn4d.impl.Release;
 import au.gov.ga.conn4d.impl.ReleaseFactory_4D;
 import au.gov.ga.conn4d.impl.behavior.Mortality_None;
@@ -23,6 +18,9 @@ import au.gov.ga.conn4d.impl.writers.TrajectoryWriter_Text;
 import au.gov.ga.conn4d.input.ConfigurationOverride;
 import au.gov.ga.conn4d.parameters.Parameters_Test;
 import au.gov.ga.conn4d.test.NullPlug;
+
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.GeometryFactory;
 
 public class TestReleaseFactory {
 	

@@ -10,14 +10,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+import au.gov.ga.conn4d.impl.ReleaseRunner_4D;
 import au.gov.ga.conn4d.impl.readers.ReleaseFileReader_Shapefile_4D;
 import au.gov.ga.conn4d.impl.readers.ReleaseFileReader_Text;
-import au.gov.ga.conn4d.parameters.Parameters_Zonal_4D;
-import au.gov.ga.conn4d.utils.TimeConvert;
-
-import au.gov.ga.conn4d.impl.ReleaseRunner_4D;
 import au.gov.ga.conn4d.input.ParameterOverride;
 import au.gov.ga.conn4d.input.ReleaseFileReader;
+import au.gov.ga.conn4d.parameters.Parameters_Zonal_4D;
+import au.gov.ga.conn4d.utils.TimeConvert;
 
 
 /**
