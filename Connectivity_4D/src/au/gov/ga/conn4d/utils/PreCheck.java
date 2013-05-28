@@ -107,6 +107,7 @@ public class PreCheck {
 		System.out.println();
 
 		Boundary_Raster bathymetry;
+		@SuppressWarnings("unused")
 		CollisionDetector cd;
 
 		try {

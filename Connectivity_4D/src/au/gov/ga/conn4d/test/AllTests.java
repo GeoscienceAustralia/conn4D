@@ -12,6 +12,7 @@ import au.gov.ga.conn4d.test.impl.collision.TestIntersector_3D_Poly;
 import au.gov.ga.conn4d.test.impl.movement.TestMovement_RK4_3D;
 import au.gov.ga.conn4d.test.impl.readers.TestBathymetryReader_Grid;
 import au.gov.ga.conn4d.test.impl.readers.TestBoundary_NetCDF_Grid;
+import au.gov.ga.conn4d.test.impl.readers.TestReader_NetCDF_4D;
 import au.gov.ga.conn4d.test.impl.readers.TestVelocityReader_HYCOMList_4D;
 import au.gov.ga.conn4d.test.impl.readers.TestVelocityReader_NetCDF_4D;
 import au.gov.ga.conn4d.test.impl.writers.TestTrajectoryWriter_Text;
@@ -32,7 +33,7 @@ import au.gov.ga.conn4d.test.utils.TestVectorMath;
 		TestFMath.class, TestIndexLookup_Cell.class,
 		TestIndexLookup_Nearest.class, TestIntersector_3D_Poly.class,
 		TestMortality_None.class, TestMovement_RK4_3D.class,
-		TestParameterOverride.class, TestTrajectoryWriter_Text.class,
+		TestReader_NetCDF_4D.class, TestParameterOverride.class, TestTrajectoryWriter_Text.class,
 		TestTriCubicSpline.class, TestRelease.class, TestReleaseFactory.class,
 		TestVectorMath.class, TestVelocityReader_NetCDF_4D.class,
 		TestVelocityReader_HYCOMList_4D.class })

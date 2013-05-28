@@ -1,6 +1,6 @@
 package au.gov.ga.conn4d.test.utils;
 
-import junit.framework.Assert;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
@@ -9,6 +9,7 @@ import au.gov.ga.conn4d.utils.TriCubicSpline;
 
 public class TestTriCubicSpline {
 
+	double eps = 1E-8;
 	double[] a1 = new double[]{1,2,3};
 	double[] b1 = new double[] {1,2,3,4,5};
 	double[] c1 = new double[] {1,2,3,4,5};
@@ -38,22 +39,22 @@ public class TestTriCubicSpline {
 	@Test
 	public void test() {
 		
-		Assert.assertTrue(bcs.interpolate(1, 1)==1.0);
-		Assert.assertTrue(bcs.interpolate(1, 2)==2.0);
-		Assert.assertTrue(bcs.interpolate(2, 1)==6.0);
-		Assert.assertTrue(bcs.interpolate(1, 1.5)==1.5);
-		Assert.assertTrue(bcs.interpolate(1.5, 1)==3.5);
+		assertEquals(bcs.interpolate(1, 1),1.0,eps);
+		assertEquals(bcs.interpolate(1, 2),2.0,eps);
+		assertEquals(bcs.interpolate(2, 1),6.0,eps);
+		assertEquals(bcs.interpolate(1, 1.5),1.5,eps);
+		assertEquals(bcs.interpolate(1.5, 1),3.5,eps);
 		
-		Assert.assertTrue(tcs.interpolate(1, 1, 1)==1.0);
-		Assert.assertTrue(tcs.interpolate(1, 1, 2)==2.0);
-		Assert.assertTrue(tcs.interpolate(1, 2, 1)==6.0);
-		Assert.assertTrue(tcs.interpolate(2, 1, 1)==26.0);
-		Assert.assertTrue(tcs.interpolate(1, 1, 1.5)==1.5);
-		Assert.assertTrue(tcs.interpolate(1, 1.5, 1)==3.5);
-		Assert.assertTrue(tcs.interpolate(1.5, 1, 1)==13.5);
-		Assert.assertTrue(tcs.interpolate(1, 1, 1.25)==1.25);
-		Assert.assertTrue(tcs.interpolate(1, 1.25, 1)==2.25);
-		Assert.assertTrue(tcs.interpolate(1.25, 1, 1)==7.25);
-		Assert.assertTrue(tcs.interpolate(2.5, 2.5, 2.5)==47.5);
+		assertEquals(tcs.interpolate(1, 1, 1),1.0,eps);
+		assertEquals(tcs.interpolate(1, 1, 2),2.0,eps);
+		assertEquals(tcs.interpolate(1, 2, 1),6.0,eps);
+		assertEquals(tcs.interpolate(2, 1, 1),26.0,eps);
+		assertEquals(tcs.interpolate(1, 1, 1.5),1.5,eps);
+		assertEquals(tcs.interpolate(1, 1.5, 1),3.5,eps);
+		assertEquals(tcs.interpolate(1.5, 1, 1),13.5,eps);
+		assertEquals(tcs.interpolate(1, 1, 1.25),1.25,eps);
+		assertEquals(tcs.interpolate(1, 1.25, 1),2.25,eps);
+		assertEquals(tcs.interpolate(1.25, 1, 1),7.25,eps);
+		assertEquals(tcs.interpolate(2.5, 2.5, 2.5),47.5,eps);
 	}
 }

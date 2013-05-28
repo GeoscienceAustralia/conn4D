@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import au.gov.ga.conn4d.utils.GeometryUtils;
 
-public class TestUtils {
+public class TestGeometryUtils {
 
 	@Test
 	public void test() {
