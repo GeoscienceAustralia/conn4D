@@ -121,18 +121,18 @@ public class TriCubicSpline {
 		for (int i = 0; i < this.nPoints; i++) {
 			this.x1[i] = x1[i];
 		}
-		this.xMin[0] = Fmath.minimum(this.x1);
-		this.xMax[0] = Fmath.maximum(this.x1);
+		this.xMin[0] = VectorMath.minimum(this.x1);
+		this.xMax[0] = VectorMath.maximum(this.x1);
 		for (int j = 0; j < this.mPoints; j++) {
 			this.x2[j] = x2[j];
 		}
-		this.xMin[1] = Fmath.minimum(this.x2);
-		this.xMax[1] = Fmath.maximum(this.x2);
+		this.xMin[1] = VectorMath.minimum(this.x2);
+		this.xMax[1] = VectorMath.maximum(this.x2);
 		for (int j = 0; j < this.lPoints; j++) {
 			this.x3[j] = x3[j];
 		}
-		this.xMin[2] = Fmath.minimum(this.x3);
-		this.xMax[2] = Fmath.maximum(this.x3);
+		this.xMin[2] = VectorMath.minimum(this.x3);
+		this.xMax[2] = VectorMath.maximum(this.x3);
 		for (int i = 0; i < this.nPoints; i++) {
 			for (int j = 0; j < this.mPoints; j++) {
 				for (int k = 0; k < this.lPoints; k++) {
@@ -199,18 +199,18 @@ public class TriCubicSpline {
 		for (int i = 0; i < this.nPoints; i++) {
 			this.x1[i] = x1[i];
 		}
-		this.xMin[0] = Fmath.minimum(this.x1);
-		this.xMax[0] = Fmath.maximum(this.x1);
+		this.xMin[0] = VectorMath.minimum(this.x1);
+		this.xMax[0] = VectorMath.maximum(this.x1);
 		for (int j = 0; j < this.mPoints; j++) {
 			this.x2[j] = x2[j];
 		}
-		this.xMin[1] = Fmath.minimum(this.x2);
-		this.xMax[1] = Fmath.maximum(this.x2);
+		this.xMin[1] = VectorMath.minimum(this.x2);
+		this.xMax[1] = VectorMath.maximum(this.x2);
 		for (int j = 0; j < this.lPoints; j++) {
 			this.x3[j] = x3[j];
 		}
-		this.xMin[2] = Fmath.minimum(this.x3);
-		this.xMax[2] = Fmath.maximum(this.x3);
+		this.xMin[2] = VectorMath.minimum(this.x3);
+		this.xMax[2] = VectorMath.maximum(this.x3);
 		for (int i = 0; i < this.nPoints; i++) {
 			for (int j = 0; j < this.mPoints; j++) {
 				for (int k = 0; k < this.lPoints; k++) {
@@ -380,20 +380,20 @@ public class TriCubicSpline {
 		for (int i = 0; i < this.nPoints; i++) {
 			this.x1[i] = x1[i];
 		}
-		this.xMin[0] = Fmath.minimum(this.x1);
-		this.xMax[0] = Fmath.maximum(this.x1);
+		this.xMin[0] = VectorMath.minimum(this.x1);
+		this.xMax[0] = VectorMath.maximum(this.x1);
 
 		for (int i = 0; i < this.mPoints; i++) {
 			this.x2[i] = x2[i];
 		}
-		this.xMin[1] = Fmath.minimum(this.x2);
-		this.xMax[1] = Fmath.maximum(this.x2);
+		this.xMin[1] = VectorMath.minimum(this.x2);
+		this.xMax[1] = VectorMath.maximum(this.x2);
 
 		for (int i = 0; i < this.lPoints; i++) {
 			this.x3[i] = x3[i];
 		}
-		this.xMin[2] = Fmath.minimum(this.x3);
-		this.xMax[2] = Fmath.maximum(this.x3);
+		this.xMin[2] = VectorMath.minimum(this.x3);
+		this.xMax[2] = VectorMath.maximum(this.x3);
 
 		for (int i = 0; i < this.nPoints; i++) {
 			for (int j = 0; j < this.mPoints; j++) {
@@ -457,20 +457,20 @@ public class TriCubicSpline {
 		for (int i = 0; i < this.nPoints; i++) {
 			this.x1[i] = x1[i];
 		}
-		this.xMin[0] = Fmath.minimum(this.x1);
-		this.xMax[0] = Fmath.maximum(this.x1);
+		this.xMin[0] = VectorMath.minimum(this.x1);
+		this.xMax[0] = VectorMath.maximum(this.x1);
 
 		for (int i = 0; i < this.mPoints; i++) {
 			this.x2[i] = x2[i];
 		}
-		this.xMin[1] = Fmath.minimum(this.x2);
-		this.xMax[1] = Fmath.maximum(this.x2);
+		this.xMin[1] = VectorMath.minimum(this.x2);
+		this.xMax[1] = VectorMath.maximum(this.x2);
 
 		for (int i = 0; i < this.lPoints; i++) {
 			this.x3[i] = x3[i];
 		}
-		this.xMin[2] = Fmath.minimum(this.x3);
-		this.xMax[2] = Fmath.maximum(this.x3);
+		this.xMin[2] = VectorMath.minimum(this.x3);
+		this.xMax[2] = VectorMath.maximum(this.x3);
 
 		for (int i = 0; i < this.nPoints; i++) {
 			for (int j = 0; j < this.mPoints; j++) {

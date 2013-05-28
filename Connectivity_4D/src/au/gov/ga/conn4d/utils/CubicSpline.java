@@ -200,13 +200,13 @@ public class CubicSpline{
     	    double[] dummy = new double[nPoints];
     	    this.newAndOldIndices = new int[nPoints];
     	    // Sort x into ascending order storing indices changes
-    	    Fmath.selectionSort(this.x, dummy, this.newAndOldIndices);
+    	    VectorMath.selectionSort(this.x, dummy, this.newAndOldIndices);
     	    // Sort x into ascending order and make y match the new order storing both new x and new y
-    	    Fmath.selectionSort(this.x, this.y, this.x, this.y);
+    	    VectorMath.selectionSort(this.x, this.y, this.x, this.y);
 
     	    // Minimum and maximum values and range
-    	    this.xMin = Fmath.minimum(this.x);
-    	    this.xMax = Fmath.maximum(this.x);
+    	    this.xMin = VectorMath.minimum(this.x);
+    	    this.xMax = VectorMath.maximum(this.x);
     	    range = xMax - xMin;
     	}
 

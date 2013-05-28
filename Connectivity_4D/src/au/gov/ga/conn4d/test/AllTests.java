@@ -19,7 +19,6 @@ import au.gov.ga.conn4d.test.impl.writers.TestTrajectoryWriter_Text;
 import au.gov.ga.conn4d.test.input.TestParameterOverride;
 import au.gov.ga.conn4d.test.utils.TestArraySearch;
 import au.gov.ga.conn4d.test.utils.TestCoordinateMath;
-import au.gov.ga.conn4d.test.utils.TestFMath;
 import au.gov.ga.conn4d.test.utils.TestFileExtensionFilter;
 import au.gov.ga.conn4d.test.utils.TestGeometryUtils;
 import au.gov.ga.conn4d.test.utils.TestIndexLookup_Cell;
@@ -37,8 +36,7 @@ import au.gov.ga.conn4d.test.utils.TestVectorUtils;
 		TestReader_NetCDF_4D.class, TestVelocityReader_HYCOMList_4D.class,
 		TestVelocityReader_NetCDF_4D.class, TestTrajectoryWriter_Text.class,
 		TestParameterOverride.class, TestArraySearch.class,
-		TestCoordinateMath.class, TestFMath.class,
-		TestFileExtensionFilter.class, TestGeometryUtils.class, TestIndexLookup_Cell.class,
+		TestCoordinateMath.class, TestFileExtensionFilter.class, TestGeometryUtils.class, TestIndexLookup_Cell.class,
 		TestIndexLookup_Nearest.class, TestReferenceGrid.class,
 		TestTriCubicSpline.class, TestVectorMath.class, TestVectorUtils.class })
 public class AllTests {

@@ -137,13 +137,13 @@ public class BiCubicSpline {
 		for (int i = 0; i < this.nPoints; i++) {
 			this.x1[i] = x1[i];
 		}
-		this.xMin[0] = Fmath.minimum(this.x1);
-		this.xMax[0] = Fmath.maximum(this.x1);
+		this.xMin[0] = VectorMath.minimum(this.x1);
+		this.xMax[0] = VectorMath.maximum(this.x1);
 		for (int j = 0; j < this.mPoints; j++) {
 			this.x2[j] = x2[j];
 		}
-		this.xMin[1] = Fmath.minimum(this.x2);
-		this.xMax[1] = Fmath.maximum(this.x2);
+		this.xMin[1] = VectorMath.minimum(this.x2);
+		this.xMax[1] = VectorMath.maximum(this.x2);
 		for (int i = 0; i < this.nPoints; i++) {
 			for (int j = 0; j < this.mPoints; j++) {
 				this.y[i][j] = y[i][j];
@@ -205,13 +205,13 @@ public class BiCubicSpline {
 		for (int i = 0; i < this.nPoints; i++) {
 			this.x1[i] = x1[i];
 		}
-		this.xMin[0] = Fmath.minimum(this.x1);
-		this.xMax[0] = Fmath.maximum(this.x1);
+		this.xMin[0] = VectorMath.minimum(this.x1);
+		this.xMax[0] = VectorMath.maximum(this.x1);
 		for (int j = 0; j < this.mPoints; j++) {
 			this.x2[j] = x2[j];
 		}
-		this.xMin[1] = Fmath.minimum(this.x2);
-		this.xMax[1] = Fmath.maximum(this.x2);
+		this.xMin[1] = VectorMath.minimum(this.x2);
+		this.xMax[1] = VectorMath.maximum(this.x2);
 		for (int i = 0; i < this.nPoints; i++) {
 			for (int j = 0; j < this.mPoints; j++) {
 				this.y[i][j] = y[i][j];

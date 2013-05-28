@@ -746,6 +746,150 @@ public class VectorMath {
 	}
 
 	/**
+	 * Returns the maximum value of an array of doubles.
+	 * 
+	 * @param da
+	 *            - the input array of doubles
+	 * @return - the maximum value contained in the array
+	 */
+
+	public static double maximum(double[] da) {
+		int n = da.length;
+		double max = da[0];
+		for (int i = 1; i < n; i++) {
+			if (da[i] > max)
+				max = da[i];
+		}
+		return max;
+	}
+
+	/**
+	 * Returns the maximum value of an array of floats.
+	 * 
+	 * @param da
+	 *            - the input array of doubles
+	 * @return - the maximum value contained in the array
+	 */
+
+	public static float maximum(float[] fa) {
+		int n = fa.length;
+		float max = fa[0];
+		for (int i = 1; i < n; i++) {
+			if (fa[i] > max)
+				max = fa[i];
+		}
+		return max;
+	}
+
+	/**
+	 * Returns the maximum value of an array of integers.
+	 * 
+	 * @param da
+	 *            - the input array of doubles
+	 * @return - the maximum value contained in the array
+	 */
+
+	public static int maximum(int[] ia) {
+		int n = ia.length;
+		int max = ia[0];
+		for (int i = 1; i < n; i++) {
+			if (ia[i] > max)
+				max = ia[i];
+		}
+		return max;
+	}
+
+	/**
+	 * Returns the maximum value of an array of longs.
+	 * 
+	 * @param da
+	 *            - the input array of doubles
+	 * @return - the maximum value contained in the array
+	 */
+
+	public static long maximum(long[] la) {
+		int n = la.length;
+		long max = la[0];
+		for (int i = 1; i < n; i++) {
+			if (la[i] > max)
+				max = la[i];
+		}
+		return max;
+	}
+
+	/**
+	 * Returns the minimum value of an array of doubles.
+	 * 
+	 * @param da
+	 *            - the input array of doubles
+	 * @return - the minimum value contained in the array
+	 */
+
+	public static double minimum(double[] da) {
+		int n = da.length;
+		double min = da[0];
+		for (int i = 1; i < n; i++) {
+			if (da[i] < min)
+				min = da[i];
+		}
+		return min;
+	}
+
+	/**
+	 * Returns the minimum value of an array of floats.
+	 * 
+	 * @param da
+	 *            - the input array of doubles
+	 * @return - the minimum value contained in the array
+	 */
+
+	public static float minimum(float[] da) {
+		int n = da.length;
+		float min = da[0];
+		for (int i = 1; i < n; i++) {
+			if (da[i] < min)
+				min = da[i];
+		}
+		return min;
+	}
+
+	/**
+	 * Returns the minimum value of an array of integers.
+	 * 
+	 * @param da
+	 *            - the input array of doubles
+	 * @return - the minimum value contained in the array
+	 */
+
+	public static int minimum(int[] ia) {
+		int n = ia.length;
+		int min = ia[0];
+		for (int i = 1; i < n; i++) {
+			if (ia[i] < min)
+				min = ia[i];
+		}
+		return min;
+	}
+
+	/**
+	 * Returns the minimum value of an array of longs.
+	 * 
+	 * @param da
+	 *            - the input array of doubles
+	 * @return - the minimum value contained in the array
+	 */
+
+	public static long minimum(long[] la) {
+		int n = la.length;
+		long min = la[0];
+		for (int i = 1; i < n; i++) {
+			if (la[i] < min)
+				min = la[i];
+		}
+		return min;
+	}
+
+	/**
 	 * Returns a vector with negative values relative to the original
 	 * 
 	 * @param vector
@@ -825,6 +969,212 @@ public class VectorMath {
 			out[i] = vector[i] / sum;
 		}
 		return out;
+	}
+
+	/**
+	 * Sort an array of doubles into ascending order
+	 */
+
+	public static double[] selectionSort(double[] da) {
+		int index = 0;
+		int lastIndex = -1;
+		int n = da.length;
+		double temp = 0.0D;
+		double[] sorted = new double[n];
+		for (int i = 0; i < n; i++) {
+			sorted[i] = da[i];
+		}
+
+		while (lastIndex != n - 1) {
+			index = lastIndex + 1;
+			for (int i = lastIndex + 2; i < n; i++) {
+				if (sorted[i] < sorted[index]) {
+					index = i;
+				}
+			}
+			lastIndex++;
+			temp = sorted[index];
+			sorted[index] = sorted[lastIndex];
+			sorted[lastIndex] = temp;
+		}
+		return sorted;
+	}
+
+	/**
+	 * Sort an array of floats into ascending order
+	 */
+
+	public static float[] selectionSort(float[] fa) {
+		int index = 0;
+		int lastIndex = -1;
+		int n = fa.length;
+		float temp = 0.0f;
+		float[] sorted = new float[n];
+		for (int i = 0; i < n; i++) {
+			sorted[i] = fa[i];
+		}
+
+		while (lastIndex != n - 1) {
+			index = lastIndex + 1;
+			for (int i = lastIndex + 2; i < n; i++) {
+				if (sorted[i] < sorted[index]) {
+					index = i;
+				}
+			}
+			lastIndex++;
+			temp = sorted[index];
+			sorted[index] = sorted[lastIndex];
+			sorted[lastIndex] = temp;
+		}
+		return sorted;
+	}
+
+	/**
+	 * Sort an array of integers into ascending order 
+	 */
+
+	public static int[] selectionSort(int[] ia) {
+		int index = 0;
+		int lastIndex = -1;
+		int n = ia.length;
+		int temp = 0;
+		int[] sorted = new int[n];
+		for (int i = 0; i < n; i++) {
+			sorted[i] = ia[i];
+		}
+
+		while (lastIndex != n - 1) {
+			index = lastIndex + 1;
+			for (int i = lastIndex + 2; i < n; i++) {
+				if (sorted[i] < sorted[index]) {
+					index = i;
+				}
+			}
+			lastIndex++;
+			temp = sorted[index];
+			sorted[index] = sorted[lastIndex];
+			sorted[lastIndex] = temp;
+		}
+		return sorted;
+	}
+
+	/**
+	 * Sort an array of longs into ascending order
+	 */
+
+	public static long[] selectionSort(long[] da) {
+		int index = 0;
+		int lastIndex = -1;
+		int n = da.length;
+		long temp = 0L;
+		long[] sorted = new long[n];
+		for (int i = 0; i < n; i++) {
+			sorted[i] = da[i];
+		}
+
+		while (lastIndex != n - 1) {
+			index = lastIndex + 1;
+			for (int i = lastIndex + 2; i < n; i++) {
+				if (sorted[i] < sorted[index]) {
+					index = i;
+				}
+			}
+			lastIndex++;
+			temp = sorted[index];
+			sorted[index] = sorted[lastIndex];
+			sorted[lastIndex] = temp;
+		}
+		return sorted;
+	}
+
+	/**
+	 * Sorts an array of doubles into ascending order
+	 */
+
+	public static void selectionSort(double[] original, double[] sorted,
+			int[] indices) {
+		int index = 0;
+		int lastIndex = -1;
+		int n = original.length;
+		double temp = 0.0D;
+		int temp_idx = 0;
+		for (int i = 0; i < n; i++) {
+			sorted[i] = original[i];
+			indices[i] = i;
+		}
+
+		while (lastIndex != n - 1) {
+			index = lastIndex + 1;
+			for (int i = lastIndex + 2; i < n; i++) {
+				if (sorted[i] < sorted[index]) {
+					index = i;
+				}
+			}
+			lastIndex++;
+			temp = sorted[index];
+			sorted[index] = sorted[lastIndex];
+			sorted[lastIndex] = temp;
+			temp_idx = indices[index];
+			indices[index] = indices[lastIndex];
+			indices[lastIndex] = temp_idx;
+		}
+	}
+	
+	// sort the elements of an array of doubles into ascending order with
+	// matching switches in an array of the length
+	// using selection sort method
+	// array determining the order is the first argument
+	// matching array is the second argument
+	// sorted arrays returned as third and fourth arguments respectively
+	public static void selectionSort(double[] aa, double[] bb, double[] cc,
+			double[] dd) {
+		int index = 0;
+		int lastIndex = -1;
+		int n = aa.length;
+		int m = bb.length;
+		if (n != m)
+			throw new IllegalArgumentException(
+					"First argument array, aa, (length = " + n
+							+ ") and the second argument array, bb, (length = "
+							+ m + ") should be the same length");
+		int nn = cc.length;
+		if (nn < n)
+			throw new IllegalArgumentException(
+					"The third argument array, cc, (length = "
+							+ nn
+							+ ") should be at least as long as the first argument array, aa, (length = "
+							+ n + ")");
+		int mm = dd.length;
+		if (mm < m)
+			throw new IllegalArgumentException(
+					"The fourth argument array, dd, (length = "
+							+ mm
+							+ ") should be at least as long as the second argument array, bb, (length = "
+							+ m + ")");
+
+		double holdx = 0.0D;
+		double holdy = 0.0D;
+
+		for (int i = 0; i < n; i++) {
+			cc[i] = aa[i];
+			dd[i] = bb[i];
+		}
+
+		while (lastIndex != n - 1) {
+			index = lastIndex + 1;
+			for (int i = lastIndex + 2; i < n; i++) {
+				if (cc[i] < cc[index]) {
+					index = i;
+				}
+			}
+			lastIndex++;
+			holdx = cc[index];
+			cc[index] = cc[lastIndex];
+			cc[lastIndex] = holdx;
+			holdy = dd[index];
+			dd[index] = dd[lastIndex];
+			dd[lastIndex] = holdy;
+		}
 	}
 
 	/**
@@ -1023,10 +1373,10 @@ public class VectorMath {
 		float mean = 0;
 		float M2 = 0;
 
-		if(fa == null || fa.length==0){
+		if (fa == null || fa.length == 0) {
 			return Float.NaN;
 		}
-		
+
 		for (int i = 0; i < fa.length; i++) {
 			n = n + 1;
 			float delta = fa[i] - mean;
@@ -1049,7 +1399,7 @@ public class VectorMath {
 	 */
 
 	public static float weighted_variance(float[] fa, float[] weights) {
-		
+
 		float sumweight = 0;
 		float mean = 0;
 		float M2 = 0;
