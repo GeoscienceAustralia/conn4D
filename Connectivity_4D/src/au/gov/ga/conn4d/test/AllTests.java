@@ -24,7 +24,6 @@ import au.gov.ga.conn4d.test.utils.TestGeometryUtils;
 import au.gov.ga.conn4d.test.utils.TestIndexLookup_Cell;
 import au.gov.ga.conn4d.test.utils.TestIndexLookup_Nearest;
 import au.gov.ga.conn4d.test.utils.TestReferenceGrid;
-import au.gov.ga.conn4d.test.utils.TestTriCubicSpline;
 import au.gov.ga.conn4d.test.utils.TestVectorMath;
 import au.gov.ga.conn4d.test.utils.TestVectorUtils;
 
@@ -38,6 +37,6 @@ import au.gov.ga.conn4d.test.utils.TestVectorUtils;
 		TestParameterOverride.class, TestArraySearch.class,
 		TestCoordinateMath.class, TestFileExtensionFilter.class, TestGeometryUtils.class, TestIndexLookup_Cell.class,
 		TestIndexLookup_Nearest.class, TestReferenceGrid.class,
-		TestTriCubicSpline.class, TestVectorMath.class, TestVectorUtils.class })
+		TestVectorMath.class, TestVectorUtils.class })
 public class AllTests {
 }

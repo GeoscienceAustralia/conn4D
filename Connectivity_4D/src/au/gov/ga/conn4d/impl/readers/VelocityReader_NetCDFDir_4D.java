@@ -16,7 +16,9 @@ import au.gov.ga.conn4d.VelocityReader;
 import au.gov.ga.conn4d.utils.FilenamePatternFilter;
 import au.gov.ga.conn4d.utils.IndexLookup_Nearest;
 import au.gov.ga.conn4d.utils.TimeConvert;
-import au.gov.ga.conn4d.utils.TriCubicSpline;
+import au.gov.ga.conn4d.utils.TricubicSplineInterpolatingFunction;
+import au.gov.ga.conn4d.utils.TricubicSplineInterpolator;
+//import au.gov.ga.conn4d.utils.TriCubicSpline;
 import au.gov.ga.conn4d.utils.VectorMath;
 
 /**
@@ -47,9 +49,9 @@ public class VelocityReader_NetCDFDir_4D implements VelocityReader, Cloneable {
 	private Variable uVar, vVar, wVar;
 	private Array uArr, vArr, wArr, latArr, zArr;
 	private IndexLookup_Nearest xloc, yloc, zloc, tloc;
-	private TriCubicSpline tcs = new TriCubicSpline(new double[zKernelSize],
-			new double[kernelSize], new double[kernelSize],
-			new float[zKernelSize][kernelSize][kernelSize]);
+	//private TriCubicSpline tcs = new TriCubicSpline(new double[zKernelSize],
+	//		new double[kernelSize], new double[kernelSize],
+	//		new float[zKernelSize][kernelSize][kernelSize]);
 	private final double[] NODATA = { Double.NaN, Double.NaN, Double.NaN };
 	private String latName = "Latitude";
 	private String lonName = "Longitude";
@@ -765,29 +767,38 @@ public class VelocityReader_NetCDFDir_4D implements VelocityReader, Cloneable {
 
 			// Obtain the interpolated values
 
-			int[] dim = tcs.getDim();
+			//int[] dim = tcs.getDim();
 
-			if (dim[0] != zja.length || dim[1] != latja.length
-					|| dim[2] != lonja.length) {
-				tcs = new TriCubicSpline(zja, latja, lonja, autmp);
-			} else {
-				tcs.resetData(zja, latja, lonja, autmp);
-			}
-			try {
-				u = tcs.interpolate(z, lat, lon);
-				tcs.setValues(avtmp);
-				v = tcs.interpolate(z, lat, lon);
+			//if (dim[0] != zja.length || dim[1] != latja.length
+			//		|| dim[2] != lonja.length) {
+			//	tcs = new TriCubicSpline(zja, latja, lonja, autmp);
+			//} else {
+			//	tcs.resetData(zja, latja, lonja, autmp);
+			//}
+			
+			TricubicSplineInterpolator tci = new TricubicSplineInterpolator();
+			TricubicSplineInterpolatingFunction tsf = tci.interpolate(lonja, latja, zja, autmp);
+
+			//try {
+				//u = tcs.interpolate(z, lat, lon);
+			u = tsf.value(lon,lat,z);
+				//tcs.setValues(avtmp);
+			tsf = tci.interpolate(lonja, latja, zja, avtmp);
+				//v = tcs.interpolate(z, lat, lon);
+			v = tsf.value(lon,lat,z);
 
 				if (zloc.isIn_Bounds() >= 0) {
-					tcs.setValues(awtmp);
-					w = tcs.interpolate(z, lat, lon);
+					//tcs.setValues(awtmp);
+					//w = tcs.interpolate(z, lat, lon);
+					tsf = tci.interpolate(lonja, latja, zja, awtmp);
+					w = tsf.value(lon,lat,z);
 				} else {
 					w = 0;
 				}
 
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			//} catch (Exception e) {
+			//	e.printStackTrace();
+			//}
 
 			// If there is something strange with the values, return NODATA.
 
