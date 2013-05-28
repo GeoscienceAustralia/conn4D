@@ -19,7 +19,6 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.index.SpatialIndex;
 import com.vividsolutions.jts.index.strtree.STRtree;
 
-
 /**
  * Provides basic capability for reading Shapefiles given
  * a path location.  A STRtree is built for the data

@@ -43,16 +43,6 @@ public class TestArraySearch {
 		}
 	}
 	
-	@Test(expected=ArrayIndexOutOfBoundsException.class)
-	public void testArrayExceptions(){
-		
-	}
-	
-	@Test(expected=IllegalArgumentException.class)
-	public void testArgumentException(){
-		assertEquals(ArraySearch.binarySearch(la_fwd, 80, 20),80);
-	}
-	
 	@Test
 	public void testLong() {
 		assertEquals(ArraySearch.binarySearch(la_fwd, 80, 80),80);

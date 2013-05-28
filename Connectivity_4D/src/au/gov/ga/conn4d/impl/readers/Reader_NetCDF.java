@@ -131,4 +131,10 @@ public abstract class Reader_NetCDF {
 	public void setVariableName(String variableName) {
 		this.varName = variableName;
 	}
+	
+	/**
+	 * Returns the minimum and maximum values for each dimension.
+	 */
+	
+	public abstract double[][] getBounds();
 }

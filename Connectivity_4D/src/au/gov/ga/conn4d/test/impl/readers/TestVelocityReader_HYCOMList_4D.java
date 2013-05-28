@@ -28,7 +28,6 @@ public class TestVelocityReader_HYCOMList_4D {
 			ncl.setVName("v");
 			ncl.setWName("w");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -46,7 +45,6 @@ public class TestVelocityReader_HYCOMList_4D {
 		c.set(Calendar.SECOND, 0);
 		c.set(Calendar.MILLISECOND, 0);
 		long time = c.getTimeInMillis();
-		System.out.println(formatUTC.format(time));
 		double[] vels = ncl.getVelocities(time, -10, 100.0799560546875, -49.904899597);
 		System.out.println(Arrays.toString(vels));
 	}

@@ -59,7 +59,6 @@ public class Reader_NetCDF_3D extends Reader_NetCDF {
 	public Reader_NetCDF_3D clone() {
 		Reader_NetCDF_3D ncb;
 		ncb = new Reader_NetCDF_3D(netcdfFile.getLocation());
-		// TODO TIDY THIS UP!!!!
 		ncb.neglon = neglon;
 		return ncb;
 	}
@@ -112,5 +111,20 @@ public class Reader_NetCDF_3D extends Reader_NetCDF {
 		lats = new IndexLookup_Nearest(netcdfFile.findVariable(latName));
 		lons = new IndexLookup_Nearest(netcdfFile.findVariable(lonName));
 		time = new IndexLookup_Nearest(netcdfFile.findVariable(timeName));
+	}
+	
+	/**
+	 * Returns the minimum and maximum values for each dimension.
+	 */
+	
+	public double[][] getBounds(){
+		double[][] bounds = new double[3][2];
+		bounds[0][0] = time.getMinVal();
+		bounds[0][1] = time.getMaxVal();
+		bounds[2][0] = lons.getMinVal();
+		bounds[2][1] = lons.getMaxVal();
+		bounds[3][0] = lats.getMinVal();
+		bounds[3][1] = lats.getMaxVal();
+		return bounds;
 	}
 }

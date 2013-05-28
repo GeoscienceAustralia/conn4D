@@ -1,14 +1,18 @@
 package au.gov.ga.conn4d.test.parameters;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import au.gov.ga.conn4d.parameters.Parameters_Zonal_4D;
+
 public class TestParameters_Zonal_4D {
+	
+	Parameters_Zonal_4D pz4 = new Parameters_Zonal_4D();
 
 	@Test
 	public void testGetCompetencyStart() {
-		fail("Not yet implemented");
+		assertEquals(pz4.getCompetencyStart(),0);
 	}
 
 	@Test

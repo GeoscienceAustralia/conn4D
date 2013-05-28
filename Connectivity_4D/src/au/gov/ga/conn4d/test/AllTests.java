@@ -21,21 +21,25 @@ import au.gov.ga.conn4d.test.utils.TestArraySearch;
 import au.gov.ga.conn4d.test.utils.TestCoordinateMath;
 import au.gov.ga.conn4d.test.utils.TestFMath;
 import au.gov.ga.conn4d.test.utils.TestFileExtensionFilter;
+import au.gov.ga.conn4d.test.utils.TestGeometryUtils;
 import au.gov.ga.conn4d.test.utils.TestIndexLookup_Cell;
 import au.gov.ga.conn4d.test.utils.TestIndexLookup_Nearest;
+import au.gov.ga.conn4d.test.utils.TestReferenceGrid;
 import au.gov.ga.conn4d.test.utils.TestTriCubicSpline;
 import au.gov.ga.conn4d.test.utils.TestVectorMath;
+import au.gov.ga.conn4d.test.utils.TestVectorUtils;
 
 @RunWith(Suite.class)
-@SuiteClasses({ TestArraySearch.class, TestBathymetryReader_Grid.class,
-		TestBoundary_NetCDF_Grid.class, TestCollisionDetection_3D_Raster.class,
-		TestCoordinateMath.class, TestFileExtensionFilter.class,
-		TestFMath.class, TestIndexLookup_Cell.class,
-		TestIndexLookup_Nearest.class, TestIntersector_3D_Poly.class,
-		TestMortality_None.class, TestMovement_RK4_3D.class,
-		TestReader_NetCDF_4D.class, TestParameterOverride.class, TestTrajectoryWriter_Text.class,
-		TestTriCubicSpline.class, TestRelease.class, TestReleaseFactory.class,
-		TestVectorMath.class, TestVelocityReader_NetCDF_4D.class,
-		TestVelocityReader_HYCOMList_4D.class })
+@SuiteClasses({ TestRelease.class, TestReleaseFactory.class,
+		TestMortality_None.class, TestCollisionDetection_3D_Raster.class,
+		TestIntersector_3D_Poly.class, TestMovement_RK4_3D.class,
+		TestBathymetryReader_Grid.class, TestBoundary_NetCDF_Grid.class,
+		TestReader_NetCDF_4D.class, TestVelocityReader_HYCOMList_4D.class,
+		TestVelocityReader_NetCDF_4D.class, TestTrajectoryWriter_Text.class,
+		TestParameterOverride.class, TestArraySearch.class,
+		TestCoordinateMath.class, TestFMath.class,
+		TestFileExtensionFilter.class, TestGeometryUtils.class, TestIndexLookup_Cell.class,
+		TestIndexLookup_Nearest.class, TestReferenceGrid.class,
+		TestTriCubicSpline.class, TestVectorMath.class, TestVectorUtils.class })
 public class AllTests {
 }

@@ -137,7 +137,7 @@ public class TestCollisionDetection_3D_Raster {
 	 * horizontal line.
 	 */
 	
-	//@Test
+	@Test
 	public void testBreaching(){
 		Particle p1 = new Particle();
 		p1.setPX(-1.5); p1.setPY(0); p1.setPZ(-0.5); p1.setX(0.5); p1.setY(0); p1.setZ(-0.5);
@@ -152,7 +152,7 @@ public class TestCollisionDetection_3D_Raster {
 	 * 45° line
 	 */
 	
-	//@Test
+	@Test
 	public void testConcaveEdgeLine(){
 		Particle p1 = new Particle();
 		p1.setPX(0); p1.setPY(0.5);	p1.setPZ(1); p1.setX(0); p1.setY(0.5); p1.setZ(-1);
@@ -167,7 +167,7 @@ public class TestCollisionDetection_3D_Raster {
 	 * vertical line
 	 */
 	
-	//@Test
+	@Test
 	public void testConcaveYEdgeZLine(){
 		Particle p1 = new Particle();
 		p1.setPX(0); p1.setPY(0.5);	p1.setPZ(1); p1.setX(0); p1.setY(0.5); p1.setZ(-1);
@@ -182,7 +182,7 @@ public class TestCollisionDetection_3D_Raster {
 	 * vertical line
 	 */
 	
-	//@Test
+	@Test
 	public void testConvexYEdgeZLine(){
 		Particle p1 = new Particle();
 		p1.setPX(0); p1.setPY(0.5);	p1.setPZ(1); p1.setX(0); p1.setY(0.5); p1.setZ(-1);
@@ -197,7 +197,7 @@ public class TestCollisionDetection_3D_Raster {
 	 * positive slope in the X-direction.
 	 */
 	
-	//@Test
+	@Test
 	public void testEasyCorner(){
 		Particle p1 = new Particle();
 		p1.setPX(0.5); p1.setPY(0.5);	p1.setPZ(-8.5); p1.setX(0.5); p1.setY(0.5); p1.setZ(-10.5); 
@@ -211,7 +211,7 @@ public class TestCollisionDetection_3D_Raster {
 	 * positive slope in the X-direction.
 	 */
 	
-	//@Test
+	@Test
 	public void testEasyXEdgeZLine(){
 		Particle p1 = new Particle();
 		p1.setPX(0.5); p1.setPY(0);	p1.setPZ(-8.5); p1.setX(0.5); p1.setY(0); p1.setZ(-10.5); 
@@ -225,7 +225,7 @@ public class TestCollisionDetection_3D_Raster {
 	 * positive slope in the X-direction.
 	 */
 	
-	//@Test
+	@Test
 	public void testEasyYEdgeZLine(){
 		Particle p1 = new Particle();
 		p1.setPX(0); p1.setPY(0.5);	p1.setPZ(-9); p1.setX(0); p1.setY(0.5); p1.setZ(-11); 
@@ -235,7 +235,7 @@ public class TestCollisionDetection_3D_Raster {
 	}	
 	
 	
-	@Test
+	//@Test
 	public void testReal(){
 		Particle p1 = new Particle();
 		p1.setPX(113.19207965621727); p1.setPY(-26.23487697950828); p1.setPZ(-3.2944260095246136); 
@@ -250,7 +250,7 @@ public class TestCollisionDetection_3D_Raster {
 	 * Tests shoaling behavior using a positive slope in the X-direction.
 	 */
 	
-	//@Test
+	@Test
 	public void testShoaling(){
 		Particle p1 = new Particle();
 		p1.setPX(-1); p1.setPY(0);	p1.setPZ(-10); p1.setX(1); p1.setY(0); p1.setZ(-10);
@@ -264,7 +264,7 @@ public class TestCollisionDetection_3D_Raster {
 	 * Tests a vertical line against a negative slope in the X-direction
 	 */
 	
-	//@Test
+	@Test
 	public void testXReverseSlopeZLine() {
 		Particle p1 = new Particle();
 		p1.setPX(0); p1.setPY(0);	p1.setPZ(-9); p1.setX(0); p1.setY(0); p1.setZ(-11); 
@@ -278,7 +278,7 @@ public class TestCollisionDetection_3D_Raster {
 	 * offset from 0 (at 5,5)
 	 */
 	
-	//@Test
+	@Test
 	public void testXSlopeOffsetZLine(){
 		Particle p1 = new Particle();
 		p1.setPX(5); p1.setPY(5);	p1.setPZ(-4); p1.setX(5); p1.setY(5); p1.setZ(-6); 
@@ -291,7 +291,7 @@ public class TestCollisionDetection_3D_Raster {
 	 * Tests a vertical line against a positive slope in the X-direction
 	 */
 	
-	//@Test
+	@Test
 	public void testXSlopeZLine() {
 		Particle p1 = new Particle();
 		p1.setPX(0); p1.setPY(0);	p1.setPZ(-9); p1.setX(0); p1.setY(0); p1.setZ(-11); 
@@ -304,7 +304,7 @@ public class TestCollisionDetection_3D_Raster {
 	 * Tests a vertical line against a positive slope in the Y-direction
 	 */
 	
-	//@Test
+	@Test
 	public void testYSlopeZLine() {
 		Particle p1 = new Particle();
 		p1.setPX(0); p1.setPY(0);	p1.setPZ(-9); p1.setX(0); p1.setY(0); p1.setZ(-11); 

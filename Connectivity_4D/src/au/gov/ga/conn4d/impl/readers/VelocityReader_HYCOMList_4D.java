@@ -1085,12 +1085,11 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 	public void setZLookup(String name) {
 		zVar = uFile.findVariable(zName);
 		if (zVar == null) {
-			System.out
-					.println("Incorrect variable match:\n\nVariables in local config file: "
-							+ zName + ".");
-			System.out.println("Velocity file variables: "
+			throw new IllegalArgumentException("Incorrect variable match:\n\nVariables in local config file: "
+							+ zName + ".\nVelocity file variables: "
 					+ uFile.getVariables().toString() + "\n");
 		}
+		
 		zloc = new IndexLookup_Nearest(zVar);
 
 		if (positiveDown) {
