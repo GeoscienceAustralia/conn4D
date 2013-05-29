@@ -16,16 +16,21 @@ import au.gov.ga.conn4d.test.impl.readers.Reader_NetCDF_4DTest;
 import au.gov.ga.conn4d.test.impl.readers.VelocityReader_HYCOMList_4DTest;
 import au.gov.ga.conn4d.test.impl.readers.VelocityReader_NetCDF_4DTest;
 import au.gov.ga.conn4d.test.impl.writers.TrajectoryWriter_TextTest;
-import au.gov.ga.conn4d.test.input.TestParameterOverride;
-import au.gov.ga.conn4d.test.utils.TestArraySearch;
-import au.gov.ga.conn4d.test.utils.TestCoordinateMath;
-import au.gov.ga.conn4d.test.utils.TestFileExtensionFilter;
-import au.gov.ga.conn4d.test.utils.TestGeometryUtils;
-import au.gov.ga.conn4d.test.utils.TestIndexLookup_Cell;
-import au.gov.ga.conn4d.test.utils.TestIndexLookup_Nearest;
-import au.gov.ga.conn4d.test.utils.TestReferenceGrid;
-import au.gov.ga.conn4d.test.utils.TestVectorMath;
-import au.gov.ga.conn4d.test.utils.TestVectorUtils;
+import au.gov.ga.conn4d.test.input.ParameterOverrideTest;
+import au.gov.ga.conn4d.test.utils.ArraySearchTest;
+import au.gov.ga.conn4d.test.utils.BicubicSplineInterpolatingFunctionTest;
+import au.gov.ga.conn4d.test.utils.BicubicSplineInterpolatorTest;
+import au.gov.ga.conn4d.test.utils.CoordinateMathTest;
+import au.gov.ga.conn4d.test.utils.FileExtensionFilterTest;
+import au.gov.ga.conn4d.test.utils.GeometryUtilsTest;
+import au.gov.ga.conn4d.test.utils.IndexLookup_CellTest;
+import au.gov.ga.conn4d.test.utils.IndexLookup_NearestTest;
+import au.gov.ga.conn4d.test.utils.ReferenceGridTest;
+import au.gov.ga.conn4d.test.utils.SplineInterpolatorTest;
+import au.gov.ga.conn4d.test.utils.TricubicSplineInterpolatingFunctionTest;
+import au.gov.ga.conn4d.test.utils.TricubicSplineInterpolatorTest;
+import au.gov.ga.conn4d.test.utils.VectorMathTest;
+import au.gov.ga.conn4d.test.utils.VectorUtilsTest;
 
 @RunWith(Suite.class)
 @SuiteClasses({ ReleaseTest.class, ReleaseFactoryTest.class,
@@ -34,9 +39,14 @@ import au.gov.ga.conn4d.test.utils.TestVectorUtils;
 		BathymetryReader_GridTest.class, Boundary_NetCDF_GridTest.class,
 		Reader_NetCDF_4DTest.class, VelocityReader_HYCOMList_4DTest.class,
 		VelocityReader_NetCDF_4DTest.class, TrajectoryWriter_TextTest.class,
-		TestParameterOverride.class, TestArraySearch.class,
-		TestCoordinateMath.class, TestFileExtensionFilter.class, TestGeometryUtils.class, TestIndexLookup_Cell.class,
-		TestIndexLookup_Nearest.class, TestReferenceGrid.class,
-		TestVectorMath.class, TestVectorUtils.class })
+		ParameterOverrideTest.class, ArraySearchTest.class,
+		BicubicSplineInterpolatingFunctionTest.class,
+		BicubicSplineInterpolatorTest.class, CoordinateMathTest.class,
+		FileExtensionFilterTest.class, GeometryUtilsTest.class,
+		IndexLookup_CellTest.class, IndexLookup_NearestTest.class,
+		ReferenceGridTest.class, SplineInterpolatorTest.class,
+		TricubicSplineInterpolatingFunctionTest.class,
+		TricubicSplineInterpolatorTest.class, VectorMathTest.class,
+		VectorUtilsTest.class })
 public class AllTests {
 }
