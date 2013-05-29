@@ -1,6 +1,10 @@
 package au.gov.ga.conn4d.utils;
 
 /*
+ * TricubicSplineInterpolator modified from apache.commons.math3
+ * to accommodate float value inputs.  No other elements or procedures were
+ * altered.
+ * 
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.

@@ -1,0 +1,33 @@
+package au.gov.ga.conn4d.test.impl.readers;
+
+
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+
+import au.gov.ga.conn4d.impl.readers.Reader_NetCDF_3D;
+
+public class Reader_NetCDF_3DTest {
+
+	Reader_NetCDF_3D n3;
+	String filename = "Z:/NetCDF/AUS_u_2005.nc";
+	String varName = "mld";
+	String timeName = "Time";
+	String latName = "Latitude";
+	String lonName = "Longitude";
+	
+	@Before
+	public void setUp() throws Exception {
+		n3 = new Reader_NetCDF_3D(filename, varName, timeName, latName, lonName);
+	}
+	
+	@Test
+	public void test() {
+		assertEquals(23.5252,n3.getValue(39448, 100, -50),1E-4);
+		assertEquals(24.2172,n3.getValue(39448, 100.08, -50),1E-4);
+		assertEquals(24.2172,n3.getValue(39448, 100.04, -50),1E-4);
+		assertEquals(23.5252,n3.getValue(39448.25, 100, -50),1E-4);
+		assertEquals(62.4045,n3.getValue(39449, 100, -50),1E-4);
+		assertEquals(62.4045,n3.getValue(39448.5, 100, -50),1E-4);
+	}
+}
