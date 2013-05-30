@@ -7,10 +7,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Performs basic time conversions to and from milliseconds.
+ * Performs basic time conversions to and from milliseconds.  This is
+ * intended for *simple conversions ONLY*, which is why months, dates etc.
+ * are not included, nor are time zone shifts, daylight savings time etc.
+ * accounted for.  For those types of conversions, use JODA, or the upcoming
+ * Time and Date API in version 1.8.
  * 
  * @author Johnathan Kool
- * 
  */
 
 public class TimeConvert {
@@ -39,11 +42,9 @@ public class TimeConvert {
 				|| unit.equalsIgnoreCase("Min") || unit.equalsIgnoreCase("M")) {
 			return millisToMinutes(millis);
 		}
-
 		else
 			throw new UnsupportedOperationException("Conversion of unit "
 					+ unit + "has not been implemented");
-
 	}
 
 	/**
@@ -82,7 +83,6 @@ public class TimeConvert {
 		} else
 			throw new UnsupportedOperationException("Conversion of unit "
 					+ unit + "has not been implemented");
-
 	}
 
 	/**

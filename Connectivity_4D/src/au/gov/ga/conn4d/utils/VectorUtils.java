@@ -386,13 +386,13 @@ public class VectorUtils {
 		return out;
 	}
 	
-	private static double findScale(double[] values, double[][] coordinates, double lagsize){
-		return 0;//TODO NOT YET IMPLEMENTED
-	}
+//	private static double findScale(double[] values, double[][] coordinates, double lagsize){
+//		return 0;//TODO NOT YET IMPLEMENTED
+//	}
 	
-	private static double findScale(double[] values, double[] coordinates, double lagsize){
-		 return 0;//TODO NOT YET IMPLEMENTED
-	}
+//	private static double findScale(double[] values, double[] coordinates, double lagsize){
+//		 return 0;//TODO NOT YET IMPLEMENTED
+//	}
 	
 	/**
 	 * Generates a distance matrix from a vector of values
