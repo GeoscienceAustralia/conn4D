@@ -18,7 +18,6 @@ import au.gov.ga.conn4d.utils.GeometryUtils;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
-
 /**
  * 
  * Performs actions associated with releasing a single Particle object from a
@@ -340,8 +339,6 @@ public class Release implements Runnable {
 
 			// end of time step
 
-		} catch (StackOverflowError e) {
-			e.printStackTrace();
 		} catch (NullPointerException npe){
 			System.out.println(
 			"Null Pointer Error - \n" +
