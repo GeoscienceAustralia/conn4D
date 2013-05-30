@@ -8,7 +8,11 @@ import cern.jet.random.engine.RandomEngine;
 import cern.jet.random.engine.RandomSeedTable;
 
 /**
- * Implements mortality using an exponential function.
+ * Implements mortality using an exponential function. The mortality rate is
+ * always set using milliseconds, even though the duration over which it is
+ * applied (timeInterval - in milliseconds) may change. In other words,
+ * time conversions to millisecond units must be performed externally to this
+ * class.
  * 
  * @author Johnathan Kool
  */
@@ -33,7 +37,6 @@ public class Mortality_Exponential implements Mortality {
 
 	@Override
 	public void apply(Particle p) {
-
 		if (uni.nextDouble() > Math.exp(-1.0 * mrate * timeInterval)) {
 			p.setDead(true);
 		}
@@ -52,9 +55,9 @@ public class Mortality_Exponential implements Mortality {
 	}
 
 	/**
-	 * Retrieves the mortality rate
+	 * Retrieves the mortality rate per millisecond
 	 * 
-	 * @return - the mortality rate
+	 * @return - the mortality rate per millisecond
 	 */
 
 	public double getMrate() {
@@ -72,10 +75,10 @@ public class Mortality_Exponential implements Mortality {
 	}
 
 	/**
-	 * Sets the mortality rate
+	 * Sets the mortality rate as a per millisecond rate
 	 * 
 	 * @param mrate
-	 *            - the mortality rate
+	 *            - the mortality rate as a per millisecond rate
 	 */
 
 	public void setMrate(double mrate) {
