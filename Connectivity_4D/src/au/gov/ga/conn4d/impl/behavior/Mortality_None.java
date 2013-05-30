@@ -14,15 +14,6 @@ public class Mortality_None implements Mortality, Cloneable {
 	}
 
 	/**
-	 * Applies the mortality function over a given number of cycles (in this
-	 * case, nothing occurs)
-	 */
-
-	@Override
-	public void apply(Particle p, double cycles) {
-	}
-
-	/**
 	 * Generates a copy of this class instance
 	 */
 	@Override

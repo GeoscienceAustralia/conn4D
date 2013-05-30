@@ -12,8 +12,6 @@ public class NullPlug implements MatrixWriter, TrajectoryWriter,
 	@Override
 	public void apply(Particle p){}
 	@Override
-	public void apply(Particle p,double cycles){}
-	@Override
 	public void close(){}
 	public boolean isNearNoData(){return false;}
 	public void checkReflect(Particle p){}

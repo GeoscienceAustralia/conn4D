@@ -46,7 +46,6 @@ public class Mortality_Exponential implements Mortality {
 	 * Applies probabilistic mortality the given particle
 	 */
 
-	@Override
 	public void apply(Particle p, double cycles) {
 
 		if (uni.nextDouble() > Math.exp(-1.0 * mrate * cycles * timeInterval)) {

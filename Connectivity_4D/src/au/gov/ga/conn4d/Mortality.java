@@ -25,7 +25,7 @@ public interface Mortality {
 	 *            - The particle to be acted upon
 	 */
 
-	public void apply(Particle p, double cycles);
+	//public void apply(Particle p, double cycles);
 
 	/**
 	 * Generates a clone of the Mortality instance
