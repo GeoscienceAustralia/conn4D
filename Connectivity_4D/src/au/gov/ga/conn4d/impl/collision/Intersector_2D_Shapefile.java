@@ -14,7 +14,6 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.Point;
 
-
 /**
  * Performs basic intersection operations associated with a shapefile.
  * 

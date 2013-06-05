@@ -3,7 +3,6 @@ package au.gov.ga.conn4d.test.impl.behavior;
 import junit.framework.TestCase;
 
 import org.junit.Before;
-import org.junit.Test;
 
 import au.gov.ga.conn4d.Particle;
 import au.gov.ga.conn4d.impl.behavior.VerticalMigration_Text;
@@ -39,14 +38,6 @@ public class VerticalMigration_TextTest extends TestCase {
 	 * Incomplete
 	 */
 	
-	@Test
-	public void testMovement() {
-		
-		for(int i = 1; i < 31; i++){
-			vm.apply(p);
-			//System.out.print(p.getZ() + " ");
-			if(i%15 == 0){System.out.print("\n");}
-		
-		}
-	}
+	//@Test
+	public void testMovement() {}
 }

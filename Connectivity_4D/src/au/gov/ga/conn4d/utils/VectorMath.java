@@ -1098,6 +1098,7 @@ public class VectorMath {
 		int n = original.length;
 		double temp = 0.0D;
 		int temp_idx = 0;
+		
 		for (int i = 0; i < n; i++) {
 			sorted[i] = original[i];
 			indices[i] = i;

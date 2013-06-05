@@ -79,9 +79,9 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 
 	public VelocityReader_HYCOMList_4D() {
 	}
-
+	
 	public VelocityReader_HYCOMList_4D(String dir) throws IOException {
-		initialize(dir);
+		this.initialize(dir);
 	}
 
 	public void initialize(String dir) throws IOException {
@@ -118,7 +118,7 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 								+ tVar
 								+ " was not found in "
 								+ fil.getPath()
-								+ " when initializing the VelocityReader.  Skipping.");
+								+ " when initializing the VelocityReader.  This file will be skipped.");
 				continue;
 			}
 
@@ -154,7 +154,7 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 
 		if (uFiles.size() == 0 || vFiles.size() == 0 || wFiles.size() == 0) {
 			System.out
-					.println("Velocity directory is missing a file set, or files/variables are not named properly."
+					.println("Velocity directory is empty, or files/variables are not named properly."
 							+ "Files  must be named as *_u*, *_v*, and *_w*.");
 
 			System.exit(0);

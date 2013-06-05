@@ -31,7 +31,7 @@ public class ReleaseTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		// Build the velocity reader
+		// Build the velocity readerr
 		v3.setUFile(uFile, "Variable X");
 		v3.setVFile(vFile, "Variable X");
 		v3.setWFile(wFile, "Variable X");

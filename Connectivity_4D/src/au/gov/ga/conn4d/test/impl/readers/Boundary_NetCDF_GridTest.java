@@ -1,11 +1,15 @@
 package au.gov.ga.conn4d.test.impl.readers;
 
+import static org.junit.Assert.*;
+
 import java.io.IOException;
 import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.vividsolutions.jts.geom.Coordinate;
 
 import au.gov.ga.conn4d.impl.readers.Boundary_Raster_NetCDF;
 
@@ -25,7 +29,11 @@ public class Boundary_NetCDF_GridTest {
 	@Test
 	public void testVertices() {
 		Assert.assertNull(bng.getVertices(new int[]{0,0}));
-		System.out.println(Arrays.toString(bng.getVertices(new int[]{1,1})));
+		Coordinate[] ca = bng.getVertices(new int[]{1,1});
+		assertEquals(ca[0], new Coordinate(-1.96,-1.96,51));
+		assertEquals(ca[1], new Coordinate(-1.92,-1.96,52));
+		assertEquals(ca[2], new Coordinate(-1.92,-1.92,153));
+		assertEquals(ca[3], new Coordinate(-1.96,-1.92,152));
 	}
 	
 	@Test

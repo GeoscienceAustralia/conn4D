@@ -353,19 +353,6 @@ public class CoordinateMathTest {
 		assertTrue(compare(CoordinateMath.rotate3D(x, y, -d90),z,eps));
 		assertTrue(compare(CoordinateMath.rotate3D(z, x, d90),ny,eps));
 		assertTrue(compare(CoordinateMath.rotate3D(z, y, d90),x,eps));
-	
-/*
-		System.out.println(CoordinateMath.rotate3D(new Coordinate(11, 10, 0),
-				new Coordinate(10, 10, 15), new Coordinate(10, 10, 0),
-				Math.toRadians(-90)));
-		System.out.println(CoordinateMath.rotate3Dn(new Coordinate(11, 10, 0),
-				new Coordinate(10, 10, 15), new Coordinate(10, 10, 0),
-				Math.toRadians(-90)));
-		System.out.println(CoordinateMath.rotate3D(new Coordinate(0, 0, -1),
-				new Coordinate(0, 1, 0), new Coordinate(0, 0, 0),
-				Math.toRadians(90)));
-		System.out.println(CoordinateMath.rotate3D(new Coordinate(0, 0.5, -1),
-				new Coordinate(0, 1.5, 0), Math.toRadians(180)));*/
 	}
 
 	/*
