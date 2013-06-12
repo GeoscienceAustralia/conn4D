@@ -241,7 +241,6 @@ public class Spline {
 	 * 
 	 * @param n
 	 *            - the number of zero-value elements in the Spline
-	 * @return
 	 */
 
 	public static Spline zero(int n) {

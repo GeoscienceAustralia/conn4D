@@ -27,8 +27,6 @@ public class Mortality_WeibullTest {
 	 * conform to an exponential distribution curve. Carrying out a unit test
 	 * with guaranteed results is difficult due to the stochastic nature of the
 	 * function.
-	 * 
-	 * @param args
 	 */
 
 	@Test

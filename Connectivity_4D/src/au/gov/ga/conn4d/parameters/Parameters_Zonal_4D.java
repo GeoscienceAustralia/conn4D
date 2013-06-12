@@ -291,7 +291,6 @@ public class Parameters_Zonal_4D implements Parameters {
 	/**
 	 * Designates whether the model is true 3D (i.e. vertical movement)
 	 * or is semi-3D - layered horizontal motion.
-	 * @return
 	 */
 
 	public boolean isTrue3D() {
@@ -516,7 +515,6 @@ public class Parameters_Zonal_4D implements Parameters {
 	/**
 	 * Sets whether the model is true 3D (i.e. vertical movement)
 	 * or is semi-3D - layered horizontal motion.
-	 * @return
 	 */
 	
 	public void setTrue3D(boolean true3D) {

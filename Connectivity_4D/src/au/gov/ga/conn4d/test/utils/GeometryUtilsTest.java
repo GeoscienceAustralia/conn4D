@@ -3,8 +3,6 @@ package au.gov.ga.conn4d.test.utils;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertArrayEquals;
 
-import java.util.Arrays;
-
 import org.junit.Test;
 
 import au.gov.ga.conn4d.utils.GeometryUtils;

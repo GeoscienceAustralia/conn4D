@@ -1057,8 +1057,6 @@ public class ArraySearch {
 	 *            the array to be searched
 	 * @param key
 	 *            the value to be searched for
-	 * @param init
-	 *            initial guess of the index of the search key
 	 * @return index of the search key, if it is contained in the array within
 	 *         the specified range; otherwise,
 	 *         <tt>(-(<i>insertion point</i>) - 1)</tt>. The <i>insertion
@@ -1095,8 +1093,6 @@ public class ArraySearch {
 	 *            the index of the last element (exclusive) to be searched
 	 * @param key
 	 *            the value to be searched for
-	 * @param init
-	 *            initial guess of the index of the search key
 	 * @return index of the search key, if it is contained in the array within
 	 *         the specified range; otherwise,
 	 *         <tt>(-(<i>insertion point</i>) - 1)</tt>. The <i>insertion
@@ -1151,8 +1147,6 @@ public class ArraySearch {
 	 *            the array to be searched
 	 * @param key
 	 *            the value to be searched for
-	 * @param init
-	 *            initial guess of the index of the search key
 	 * @return index of the search key, if it is contained in the array within
 	 *         the specified range; otherwise,
 	 *         <tt>(-(<i>insertion point</i>) - 1)</tt>. The <i>insertion
@@ -1189,8 +1183,6 @@ public class ArraySearch {
 	 *            the index of the last element (exclusive) to be searched
 	 * @param key
 	 *            the value to be searched for
-	 * @param init
-	 *            initial guess of the index of the search key
 	 * @return index of the search key, if it is contained in the array within
 	 *         the specified range; otherwise,
 	 *         <tt>(-(<i>insertion point</i>) - 1)</tt>. The <i>insertion

@@ -34,9 +34,6 @@ public class Spline2D {
 
 	/**
 	 * Constructor with initial data arrays
-	 * 
-	 * @param nP
-	 * @param mP
 	 */
 
 	public Spline2D(double[] x1, double[] x2, double[][] vals) {
@@ -215,7 +212,6 @@ public class Spline2D {
 	 * 
 	 * @param nP
 	 * @param mP
-	 * @return
 	 */
 
 	public static Spline2D zero(int nP, int mP) {
@@ -255,8 +251,6 @@ public class Spline2D {
 
 	/**
 	 * (GET) Retrieves the inner matrix of derivatives for this object
-	 * 
-	 * @return
 	 */
 
 	public double[][] getDeriv() {

@@ -766,8 +766,8 @@ public class VectorMath {
 	/**
 	 * Returns the maximum value of an array of floats.
 	 * 
-	 * @param da
-	 *            - the input array of doubles
+	 * @param fa
+	 *            - the input array of floats
 	 * @return - the maximum value contained in the array
 	 */
 
@@ -784,8 +784,8 @@ public class VectorMath {
 	/**
 	 * Returns the maximum value of an array of integers.
 	 * 
-	 * @param da
-	 *            - the input array of doubles
+	 * @param ia
+	 *            - the input array of integers
 	 * @return - the maximum value contained in the array
 	 */
 
@@ -802,8 +802,8 @@ public class VectorMath {
 	/**
 	 * Returns the maximum value of an array of longs.
 	 * 
-	 * @param da
-	 *            - the input array of doubles
+	 * @param la
+	 *            - the input array of longs
 	 * @return - the maximum value contained in the array
 	 */
 
@@ -856,8 +856,8 @@ public class VectorMath {
 	/**
 	 * Returns the minimum value of an array of integers.
 	 * 
-	 * @param da
-	 *            - the input array of doubles
+	 * @param ia
+	 *            - the input array of integers
 	 * @return - the minimum value contained in the array
 	 */
 
@@ -874,8 +874,8 @@ public class VectorMath {
 	/**
 	 * Returns the minimum value of an array of longs.
 	 * 
-	 * @param da
-	 *            - the input array of doubles
+	 * @param la
+	 *            - the input array of longs
 	 * @return - the minimum value contained in the array
 	 */
 
