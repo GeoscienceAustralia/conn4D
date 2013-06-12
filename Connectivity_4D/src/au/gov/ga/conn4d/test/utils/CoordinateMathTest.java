@@ -390,5 +390,4 @@ public class CoordinateMathTest {
 		if(Math.abs(a.z-b.z)>eps){return false;}
 		return true;
 	}
-
 }
