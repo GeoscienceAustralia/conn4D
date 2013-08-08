@@ -27,8 +27,12 @@ public class Diffusion_Simple_3D implements Diffuser, Cloneable {
 	private float uK = 2f;  // Open-ocean vertical eddy diffusivity coefficient in m/s from http://oceanworld.tamu.edu/resources/ocng_textbook/chapter08/chapter08_05.htm (Ledwell, Watson and Law 1991)
 	private float vK = 2f;  // Open-ocean vertical eddy diffusivity coefficient in m/s from http://oceanworld.tamu.edu/resources/ocng_textbook/chapter08/chapter08_05.htm (Ledwell, Watson and Law 1991)
 	private float wK = 1.0E-5f; // Open-ocean vertical eddy diffusivity coefficient in m/s from http://oceanworld.tamu.edu/resources/ocng_textbook/chapter08/chapter08_05.htm (Munk, 1966)
+	
 	private float h = 7200; // Minimum integration time step (default=2hrs)
-	private float sqrt_h = (float) Math.sqrt(h);
+	
+	private double usc = Math.sqrt(2 * uK * h);
+	private double vsc = Math.sqrt(2 * vK * h);
+	private double wsc = Math.sqrt(2 * wK * h);
 
 	// Seed the random number generator by randomly picking from a seed table.
 	
@@ -42,7 +46,6 @@ public class Diffusion_Simple_3D implements Diffuser, Cloneable {
 
 	public Diffusion_Simple_3D(float h) {
 		this.h = h / 1000; // convert h from milliseconds to seconds
-		this.sqrt_h = (float) Math.sqrt(h);
 	}
 
 	/**
@@ -63,13 +66,9 @@ public class Diffusion_Simple_3D implements Diffuser, Cloneable {
 	@Override
 	public void apply(Particle p) {
 
-		float usc = uK * sqrt_h;
-		float vsc = vK * sqrt_h;
-		float wsc = wK * sqrt_h;
-
-		double dx = usc * (float) norm.nextDouble();
-		double dy = vsc * (float) norm.nextDouble();
-		double dz = wsc * (float) norm.nextDouble();
+		double dx = usc * norm.nextDouble();
+		double dy = vsc * norm.nextDouble();
+		double dz = wsc * norm.nextDouble();
 
 		// Determine the new coordinates
 
@@ -99,7 +98,6 @@ public class Diffusion_Simple_3D implements Diffuser, Cloneable {
 
 	public void setH(float h) {
 		this.h = h / 1000;
-		this.sqrt_h = (float) Math.sqrt(h);
 	}
 	
 	/**

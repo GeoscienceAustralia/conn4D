@@ -17,7 +17,7 @@ import au.gov.ga.conn4d.impl.readers.VelocityReader_NetCDF_4D;
 import au.gov.ga.conn4d.impl.writers.TrajectoryWriter_Text;
 import au.gov.ga.conn4d.input.ConfigurationOverride;
 import au.gov.ga.conn4d.parameters.Parameters_Test;
-import au.gov.ga.conn4d.test.NullPlug;
+//import au.gov.ga.conn4d.test.NullPlug;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -66,8 +66,8 @@ public class ReleaseFactoryTest {
 		rf.setDiffusion(new Diffusion_None());
 		rf.setMortality(new Mortality_None());
 		rf.setCollisionDetection(new CollisionDetector_None());
-		rf.setDistanceWriter(new NullPlug());
-		rf.setMatrixWriter(new NullPlug());
+		//rf.setDistanceWriter(new NullPlug());
+		//rf.setMatrixWriter(new NullPlug());
 		rf.setSettlement(new Settlement_None());
 		rf.setTrajectoryWriter(new TrajectoryWriter_Text("C:/Temp/testme.txt"));
 		rf.setLocalParameters(new ConfigurationOverride());

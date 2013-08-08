@@ -27,12 +27,12 @@ import au.gov.ga.conn4d.impl.readers.Shapefile;
 import au.gov.ga.conn4d.impl.readers.VelocityReader_HYCOMList_4D;
 import au.gov.ga.conn4d.impl.readers.VelocityReader_NetCDFDir_4D;
 import au.gov.ga.conn4d.impl.readers.VelocityReader_NetCDF_4D;
-import au.gov.ga.conn4d.impl.writers.DistanceWriter_Text;
-import au.gov.ga.conn4d.impl.writers.MatrixWriter_Text;
+//import au.gov.ga.conn4d.impl.writers.DistanceWriter_Text;
+//import au.gov.ga.conn4d.impl.writers.MatrixWriter_Text;
 import au.gov.ga.conn4d.impl.writers.TrajectoryWriter_Text;
 import au.gov.ga.conn4d.input.ConfigurationOverride;
-import au.gov.ga.conn4d.output.DistanceWriter;
-import au.gov.ga.conn4d.output.MatrixWriter;
+//import au.gov.ga.conn4d.output.DistanceWriter;
+//import au.gov.ga.conn4d.output.MatrixWriter;
 import au.gov.ga.conn4d.output.TrajectoryWriter;
 import au.gov.ga.conn4d.utils.TimeConvert;
 import au.gov.ga.conn4d.utils.VectorUtils;
@@ -51,8 +51,8 @@ public class ReleaseFactory_4D {
 	private ConfigurationOverride lp;
 	private VelocityReader vr;
 	private TrajectoryWriter tw;
-	private DistanceWriter dw;
-	private MatrixWriter mw;
+	//private DistanceWriter dw;
+	//private MatrixWriter mw;
 	private Mortality mort;
 	private Settlement sm;
 	private VerticalMigration vm;
@@ -96,8 +96,8 @@ public class ReleaseFactory_4D {
 		rel.setNegativeCoordinates(lp.negCoord);
 		rel.setNegativeOceanCoordinates(lp.negOceanCoord);
 		rel.setTrajectoryWriter(tw);
-		rel.setMatrixWriter(mw);
-		rel.setDistanceWriter(dw);
+		//rel.setMatrixWriter(mw);
+		//rel.setDistanceWriter(dw);
 		rel.setParameters(prm);
 		rel.setTime(time);
 		rel.setMortality(mort.clone());
@@ -212,8 +212,8 @@ public class ReleaseFactory_4D {
 
 		tw = new TrajectoryWriter_Text(output + prm.getLocName() + ".txt");
 		tw.setNegCoord(!lp.negOceanCoord && lp.negCoord);
-		mw = new MatrixWriter_Text(output + prm.getLocName() + ".sum");
-		dw = new DistanceWriter_Text(output + prm.getLocName() + ".dst");
+		//mw = new MatrixWriter_Text(output + prm.getLocName() + ".sum");
+		//dw = new DistanceWriter_Text(output + prm.getLocName() + ".dst");
 
 		// Set mortality
 
@@ -401,9 +401,9 @@ public class ReleaseFactory_4D {
 	 * @return - The DistanceWriter object
 	 */
 
-	public DistanceWriter getDistanceWriter() {
-		return dw;
-	}
+	//public DistanceWriter getDistanceWriter() {
+	//	return dw;
+	//}
 
 	/**
 	 * Retrieves the LocalParameters object associated with this instance.
@@ -421,9 +421,9 @@ public class ReleaseFactory_4D {
 	 * @return - The MatrixWriter object
 	 */
 
-	public MatrixWriter getMatrixWriter() {
-		return mw;
-	}
+	//public MatrixWriter getMatrixWriter() {
+	//	return mw;
+	//}
 
 	/**
 	 * Retrieves the Mortality object associated with this instance.
@@ -536,9 +536,9 @@ public class ReleaseFactory_4D {
 	 *            - The DistanceWriter object
 	 */
 
-	public void setDistanceWriter(DistanceWriter dw) {
-		this.dw = dw;
-	}
+	//public void setDistanceWriter(DistanceWriter dw) {
+	//	this.dw = dw;
+	//}
 
 	/**
 	 * Sets the LocalParameters object for this instance.
@@ -558,9 +558,9 @@ public class ReleaseFactory_4D {
 	 *            - The MatrixWriter object
 	 */
 
-	public void setMatrixWriter(MatrixWriter mw) {
-		this.mw = mw;
-	}
+	//public void setMatrixWriter(MatrixWriter mw) {
+	//	this.mw = mw;
+	//}
 
 	/**
 	 * Sets the Mortality object for this instance.
@@ -658,12 +658,12 @@ public class ReleaseFactory_4D {
 		if (tw != null) {
 			tw.close();
 		}
-		if (mw != null) {
-			mw.close();
-		}
-		if (dw != null) {
-			dw.close();
-		}
+		//if (mw != null) {
+		//	mw.close();
+		//}
+		//if (dw != null) {
+		//	dw.close();
+		//}
 		if (mv != null) {
 			mv.close();
 		}
