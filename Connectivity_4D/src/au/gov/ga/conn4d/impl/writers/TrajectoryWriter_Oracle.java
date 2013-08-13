@@ -146,57 +146,57 @@ public class TrajectoryWriter_Oracle implements TrajectoryWriter {
 		try {
 			if (p.recording()) {
 
-				ps1.setLong(0, p.getID());
-				ps1.setTimestamp(1, new Timestamp(p.getT()));
-				ps1.setDouble(2, TimeConvert.convertFromMillis(durationUnits,
+				ps1.setLong(1, p.getID());
+				ps1.setTimestamp(2, new Timestamp(p.getT()));
+				ps1.setDouble(3, TimeConvert.convertFromMillis(durationUnits,
 						p.getAge()));
-				ps1.setDouble(3, p.getZ());
+				ps1.setDouble(4, p.getZ());
 
 				if (p.getX() > 180) {
-					ps1.setDouble(4, -(360d - p.getX()));
+					ps1.setDouble(5, -(360d - p.getX()));
 				} else {
-					ps1.setDouble(4, p.getX());
+					ps1.setDouble(6, p.getX());
 				}
 
-				ps1.setDouble(5, p.getY());
-				ps1.setDouble(6, p.getDistance());
+				ps1.setDouble(7, p.getY());
+				ps1.setDouble(8, p.getDistance());
 
 				if (p.canSettle() == true) {
-					ps2.setLong(0, p.getID());
-					ps2.setTimestamp(1, new Timestamp(p.getT()));
+					ps2.setLong(1, p.getID());
+					ps2.setTimestamp(2, new Timestamp(p.getT()));
 					ps2.setDouble(
-							2,
+							3,
 							TimeConvert.convertFromMillis(durationUnits,
 									p.getAge()));
-					ps2.setDouble(3, p.getZ());
+					ps2.setDouble(4, p.getZ());
 
 					if (p.getX() > 180) {
-						ps2.setDouble(4, -(360d - p.getX()));
+						ps2.setDouble(5, -(360d - p.getX()));
 					} else {
-						ps2.setDouble(4, p.getX());
+						ps2.setDouble(5, p.getX());
 					}
 
-					ps2.setDouble(5, p.getY());
-					ps2.setDouble(6, p.getDistance());
-					ps2.setString(7, p.getDestination());
-					ps1.setString(7, "S" + p.getDestination());
-					ps2.setInt(8, p.getNodata() ? 1 : 0);
+					ps2.setDouble(6, p.getY());
+					ps2.setDouble(7, p.getDistance());
+					ps2.setString(8, p.getDestination());
+					ps1.setString(8, "S" + p.getDestination());
+					ps2.setInt(9, p.getNodata() ? 1 : 0);
 
 				} else if (p.isLost() == true) {
-					ps1.setString(7, "L");
+					ps1.setString(8, "L");
 					p.setRecording(false);
 				} else if (p.isDead() == true) {
-					ps1.setString(7, "M");
+					ps1.setString(8, "M");
 					p.setRecording(false);
 				} else if (p.wasError() == true) {
-					ps1.setString(7, "X");
+					ps1.setString(8, "X");
 					p.setRecording(false);
 				} else {
-					ps1.setString(7, "I");
+					ps1.setString(8, "I");
 				}
 
-				ps1.setString(7, "I");
-				ps1.setInt(8, p.getNodata() ? 1 : 0);
+				ps1.setString(8, "I");
+				ps1.setInt(9, p.getNodata() ? 1 : 0);
 
 				ps1.execute();
 				ps2.execute();

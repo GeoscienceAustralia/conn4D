@@ -15,7 +15,7 @@ public class TrajectoryWriter_TextTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testBadConstructor(){
 		@SuppressWarnings("unused")
-		TrajectoryWriter_Text tw = new TrajectoryWriter_Text("AA:/BADDIRECTORY/test.txt");
+		TrajectoryWriter_Text tw_bad = new TrajectoryWriter_Text("AA:/BADDIRECTORY/test.txt");
 	}
 
 	@Test

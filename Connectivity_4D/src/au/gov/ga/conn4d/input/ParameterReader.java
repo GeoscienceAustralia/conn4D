@@ -25,8 +25,8 @@ import java.util.StringTokenizer;
 
 public class ParameterReader {
 
-	private static BufferedReader br;
-	private static String parse, tk;
+	private BufferedReader br;
+	private String parse, tk;
 
 
 	/**

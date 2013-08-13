@@ -303,8 +303,7 @@ public class Release implements Runnable {
 				sm.apply(p);
 
 				// Update the Particle's time reference after processes are
-				// complete
-				// so that the time reflects state upon completion of the
+				// complete so that the time reflects state upon completion of the
 				// processes.
 
 				p.setT(p.getT() + prm.getH());

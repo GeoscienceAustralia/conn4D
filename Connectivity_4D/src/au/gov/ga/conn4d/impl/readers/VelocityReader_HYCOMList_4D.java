@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TimeZone;
@@ -138,15 +139,30 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 			// Put into an index linking start time with the associated file
 
 			if (name.lastIndexOf("_u") > 0) {
-				uFiles.put(minmax[0], ncf);
+				if(uFiles.containsKey(minmax[0])){
+					System.out.print("WARNING:  Velocity files have duplicate time keys. " 
+					+ name + "/" + uFiles.get(minmax[0]) + " at " + new Date(minmax[0]));
+					System.out.println(" Skipping latter file.");
+				} else{
+				uFiles.put(minmax[0], ncf);}
 			}
 
 			if (name.lastIndexOf("_v") > 0) {
-				vFiles.put(minmax[0], ncf);
+				if(vFiles.containsKey(minmax[0])){
+					System.out.print("WARNING:  Velocity files have duplicate time keys. " 
+					+ name + "/" + vFiles.get(minmax[0]) + " at " + new Date(minmax[0]));
+					System.out.println(" Skipping latter file.");
+				} else {
+				vFiles.put(minmax[0], ncf);}
 			}
 
 			if (name.lastIndexOf("_w") > 0) {
-				wFiles.put(minmax[0], ncf);
+				if(wFiles.containsKey(minmax[0])){
+					System.out.print("WARNING:  Velocity files have duplicate time keys. " 
+					+ name + "/" + wFiles.get(minmax[0]) + " at " + new Date(minmax[0]));
+					System.out.println(" Skipping latter file.");
+				} else {
+				wFiles.put(minmax[0], ncf);}
 			}
 		}
 
@@ -1051,6 +1067,7 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 		}
 
 		int dim = 0;
+		
 		if (lonVar.getRank() > 1) {
 			dim = 1;
 		}

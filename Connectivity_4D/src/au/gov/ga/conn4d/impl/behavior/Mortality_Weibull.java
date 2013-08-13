@@ -15,7 +15,7 @@ import cern.jet.random.engine.RandomSeedTable;
  * @author Johnathan Kool
  */
 
-public class Mortality_Weibull implements Mortality {
+public class Mortality_Weibull implements Mortality, Cloneable {
 
 	private double lambda;
 	private double k;

@@ -17,7 +17,7 @@ import cern.jet.random.engine.RandomSeedTable;
  * @author Johnathan Kool
  */
 
-public class Mortality_Exponential implements Mortality {
+public class Mortality_Exponential implements Mortality, Cloneable {
 
 	private int seed = RandomSeedTable.getSeedAtRowColumn(
 			Uniform.staticNextIntFromTo(0, Integer.MAX_VALUE),

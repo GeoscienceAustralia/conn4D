@@ -12,7 +12,7 @@ import au.gov.ga.conn4d.Settlement;
  * 
  */
 
-public class Settlement_None implements Settlement {
+public class Settlement_None implements Settlement, Cloneable {
 
 	/**
 	 * Performs actions associated with settling - in this case, taking no

@@ -12,7 +12,7 @@ import au.gov.ga.conn4d.Particle;
  *
  */
 
-public class CollisionDetector_None implements CollisionDetector {
+public class CollisionDetector_None implements CollisionDetector, Cloneable {
 
 	/**
 	 * Performs actions that relocate a Particle upon encountering a barrier.

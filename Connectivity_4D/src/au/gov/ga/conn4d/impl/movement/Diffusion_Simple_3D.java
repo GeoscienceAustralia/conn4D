@@ -69,14 +69,16 @@ public class Diffusion_Simple_3D implements Diffuser, Cloneable {
 		double dx = usc * norm.nextDouble();
 		double dy = vsc * norm.nextDouble();
 		double dz = wsc * norm.nextDouble();
+		
+		//System.out.println(dx + "," + dy + "," + dz);
 
 		// Determine the new coordinates
 
 		double[] coords = GeometryUtils.latLon(new double[] { p.getY(), p.getX() }, dy,
 				dx);
-
+		
 		// Update the particle's coordinates.
-
+		
 		p.setX(coords[1]);
 		p.setY(coords[0]);
 		p.setZ(p.getZ()+dz);

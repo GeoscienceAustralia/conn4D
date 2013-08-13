@@ -81,7 +81,7 @@ public class Particle implements Cloneable {
 		p.distance = this.distance;
 		p.source = this.source;
 		p.destination = this.destination;
-		p.visited = new HashSet<Long>(this.visited);
+		//p.visited = new HashSet<Long>(this.visited);
 		p.comments = this.comments;
 		return p;
 	}

@@ -23,7 +23,7 @@ import com.vividsolutions.jts.geom.LineSegment;
  * @param p
  */
 
-public class CollisionDetector_3D_Raster implements CollisionDetector {
+public class CollisionDetector_3D_Raster implements CollisionDetector, Cloneable {
 
 	private Boundary_Raster bnd;
 	private Intersector_3D_Raster i3d = new Intersector_3D_Raster();

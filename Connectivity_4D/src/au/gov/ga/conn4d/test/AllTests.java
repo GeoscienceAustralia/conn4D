@@ -11,7 +11,7 @@ import au.gov.ga.conn4d.test.impl.behavior.Mortality_NoneTest;
 import au.gov.ga.conn4d.test.impl.behavior.Mortality_WeibullTest;
 import au.gov.ga.conn4d.test.impl.collision.CollisionDetection_3D_RasterTest;
 import au.gov.ga.conn4d.test.impl.collision.Intersector_3D_PolyTest;
-import au.gov.ga.conn4d.test.impl.movement.Movement_RK4_3DTest;
+import au.gov.ga.conn4d.test.impl.movement.Advection_RK4_3DTest;
 import au.gov.ga.conn4d.test.impl.readers.BathymetryReader_GridTest;
 import au.gov.ga.conn4d.test.impl.readers.Boundary_NetCDF_GridTest;
 import au.gov.ga.conn4d.test.impl.readers.Reader_NetCDF_4DTest;
@@ -33,7 +33,7 @@ import au.gov.ga.conn4d.test.utils.VectorUtilsTest;
 @SuiteClasses({ ReleaseTest.class, ReleaseFactoryTest.class,
 		Mortality_ExponentialTest.class, Mortality_NoneTest.class, Mortality_WeibullTest.class,
 		CollisionDetection_3D_RasterTest.class, Intersector_3D_PolyTest.class,
-		Movement_RK4_3DTest.class, BathymetryReader_GridTest.class,
+		Advection_RK4_3DTest.class, BathymetryReader_GridTest.class,
 		Boundary_NetCDF_GridTest.class, Reader_NetCDF_4DTest.class,
 		VelocityReader_HYCOMList_4DTest.class,
 		VelocityReader_NetCDF_4DTest.class, TrajectoryWriter_TextTest.class,

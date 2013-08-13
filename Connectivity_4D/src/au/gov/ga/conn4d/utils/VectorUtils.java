@@ -238,9 +238,15 @@ public class VectorUtils {
 	 */
 	
 	public static double moransI(double[] vals, double[][] weights){
+
+		if(vals == null){
+			throw new IllegalArgumentException("Array is empty.");
+		}
+		
 		int n = vals.length;
-		if(vals == null || n <= 1){
-			return Double.NaN;
+		
+		if (n==1){
+			throw new IllegalArgumentException("Array contains only one value.");	
 		}
 		
 		int W = 0;
@@ -283,9 +289,15 @@ public class VectorUtils {
 	 */
 	
 	public static double moransI_percentile(double[] vals, double[][] weights){
+		
+		if(vals == null){
+			throw new IllegalArgumentException("Array is empty.");
+		}
+		
 		int n = vals.length;
-		if(vals == null || n <= 1){
-			throw new IllegalArgumentException("Array is empty or contains only one value");
+		
+		if (n==1){
+			throw new IllegalArgumentException("Array contains only one value.");	
 		}
 		
 		double sum = 0;

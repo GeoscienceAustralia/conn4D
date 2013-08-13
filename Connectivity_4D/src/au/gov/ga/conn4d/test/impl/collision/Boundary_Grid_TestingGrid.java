@@ -16,7 +16,7 @@ import com.vividsolutions.jts.geom.Coordinate;
  * @author Johnathan Kool
  */
 
-public class Boundary_Grid_TestingGrid implements Boundary_Raster {
+public class Boundary_Grid_TestingGrid implements Boundary_Raster, Cloneable {
 
 	private double minx = -1;
 	private double miny = -1;
