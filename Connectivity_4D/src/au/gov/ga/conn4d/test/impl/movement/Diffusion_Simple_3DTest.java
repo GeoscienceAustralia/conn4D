@@ -1,11 +1,8 @@
 package au.gov.ga.conn4d.test.impl.movement;
 
-import static org.junit.Assert.*;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import org.junit.Test;
 import au.gov.ga.conn4d.Particle;

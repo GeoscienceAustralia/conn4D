@@ -12,8 +12,8 @@ import cern.jet.random.engine.RandomSeedTable;
 /**
  * Performs simple anisotropic diffusion in three dimensions.
  * 
- * @author Johnathan Kool based on FORTRAN code developed by Robert K. Cowen,
- *         Claire Paris and Ashwanth Srinivasan.
+ * @author Johnathan Kool based on FORTRAN code developed by Claire Paris, 
+ * Ashwanth Srinivasan and Robert K. Cowen.
  */
 
 public class Diffusion_Simple_3D implements Diffuser, Cloneable {
@@ -54,10 +54,6 @@ public class Diffusion_Simple_3D implements Diffuser, Cloneable {
 	 * The equations are based on equations 8 and 9 of Dimou, K.N. and Adams,
 	 * E.E. 1993 - Estuarine and Coastal Shelf Science 37:99-110. A Random-walk,
 	 * Particle Tracking Model for Well-Mixed Estuaries and Coastal Waters
-	 * 
-	 * Because we are calculating the diffusion coefficients independently (sqrt2D in
-	 * Dimou's text), we multiply the result by sqrt of h (delta t in Dimou's text)
-	 * since the square root of products is equal to the product of their square roots.
 	 * 
 	 * @param p
 	 *            - The particle to be acted upon.

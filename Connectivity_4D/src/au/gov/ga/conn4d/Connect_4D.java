@@ -27,9 +27,9 @@ public class Connect_4D {
 	private static ParameterOverride gp = new ParameterOverride();
 	private static ReleaseFileReader rf;
 	private static ReleaseRunner_4D rr;
-	private static DateFormat outerformat = new SimpleDateFormat(
+	private DateFormat outerformat = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss zzz");
-	private static NumberFormat deltaformat = new DecimalFormat("#.000");
+	private NumberFormat deltaformat = new DecimalFormat("#.000");
 	private static String prmfile = "default.prm";
 	private static String cfgfile = "default.cfg";
 	private static String restartAt = "#";
