@@ -145,11 +145,9 @@ public class TimeConvert {
 			d = df.parse(date);
 			return d.getTime();
 		} catch (ParseException e) {
-			System.out.println("WARNING:  Date provided: " + date
-					+ "could not be parsed.\n\n");
-			e.printStackTrace();
+			throw new IllegalArgumentException("Date could not be parsed: "
+					+ date + ".  Required format is M/d/yyyy.");
 		}
-		return -1;
 	}
 
 	/**

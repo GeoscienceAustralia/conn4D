@@ -1,15 +1,19 @@
 package au.gov.ga.conn4d.impl;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import au.gov.ga.conn4d.Parameters;
 import au.gov.ga.conn4d.ReleaseRunner;
-
-
+import au.gov.ga.conn4d.input.ConfigurationOverride;
+import au.gov.ga.conn4d.output.TrajectoryWriter;
 
 /**
  * Creates and sets the parameters of Factory Objects used to generate Release
- * threads. Also executes the Release Threads using a cached thread pool.
+ * threads. Also executes the Release Threads using a thread pool.  A single
+ * Release corresponds to a set of Particles released from a single location
+ * (polygon/raster cell or voxel)
  * 
  * @author Johnathan Kool
  */
@@ -17,6 +21,7 @@ import au.gov.ga.conn4d.ReleaseRunner;
 public class ReleaseRunner_4D implements ReleaseRunner {
 
 	private ReleaseFactory_4D relFactory;
+	private int poolSize = 16;
 
 	/**
 	 * Single-argument constructor.
@@ -25,7 +30,7 @@ public class ReleaseRunner_4D implements ReleaseRunner {
 	 *            : Location-specific configuration parameters (filename)
 	 */
 
-	public ReleaseRunner_4D(String config) {
+	public ReleaseRunner_4D(ConfigurationOverride config) {
 		relFactory = new ReleaseFactory_4D(config);
 	}
 
@@ -38,7 +43,7 @@ public class ReleaseRunner_4D implements ReleaseRunner {
 	@Override
 	public void run(Parameters prm) {
 
-		// Set the parameters of the ReleaseTemplate using the Datagram
+		// Set the parameters of the ReleaseTemplate using Parameters
 
 		relFactory.setParameters(prm);
 
@@ -46,6 +51,8 @@ public class ReleaseRunner_4D implements ReleaseRunner {
 
 		relFactory.setTime(prm.getTime());
 		int n = prm.getNPart();
+		
+		poolSize = prm.getPoolSize();
 
 		// Ensure that the group starts in bounds. With centroid we can test as
 		// a group.
@@ -72,6 +79,7 @@ public class ReleaseRunner_4D implements ReleaseRunner {
 		 * calling the shutdown operation (flushing and closing the writers)
 		 */
 
+		ExecutorService service = Executors.newFixedThreadPool(poolSize);
 		CountDownLatch doneSignal = new CountDownLatch(n);
 
 		try {
@@ -88,13 +96,14 @@ public class ReleaseRunner_4D implements ReleaseRunner {
 					continue;
 				}
 				rel.setDoneSignal(doneSignal);
-				Thread th = new Thread(rel);
+				service.submit(rel);
+				//Thread th = new Thread(rel);
 
 				// Setting the priority manually to 3 to avoid hogging
 				// resources
 
 				// th.setPriority(3);
-				th.start();
+				//th.start();
 				ct++;
 			}
 
@@ -103,7 +112,7 @@ public class ReleaseRunner_4D implements ReleaseRunner {
 
 			// Wait for the threads to all finish.
 
-			// doneSignal.await();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -112,6 +121,7 @@ public class ReleaseRunner_4D implements ReleaseRunner {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			service.shutdown();
 			relFactory.shutdown();
 		}
 		System.gc();
@@ -123,5 +133,13 @@ public class ReleaseRunner_4D implements ReleaseRunner {
 
 	public void close() {
 		// exec.shutdown();
+	}
+	
+	public void setPoolSize(int poolSize){
+		this.poolSize=poolSize;
+	}
+	
+	public void setWriter(TrajectoryWriter tw){
+		relFactory.setTrajectoryWriter(tw);
 	}
 }

@@ -22,6 +22,7 @@ public class Parameters_Zonal_4D implements Parameters {
 
 	private String locName = "Test";
 	private int nPart = 1;
+	private int poolSize = 16;
 	private Geometry position;
 	private double minDepth = 0;
 	private double maxDepth = 0;
@@ -210,6 +211,15 @@ public class Parameters_Zonal_4D implements Parameters {
 		return outputFreq;
 	}
 
+	/**
+	 * Retrieves the thread pool size to be used by the ReleaseRunner
+	 */
+	
+	@Override
+	public int getPoolSize(){
+		return poolSize;
+	}
+	
 	/**
 	 * Retrieves the geometry over which Particles are to be released.
 	 */
@@ -444,7 +454,12 @@ public class Parameters_Zonal_4D implements Parameters {
 	
 	@Override
 	public void setOutputFolder(String outputFolder) {
-		this.outputFolder = outputFolder;
+		if (outputFolder.equalsIgnoreCase("jobfs")||outputFolder.equalsIgnoreCase("$jobfs")){
+			this.outputFolder=System.getenv("PBS_JOBFS");
+		}
+		else{
+			this.outputFolder = outputFolder;
+		}
 	}
 
 	/**
@@ -457,6 +472,15 @@ public class Parameters_Zonal_4D implements Parameters {
 		this.outputFreq = outputFreq;
 	}
 
+	/**
+	 * Sets the thread pool size to be used by the ReleaseRunner
+	 */
+	
+	@Override
+	public void setPoolSize(int poolSize){
+		this.poolSize=poolSize;
+	}
+	
 	/**
 	 * Sets the geometry over which Particles are to be released.
 	 */

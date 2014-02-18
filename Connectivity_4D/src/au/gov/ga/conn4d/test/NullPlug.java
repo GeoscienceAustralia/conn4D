@@ -26,4 +26,5 @@ public class NullPlug implements MatrixWriter, TrajectoryWriter,
 	public NullPlug clone(){return this;}
 	@Override
 	public void setNegCoord(boolean b){}
+	public boolean isFinished(){return true;}
 }

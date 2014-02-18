@@ -124,7 +124,6 @@ public class TrajectoryWriter_Text implements TrajectoryWriter {
 		}
 	}
 
-
 	/**
 	 * Closes and cleans up the output file
 	 */

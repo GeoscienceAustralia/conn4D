@@ -340,29 +340,46 @@ public class CoordinateMathTest {
 
 	@Test
 	public void testRotate3DCoordinateCoordinateDouble() {
-		double d90 = Math.PI/2;
+		double d90 = Math.PI / 2;
 		double d180 = Math.PI;
-		assertTrue(compare(CoordinateMath.rotate3D(x, z, d90),y,eps));
-		assertTrue(compare(CoordinateMath.rotate3D(x, z, d180),nx,eps));
-		assertTrue(compare(CoordinateMath.rotate3D(y, z, d90),nx,eps));
-		assertTrue(compare(CoordinateMath.rotate3D(ny, z, d90),x,eps));
-		assertTrue(compare(CoordinateMath.rotate3D(ny, z, -d90),nx,eps));
-		assertTrue(compare(CoordinateMath.rotate3D(x, y, d90),nz,eps));
-		assertTrue(compare(CoordinateMath.rotate3D(x, y, d180),nx,eps));
-		assertTrue(compare(CoordinateMath.rotate3D(nx, y, d90),z,eps));
-		assertTrue(compare(CoordinateMath.rotate3D(x, y, -d90),z,eps));
-		assertTrue(compare(CoordinateMath.rotate3D(z, x, d90),ny,eps));
-		assertTrue(compare(CoordinateMath.rotate3D(z, y, d90),x,eps));
+		assertTrue(compare(CoordinateMath.rotate3D(x, z, d90), y, eps));
+		assertTrue(compare(CoordinateMath.rotate3D(x, z, d180), nx, eps));
+		assertTrue(compare(CoordinateMath.rotate3D(y, z, d90), nx, eps));
+		assertTrue(compare(CoordinateMath.rotate3D(ny, z, d90), x, eps));
+		assertTrue(compare(CoordinateMath.rotate3D(ny, z, -d90), nx, eps));
+		assertTrue(compare(CoordinateMath.rotate3D(x, y, d90), nz, eps));
+		assertTrue(compare(CoordinateMath.rotate3D(x, y, d180), nx, eps));
+		assertTrue(compare(CoordinateMath.rotate3D(nx, y, d90), z, eps));
+		assertTrue(compare(CoordinateMath.rotate3D(x, y, -d90), z, eps));
+		assertTrue(compare(CoordinateMath.rotate3D(z, x, d90), ny, eps));
+		assertTrue(compare(CoordinateMath.rotate3D(z, y, d90), x, eps));
 	}
 
-	/*
-	 * @Test public void testRotate3DnCoordinateCoordinateDouble() {
-	 * fail("Not yet implemented"); }
-	 * 
-	 * @Test public void testRotate3DCoordinateCoordinateCoordinateDouble() {
-	 * fail("Not yet implemented"); }
-	 * 
-	 * @Test public void testRotate3DnCoordinateCoordinateCoordinateDouble() {
+	@Test
+	public void testRotate3DnCoordinateCoordinateDouble() {
+		double d90 = Math.PI / 2;
+		double d180 = Math.PI;
+		assertTrue(compare(CoordinateMath.rotate3Dn(x, z, d180), nx, eps));
+		assertTrue(compare(CoordinateMath.rotate3Dn(y, z, d90), nx, eps));
+		assertTrue(compare(CoordinateMath.rotate3Dn(ny, z, -d90), nx, eps));
+		assertTrue(compare(CoordinateMath.rotate3Dn(x, y, d90), nz, eps));
+		assertTrue(compare(CoordinateMath.rotate3Dn(x, y, d180), nx, eps));
+		assertTrue(compare(CoordinateMath.rotate3Dn(z, x, d90), ny, eps));
+	}
+
+	
+	  //@Test public void testRotate3DCoordinateCoordinateCoordinateDouble() {
+	 //		double d90 = Math.PI / 2;
+	//		double d180 = Math.PI;
+	//		assertTrue(compare(CoordinateMath.rotate3D(x, z, d180), nx, eps));
+	//		assertTrue(compare(CoordinateMath.rotate3D(y, z, d90), nx, eps));
+	//		assertTrue(compare(CoordinateMath.rotate3D(ny, z, -d90), nx, eps));
+	//		assertTrue(compare(CoordinateMath.rotate3D(x, y, d90), nz, eps));
+	//		assertTrue(compare(CoordinateMath.rotate3D(x, y, d180), nx, eps));
+	//		assertTrue(compare(CoordinateMath.rotate3D(z, x, d90), ny, eps)); 
+	 // }
+	  
+	/* @Test public void testRotate3DnCoordinateCoordinateCoordinateDouble() {
 	 * fail("Not yet implemented"); }
 	 */
 
@@ -383,11 +400,17 @@ public class CoordinateMathTest {
 		assertEquals(CoordinateMath.subtract(origin, z), nz);
 		assertEquals(CoordinateMath.subtract(xyz, x), new Coordinate(0, 1, 1));
 	}
-	
-	private boolean compare(Coordinate a, Coordinate b, double eps){
-		if(Math.abs(a.x-b.x)>eps){return false;}
-		if(Math.abs(a.y-b.y)>eps){return false;}
-		if(Math.abs(a.z-b.z)>eps){return false;}
+
+	private boolean compare(Coordinate a, Coordinate b, double eps) {
+		if (Math.abs(a.x - b.x) > eps) {
+			return false;
+		}
+		if (Math.abs(a.y - b.y) > eps) {
+			return false;
+		}
+		if (Math.abs(a.z - b.z) > eps) {
+			return false;
+		}
 		return true;
 	}
 }

@@ -12,7 +12,7 @@ public class GeometryUtilsTest {
 	private double eps = 1E-8;
 
 	@Test
-	public void test() {
+	public void testProjectionConversions() {
 		assertEquals(GeometryUtils.lonlat2ceqd(new double[]{1,0})[0], 111319.5, 0.1);
 		assertEquals(GeometryUtils.lonlat2ceqd(new double[]{0,1})[1], 111319.5, 0.1);
 		assertEquals(GeometryUtils.ceqd2lonlat(new double[]{111319.5,0})[0], 1, 0.001);
@@ -23,5 +23,18 @@ public class GeometryUtilsTest {
 		double[] backagain = GeometryUtils.ceqd2lonlat(output);
 		assertArrayEquals(new double[]{113.40437496675112,-26.983227605170704},backagain,eps);
 	}
-
+	
+	@Test
+	public void testDistanceSphere(){
+		double rln1 = 0;
+		double rlt1 = 0; 
+		double rln2 = 1;
+		double rlt2 = 0;
+		
+		System.out.println(GeometryUtils.distance_Sphere(rln1, rlt1, rln2, rlt2));
+		System.out.println(GeometryUtils.distance_Sphere(0, 0, 0, 1));
+		double dist = Math.acos(Math.cos(rlt1) * Math.cos(rlt2) * Math.cos(rln2 -
+		 rln1) + Math.sin(rlt1) * Math.sin(rlt2));
+		System.out.println(6378137d * Math.toDegrees(dist) / 360);
+	}
 }

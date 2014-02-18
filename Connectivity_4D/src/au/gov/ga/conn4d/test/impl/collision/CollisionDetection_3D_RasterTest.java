@@ -1,7 +1,6 @@
 package au.gov.ga.conn4d.test.impl.collision;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -232,19 +231,7 @@ public class CollisionDetection_3D_RasterTest {
 		cdb_x.handleIntersection(p1);
 		double[] da = new double[]{p1.getX(),p1.getY(),p1.getZ()};
 	    Assert.assertArrayEquals(new double[]{-1,0.5,-10},da ,1E-1);// precision decrease due to use of meters
-	}	
-	
-	
-	//@Test
-	public void testReal(){
-		Particle p1 = new Particle();
-		p1.setPX(113.19207965621727); p1.setPY(-26.23487697950828); p1.setPZ(-3.2944260095246136); 
-		p1.setX(113.34096133503076); p1.setY(-26.196148714500566); p1.setZ(-3.3461520598461485); 
-		cdb_real.handleIntersection(p1);
-		double[] da = new double[]{p1.getX(),p1.getY(),p1.getZ()};
-		System.out.println(Arrays.toString(da));
-		//Assert.assertTrue(p1.isLost());
-	}	
+	}
 	
 	/**
 	 * Tests shoaling behavior using a positive slope in the X-direction.

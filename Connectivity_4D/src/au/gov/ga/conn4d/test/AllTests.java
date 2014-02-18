@@ -22,10 +22,12 @@ import au.gov.ga.conn4d.test.input.ParameterOverrideTest;
 import au.gov.ga.conn4d.test.utils.ArraySearchTest;
 import au.gov.ga.conn4d.test.utils.CoordinateMathTest;
 import au.gov.ga.conn4d.test.utils.FileExtensionFilterTest;
+import au.gov.ga.conn4d.test.utils.FilenamePatternFilterTest;
 import au.gov.ga.conn4d.test.utils.GeometryUtilsTest;
 import au.gov.ga.conn4d.test.utils.IndexLookup_CellTest;
 import au.gov.ga.conn4d.test.utils.IndexLookup_NearestTest;
 import au.gov.ga.conn4d.test.utils.ReferenceGridTest;
+import au.gov.ga.conn4d.test.utils.TimeConvertTest;
 import au.gov.ga.conn4d.test.utils.VectorMathTest;
 import au.gov.ga.conn4d.test.utils.VectorUtilsTest;
 
@@ -39,8 +41,8 @@ import au.gov.ga.conn4d.test.utils.VectorUtilsTest;
 		VelocityReader_NetCDF_4DTest.class, TrajectoryWriter_TextTest.class,
 		ParameterOverrideTest.class, ArraySearchTest.class,
 		CoordinateMathTest.class, FileExtensionFilterTest.class,
-		GeometryUtilsTest.class, IndexLookup_CellTest.class,
+		FilenamePatternFilterTest.class, GeometryUtilsTest.class, IndexLookup_CellTest.class,
 		IndexLookup_NearestTest.class, ReferenceGridTest.class,
-		VectorMathTest.class, VectorUtilsTest.class })
+		TimeConvertTest.class, VectorMathTest.class, VectorUtilsTest.class })
 public class AllTests {
 }

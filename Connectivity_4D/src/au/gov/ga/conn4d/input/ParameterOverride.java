@@ -31,7 +31,8 @@ public class ParameterOverride extends ParameterReader {
 	public final double NODATA = 1e34f; // NO DATA code
 	public String outputFolder = "";
 	public String outputFreq = "1"; // Frequency of writing to the output file.
-												public String outputFreqUnits = "Days";
+	public String outputFreqUnits = "Days";
+	public int poolSize = 16;
 	public String relDuration = "30"; // Pelagic Larval Duration (days)
 	public String relDurationUnits = "Days";
 	public String relFileName = "release.txt"; // Path and name of the release
@@ -71,6 +72,7 @@ public class ParameterOverride extends ParameterReader {
 				competencyStart));
 		parameters.setMortalityRate(mrate);
 		parameters.setMortalityUnits(mUnits);
+		parameters.setPoolSize(poolSize);
 		parameters.setVerticalMigration(vmgrt);
 		parameters.setOutputFolder(outputFolder);
 		parameters.setEffectiveMigration(effectiveMigration);

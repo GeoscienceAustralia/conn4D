@@ -96,6 +96,12 @@ public interface Parameters {
 	public long getOutputFreq();
 
 	/**
+	 * Gets the thread pool size used by the ReleaseRunner
+	 */
+	
+	public int getPoolSize();
+	
+	/**
 	 * Retrieves an initial release position as a Geometry
 	 */
 
@@ -227,6 +233,8 @@ public interface Parameters {
 	public void setOutputFolder(String outputFolder);
 
 	public void setOutputFreq(long outputFreq);
+	
+	public void setPoolSize(int poolSize);
 
 	public void setPosition(Geometry position);
 

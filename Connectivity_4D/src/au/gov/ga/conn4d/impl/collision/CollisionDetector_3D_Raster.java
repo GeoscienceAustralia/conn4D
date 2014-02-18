@@ -307,7 +307,7 @@ public class CollisionDetector_3D_Raster implements CollisionDetector, Cloneable
 
 	/**
 	 * Sets the projection transformation being used to convert geographic
-	 * horizontal coordiantes into metres.
+	 * horizontal coordinates into metres.
 	 */
 
 	public void setProjectionTransform(PrjTransform pt) {

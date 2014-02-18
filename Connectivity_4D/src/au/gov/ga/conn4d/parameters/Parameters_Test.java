@@ -13,6 +13,7 @@ public class Parameters_Test implements Parameters{
 	
 	private String locName = "Test";
 	private int nPart;
+	private int poolSize;
 	private Geometry position;
 	private double depth;
 	private long stime;
@@ -105,6 +106,16 @@ public class Parameters_Test implements Parameters{
 	public long getOutputFreq() {
 		return outputFreq;
 	}
+	
+	/**
+	 * Sets the thread pool size to be used by the ReleaseRunner
+	 */
+	
+	@Override
+	public int getPoolSize(){
+		return poolSize;
+	}
+	
 	@Override
 	public Geometry getPosition(){
 		return position;
@@ -202,12 +213,27 @@ public class Parameters_Test implements Parameters{
 	}
 	@Override
 	public void setOutputFolder(String outputFolder) {
-		this.outputFolder = outputFolder;
+		if (outputFolder.equalsIgnoreCase("jobfs")||outputFolder.equalsIgnoreCase("$jobfs")){
+			this.outputFolder=System.getenv("PBS_JOBFS");
+		}
+		else{
+			this.outputFolder = outputFolder;
+		}
 	}
 	@Override
 	public void setOutputFreq(long outputFreq) {
 		this.outputFreq = outputFreq;
 	}
+	
+	/**
+	 * Sets the thread pool size to be used by the ReleaseRunner
+	 */
+	
+	@Override
+	public void setPoolSize(int poolSize){
+		this.poolSize=poolSize;
+	}
+	
 	public void setPosition(double x, double y, double z){
 		position = gf.createPoint(new Coordinate(x,y,z));
 		depth = z;

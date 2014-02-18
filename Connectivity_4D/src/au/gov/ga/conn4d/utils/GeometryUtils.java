@@ -58,7 +58,7 @@ public class GeometryUtils {
 				* Math.cos(rlt2) * Math.cos(d_lambda);
 		dist = Math.atan2(numerator, denominator);
 
-		return R_EARTH * Math.toDegrees(dist) / 360;
+		return 2*Math.PI*R_EARTH * Math.toDegrees(dist) / 360;
 	}
 	
 	/**

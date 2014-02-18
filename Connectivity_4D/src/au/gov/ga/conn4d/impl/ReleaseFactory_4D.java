@@ -25,18 +25,14 @@ import au.gov.ga.conn4d.impl.movement.Diffusion_Simple_3D;
 import au.gov.ga.conn4d.impl.readers.Boundary_Raster_NetCDF;
 import au.gov.ga.conn4d.impl.readers.Shapefile;
 import au.gov.ga.conn4d.impl.readers.VelocityReader_HYCOMList_4D;
+//import au.gov.ga.conn4d.impl.readers.VelocityReader_InMemHYCOMList_4D;
 import au.gov.ga.conn4d.impl.readers.VelocityReader_NetCDFDir_4D;
 import au.gov.ga.conn4d.impl.readers.VelocityReader_NetCDF_4D;
-//import au.gov.ga.conn4d.impl.writers.DistanceWriter_Text;
-//import au.gov.ga.conn4d.impl.writers.MatrixWriter_Text;
-import au.gov.ga.conn4d.impl.writers.TrajectoryWriter_Text;
+
 import au.gov.ga.conn4d.input.ConfigurationOverride;
-//import au.gov.ga.conn4d.output.DistanceWriter;
-//import au.gov.ga.conn4d.output.MatrixWriter;
 import au.gov.ga.conn4d.output.TrajectoryWriter;
 import au.gov.ga.conn4d.utils.TimeConvert;
 import au.gov.ga.conn4d.utils.VectorUtils;
-
 
 /**
  * Factory class used to generate individual instances of Release, which are
@@ -51,8 +47,6 @@ public class ReleaseFactory_4D {
 	private ConfigurationOverride lp;
 	private VelocityReader vr;
 	private TrajectoryWriter tw;
-	//private DistanceWriter dw;
-	//private MatrixWriter mw;
 	private Mortality mort;
 	private Settlement sm;
 	private VerticalMigration vm;
@@ -79,7 +73,7 @@ public class ReleaseFactory_4D {
 	 * @param local_config
 	 */
 	
-	public ReleaseFactory_4D(String local_config) {
+	public ReleaseFactory_4D(ConfigurationOverride local_config) {
 		initialize(local_config);
 	}
 
@@ -96,8 +90,6 @@ public class ReleaseFactory_4D {
 		rel.setNegativeCoordinates(lp.negCoord);
 		rel.setNegativeOceanCoordinates(lp.negOceanCoord);
 		rel.setTrajectoryWriter(tw);
-		//rel.setMatrixWriter(mw);
-		//rel.setDistanceWriter(dw);
 		rel.setParameters(prm);
 		rel.setTime(time);
 		rel.setMortality(mort.clone());
@@ -136,10 +128,10 @@ public class ReleaseFactory_4D {
 	 *            - String pathname of the LocalParameters file/object.
 	 */
 
-	private void initialize(String local_config) {
-		lp = new ConfigurationOverride(local_config);
+	private void initialize(ConfigurationOverride local_config) {
+		lp = local_config;
 		boolean err = false;
-
+		
 		// Initialize the habitat class.
 
 		try {
@@ -174,10 +166,6 @@ public class ReleaseFactory_4D {
 		}
 
 		if (err) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-			}
 			System.out
 					.println("\nErrors occurred during initialization.  Exiting.");
 			shutdown();
@@ -200,18 +188,22 @@ public class ReleaseFactory_4D {
 
 		this.prm = prm;
 		counter = 0;
-		String output = lp.trajOutputDir + File.separatorChar
-				+ prm.getWriteFolder() + File.separatorChar;
-		File outputdir = new File(output);
-
-		if (!outputdir.isDirectory()) {
-			outputdir.mkdir();
-		}
-
+		
+		//File tod = new File (lp.trajOutputDir);
+		
+		//if(!tod.isDirectory()){
+		//	tod.mkdirs();
+		//}
+		
+		//String output = lp.trajOutputDir + File.separatorChar
+		//		+ prm.getWriteFolder() + ".dat";
+		
+		//tw = new TrajectoryWriter_Binary(output);
+		
 		// Set the output writers
 
-		tw = new TrajectoryWriter_Text(output + prm.getLocName() + ".txt");
-		tw.setNegCoord(!lp.negOceanCoord && lp.negCoord);
+		//tw = new TrajectoryWriter_Text(output + prm.getLocName() + ".txt");
+		//tw.setNegCoord(!lp.negOceanCoord && lp.negCoord);
 		//mw = new MatrixWriter_Text(output + prm.getLocName() + ".sum");
 		//dw = new DistanceWriter_Text(output + prm.getLocName() + ".dst");
 
@@ -317,8 +309,10 @@ public class ReleaseFactory_4D {
 			// coded and added here as a choice)
 
 		} else if (lp.velocityType.equalsIgnoreCase("HYCOM_LIST")) {
+			//VelocityReader_InMemHYCOMList_4D ndr = null;
 			VelocityReader_HYCOMList_4D ndr = null;
 			try {
+				//ndr = new VelocityReader_InMemHYCOMList_4D();
 				ndr = new VelocityReader_HYCOMList_4D();
 				ndr.setLonName(lp.lonName);
 				ndr.setLatName(lp.latName);
@@ -396,16 +390,6 @@ public class ReleaseFactory_4D {
 	}
 
 	/**
-	 * Retrieves the DistanceWriter object associated with this instance.
-	 * 
-	 * @return - The DistanceWriter object
-	 */
-
-	//public DistanceWriter getDistanceWriter() {
-	//	return dw;
-	//}
-
-	/**
 	 * Retrieves the LocalParameters object associated with this instance.
 	 * 
 	 * @return - The LocalParameters object
@@ -414,16 +398,6 @@ public class ReleaseFactory_4D {
 	public ConfigurationOverride getLocalParameters() {
 		return lp;
 	}
-
-	/**
-	 * Retrieves the MatrixWriter object associated with this instance.
-	 * 
-	 * @return - The MatrixWriter object
-	 */
-
-	//public MatrixWriter getMatrixWriter() {
-	//	return mw;
-	//}
 
 	/**
 	 * Retrieves the Mortality object associated with this instance.
@@ -530,17 +504,6 @@ public class ReleaseFactory_4D {
 	}
 
 	/**
-	 * Sets the DistanceWriter object for this instance.
-	 * 
-	 * @param dw
-	 *            - The DistanceWriter object
-	 */
-
-	//public void setDistanceWriter(DistanceWriter dw) {
-	//	this.dw = dw;
-	//}
-
-	/**
 	 * Sets the LocalParameters object for this instance.
 	 * 
 	 * @param lp
@@ -550,17 +513,6 @@ public class ReleaseFactory_4D {
 	public void setLocalParameters(ConfigurationOverride lp) {
 		this.lp = lp;
 	}
-
-	/**
-	 * Sets the MatrixWriter object for this instance.
-	 * 
-	 * @param mw
-	 *            - The MatrixWriter object
-	 */
-
-	//public void setMatrixWriter(MatrixWriter mw) {
-	//	this.mw = mw;
-	//}
 
 	/**
 	 * Sets the Mortality object for this instance.
@@ -655,15 +607,6 @@ public class ReleaseFactory_4D {
 	 */
 
 	public void shutdown() {
-		if (tw != null) {
-			tw.close();
-		}
-		//if (mw != null) {
-		//	mw.close();
-		//}
-		//if (dw != null) {
-		//	dw.close();
-		//}
 		if (mv != null) {
 			mv.close();
 		}

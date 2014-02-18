@@ -37,14 +37,10 @@ public class Intersector_3D_Raster {
 		double d1 = 0;
 		double d2 = 0;
 
-		try {
-			d1 = CoordinateMath.magnitude(CoordinateMath.subtract(vertices[0],
-					vertices[2]));
-			d2 = CoordinateMath.magnitude(CoordinateMath.subtract(vertices[1],
-					vertices[3]));
-		} catch (NullPointerException npe) {
-			intersect(ls, vertices);
-		}
+		d1 = CoordinateMath.magnitude(CoordinateMath.subtract(vertices[0],
+				vertices[2]));
+		d2 = CoordinateMath.magnitude(CoordinateMath.subtract(vertices[1],
+				vertices[3]));
 
 		Coordinate[] t1, t2;
 
@@ -87,7 +83,9 @@ public class Intersector_3D_Raster {
 	 */
 
 	public LineSegment reflect(LineSegment ls, Coordinate[] vertices) {
+		
 		// Better criteria might be combined distance to the centroid?
+		
 		double d1 = CoordinateMath.magnitude(CoordinateMath.subtract(
 				vertices[0], vertices[2]));
 		double d2 = CoordinateMath.magnitude(CoordinateMath.subtract(
