@@ -32,6 +32,7 @@ public class ConfigurationOverride extends ParameterReader {
 	public String velocityType = "IANN";		// Velocity type (IANN- Interannual or CLIM - climatological)
 	public long timeOffset = -2177521200000l;   // Offset between velocity time (HYCOM-1900) and Java's base time (1970)
 	public String timeOffsetUnits = "milliseconds";
+	public int bufferSize = 32768;
 	
 	/**
 	 * No argument constructor.
