@@ -23,7 +23,9 @@ import au.gov.ga.conn4d.output.TrajectoryWriter;
 public class TrajectoryWriter_Binary implements Runnable,TrajectoryWriter {
 	
 	private static boolean negCoord = false;
+	@SuppressWarnings("unused")
 	private String timeUnits = "Date";
+	@SuppressWarnings("unused")
 	private String durationUnits = "Days";
 
 	/**
@@ -131,7 +133,7 @@ public class TrajectoryWriter_Binary implements Runnable,TrajectoryWriter {
 	/**
 	 * Opens a ThreadWriter using a File object for the output file
 	 * 
-	 * @param file
+	 * @param outputFile - The File object to be written to
 	 * @throws IOException
 	 */
 
@@ -144,7 +146,7 @@ public class TrajectoryWriter_Binary implements Runnable,TrajectoryWriter {
 	 * Opens a ThreadWriter using a String representing the path of the output
 	 * file
 	 * 
-	 * @param filename
+	 * @param filename - The path of the File object to be written to
 	 * @throws IOException
 	 */
 
@@ -156,7 +158,7 @@ public class TrajectoryWriter_Binary implements Runnable,TrajectoryWriter {
 	/**
 	 * Opens a ThreadWriter using a File object for the output file
 	 * 
-	 * @param file
+	 * @param outputFile - The File object to be written to
 	 * @throws IOException
 	 */
 
@@ -234,8 +236,8 @@ public class TrajectoryWriter_Binary implements Runnable,TrajectoryWriter {
 	/**
 	 * Submits a String to the queue for writing.
 	 * 
-	 * @param s
-	 *            - a String to be written to to the output file.
+	 * @param item
+	 *            - the DataItem to be written to to the output file.
 	 */
 
 	public TrajectoryWriter_Binary write(DataItem item) {
