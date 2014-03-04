@@ -33,6 +33,7 @@ public class ConfigurationOverride extends ParameterReader {
 	public long timeOffset = -2177521200000l;   // Offset between velocity time (HYCOM-1900) and Java's base time (1970)
 	public String timeOffsetUnits = "milliseconds";
 	public int bufferSize = 32768;
+	public int poolSize = 8;
 	
 	/**
 	 * No argument constructor.
