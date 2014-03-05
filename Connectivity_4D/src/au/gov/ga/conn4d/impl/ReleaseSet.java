@@ -8,6 +8,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import au.gov.ga.conn4d.Parameters;
 import au.gov.ga.conn4d.ReleaseRunner;
@@ -17,15 +18,22 @@ import au.gov.ga.conn4d.impl.writers.TrajectoryWriter_Binary;
 import au.gov.ga.conn4d.input.ConfigurationOverride;
 import au.gov.ga.conn4d.input.ParameterOverride;
 import au.gov.ga.conn4d.input.ReleaseFileReader;
-import au.gov.ga.conn4d.output.TrajectoryWriter;
 import au.gov.ga.conn4d.parameters.Parameters_Zonal_4D;
 import au.gov.ga.conn4d.utils.TimeConvert;
+
+/**
+ * Handles running sets of releases (individual track lines)
+ * 
+ * @author Johnathan Kool
+ */
 
 public class ReleaseSet {
 
 	private ReleaseFileReader rf_reader;
 	private ReleaseRunner rr;
 	private SimpleDateFormat innerFormat = new SimpleDateFormat("yyyy-MM-dd");
+	private SimpleDateFormat outerFormat = new SimpleDateFormat(
+			"yyyy-MM-dd HH:mm:ss zzz");
 	private SimpleDateFormat fullFormat = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss zzz");
 	private NumberFormat deltaformat = new DecimalFormat("#.000");
@@ -34,14 +42,27 @@ public class ReleaseSet {
 	private long time;
 	private boolean pass;
 	private String restartAt;
-	//private TrajectoryWriter tw;
 	private TrajectoryWriter_Binary tb = null;
+
+	/**
+	 * Two-argument constructor accepting a ParameterOverride and a ConfigurationOverride.
+	 * The Constructor is set up this way so that the code can operate in a client-server
+	 * type relationship with the client submitting a job to a machine with a local configuration.
+	 * 
+	 * @param prm_override
+	 * @param cfg_override
+	 */
 	
 	public ReleaseSet(ParameterOverride prm_override, ConfigurationOverride cfg_override){
 		this.prm_override = prm_override;
 		this.cfg_override = cfg_override;
 		this.rr = new ReleaseRunner_4D(cfg_override);
+		this.outerFormat.setTimeZone(TimeZone.getTimeZone(System.getProperty("user.timezone")));
 	}
+	
+	/**
+	 * Runs the set of releases
+	 */
 	
 	public void runSet(){
 		
@@ -144,7 +165,7 @@ public class ReleaseSet {
 					+ TimeConvert.millisToString(System
 							.currentTimeMillis() - timer)
 					+ ")\t"
-					+ fullFormat.format(new Date(System
+					+ outerFormat.format(new Date(System
 							.currentTimeMillis())));
 			rf_reader.next();
 			System.gc();
@@ -167,11 +188,17 @@ public class ReleaseSet {
 		}
 		tb.close();
 	}
+
+	/**
+	 * Closes resources when finished (runs ReleaseRunner close)
+	 */
 	
 	public void close(){
 		rr.close();
 
 	}
+	
+	// Getters and setters
 
 	public ParameterOverride getPrm_override() {
 		return prm_override;

@@ -13,13 +13,14 @@ import au.gov.ga.conn4d.utils.TimeConvert;
 
 /**
  * Lagrangian particle tracking program.
+ * 
+ * @author - Johnathan Kool, Geoscience Australia
  */
 
 public class Connect_4D {
 	private static ParameterOverride prm_override = new ParameterOverride();
 	private static ConfigurationOverride cfg_override = new ConfigurationOverride();
 	private static ReleaseFileReader rf_reader;
-	// private static ReleaseRunner_4D rr;
 	private DateFormat outerformat = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss zzz");
 
@@ -89,7 +90,7 @@ public class Connect_4D {
 		rs.close();
 
 		System.out.println("\nTime finished: "
-				+ new Date(System.currentTimeMillis())
+				+ outerformat.format(new Date(System.currentTimeMillis()))
 				+ " ("
 				+ TimeConvert.millisToString(System.currentTimeMillis()
 						- outertimer) + ")");

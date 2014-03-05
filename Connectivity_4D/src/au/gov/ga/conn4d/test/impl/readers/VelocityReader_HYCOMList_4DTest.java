@@ -15,7 +15,7 @@ import au.gov.ga.conn4d.impl.readers.VelocityReader_HYCOMList_4D;
 
 public class VelocityReader_HYCOMList_4DTest {
 
-	private String dir = "V:/Data/HYCOM/Blocks";
+	private String dir = "G:/Blocks";
 	private VelocityReader_HYCOMList_4D ncl;
 	private double eps = 1E-2;
 	
