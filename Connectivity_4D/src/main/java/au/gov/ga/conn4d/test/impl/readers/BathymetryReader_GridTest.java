@@ -11,19 +11,16 @@ import au.gov.ga.conn4d.impl.readers.Boundary_Raster_NetCDF;
 public class BathymetryReader_GridTest {
 
 	Boundary_Raster_NetCDF xbr,ybr,rbr;
-	String xpath = "C:/Temp/bath_xmap.nc";
-	String ypath = "C:/Temp/bath_ymap.nc";
-	String realpath = "C:/Temp/aus_bath_lite2.nc";
+	String xpath = "./files/bath_xmap.nc";
+	String ypath = "./files/bath_ymap.nc";
 	
 	@Before
 	public void setUp(){
 		try {
 			xbr = new Boundary_Raster_NetCDF(xpath,"Latitude","Longitude");
 			ybr = new Boundary_Raster_NetCDF(ypath,"Latitude","Longitude");
-			rbr = new Boundary_Raster_NetCDF(realpath,"Latitude","Longitude");
 			xbr.setPositiveDown(false);
-			ybr.setPositiveDown(false);
-			rbr.setPositiveDown(false);		
+			ybr.setPositiveDown(false);	
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

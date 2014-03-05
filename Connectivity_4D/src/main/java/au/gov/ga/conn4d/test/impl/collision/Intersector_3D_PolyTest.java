@@ -11,7 +11,12 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineSegment;
-//import com.vividsolutions.jts.geom.LinearRing;
+
+/**
+ * Tests polygon intersections in 3D
+ * 
+ * @author Johnathan Kool
+ */
 
 public class Intersector_3D_PolyTest {
 
@@ -64,6 +69,10 @@ public class Intersector_3D_PolyTest {
 				-1));
 	}
 	
+	/**
+	 * Test rotation about the X axis using a line oriented in the Z direction (vertical).
+	 */
+	
 	@Test
 	public void testXAxisRotationLineZ() {
 		int n = 100;
@@ -80,6 +89,11 @@ public class Intersector_3D_PolyTest {
 					c2arr(rfLine.p1), 1E-6);
 		}
 	}
+	
+	/**
+	 * Test rotation about the X axis using a line oriented in the Z direction (vertical)
+	 * using vertices in reversed order.
+	 */
 	
 	@Test
 	public void testXAxisRotationLineZ_ReversedVertices() {
@@ -98,6 +112,10 @@ public class Intersector_3D_PolyTest {
 		}
 	}
 	
+	/**
+	 * Test rotation about the X axis using a line oriented in the Y direction (horizontal).
+	 */
+	
 	@Test
 	public void testXAxisRotationLineY() {
 		int n = 100;
@@ -114,6 +132,10 @@ public class Intersector_3D_PolyTest {
 					c2arr(rfLine.p1), 1E-6);
 		}
 	}
+	
+	/**
+	 * Test rotation about the Y axis using a line oriented in the Z direction (vertical).
+	 */
 	
 	@Test
 	public void testYAxisRotationLineZ() {
@@ -132,6 +154,11 @@ public class Intersector_3D_PolyTest {
 		}
 	}
 	
+	/**
+	 * Test rotation about the Y axis using a line oriented in the Z direction (vertical)
+	 * using vertices in reversed order.
+	 */
+	
 	@Test
 	public void testYAxisRotationLineZ_ReversedVertices() {
 		int n = 100;
@@ -148,6 +175,10 @@ public class Intersector_3D_PolyTest {
 					c2arr(rfLine.p1), 1E-6);
 		}
 	}
+	
+	/**
+	 * Test rotation about the Y axis using a line oriented in the X direction (horizontal).
+	 */
 	
 	@Test
 	public void testYAxisRotationLineX() {
@@ -166,6 +197,10 @@ public class Intersector_3D_PolyTest {
 		}
 	}
 	
+	/**
+	 * Test rotation about the Z axis using a line oriented in the X direction (horizontal).
+	 */
+	
 	@Test
 	public void testZAxisRotationLineX() {
 		int n = 100;
@@ -183,6 +218,10 @@ public class Intersector_3D_PolyTest {
 		}
 	}
 	
+	/**
+	 * Test rotation about the Z axis using a line oriented in the Y direction (horizontal).
+	 */
+	
 	@Test
 	public void testZAxisRotationLineY() {
 		int n = 100;
@@ -199,6 +238,10 @@ public class Intersector_3D_PolyTest {
 					c2arr(rfLine.p1), 1E-6);
 		}
 	}
+	
+	/**
+	 * Test for the correct intersection point.
+	 */
 	
 	@Test
 	public void testIntersection(){
@@ -223,6 +266,11 @@ public class Intersector_3D_PolyTest {
 		Assert.assertArrayEquals(new double[]{0,0,-4.5},new double[]{isect.x,isect.y,isect.z},e);
 	}
 	
+	/**
+	 * Test rotation about the X axis using a line oriented in the Z direction (vertical)
+	 * handling breaching behaviour.
+	 */
+	
 	@Test
 	public void testXAxisRotationLineZ_special() {
 		int n = 100;
@@ -239,6 +287,11 @@ public class Intersector_3D_PolyTest {
 					c2arr(rfLine.p1), 1E-6);
 		}
 	}
+	
+	/**
+	 * Test rotation about the X axis using a line oriented in the Z direction (vertical)
+	 * handling breaching behaviour, using reversed polygon vertices.
+	 */
 	
 	@Test
 	public void testXAxisRotationLineZ_ReversedVertices_special() {

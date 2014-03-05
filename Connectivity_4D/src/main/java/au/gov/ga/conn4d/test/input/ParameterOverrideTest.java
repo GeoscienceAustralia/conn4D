@@ -15,7 +15,7 @@ public class ParameterOverrideTest {
 	
 	@Test
 	public void testReadFile() {
-		po.readFile("H:/Transfer/programming/workspace/Connectivity_4D/test.prm");
+		po.readFile("./files/test.prm");
 		
 		assertFalse(po.centroid);
 		assertEquals(po.competencyStart,"31");
@@ -32,8 +32,5 @@ public class ParameterOverrideTest {
 		
 		Parameters prm = new Parameters_Test();
 		po.setParameters(prm);
-		
-		
 	}
-
 }

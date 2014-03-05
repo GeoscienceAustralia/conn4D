@@ -12,9 +12,9 @@ public class VelocityReader_NetCDF_4DTest {
 
 	VelocityReader_NetCDF_4D v3 = new VelocityReader_NetCDF_4D();
 
-	String uFile = "C:/Temp/Linear_x.nc";
-	String vFile = "C:/Temp/Linear_y.nc";
-	String wFile = "C:/Temp/Linear_z.nc";
+	String uFile = "./files/linear_x.nc";
+	String vFile = "./files/linear_y.nc";
+	String wFile = "./files/linear_z.nc";
 
 	@Before
 	public void setUp() throws Exception {

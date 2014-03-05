@@ -19,7 +19,7 @@ public class Boundary_NetCDF_GridTest {
 	@Before
 	public void setUp(){
 		try {
-			bng = new Boundary_Raster_NetCDF("C:/Temp/bath_index.nc","Latitude","Longitude");
+			bng = new Boundary_Raster_NetCDF("./files/bath_index.nc","Latitude","Longitude");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -43,10 +43,4 @@ public class Boundary_NetCDF_GridTest {
 		Assert.assertArrayEquals(new int[]{0, 1},bng.getIndices(-1.96+1E-12, -2));
 		Assert.assertArrayEquals(new int[]{0, 1},bng.getIndices(-1.95, -2));
 	}
-	
-	//@Test
-	public void testRealDepth(){
-		System.out.println(bng.getRealDepth(-1.959, -1.96));
-	}
-
 }

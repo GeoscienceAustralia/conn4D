@@ -17,9 +17,9 @@ public class Advection_RK4_3DTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		v3.setUFile("C:/Temp/Ones.nc", "Variable X");
-		v3.setVFile("C:/Temp/Ones.nc", "Variable X");
-		v3.setWFile("C:/Temp/Negative_Ones.nc", "Variable_X");
+		v3.setUFile("./files/ones.nc", "Variable X");
+		v3.setVFile("./files/ones.nc", "Variable X");
+		v3.setWFile("./files/negative_ones.nc", "Variable_X");
 		v3.setXLookup("Longitude");
 		v3.setYLookup("Latitude");
 		v3.setZLookup("Depth");

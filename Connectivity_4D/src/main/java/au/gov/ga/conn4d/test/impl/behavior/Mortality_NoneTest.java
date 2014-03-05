@@ -54,7 +54,4 @@ public class Mortality_NoneTest {
 		mn.setTimeInterval(1000);
 		Assert.assertTrue(p1.deepEquals(p2));
 	}
-	
-	
-
 }

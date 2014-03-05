@@ -33,7 +33,7 @@ public class Intersector_3D_RasterTest {
 		
 		Coordinate isect = i3d.intersect(ls, vertices);
 		
-		System.out.println(isect);
+		//System.out.println(isect);
 		
 	}
 
