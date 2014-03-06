@@ -31,10 +31,10 @@ public class GeometryUtilsTest {
 		double rln2 = 1;
 		double rlt2 = 0;
 		
-		System.out.println(GeometryUtils.distance_Sphere(rln1, rlt1, rln2, rlt2));
-		System.out.println(GeometryUtils.distance_Sphere(0, 0, 0, 1));
+		assertEquals(GeometryUtils.distance_Sphere(rln1, rlt1, rln2, rlt2),111319.49079327358,1E-9);
+		assertEquals(GeometryUtils.distance_Sphere(0, 0, 0, 1),17717.047222222223,1E-9);
 		double dist = Math.acos(Math.cos(rlt1) * Math.cos(rlt2) * Math.cos(rln2 -
 		 rln1) + Math.sin(rlt1) * Math.sin(rlt2));
-		System.out.println(6378137d * Math.toDegrees(dist) / 360);
+		assertEquals((6378137d * Math.toDegrees(dist) / 360),1015112.031267312,1E-9);
 	}
 }

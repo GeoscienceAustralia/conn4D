@@ -20,7 +20,7 @@ public class IndexLookup_NearestTest {
 	@Before
 	public void setUp(){
 		try {
-			linear_x = NetcdfFile.open("C://Temp//Linear_x.nc");
+			linear_x = NetcdfFile.open("./files/linear_x.nc");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

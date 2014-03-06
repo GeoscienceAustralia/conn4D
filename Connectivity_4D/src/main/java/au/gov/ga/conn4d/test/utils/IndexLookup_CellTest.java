@@ -20,7 +20,7 @@ public class IndexLookup_CellTest{
 	public void testLocate() {
 		
 		try {
-			ncFile = NetcdfFile.open("C://Temp//xmap.nc");
+			ncFile = NetcdfFile.open("./files/xmap.nc");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
