@@ -26,9 +26,9 @@ public class Intersector_3D_RasterTest {
 		LineSegment ls = new LineSegment(a,b);
 		Coordinate[] vertices = new Coordinate[]
 		{new Coordinate(113.25261561937987, -23.137438714125906, -318.65625), 
-		 new Coordinate (113.26261561878555, -23.137438714125906, -302.859375), 
-		 new Coordinate (113.26261561878555, -23.127438714720235, -309.171875), 
-		 new Coordinate (113.25261561937987, -23.127438714720235, -327.875)
+		 new Coordinate(113.26261561878555, -23.137438714125906, -302.859375), 
+		 new Coordinate(113.26261561878555, -23.127438714720235, -309.171875), 
+		 new Coordinate(113.25261561937987, -23.127438714720235, -327.875)
 		};
 		
 		Coordinate isect = i3d.intersect(ls, vertices);

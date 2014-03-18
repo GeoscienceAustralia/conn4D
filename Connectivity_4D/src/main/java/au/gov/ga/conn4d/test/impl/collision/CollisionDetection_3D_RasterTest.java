@@ -14,6 +14,10 @@ import au.gov.ga.conn4d.utils.PrjTransform_None;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
+/**
+ * Performs testing of 3D collisions against a 2.5D raster.
+ */
+
 public class CollisionDetection_3D_RasterTest {
 	
 	CollisionDetector_3D_Raster cdb_x, cdb_xr, cdb_y, cdb_real;

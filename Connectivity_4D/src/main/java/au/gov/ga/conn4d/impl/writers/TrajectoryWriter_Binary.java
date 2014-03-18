@@ -137,9 +137,9 @@ public class TrajectoryWriter_Binary implements Runnable,TrajectoryWriter {
 	 * @throws IOException
 	 */
 
-	public TrajectoryWriter_Binary(File outputFile) throws IOException {
+	public TrajectoryWriter_Binary(File outputFile, boolean append) throws IOException {
 		this.out = 	new DataOutputStream(new BufferedOutputStream(
-				new GZIPOutputStream(new FileOutputStream(outputFile))));
+				new GZIPOutputStream(new FileOutputStream(outputFile),append)));
 	}
 
 	/**
@@ -150,9 +150,9 @@ public class TrajectoryWriter_Binary implements Runnable,TrajectoryWriter {
 	 * @throws IOException
 	 */
 
-	public TrajectoryWriter_Binary(String filename) throws IOException {
+	public TrajectoryWriter_Binary(String filename, boolean append) throws IOException {
 		this.out = new DataOutputStream(new BufferedOutputStream(
-				new GZIPOutputStream(new FileOutputStream(new File(filename)))));
+				new GZIPOutputStream(new FileOutputStream(new File(filename)),append)));
 	}
 	
 	/**
@@ -162,9 +162,9 @@ public class TrajectoryWriter_Binary implements Runnable,TrajectoryWriter {
 	 * @throws IOException
 	 */
 
-	public TrajectoryWriter_Binary(File outputFile, int buffersize) throws IOException {
+	public TrajectoryWriter_Binary(File outputFile, boolean append, int buffersize) throws IOException {
 		this.out = 	new DataOutputStream(new BufferedOutputStream(
-				new GZIPOutputStream(new FileOutputStream(outputFile)),buffersize));
+				new GZIPOutputStream(new FileOutputStream(outputFile),append),buffersize));
 	}
 
 	/**
@@ -175,7 +175,7 @@ public class TrajectoryWriter_Binary implements Runnable,TrajectoryWriter {
 	 * @throws IOException
 	 */
 
-	public TrajectoryWriter_Binary(String filename, int buffersize) throws IOException {
+	public TrajectoryWriter_Binary(String filename, boolean append, int buffersize) throws IOException {
 		this.out = new DataOutputStream(new BufferedOutputStream(
 				new GZIPOutputStream(new FileOutputStream(new File(filename))),buffersize));
 	}

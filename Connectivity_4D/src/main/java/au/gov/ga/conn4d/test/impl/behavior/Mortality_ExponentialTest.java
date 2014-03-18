@@ -9,6 +9,10 @@ import au.gov.ga.conn4d.Particle;
 import au.gov.ga.conn4d.impl.behavior.Mortality_Exponential;
 import au.gov.ga.conn4d.utils.TimeConvert;
 
+/**
+ * Performs testing for the Mortality_Exponential class
+ */
+
 public class Mortality_ExponentialTest {
 
 	private final double reps = 1E6;
@@ -85,6 +89,10 @@ public class Mortality_ExponentialTest {
 		
 	}
 
+	/**
+	 * Performs testing of the clone operation
+	 */
+	
 	@Test
 	public void testClone() {
 		Mortality_Exponential clone = me.clone();

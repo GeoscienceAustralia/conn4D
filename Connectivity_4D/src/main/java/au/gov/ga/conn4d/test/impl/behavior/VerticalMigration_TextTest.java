@@ -7,6 +7,10 @@ import org.junit.Before;
 import au.gov.ga.conn4d.Particle;
 import au.gov.ga.conn4d.impl.behavior.VerticalMigration_Text;
 
+/**
+ * Tests vertical migration behaviour based on an input text file.
+ */
+
 public class VerticalMigration_TextTest extends TestCase {
 
 	VerticalMigration_Text vm;

@@ -1,52 +1,38 @@
 package au.gov.ga.conn4d.test.impl.movement;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import junit.framework.Assert;
 
 import org.junit.Test;
+
+import com.vividsolutions.jts.geom.Coordinate;
+
 import au.gov.ga.conn4d.Particle;
 
 import au.gov.ga.conn4d.impl.movement.Diffusion_Simple_3D;
+import au.gov.ga.conn4d.utils.CoordinateMath;
 
 public class Diffusion_Simple_3DTest {
 
 	Diffusion_Simple_3D ds3 = new Diffusion_Simple_3D();
 	int n = 10000;
-	
-	@Test
+
+	//@Test
 	public void test() {
-		//double[] x = new double[n];
-		//double[] y = new double[n];
-		//double[] z = new double[n];
-		
-		try {
-			BufferedWriter bw = new BufferedWriter(new FileWriter("C:/Temp/disp.csv"));
-			
-			for (int i = 0; i < n; i++){
-				Particle p = new Particle();
-				
-				for(int j = 0; j < 12; j++){
-					ds3.apply(p);
-				}
-				
-				//x[i] = p.getX();
-				//y[i] = p.getY();
-				//z[i] = p.getZ();
-				//bw.write(x[i] + "," + y[i] + "," + z[i] + "\n");
-				bw.write(p.getX() + "," + p.getY() + "," + p.getZ() + "\n");
+
+		Coordinate[] ca = new Coordinate[n];
+
+		for (int i = 0; i < n; i++) {
+			Particle p = new Particle();
+
+			for (int j = 0; j < 12; j++) {
+				ds3.apply(p);
 			}
-			
-			bw.flush();
-			bw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}	
-	}
-	
-	public static void main(String[] args){
-		Diffusion_Simple_3DTest d3t = new Diffusion_Simple_3DTest();
-		d3t.test();
-		System.out.println("Complete");
+			ca[i] = new Coordinate(p.getX(), p.getY(), p.getZ());
+		}
+		
+		Coordinate avg = CoordinateMath.average(ca);
+		double length = CoordinateMath.length3D(avg, new Coordinate());
+		//Assert.assertTrue(length<5);
+		
 	}
 }

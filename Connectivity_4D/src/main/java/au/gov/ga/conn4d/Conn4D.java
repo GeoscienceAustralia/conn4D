@@ -17,7 +17,7 @@ import au.gov.ga.conn4d.utils.TimeConvert;
  * @author - Johnathan Kool, Geoscience Australia
  */
 
-public class Connect_4D {
+public class Conn4D {
 	private static ParameterOverride prm_override = new ParameterOverride();
 	private static ConfigurationOverride cfg_override = new ConfigurationOverride();
 	private static ReleaseFileReader rf_reader;
@@ -40,7 +40,7 @@ public class Connect_4D {
 	 *            machine-dependent parameters
 	 */
 
-	public Connect_4D(String prmfile, String cfgfile) {
+	public Conn4D(String prmfile, String cfgfile) {
 
 		prm_override.readFile(prmfile);
 		cfg_override.readFile(cfgfile);
@@ -127,7 +127,7 @@ public class Connect_4D {
 			restartAt = args[2];
 		}
 
-		Connect_4D connect = new Connect_4D(prmfile, cfgfile);
+		Conn4D connect = new Conn4D(prmfile, cfgfile);
 		connect.run();
 	}
 

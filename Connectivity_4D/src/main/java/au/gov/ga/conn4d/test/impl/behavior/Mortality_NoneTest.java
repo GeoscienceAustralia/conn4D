@@ -8,13 +8,19 @@ import org.junit.Test;
 import au.gov.ga.conn4d.Particle;
 import au.gov.ga.conn4d.impl.behavior.Mortality_None;
 
-
+/**
+ * Performs testing for the Mortality_None class (no mortality)
+ */
 
 public class Mortality_NoneTest {
 
 	Mortality_None mn = new Mortality_None();
 	Particle p1;
 	Particle p2;
+	
+	/**
+	 * Setup procedures
+	 */
 	
 	@Before
 	public void setUp(){
@@ -47,11 +53,16 @@ public class Mortality_NoneTest {
 		p2 = p1.clone();
 	}
 	
+	/**
+	 * Ensures that all individuals are retained following mortality
+	 */
+	
 	@Test
 	public void test() {
 		mn.apply(p2);
 		Assert.assertTrue(p1.deepEquals(p2));
 		mn.setTimeInterval(1000);
+		mn.apply(p2);
 		Assert.assertTrue(p1.deepEquals(p2));
 	}
 }

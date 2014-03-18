@@ -21,7 +21,7 @@ import au.gov.ga.conn4d.output.TrajectoryWriter;
 public class ReleaseRunner_4D implements ReleaseRunner {
 
 	private ReleaseFactory_4D relFactory;
-	private int poolSize = 8;
+	private int poolSize = 16;
 
 	/**
 	 * Single-argument constructor.

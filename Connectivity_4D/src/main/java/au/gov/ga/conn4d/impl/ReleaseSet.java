@@ -92,7 +92,7 @@ public class ReleaseSet {
 		System.out.println("Writing to " + outputPath + "...");
 		
 		try {
-			tb = new TrajectoryWriter_Binary(outputPath, bufferSize);
+			tb = new TrajectoryWriter_Binary(outputPath, pass, bufferSize);
 			tb.open();
 		} catch (IOException e) {
 			e.printStackTrace();

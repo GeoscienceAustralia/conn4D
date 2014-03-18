@@ -12,11 +12,19 @@ import au.gov.ga.conn4d.Particle;
 import au.gov.ga.conn4d.impl.behavior.Mortality_Weibull;
 import au.gov.ga.conn4d.utils.TimeConvert;
 
+/**
+ * Performs testing for the Mortality_Weibull class
+ */
+
 public class Mortality_WeibullTest {
 
 	private Mortality_Weibull mw;
 	private final double reps = 1E6;
 
+	/**
+	 * Setup procedures
+	 */
+	
 	@Before
 	public void setUp() {
 		mw = new Mortality_Weibull(0, 1);
@@ -61,6 +69,10 @@ public class Mortality_WeibullTest {
 		assertEquals(p_surv,0.367879,1E-2);
 	}
 
+	/**
+	 * Performs testing of the clone operation
+	 */
+	
 	@Test
 	public void testClone() {
 		Mortality_Weibull clone = mw.clone();

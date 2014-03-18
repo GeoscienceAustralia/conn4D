@@ -9,6 +9,10 @@ import au.gov.ga.conn4d.Particle;
 import au.gov.ga.conn4d.impl.movement.Advection_RK4_3D;
 import au.gov.ga.conn4d.impl.readers.VelocityReader_NetCDF_4D;
 
+/**
+ * Tests Advection_RK4_3D - 3D Runge-Kutta integrated advection.
+ */
+
 public class Advection_RK4_3DTest {
 
 	Advection_RK4_3D rk3d = new Advection_RK4_3D();
