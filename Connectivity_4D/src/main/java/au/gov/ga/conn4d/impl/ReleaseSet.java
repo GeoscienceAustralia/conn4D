@@ -40,7 +40,6 @@ public class ReleaseSet {
 	private ParameterOverride prm_override;
 	private ConfigurationOverride cfg_override;
 	private long time;
-	private boolean pass;
 	private String restartAt;
 	private TrajectoryWriter_Binary tb = null;
 
@@ -92,7 +91,7 @@ public class ReleaseSet {
 		System.out.println("Writing to " + outputPath + "...");
 		
 		try {
-			tb = new TrajectoryWriter_Binary(outputPath, pass, bufferSize);
+			tb = new TrajectoryWriter_Binary(outputPath, bufferSize);
 			tb.open();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -120,17 +119,6 @@ public class ReleaseSet {
 		// Iterate through each release point
 		
 		while (rf_reader.hasNext()) {
-
-			// Allows for re-starting the code
-			
-			if (pass && !restartAt.equalsIgnoreCase("#")) {
-				if (rf_reader.getLocName().equalsIgnoreCase(restartAt)) {
-					pass = false;
-				} else {
-					rf_reader.next();
-					continue;
-				}
-			}
 
 			Parameters prm = new Parameters_Zonal_4D();
 			long timer = System.currentTimeMillis();
@@ -214,14 +202,6 @@ public class ReleaseSet {
 
 	public void setTime(long time) {
 		this.time = time;
-	}
-
-	public boolean isPass() {
-		return pass;
-	}
-
-	public void setPass(boolean pass) {
-		this.pass = pass;
 	}
 
 	public String getRestartAt() {

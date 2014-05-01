@@ -2,6 +2,7 @@ package au.gov.ga.conn4d.impl.readers;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import org.geotools.data.FeatureSource;
@@ -11,6 +12,7 @@ import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.feature.type.PropertyDescriptor;
 import org.opengis.filter.Filter;
 
 import au.gov.ga.conn4d.Habitat;
@@ -135,6 +137,17 @@ public class Shapefile implements Habitat{
 	/**
 	 * Identifies whether the data set uses negative longitude values.
 	 */
+	
+	public boolean hasField(String field){
+		Iterator<PropertyDescriptor> it =  source.getSchema().getDescriptors().iterator();
+		while(it.hasNext()){
+			PropertyDescriptor pd = it.next();
+			if(pd.getName().toString().equals(field)){
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	public boolean isNegLon(){
 		return negLon;
