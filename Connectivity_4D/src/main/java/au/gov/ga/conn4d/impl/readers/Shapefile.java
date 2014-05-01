@@ -139,7 +139,7 @@ public class Shapefile implements Habitat{
 	 */
 	
 	public boolean hasField(String field){
-		Iterator<PropertyDescriptor> it =  source.getSchema().getDescriptors().iterator();
+		Iterator<PropertyDescriptor> it = source.getSchema().getDescriptors().iterator();
 		while(it.hasNext()){
 			PropertyDescriptor pd = it.next();
 			if(pd.getName().toString().equals(field)){
