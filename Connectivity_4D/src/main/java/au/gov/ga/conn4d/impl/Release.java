@@ -11,8 +11,6 @@ import au.gov.ga.conn4d.Particle;
 import au.gov.ga.conn4d.Settlement;
 import au.gov.ga.conn4d.VerticalMigration;
 import au.gov.ga.conn4d.impl.collision.CollisionDetector_None;
-//import au.gov.ga.conn4d.output.DistanceWriter;
-//import au.gov.ga.conn4d.output.MatrixWriter;
 import au.gov.ga.conn4d.output.TrajectoryWriter;
 import au.gov.ga.conn4d.utils.GeometryUtils;
 
@@ -37,8 +35,6 @@ public class Release implements Runnable {
 	private CollisionDetector collisionDetector;
 	private CountDownLatch doneSignal;
 	private TrajectoryWriter tw;
-	//private DistanceWriter dw;
-	//private MatrixWriter mw;
 	private long time;
 	private long id = -1;
 	private long competencyStart = 0;
@@ -64,28 +60,12 @@ public class Release implements Runnable {
 	}
 
 	/**
-	 * Retrieves the DistanceWriter associated with this instance
-	 */
-
-	//public DistanceWriter getDistanceWriter() {
-	//	return dw;
-	//}
-
-	/**
 	 * Retrieves the ID of the Particle
 	 */
 
 	public long getId() {
 		return id;
 	}
-
-	/**
-	 * Retrieves the MatrixWriter associated with this instance
-	 */
-
-	//public MatrixWriter getMatrixWriter() {
-	//	return mw;
-	//}
 
 	/**
 	 * Retrieves the Mortality object associated with this instance
@@ -223,8 +203,6 @@ public class Release implements Runnable {
 
 			if (writeInitial) {
 				tw.apply(p);
-				//mw.apply(p);
-				//dw.apply(p);
 			}
 
 			long rd = prm.getRelDuration();
@@ -318,8 +296,6 @@ public class Release implements Runnable {
 
 						|| (p.canSettle() && !(sm instanceof au.gov.ga.conn4d.impl.behavior.Settlement_FloatOver))) {
 					tw.apply(p);
-					//mw.apply(p);
-					//dw.apply(p);
 					writect = 0;
 				}
 
@@ -347,8 +323,6 @@ public class Release implements Runnable {
 			"df: " + df + "\n" +
 			"collisionDetect: " + collisionDetector + "\n" +
 			"tw: " + tw + "\n" +
-			//"dw: " + dw + "\n" +
-			//"mw: " + mw + "\n" + 
 			p.toString() + "\n");
 			npe.printStackTrace();
 		} catch (Exception e) {
@@ -390,17 +364,6 @@ public class Release implements Runnable {
 	}
 
 	/**
-	 * Sets the DistanceWriter object for this instance.
-	 * 
-	 * @param dw
-	 *            - The DistanceWriter object
-	 */
-
-	//public void setDistanceWriter(DistanceWriter dw) {
-	//	this.dw = dw;
-	//}
-
-	/**
 	 * Sets the CountDownLatch object associated with this instance.
 	 * 
 	 * @param doneSignal
@@ -433,17 +396,6 @@ public class Release implements Runnable {
 	public void setKill(boolean kill) {
 		this.kill = kill;
 	}
-
-	/**
-	 * Sets the MatrixWriter object for this instance.
-	 * 
-	 * @param mw
-	 *            - The MatrixWriter object
-	 */
-
-	//public void setMatrixWriter(MatrixWriter mw) {
-	//	this.mw = mw;
-	//}
 
 	/**
 	 * Sets the Mortality object for this instance.

@@ -234,6 +234,12 @@ public class GeometryUtils {
 		return new float[] { (float) rlat2, (float) rlon2, coords[2]+dz};
 	}
 	
+	/**
+	 * Converts coordinates from decimal degrees to Mercator projection
+	 * 
+	 * @param coords
+	 * @return
+	 */
 	public static double[] dd2mercator(double[] coords){
 		double rad = Math.toRadians(coords[1]);
 		double fsin = Math.sin(rad);

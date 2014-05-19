@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
-import java.util.zip.GZIPOutputStream;
 
 import au.gov.ga.conn4d.Particle;
 import au.gov.ga.conn4d.output.TrajectoryWriter;
@@ -207,7 +206,8 @@ public class TrajectoryWriter_Binary implements Runnable,TrajectoryWriter {
 	public void run() {
 		while (!stopped || queue.size() > 0) {
 			try {
-				Item item = queue.poll(100, TimeUnit.MICROSECONDS);
+				//Item item = queue.poll(100, TimeUnit.MICROSECONDS);
+				Item item = queue.poll(10, TimeUnit.MILLISECONDS);
 				if (item != null) {
 					try {
 						item.write(out);
@@ -225,7 +225,7 @@ public class TrajectoryWriter_Binary implements Runnable,TrajectoryWriter {
 			}
 		}
 		try {
-			//out.writeChar(28);
+			out.writeChar(28);
 			out.flush();
 			out.close();
 		} catch (IOException ignore) {

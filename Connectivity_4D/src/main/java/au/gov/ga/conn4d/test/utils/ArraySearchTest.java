@@ -45,53 +45,25 @@ public class ArraySearchTest {
 	
 	@Test
 	public void testLong() {
-		assertEquals(ArraySearch.binarySearch(la_fwd, 80, 80),80);
-		assertEquals(ArraySearch.binarySearch(la_fwd, 80, 60),80);
-		assertEquals(ArraySearch.binarySearch(la_fwd, 80, 90),80);
 		assertEquals(ArraySearch.reverseSearch(la_rev, -80),80);
-		assertEquals(ArraySearch.binarySearch(la_fwd, 20, 20),20);
-		assertEquals(ArraySearch.binarySearch(la_fwd, 20, 10),20);
-		assertEquals(ArraySearch.binarySearch(la_fwd, 20, 30),20);
 		assertEquals(ArraySearch.reverseSearch(la_rev, -20),20);
-		assertEquals(ArraySearch.binarySearch(la_fwd, 20, 80, 30, 40),30);
 	}
 	
 	@Test
-	public void testInt() {
-		assertEquals(ArraySearch.binarySearch(ia_fwd, 80, 80),80);
-		assertEquals(ArraySearch.binarySearch(ia_fwd, 80, 60),80);
-		assertEquals(ArraySearch.binarySearch(ia_fwd, 80, 90),80);
+	public void testInt() {;
 		assertEquals(ArraySearch.reverseSearch(ia_rev, -80),80);
-		assertEquals(ArraySearch.binarySearch(ia_fwd, 20, 20),20);
-		assertEquals(ArraySearch.binarySearch(ia_fwd, 20, 10),20);
-		assertEquals(ArraySearch.binarySearch(ia_fwd, 20, 30),20);
 		assertEquals(ArraySearch.reverseSearch(ia_rev, -20),20);
-		assertEquals(ArraySearch.binarySearch(ia_fwd, 20, 80, 30, 40),30);
 	}
 	
 	@Test
 	public void testDouble() {
-		assertEquals(ArraySearch.binarySearch(da_fwd, 80, 80),80);
-		assertEquals(ArraySearch.binarySearch(da_fwd, 80, 60),80);
-		assertEquals(ArraySearch.binarySearch(da_fwd, 80, 90),80);
 		assertEquals(ArraySearch.reverseSearch(da_rev, -80),80);
-		assertEquals(ArraySearch.binarySearch(da_fwd, 20, 20),20);
-		assertEquals(ArraySearch.binarySearch(da_fwd, 20, 10),20);
-		assertEquals(ArraySearch.binarySearch(da_fwd, 20, 30),20);
 		assertEquals(ArraySearch.reverseSearch(da_rev, -20),20);
-		assertEquals(ArraySearch.binarySearch(da_fwd, 20, 80, 30, 40),30);
 	}
 	
 	@Test
 	public void testFloat() {
-		assertEquals(ArraySearch.binarySearch(fa_fwd, 80, 80),80);
-		assertEquals(ArraySearch.binarySearch(fa_fwd, 80, 60),80);
-		assertEquals(ArraySearch.binarySearch(fa_fwd, 80, 90),80);
 		assertEquals(ArraySearch.reverseSearch(fa_rev, -80),80);
-		assertEquals(ArraySearch.binarySearch(fa_fwd, 20, 20),20);
-		assertEquals(ArraySearch.binarySearch(fa_fwd, 20, 10),20);
-		assertEquals(ArraySearch.binarySearch(fa_fwd, 20, 30),20);
 		assertEquals(ArraySearch.reverseSearch(fa_rev, -20),20);
-		assertEquals(ArraySearch.binarySearch(fa_fwd, 20, 80, 30, 40),30);
 	}
 }
