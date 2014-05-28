@@ -55,10 +55,10 @@ public class ParameterOverride extends ParameterReader {
 	public String h = "7200"; // Integration time step (seconds)
 	public String hUnits = "Seconds"; // Units of h
 	public String initialPositionType = "centroid";
-	public String maxTime = "12/25/2005";// Latest bound of the model run
-	public String maxTimeUnits = "Date";
 	public String minTime = "01/02/2003";// Earliest bound of the model run
 	public String minTimeUnits = "Date";
+	public String maxTime = "12/25/2005";// Latest bound of the model run
+	public String maxTimeUnits = "Date";
 	public String mortalityType = "None";
 	public double mrate = 0.0d; // Mortality rate
 	public String mUnits = "Days";
@@ -67,7 +67,6 @@ public class ParameterOverride extends ParameterReader {
 	public String outputFolder = "";
 	public String outputFreq = "1"; // Frequency of writing to the output file.
 	public String outputFreqUnits = "Days";
-	public int poolSize = 8;
 	public String relDuration = "30"; // Pelagic Larval Duration (days)
 	public String relDurationUnits = "Days";
 	public String relFileName = "release.txt"; // Path and name of the release
@@ -107,7 +106,6 @@ public class ParameterOverride extends ParameterReader {
 				competencyStart));
 		parameters.setMortalityRate(mrate);
 		parameters.setMortalityUnits(mUnits);
-		parameters.setPoolSize(poolSize);
 		parameters.setVerticalMigration(vmgrt);
 		parameters.setOutputFolder(outputFolder);
 		parameters.setEffectiveMigration(effectiveMigration);

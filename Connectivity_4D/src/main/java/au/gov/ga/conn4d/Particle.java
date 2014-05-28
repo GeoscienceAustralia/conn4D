@@ -52,6 +52,8 @@ public class Particle implements Cloneable {
 	private double px, py, pz;
 	private double x0, y0, z0;
 	private double u = 0d, v = 0d, w = 0d;
+	private double pu = 0d, pv = 0d, pw = 0d;
+	private double mass = 1,volume = 1,density = 1, dragCoeff = 1;
 	private long t;
 	private long birthday = 0;
 	private long competencyStart = 0;
@@ -104,6 +106,10 @@ public class Particle implements Cloneable {
 		p.i = this.i;
 		p.j = this.j;
 		p.k = this.k;
+		p.mass=this.mass;
+		p.volume=this.volume;
+		p.density=this.density;
+		p.dragCoeff=this.dragCoeff;
 		p.competencyStart = this.competencyStart;
 		p.settling = this.settling;
 		p.dead = this.dead;
@@ -216,7 +222,15 @@ public class Particle implements Cloneable {
 	}
 
 	/**
-	 * Retrieve the settlement destination of the Particle
+	 * Retrieve the density of the Particle
+	 */
+	
+	public double getDensity(){
+		return density;
+	}
+	
+	/**
+	 * Retrieve the settlement destination of the particle
 	 */
 
 	public String getDestination() {
@@ -224,13 +238,21 @@ public class Particle implements Cloneable {
 	}
 
 	/**
-	 * Retrieve the distance traveled by the Particle (meters)
+	 * Retrieve the distance traveled by the particle (meters)
 	 */
 
 	public double getDistance() {
 		return distance;
 	}
+	
+	/**
+	 * Retrieve the drag coefficient of the particle
+	 */
 
+	public double getDragCoefficient(){
+		return dragCoeff;
+	}
+	
 	/**
 	 * Retrieve the unique identifier of the particle
 	 */
@@ -240,6 +262,16 @@ public class Particle implements Cloneable {
 	}
 
 	/**
+	 * Retrieve the mass of the particle
+	 * 
+	 * @return
+	 */
+	
+	public double getMass(){
+		return mass;
+	}
+	
+	/**
 	 * Identify whether the particle encountered a NoData value in the velocity
 	 * field.
 	 */
@@ -247,7 +279,24 @@ public class Particle implements Cloneable {
 	public boolean getNodata() {
 		return nodata;
 	}
+	
+	/**
+	 * Retrieve the volume of the particle
+	 */
 
+	public double getVolume(){
+		return volume;
+	}
+	
+	/**
+	 * Retrieve the cross-sectional area of the particle
+	 */
+	
+	public double getxArea(){
+		double val = Math.pow(volume, -3);
+		return val*val;
+	}
+	
 	/**
 	 * Retrieve the original X Coordinate of the particle
 	 */
@@ -272,6 +321,30 @@ public class Particle implements Cloneable {
 		return z0;
 	}
 
+	/**
+	 * Retrieve the Previous u velocity of the particle
+	 */
+
+	public double getPU() {
+		return pu;
+	}
+
+	/**
+	 * Retrieve the Previous v velocity of the particle
+	 */
+
+	public double getPV() {
+		return pv;
+	}
+
+	/**
+	 * Retrieve the Previous w velocity of the particle
+	 */
+
+	public double getPW() {
+		return pw;
+	}
+	
 	/**
 	 * Retrieve the Previous X Coordinate of the particle
 	 */
@@ -443,6 +516,16 @@ public class Particle implements Cloneable {
 	}
 
 	/**
+	 * Sets the density of the particle
+	 * 
+	 * @param density
+	 */
+	
+	public void setDensity(double density){
+		this.density = density;
+	}
+	
+	/**
 	 * Sets the settlement destination of the particle (text representation).
 	 */
 
@@ -451,11 +534,19 @@ public class Particle implements Cloneable {
 	}
 
 	/**
-	 * Sets the distance traveled by the Particle (meters)
+	 * Sets the distance traveled by the article (meters)
 	 */
 
 	public void setDistance(double distance) {
 		this.distance = distance;
+	}
+	
+	/**
+	 * Sets the drag coefficient of the particle
+	 */
+	
+	public void setDragCoefficient(double dragCoeff){
+		this.dragCoeff=dragCoeff;
 	}
 
 	/**
@@ -496,6 +587,16 @@ public class Particle implements Cloneable {
 	}
 
 	/**
+	 * Sets the mass of the particle
+	 * 
+	 * @param mass
+	 */
+	
+	public void setMass(double mass){
+		this.mass = mass;
+	}
+	
+	/**
 	 * Sets whether the particle is near a NoData element in the velocity field
 	 * 
 	 * @param nearNoData
@@ -519,6 +620,36 @@ public class Particle implements Cloneable {
 		}
 	}
 
+	/**
+	 * Sets the previous u (East-West velocity) value of the Particle
+	 * 
+	 * @param pu
+	 */
+
+	public void setPU(double pu) {
+		this.pu = pu;
+	}
+
+	/**
+	 * Sets the previous v (North-South velocity) value of the Particle
+	 * 
+	 * @param pv
+	 */
+
+	public void setPV(double pv) {
+		this.pv = pv;
+	}
+
+	/**
+	 * Sets the previous w (vertical velocity) value of the Particle
+	 * 
+	 * @param pw
+	 */
+
+	public void setPW(double pw) {
+		this.pw = pw;
+	}
+	
 	/**
 	 * Sets the previous X (East-West) value of the Particle
 	 * 
@@ -607,6 +738,16 @@ public class Particle implements Cloneable {
 
 	public void setV(double v) {
 		this.v = v;
+	}
+	
+	/**
+	 * Sets the volume of the Particle
+	 * 
+	 * @param volume
+	 */
+	
+	public void setVolume(double volume){
+		this.volume=volume;
 	}
 
 	/**

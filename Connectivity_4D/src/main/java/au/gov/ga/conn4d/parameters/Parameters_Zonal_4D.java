@@ -57,8 +57,8 @@ public class Parameters_Zonal_4D implements Parameters {
 
 	private String locName = "Test";
 	private int nPart = 1;
-	private int poolSize = 8;
-	public int bufferSize = 32768;
+	private int poolSize = 16;
+	public int bufferSize = 1048576;
 	private Geometry position;
 	private double minDepth = 0;
 	private double maxDepth = 0;
