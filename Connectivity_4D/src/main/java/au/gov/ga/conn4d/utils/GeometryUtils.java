@@ -83,7 +83,7 @@ public class GeometryUtils {
 		// + Math.sin(rlt1) * Math.sin(rlt2));
 
 		// More complex great circle distance formula to reduce error due to
-		// rounding.
+		// rounding - from Wikipedia http://en.wikipedia.org/wiki/Great-circle_distance
 
 		double n1 = Math.pow(Math.cos(rlt2) * Math.sin(d_lambda), 2);
 		double n2 = Math.pow(Math.cos(rlt1) * Math.sin(rlt2) - Math.sin(rlt1)
@@ -130,7 +130,7 @@ public class GeometryUtils {
 		// + Math.sin(rlt1) * Math.sin(rlt2));
 
 		// More complex great circle distance formula to reduce error due to
-		// rounding.
+		// rounding. - from Wikipedia http://en.wikipedia.org/wiki/Great-circle_distance
 
 		double n1 = Math.pow(Math.cos(rlt2) * Math.sin(d_lambda), 2);
 		double n2 = Math.pow(Math.cos(rlt1) * Math.sin(rlt2) - Math.sin(rlt1)
