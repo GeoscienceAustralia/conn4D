@@ -243,7 +243,7 @@ public class TricubicSplineInterpolator implements TrivariateGridInterpolator {
 		final int xLen = xval.length;
 		
 		final double[] zzval;
-		final float[][][] ffval = new float[zLen][][];
+		float[][][] ffval = new float[zLen][][];
 		
 		if(zval[0]>zval[zLen-1]){
 			zzval = VectorMath.selectionSort(zval);
@@ -253,6 +253,7 @@ public class TricubicSplineInterpolator implements TrivariateGridInterpolator {
 		}
 		else{
 			zzval = zval;
+			ffval=fval;
 		}
 
 		// Samples, re-ordered as (z, x, y) and (y, z, x) tuplets

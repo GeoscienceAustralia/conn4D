@@ -102,7 +102,7 @@ public class Mortality_ExponentialTest {
 		}
 		
 		p_surv = (double) sum / reps;
-		assertEquals(p_surv,Math.exp(-0.07*4),1E-3);
+		assertEquals(p_surv,Math.exp(-0.07*4),1E-2);
 	}
 
 	@Test

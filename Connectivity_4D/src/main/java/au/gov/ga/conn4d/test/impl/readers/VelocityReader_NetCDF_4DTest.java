@@ -135,7 +135,10 @@ public class VelocityReader_NetCDF_4DTest {
 
 	@Test
 	public void testInterpolation() {
-		Assert.assertArrayEquals(null, new double[] { 78.190, 89.245, 1.042 },
+		//Assert.assertArrayEquals(null, new double[] { 78.190, 89.245, 1.042 },
+		//		v3.getVelocities(0, 0.1042, 0.5638, 0.7849), 1E-6);
+		
+		Assert.assertArrayEquals(null, new double[] { 78.094582, 95.764366, 1.9485152802 },
 				v3.getVelocities(0, 0.1042, 0.5638, 0.7849), 1E-6);
 	}
 

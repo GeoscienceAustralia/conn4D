@@ -92,8 +92,8 @@ public class ReleaseTest {
 		prm.setDepth(0);
 		prm.setLocName("Test");
 		prm.setRelDuration(100);
-		prm.setPosition(gf.createPoint(new Coordinate(0,0.5)));
-		prm.setH(10); // TODO Reconcile how H gets set.  i.e. only set it in one place.
+		prm.setPosition(gf.createPoint(new Coordinate(0,0.5,0)));
+		prm.setH(10);
 		
 		// Set the more complex release components - Null here for testing.
 		
