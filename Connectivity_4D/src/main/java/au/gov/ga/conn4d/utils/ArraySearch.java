@@ -48,20 +48,20 @@ public class ArraySearch {
 	double vvar;
 
 	/**
-	 * Checks that {@code fromIndex} and {@code toIndex} are in the range and
+	 * Checks that {@code minVal} and {@code maxVal} are in the range and
 	 * throws an appropriate exception, if they aren't.
 	 */
 
-	private static void rangeCheck(int length, int fromIndex, int toIndex) {
-		if (fromIndex > toIndex) {
-			throw new IllegalArgumentException("fromIndex(" + fromIndex
-					+ ") > toIndex(" + toIndex + ")");
+	private static void rangeCheck(int length, int minVal, int maxVal) {
+		if (minVal > maxVal) {
+			throw new IllegalArgumentException("minVal(" + minVal
+					+ ") > maxVal(" + maxVal + ")");
 		}
-		if (fromIndex < 0) {
-			throw new ArrayIndexOutOfBoundsException(fromIndex);
+		if (minVal < 0) {
+			throw new ArrayIndexOutOfBoundsException(minVal);
 		}
-		if (toIndex > length) {
-			throw new ArrayIndexOutOfBoundsException(toIndex);
+		if (maxVal > length) {
+			throw new ArrayIndexOutOfBoundsException(maxVal);
 		}
 	}
 
@@ -82,14 +82,14 @@ public class ArraySearch {
 	 *         <tt>(-(<i>insertion point</i>) - 1)</tt>. The <i>insertion
 	 *         point</i> is defined as the point at which the key would be
 	 *         inserted into the array: the index of the first element in the
-	 *         range greater than the key, or <tt>toIndex</tt> if all elements
+	 *         range greater than the key, or <tt>maxVal</tt> if all elements
 	 *         in the range are less than the specified key. Note that this
 	 *         guarantees that the return value will be &gt;= 0 if and only if
 	 *         the key is found.
 	 * @throws IllegalArgumentException
-	 *             if {@code fromIndex > toIndex}
+	 *             if {@code minVal > maxVal}
 	 * @throws ArrayIndexOutOfBoundsException
-	 *             if {@code fromIndex < 0 or toIndex > a.length}
+	 *             if {@code minVal < 0 or maxVal > a.length}
 	 */
 
 	public static int reverseSearch(long[] a, long key) {
@@ -106,9 +106,9 @@ public class ArraySearch {
 	 * 
 	 * @param a
 	 *            the array to be searched
-	 * @param fromIndex
+	 * @param minVal
 	 *            the index of the first element (inclusive) to be searched
-	 * @param toIndex
+	 * @param maxVal
 	 *            the index of the last element (exclusive) to be searched
 	 * @param key
 	 *            the value to be searched for
@@ -117,28 +117,28 @@ public class ArraySearch {
 	 *         <tt>(-(<i>insertion point</i>) - 1)</tt>. The <i>insertion
 	 *         point</i> is defined as the point at which the key would be
 	 *         inserted into the array: the index of the first element in the
-	 *         range greater than the key, or <tt>toIndex</tt> if all elements
+	 *         range greater than the key, or <tt>maxVal</tt> if all elements
 	 *         in the range are less than the specified key. Note that this
 	 *         guarantees that the return value will be &gt;= 0 if and only if
 	 *         the key is found.
 	 * @throws IllegalArgumentException
-	 *             if {@code fromIndex > toIndex}
+	 *             if {@code minVal > maxVal}
 	 * @throws ArrayIndexOutOfBoundsException
-	 *             if {@code fromIndex < 0 or toIndex > a.length}
+	 *             if {@code minVal < 0 or maxVal > a.length}
 	 */
 
-	public static int reverseSearch(long[] a, int fromIndex, int toIndex,
+	public static int reverseSearch(long[] a, int minVal, int maxVal,
 			long key) {
-		rangeCheck(a.length, fromIndex, toIndex);
-		return reverseSearch0(a, fromIndex, toIndex, key);
+		rangeCheck(a.length, minVal, maxVal);
+		return reverseSearch0(a, minVal, maxVal, key);
 	}
 
 	// Like public version, but without range checks.
 	
-	private static int reverseSearch0(long[] a, int fromIndex, int toIndex,
+	private static int reverseSearch0(long[] a, int minVal, int maxVal,
 			long key) {
-		int low = fromIndex;
-		int high = toIndex - 1;
+		int low = minVal;
+		int high = maxVal - 1;
 
 		while (low <= high) {
 			int mid = (low + high) >>> 1;
@@ -171,14 +171,14 @@ public class ArraySearch {
 	 *         <tt>(-(<i>insertion point</i>) - 1)</tt>. The <i>insertion
 	 *         point</i> is defined as the point at which the key would be
 	 *         inserted into the array: the index of the first element in the
-	 *         range greater than the key, or <tt>toIndex</tt> if all elements
+	 *         range greater than the key, or <tt>maxVal</tt> if all elements
 	 *         in the range are less than the specified key. Note that this
 	 *         guarantees that the return value will be &gt;= 0 if and only if
 	 *         the key is found.
 	 * @throws IllegalArgumentException
-	 *             if {@code fromIndex > toIndex}
+	 *             if {@code minVal > maxVal}
 	 * @throws ArrayIndexOutOfBoundsException
-	 *             if {@code fromIndex < 0 or toIndex > a.length}
+	 *             if {@code minVal < 0 or maxVal > a.length}
 	 */
 
 	public static int reverseSearch(int[] a, int key) {
@@ -195,9 +195,9 @@ public class ArraySearch {
 	 * 
 	 * @param a
 	 *            the array to be searched
-	 * @param fromIndex
+	 * @param minVal
 	 *            the index of the first element (inclusive) to be searched
-	 * @param toIndex
+	 * @param maxVal
 	 *            the index of the last element (exclusive) to be searched
 	 * @param key
 	 *            the value to be searched for
@@ -206,27 +206,27 @@ public class ArraySearch {
 	 *         <tt>(-(<i>insertion point</i>) - 1)</tt>. The <i>insertion
 	 *         point</i> is defined as the point at which the key would be
 	 *         inserted into the array: the index of the first element in the
-	 *         range greater than the key, or <tt>toIndex</tt> if all elements
+	 *         range greater than the key, or <tt>maxVal</tt> if all elements
 	 *         in the range are less than the specified key. Note that this
 	 *         guarantees that the return value will be &gt;= 0 if and only if
 	 *         the key is found.
 	 * @throws IllegalArgumentException
-	 *             if {@code fromIndex > toIndex}
+	 *             if {@code minVal > maxVal}
 	 * @throws ArrayIndexOutOfBoundsException
-	 *             if {@code fromIndex < 0 or toIndex > a.length}
+	 *             if {@code minVal < 0 or maxVal > a.length}
 	 */
 
-	public static int reverseSearch(int[] a, int fromIndex, int toIndex, int key) {
-		rangeCheck(a.length, fromIndex, toIndex);
-		return reverseSearch0(a, fromIndex, toIndex, key);
+	public static int reverseSearch(int[] a, int minVal, int maxVal, int key) {
+		rangeCheck(a.length, minVal, maxVal);
+		return reverseSearch0(a, minVal, maxVal, key);
 	}
 
 	// Like public version, but without range checks.
 	
-	private static int reverseSearch0(int[] a, int fromIndex, int toIndex,
+	private static int reverseSearch0(int[] a, int minVal, int maxVal,
 			int key) {
-		int low = fromIndex;
-		int high = toIndex - 1;
+		int low = minVal;
+		int high = maxVal - 1;
 
 		while (low <= high) {
 			int mid = (low + high) >>> 1;
@@ -259,14 +259,14 @@ public class ArraySearch {
 	 *         <tt>(-(<i>insertion point</i>) - 1)</tt>. The <i>insertion
 	 *         point</i> is defined as the point at which the key would be
 	 *         inserted into the array: the index of the first element in the
-	 *         range greater than the key, or <tt>toIndex</tt> if all elements
+	 *         range greater than the key, or <tt>maxVal</tt> if all elements
 	 *         in the range are less than the specified key. Note that this
 	 *         guarantees that the return value will be &gt;= 0 if and only if
 	 *         the key is found.
 	 * @throws IllegalArgumentException
-	 *             if {@code fromIndex > toIndex}
+	 *             if {@code minVal > maxVal}
 	 * @throws ArrayIndexOutOfBoundsException
-	 *             if {@code fromIndex < 0 or toIndex > a.length}
+	 *             if {@code minVal < 0 or maxVal > a.length}
 	 */
 	
 	public static int reverseSearch(float[] a, float key) {
@@ -283,9 +283,9 @@ public class ArraySearch {
 	 * 
 	 * @param a
 	 *            the array to be searched
-	 * @param fromIndex
+	 * @param minVal
 	 *            the index of the first element (inclusive) to be searched
-	 * @param toIndex
+	 * @param maxVal
 	 *            the index of the last element (exclusive) to be searched
 	 * @param key
 	 *            the value to be searched for
@@ -294,28 +294,28 @@ public class ArraySearch {
 	 *         <tt>(-(<i>insertion point</i>) - 1)</tt>. The <i>insertion
 	 *         point</i> is defined as the point at which the key would be
 	 *         inserted into the array: the index of the first element in the
-	 *         range greater than the key, or <tt>toIndex</tt> if all elements
+	 *         range greater than the key, or <tt>maxVal</tt> if all elements
 	 *         in the range are less than the specified key. Note that this
 	 *         guarantees that the return value will be &gt;= 0 if and only if
 	 *         the key is found.
 	 * @throws IllegalArgumentException
-	 *             if {@code fromIndex > toIndex}
+	 *             if {@code minVal > maxVal}
 	 * @throws ArrayIndexOutOfBoundsException
-	 *             if {@code fromIndex < 0 or toIndex > a.length}
+	 *             if {@code minVal < 0 or maxVal > a.length}
 	 */
 	
-	public static int reverseSearch(float[] a, int fromIndex, int toIndex,
+	public static int reverseSearch(float[] a, int minVal, int maxVal,
 			float key) {
-		rangeCheck(a.length, fromIndex, toIndex);
-		return reverseSearch0(a, fromIndex, toIndex, key);
+		rangeCheck(a.length, minVal, maxVal);
+		return reverseSearch0(a, minVal, maxVal, key);
 	}
 
 	// Like public version, but without range checks.
 	
-	private static int reverseSearch0(float[] a, int fromIndex, int toIndex,
+	private static int reverseSearch0(float[] a, int minVal, int maxVal,
 			float key) {
-		int low = fromIndex;
-		int high = toIndex - 1;
+		int low = minVal;
+		int high = maxVal - 1;
 
 		while (low <= high) {
 			int mid = (low + high) >>> 1;
@@ -348,14 +348,14 @@ public class ArraySearch {
 	 *         <tt>(-(<i>insertion point</i>) - 1)</tt>. The <i>insertion
 	 *         point</i> is defined as the point at which the key would be
 	 *         inserted into the array: the index of the first element in the
-	 *         range greater than the key, or <tt>toIndex</tt> if all elements
+	 *         range greater than the key, or <tt>maxVal</tt> if all elements
 	 *         in the range are less than the specified key. Note that this
 	 *         guarantees that the return value will be &gt;= 0 if and only if
 	 *         the key is found.
 	 * @throws IllegalArgumentException
-	 *             if {@code fromIndex > toIndex}
+	 *             if {@code minVal > maxVal}
 	 * @throws ArrayIndexOutOfBoundsException
-	 *             if {@code fromIndex < 0 or toIndex > a.length}
+	 *             if {@code minVal < 0 or maxVal > a.length}
 	 */
 	
 	public static int reverseSearch(double[] a, double key) {
@@ -372,9 +372,9 @@ public class ArraySearch {
 	 * 
 	 * @param a
 	 *            the array to be searched
-	 * @param fromIndex
+	 * @param minVal
 	 *            the index of the first element (inclusive) to be searched
-	 * @param toIndex
+	 * @param maxVal
 	 *            the index of the last element (exclusive) to be searched
 	 * @param key
 	 *            the value to be searched for
@@ -383,28 +383,28 @@ public class ArraySearch {
 	 *         <tt>(-(<i>insertion point</i>) - 1)</tt>. The <i>insertion
 	 *         point</i> is defined as the point at which the key would be
 	 *         inserted into the array: the index of the first element in the
-	 *         range greater than the key, or <tt>toIndex</tt> if all elements
+	 *         range greater than the key, or <tt>maxVal</tt> if all elements
 	 *         in the range are less than the specified key. Note that this
 	 *         guarantees that the return value will be &gt;= 0 if and only if
 	 *         the key is found.
 	 * @throws IllegalArgumentException
-	 *             if {@code fromIndex > toIndex}
+	 *             if {@code minVal > maxVal}
 	 * @throws ArrayIndexOutOfBoundsException
-	 *             if {@code fromIndex < 0 or toIndex > a.length}
+	 *             if {@code minVal < 0 or maxVal > a.length}
 	 */
 	
-	public static int reverseSearch(double[] a, int fromIndex, int toIndex,
+	public static int reverseSearch(double[] a, int minVal, int maxVal,
 			double key) {
-		rangeCheck(a.length, fromIndex, toIndex);
-		return reverseSearch0(a, fromIndex, toIndex, key);
+		rangeCheck(a.length, minVal, maxVal);
+		return reverseSearch0(a, minVal, maxVal, key);
 	}
 
 	// Like public version, but without range checks.
 	
-	private static int reverseSearch0(double[] a, int fromIndex, int toIndex,
+	private static int reverseSearch0(double[] a, int minVal, int maxVal,
 			double key) {
-		int low = fromIndex;
-		int high = toIndex - 1;
+		int low = minVal;
+		int high = maxVal - 1;
 
 		while (low <= high) {
 			int mid = (low + high) >>> 1;
@@ -437,14 +437,14 @@ public class ArraySearch {
 	 *         <tt>(-(<i>insertion point</i>) - 1)</tt>. The <i>insertion
 	 *         point</i> is defined as the point at which the key would be
 	 *         inserted into the array: the index of the first element in the
-	 *         range greater than the key, or <tt>toIndex</tt> if all elements
+	 *         range greater than the key, or <tt>maxVal</tt> if all elements
 	 *         in the range are less than the specified key. Note that this
 	 *         guarantees that the return value will be &gt;= 0 if and only if
 	 *         the key is found.
 	 * @throws IllegalArgumentException
-	 *             if {@code fromIndex > toIndex}
+	 *             if {@code minVal > maxVal}
 	 * @throws ArrayIndexOutOfBoundsException
-	 *             if {@code fromIndex < 0 or toIndex > a.length}
+	 *             if {@code minVal < 0 or maxVal > a.length}
 	 */
 
 	public static int reverseSearch(short[] a, short key) {
@@ -461,9 +461,9 @@ public class ArraySearch {
 	 * 
 	 * @param a
 	 *            the array to be searched
-	 * @param fromIndex
+	 * @param minVal
 	 *            the index of the first element (inclusive) to be searched
-	 * @param toIndex
+	 * @param maxVal
 	 *            the index of the last element (exclusive) to be searched
 	 * @param key
 	 *            the value to be searched for
@@ -472,28 +472,28 @@ public class ArraySearch {
 	 *         <tt>(-(<i>insertion point</i>) - 1)</tt>. The <i>insertion
 	 *         point</i> is defined as the point at which the key would be
 	 *         inserted into the array: the index of the first element in the
-	 *         range greater than the key, or <tt>toIndex</tt> if all elements
+	 *         range greater than the key, or <tt>maxVal</tt> if all elements
 	 *         in the range are less than the specified key. Note that this
 	 *         guarantees that the return value will be &gt;= 0 if and only if
 	 *         the key is found.
 	 * @throws IllegalArgumentException
-	 *             if {@code fromIndex > toIndex}
+	 *             if {@code minVal > maxVal}
 	 * @throws ArrayIndexOutOfBoundsException
-	 *             if {@code fromIndex < 0 or toIndex > a.length}
+	 *             if {@code minVal < 0 or maxVal > a.length}
 	 */
 	
-	public static int reverseSearch(short[] a, int fromIndex, int toIndex,
+	public static int reverseSearch(short[] a, int minVal, int maxVal,
 			short key) {
-		rangeCheck(a.length, fromIndex, toIndex);
-		return reverseSearch0(a, fromIndex, toIndex, key);
+		rangeCheck(a.length, minVal, maxVal);
+		return reverseSearch0(a, minVal, maxVal, key);
 	}
 
 	// Like public version, but without range checks.
 	
-	private static int reverseSearch0(short[] a, int fromIndex, int toIndex,
+	private static int reverseSearch0(short[] a, int minVal, int maxVal,
 			short key) {
-		int low = fromIndex;
-		int high = toIndex - 1;
+		int low = minVal;
+		int high = maxVal - 1;
 
 		while (low <= high) {
 			int mid = (low + high) >>> 1;
@@ -526,14 +526,14 @@ public class ArraySearch {
 	 *         <tt>(-(<i>insertion point</i>) - 1)</tt>. The <i>insertion
 	 *         point</i> is defined as the point at which the key would be
 	 *         inserted into the array: the index of the first element in the
-	 *         range greater than the key, or <tt>toIndex</tt> if all elements
+	 *         range greater than the key, or <tt>maxVal</tt> if all elements
 	 *         in the range are less than the specified key. Note that this
 	 *         guarantees that the return value will be &gt;= 0 if and only if
 	 *         the key is found.
 	 * @throws IllegalArgumentException
-	 *             if {@code fromIndex > toIndex}
+	 *             if {@code minVal > maxVal}
 	 * @throws ArrayIndexOutOfBoundsException
-	 *             if {@code fromIndex < 0 or toIndex > a.length}
+	 *             if {@code minVal < 0 or maxVal > a.length}
 	 */
 	
 	public static int reverseSearch(byte[] a, byte key) {
@@ -550,9 +550,9 @@ public class ArraySearch {
 	 * 
 	 * @param a
 	 *            the array to be searched
-	 * @param fromIndex
+	 * @param minVal
 	 *            the index of the first element (inclusive) to be searched
-	 * @param toIndex
+	 * @param maxVal
 	 *            the index of the last element (exclusive) to be searched
 	 * @param key
 	 *            the value to be searched for
@@ -561,28 +561,28 @@ public class ArraySearch {
 	 *         <tt>(-(<i>insertion point</i>) - 1)</tt>. The <i>insertion
 	 *         point</i> is defined as the point at which the key would be
 	 *         inserted into the array: the index of the first element in the
-	 *         range greater than the key, or <tt>toIndex</tt> if all elements
+	 *         range greater than the key, or <tt>maxVal</tt> if all elements
 	 *         in the range are less than the specified key. Note that this
 	 *         guarantees that the return value will be &gt;= 0 if and only if
 	 *         the key is found.
 	 * @throws IllegalArgumentException
-	 *             if {@code fromIndex > toIndex}
+	 *             if {@code minVal > maxVal}
 	 * @throws ArrayIndexOutOfBoundsException
-	 *             if {@code fromIndex < 0 or toIndex > a.length}
+	 *             if {@code minVal < 0 or maxVal > a.length}
 	 */
 
-	public static int reverseSearch(byte[] a, int fromIndex, int toIndex,
+	public static int reverseSearch(byte[] a, int minVal, int maxVal,
 			byte key) {
-		rangeCheck(a.length, fromIndex, toIndex);
-		return reverseSearch0(a, fromIndex, toIndex, key);
+		rangeCheck(a.length, minVal, maxVal);
+		return reverseSearch0(a, minVal, maxVal, key);
 	}
 
 	// Like public version, but without range checks.
 	
-	private static int reverseSearch0(byte[] a, int fromIndex, int toIndex,
+	private static int reverseSearch0(byte[] a, int minVal, int maxVal,
 			byte key) {
-		int low = fromIndex;
-		int high = toIndex - 1;
+		int low = minVal;
+		int high = maxVal - 1;
 
 		while (low <= high) {
 			int mid = (low + high) >>> 1;
@@ -615,14 +615,14 @@ public class ArraySearch {
 	 *         <tt>(-(<i>insertion point</i>) - 1)</tt>. The <i>insertion
 	 *         point</i> is defined as the point at which the key would be
 	 *         inserted into the array: the index of the first element in the
-	 *         range greater than the key, or <tt>toIndex</tt> if all elements
+	 *         range greater than the key, or <tt>maxVal</tt> if all elements
 	 *         in the range are less than the specified key. Note that this
 	 *         guarantees that the return value will be &gt;= 0 if and only if
 	 *         the key is found.
 	 * @throws IllegalArgumentException
-	 *             if {@code fromIndex > toIndex}
+	 *             if {@code minVal > maxVal}
 	 * @throws ArrayIndexOutOfBoundsException
-	 *             if {@code fromIndex < 0 or toIndex > a.length}
+	 *             if {@code minVal < 0 or maxVal > a.length}
 	 */
 	
 	public static int reverseSearch(char[] a, char key) {
@@ -639,9 +639,9 @@ public class ArraySearch {
 	 * 
 	 * @param a
 	 *            the array to be searched
-	 * @param fromIndex
+	 * @param minVal
 	 *            the index of the first element (inclusive) to be searched
-	 * @param toIndex
+	 * @param maxVal
 	 *            the index of the last element (exclusive) to be searched
 	 * @param key
 	 *            the value to be searched for
@@ -650,28 +650,28 @@ public class ArraySearch {
 	 *         <tt>(-(<i>insertion point</i>) - 1)</tt>. The <i>insertion
 	 *         point</i> is defined as the point at which the key would be
 	 *         inserted into the array: the index of the first element in the
-	 *         range greater than the key, or <tt>toIndex</tt> if all elements
+	 *         range greater than the key, or <tt>maxVal</tt> if all elements
 	 *         in the range are less than the specified key. Note that this
 	 *         guarantees that the return value will be &gt;= 0 if and only if
 	 *         the key is found.
 	 * @throws IllegalArgumentException
-	 *             if {@code fromIndex > toIndex}
+	 *             if {@code minVal > maxVal}
 	 * @throws ArrayIndexOutOfBoundsException
-	 *             if {@code fromIndex < 0 or toIndex > a.length}
+	 *             if {@code minVal < 0 or maxVal > a.length}
 	 */
 	
-	public static int reverseSearch(char[] a, int fromIndex, int toIndex,
+	public static int reverseSearch(char[] a, int minVal, int maxVal,
 			char key) {
-		rangeCheck(a.length, fromIndex, toIndex);
-		return reverseSearch0(a, fromIndex, toIndex, key);
+		rangeCheck(a.length, minVal, maxVal);
+		return reverseSearch0(a, minVal, maxVal, key);
 	}
 
 	// Like public version, but without range checks.
 	
-	private static int reverseSearch0(char[] a, int fromIndex, int toIndex,
+	private static int reverseSearch0(char[] a, int minVal, int maxVal,
 			char key) {
-		int low = fromIndex;
-		int high = toIndex - 1;
+		int low = minVal;
+		int high = maxVal - 1;
 
 		while (low <= high) {
 			int mid = (low + high) >>> 1;
@@ -704,14 +704,14 @@ public class ArraySearch {
 	 *         <tt>(-(<i>insertion point</i>) - 1)</tt>. The <i>insertion
 	 *         point</i> is defined as the point at which the key would be
 	 *         inserted into the array: the index of the first element in the
-	 *         range greater than the key, or <tt>toIndex</tt> if all elements
+	 *         range greater than the key, or <tt>maxVal</tt> if all elements
 	 *         in the range are less than the specified key. Note that this
 	 *         guarantees that the return value will be &gt;= 0 if and only if
 	 *         the key is found.
 	 * @throws IllegalArgumentException
-	 *             if {@code fromIndex > toIndex}
+	 *             if {@code minVal > maxVal}
 	 * @throws ArrayIndexOutOfBoundsException
-	 *             if {@code fromIndex < 0 or toIndex > a.length}
+	 *             if {@code minVal < 0 or maxVal > a.length}
 	 */
 
 	public static int reverseSearch(Object[] a, Object key) {
@@ -728,9 +728,9 @@ public class ArraySearch {
 	 * 
 	 * @param a
 	 *            the array to be searched
-	 * @param fromIndex
+	 * @param minVal
 	 *            the index of the first element (inclusive) to be searched
-	 * @param toIndex
+	 * @param maxVal
 	 *            the index of the last element (exclusive) to be searched
 	 * @param key
 	 *            the value to be searched for
@@ -739,29 +739,29 @@ public class ArraySearch {
 	 *         <tt>(-(<i>insertion point</i>) - 1)</tt>. The <i>insertion
 	 *         point</i> is defined as the point at which the key would be
 	 *         inserted into the array: the index of the first element in the
-	 *         range greater than the key, or <tt>toIndex</tt> if all elements
+	 *         range greater than the key, or <tt>maxVal</tt> if all elements
 	 *         in the range are less than the specified key. Note that this
 	 *         guarantees that the return value will be &gt;= 0 if and only if
 	 *         the key is found.
 	 * @throws IllegalArgumentException
-	 *             if {@code fromIndex > toIndex}
+	 *             if {@code minVal > maxVal}
 	 * @throws ArrayIndexOutOfBoundsException
-	 *             if {@code fromIndex < 0 or toIndex > a.length}
+	 *             if {@code minVal < 0 or maxVal > a.length}
 	 */
 	
-	public static int reverseSearch(Object[] a, int fromIndex, int toIndex,
+	public static int reverseSearch(Object[] a, int minVal, int maxVal,
 			Object key) {
-		rangeCheck(a.length, fromIndex, toIndex);
-		return reverseSearch0(a, fromIndex, toIndex, key);
+		rangeCheck(a.length, minVal, maxVal);
+		return reverseSearch0(a, minVal, maxVal, key);
 	}
 
 	// Like public version, but without range checks.
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private static int reverseSearch0(Object[] a, int fromIndex, int toIndex,
+	private static int reverseSearch0(Object[] a, int minVal, int maxVal,
 			Object key) {
-		int low = fromIndex;
-		int high = toIndex - 1;
+		int low = minVal;
+		int high = maxVal - 1;
 
 		while (low <= high) {
 			int mid = (low + high) >>> 1;

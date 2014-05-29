@@ -36,8 +36,7 @@ package au.gov.ga.conn4d.utils;
 
 /*
  * TricubicSplineInterpolator modified from apache.commons.math3
- * to accommodate float value inputs.  No other elements or procedures were
- * altered.
+ * to accommodate float value inputs, and to handle descending z values.
  * 
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -61,59 +60,71 @@ import org.apache.commons.math3.exception.NoDataException;
 import org.apache.commons.math3.exception.NonMonotonicSequenceException;
 import org.apache.commons.math3.util.MathArrays;
 
-
 /**
  * Generates a tricubic interpolating function.
  * 
  * MODIFIED from the original on 19/05/2014 by Johnathan Kool to accept
- * float arrays
+ * float arrays and descending z values.
  * 
  * @since 2.2
  * @version $Id: TricubicSplineInterpolator.java 1379904 2012-09-01 23:54:52Z
  *          erans $
  */
 public class TricubicSplineInterpolator implements TrivariateGridInterpolator {
+	
 	/**
 	 * {@inheritDoc}
 	 */
-	public TricubicSplineInterpolatingFunction interpolate(final double[] xval,
-			final double[] yval, final double[] zval, final double[][][] fval)
+	public TricubicSplineInterpolatingFunction interpolate(final double[] zval,
+			final double[] yval, final double[] xval, final double[][][] fval)
 			throws NoDataException, DimensionMismatchException,
 			NonMonotonicSequenceException {
-		if (xval.length == 0 || yval.length == 0 || zval.length == 0
+		if (zval.length == 0 || yval.length == 0 || xval.length == 0
 				|| fval.length == 0) {
 			throw new NoDataException();
 		}
-		if (xval.length != fval.length) {
-			throw new DimensionMismatchException(xval.length, fval.length);
+		if (zval.length != fval.length) {
+			throw new DimensionMismatchException(zval.length, fval.length);
 		}
-
-		MathArrays.checkOrder(xval);
-		MathArrays.checkOrder(yval);
+		
 		MathArrays.checkOrder(zval);
-
-		final int xLen = xval.length;
-		final int yLen = yval.length;
+		MathArrays.checkOrder(yval);
+		
 		final int zLen = zval.length;
+		final int yLen = yval.length;
+		final int xLen = xval.length;
+		
+		final double[] zzval;
+		final double[][][] ffval = new double[zLen][][];
+		
+		if(zval[0]>zval[zLen-1]){
+			zzval = VectorMath.selectionSort(zval);
+			for(int i = 0; i<zLen; i++){
+				ffval[i]=fval[zLen-1-i];
+			}
+		}
+		else{
+			zzval = zval;
+		}
 
 		// Samples, re-ordered as (z, x, y) and (y, z, x) tuplets
 		// fvalXY[k][i][j] = f(xval[i], yval[j], zval[k])
 		// fvalZX[j][k][i] = f(xval[i], yval[j], zval[k])
-		final double[][][] fvalXY = new double[zLen][xLen][yLen];
-		final double[][][] fvalZX = new double[yLen][zLen][xLen];
-		for (int i = 0; i < xLen; i++) {
-			if (fval[i].length != yLen) {
-				throw new DimensionMismatchException(fval[i].length, yLen);
+		final double[][][] fvalXY = new double[xLen][zLen][yLen];
+		final double[][][] fvalZX = new double[yLen][xLen][zLen];
+		for (int i = 0; i < zLen; i++) {
+			if (ffval[i].length != yLen) {
+				throw new DimensionMismatchException(ffval[i].length, yLen);
 			}
 
 			for (int j = 0; j < yLen; j++) {
-				if (fval[i][j].length != zLen) {
-					throw new DimensionMismatchException(fval[i][j].length,
-							zLen);
+				if (ffval[i][j].length != xLen) {
+					throw new DimensionMismatchException(ffval[i][j].length,
+							xLen);
 				}
 
-				for (int k = 0; k < zLen; k++) {
-					final double v = fval[i][j][k];
+				for (int k = 0; k < xLen; k++) {
+					final double v = ffval[i][j][k];
 					fvalXY[k][i][j] = v;
 					fvalZX[j][k][i] = v;
 				}
@@ -123,133 +134,145 @@ public class TricubicSplineInterpolator implements TrivariateGridInterpolator {
 		final BicubicSplineInterpolator bsi = new BicubicSplineInterpolator();
 
 		// For each line x[i] (0 <= i < xLen), construct a 2D spline in y and z
-		final BicubicSplineInterpolatingFunction[] xSplineYZ = new BicubicSplineInterpolatingFunction[xLen];
-		for (int i = 0; i < xLen; i++) {
-			xSplineYZ[i] = bsi.interpolate(yval, zval, fval[i]);
+		final BicubicSplineInterpolatingFunction[] xSplineYZ = new BicubicSplineInterpolatingFunction[zLen];
+		for (int i = 0; i < zLen; i++) {
+			xSplineYZ[i] = bsi.interpolate(yval, xval, ffval[i]);
 		}
 
 		// For each line y[j] (0 <= j < yLen), construct a 2D spline in z and x
 		final BicubicSplineInterpolatingFunction[] ySplineZX = new BicubicSplineInterpolatingFunction[yLen];
 		for (int j = 0; j < yLen; j++) {
-			ySplineZX[j] = bsi.interpolate(zval, xval, fvalZX[j]);
+			ySplineZX[j] = bsi.interpolate(xval, zzval, fvalZX[j]);
 		}
 
 		// For each line z[k] (0 <= k < zLen), construct a 2D spline in x and y
-		final BicubicSplineInterpolatingFunction[] zSplineXY = new BicubicSplineInterpolatingFunction[zLen];
-		for (int k = 0; k < zLen; k++) {
-			zSplineXY[k] = bsi.interpolate(xval, yval, fvalXY[k]);
+		final BicubicSplineInterpolatingFunction[] zSplineXY = new BicubicSplineInterpolatingFunction[xLen];
+		for (int k = 0; k < xLen; k++) {
+			zSplineXY[k] = bsi.interpolate(zzval, yval, fvalXY[k]);
 		}
 
 		// Partial derivatives wrt x and wrt y
-		final double[][][] dFdX = new double[xLen][yLen][zLen];
-		final double[][][] dFdY = new double[xLen][yLen][zLen];
-		final double[][][] d2FdXdY = new double[xLen][yLen][zLen];
-		for (int k = 0; k < zLen; k++) {
+		final double[][][] dFdX = new double[zLen][yLen][xLen];
+		final double[][][] dFdY = new double[zLen][yLen][xLen];
+		final double[][][] d2FdXdY = new double[zLen][yLen][xLen];
+		for (int k = 0; k < xLen; k++) {
 			final BicubicSplineInterpolatingFunction f = zSplineXY[k];
-			for (int i = 0; i < xLen; i++) {
-				final double x = xval[i];
+			for (int i = 0; i < zLen; i++) {
+				final double z = zzval[i];
 				for (int j = 0; j < yLen; j++) {
 					final double y = yval[j];
-					dFdX[i][j][k] = f.partialDerivativeX(x, y);
-					dFdY[i][j][k] = f.partialDerivativeY(x, y);
-					d2FdXdY[i][j][k] = f.partialDerivativeXY(x, y);
+					dFdX[i][j][k] = f.partialDerivativeX(z, y);
+					dFdY[i][j][k] = f.partialDerivativeY(z, y);
+					d2FdXdY[i][j][k] = f.partialDerivativeXY(z, y);
 				}
 			}
 		}
 
 		// Partial derivatives wrt y and wrt z
-		final double[][][] dFdZ = new double[xLen][yLen][zLen];
-		final double[][][] d2FdYdZ = new double[xLen][yLen][zLen];
-		for (int i = 0; i < xLen; i++) {
+		final double[][][] dFdZ = new double[zLen][yLen][xLen];
+		final double[][][] d2FdYdZ = new double[zLen][yLen][xLen];
+		for (int i = 0; i < zLen; i++) {
 			final BicubicSplineInterpolatingFunction f = xSplineYZ[i];
 			for (int j = 0; j < yLen; j++) {
 				final double y = yval[j];
-				for (int k = 0; k < zLen; k++) {
-					final double z = zval[k];
-					dFdZ[i][j][k] = f.partialDerivativeY(y, z);
-					d2FdYdZ[i][j][k] = f.partialDerivativeXY(y, z);
+				for (int k = 0; k < xLen; k++) {
+					final double x = xval[k];
+					dFdZ[i][j][k] = f.partialDerivativeY(y, x);
+					d2FdYdZ[i][j][k] = f.partialDerivativeXY(y, x);
 				}
 			}
 		}
 
 		// Partial derivatives wrt x and wrt z
-		final double[][][] d2FdZdX = new double[xLen][yLen][zLen];
+		final double[][][] d2FdZdX = new double[zLen][yLen][xLen];
 		for (int j = 0; j < yLen; j++) {
 			final BicubicSplineInterpolatingFunction f = ySplineZX[j];
-			for (int k = 0; k < zLen; k++) {
-				final double z = zval[k];
-				for (int i = 0; i < xLen; i++) {
-					final double x = xval[i];
-					d2FdZdX[i][j][k] = f.partialDerivativeXY(z, x);
+			for (int k = 0; k < xLen; k++) {
+				final double x = xval[k];
+				for (int i = 0; i < zLen; i++) {
+					final double z = zzval[i];
+					d2FdZdX[i][j][k] = f.partialDerivativeXY(x, z);
 				}
 			}
 		}
 
 		// Third partial cross-derivatives
-		final double[][][] d3FdXdYdZ = new double[xLen][yLen][zLen];
-		for (int i = 0; i < xLen; i++) {
-			final int nI = nextIndex(i, xLen);
+		final double[][][] d3FdXdYdZ = new double[zLen][yLen][xLen];
+		for (int i = 0; i < zLen; i++) {
+			final int nI = nextIndex(i, zLen);
 			final int pI = previousIndex(i);
 			for (int j = 0; j < yLen; j++) {
 				final int nJ = nextIndex(j, yLen);
 				final int pJ = previousIndex(j);
-				for (int k = 0; k < zLen; k++) {
-					final int nK = nextIndex(k, zLen);
+				for (int k = 0; k < xLen; k++) {
+					final int nK = nextIndex(k, xLen);
 					final int pK = previousIndex(k);
 
 					// XXX Not sure about this formula
-					d3FdXdYdZ[i][j][k] = (fval[nI][nJ][nK] - fval[nI][pJ][nK]
-							- fval[pI][nJ][nK] + fval[pI][pJ][nK]
-							- fval[nI][nJ][pK] + fval[nI][pJ][pK]
-							+ fval[pI][nJ][pK] - fval[pI][pJ][pK])
-							/ ((xval[nI] - xval[pI]) * (yval[nJ] - yval[pJ]) * (zval[nK] - zval[pK]));
+					d3FdXdYdZ[i][j][k] = (ffval[nI][nJ][nK] - ffval[nI][pJ][nK]
+							- ffval[pI][nJ][nK] + ffval[pI][pJ][nK]
+							- ffval[nI][nJ][pK] + ffval[nI][pJ][pK]
+							+ ffval[pI][nJ][pK] - ffval[pI][pJ][pK])
+							/ ((zzval[nI] - zzval[pI]) * (yval[nJ] - yval[pJ]) * (xval[nK] - xval[pK]));
 				}
 			}
 		}
 
 		// Create the interpolating splines
-		return new TricubicSplineInterpolatingFunction(xval, yval, zval, fval,
+		return new TricubicSplineInterpolatingFunction(zzval, yval, xval, ffval,
 				dFdX, dFdY, dFdZ, d2FdXdY, d2FdZdX, d2FdYdZ, d3FdXdYdZ);
 	}
 
-	public TricubicSplineInterpolatingFunction interpolate(final double[] xval,
-			final double[] yval, final double[] zval, final float[][][] fval)
+	public TricubicSplineInterpolatingFunction interpolate(final double[] zval,
+			final double[] yval, final double[] xval, final float[][][] fval)
 			throws NoDataException, DimensionMismatchException,
 			NonMonotonicSequenceException {
-		if (xval.length == 0 || yval.length == 0 || zval.length == 0
+		if (zval.length == 0 || yval.length == 0 || xval.length == 0
 				|| fval.length == 0) {
 			throw new NoDataException();
 		}
-		if (xval.length != fval.length) {
-			throw new DimensionMismatchException(xval.length, fval.length);
+		if (zval.length != fval.length) {
+			throw new DimensionMismatchException(zval.length, fval.length);
 		}
 
-		MathArrays.checkOrder(xval);
 		MathArrays.checkOrder(yval);
-		MathArrays.checkOrder(zval);
+		MathArrays.checkOrder(xval);
 
-		final int xLen = xval.length;
-		final int yLen = yval.length;
 		final int zLen = zval.length;
+		final int yLen = yval.length;
+		final int xLen = xval.length;
+		
+		final double[] zzval;
+		final float[][][] ffval = new float[zLen][][];
+		
+		if(zval[0]>zval[zLen-1]){
+			zzval = VectorMath.selectionSort(zval);
+			for(int i = 0; i<zLen; i++){
+				ffval[i]=fval[zLen-1-i];
+			}
+		}
+		else{
+			zzval = zval;
+		}
 
 		// Samples, re-ordered as (z, x, y) and (y, z, x) tuplets
 		// fvalXY[k][i][j] = f(xval[i], yval[j], zval[k])
 		// fvalZX[j][k][i] = f(xval[i], yval[j], zval[k])
-		final double[][][] fvalXY = new double[zLen][xLen][yLen];
-		final double[][][] fvalZX = new double[yLen][zLen][xLen];
-		for (int i = 0; i < xLen; i++) {
-			if (fval[i].length != yLen) {
-				throw new DimensionMismatchException(fval[i].length, yLen);
+		final double[][][] fvalXY = new double[xLen][zLen][yLen];
+		final double[][][] fvalZX = new double[yLen][xLen][zLen];
+		for (int i = 0; i < zLen; i++) {
+			if (ffval[i].length != yLen) {
+				throw new DimensionMismatchException(ffval[i].length, yLen);
 			}
 
 			for (int j = 0; j < yLen; j++) {
-				if (fval[i][j].length != zLen) {
-					throw new DimensionMismatchException(fval[i][j].length,
-							zLen);
+				if (ffval[i][j].length != xLen) {
+					throw new DimensionMismatchException(ffval[i][j].length,
+							xLen);
 				}
 
-				for (int k = 0; k < zLen; k++) {
-					final double v = fval[i][j][k];
+				for (int k = 0; k < xLen; k++) {
+					final double v = ffval[i][j][k];
 					fvalXY[k][i][j] = v;
 					fvalZX[j][k][i] = v;
 				}
@@ -259,31 +282,31 @@ public class TricubicSplineInterpolator implements TrivariateGridInterpolator {
 		final BicubicSplineInterpolator bsi = new BicubicSplineInterpolator();
 
 		// For each line x[i] (0 <= i < xLen), construct a 2D spline in y and z
-		final BicubicSplineInterpolatingFunction[] xSplineYZ = new BicubicSplineInterpolatingFunction[xLen];
-		for (int i = 0; i < xLen; i++) {
-			xSplineYZ[i] = bsi.interpolate(yval, zval, fval[i]);
+		final BicubicSplineInterpolatingFunction[] xSplineYZ = new BicubicSplineInterpolatingFunction[zLen];
+		for (int i = 0; i < zLen; i++) {
+			xSplineYZ[i] = bsi.interpolate(yval, xval, ffval[i]);
 		}
 
 		// For each line y[j] (0 <= j < yLen), construct a 2D spline in z and x
 		final BicubicSplineInterpolatingFunction[] ySplineZX = new BicubicSplineInterpolatingFunction[yLen];
 		for (int j = 0; j < yLen; j++) {
-			ySplineZX[j] = bsi.interpolate(zval, xval, fvalZX[j]);
+			ySplineZX[j] = bsi.interpolate(xval, zzval, fvalZX[j]);
 		}
 
 		// For each line z[k] (0 <= k < zLen), construct a 2D spline in x and y
-		final BicubicSplineInterpolatingFunction[] zSplineXY = new BicubicSplineInterpolatingFunction[zLen];
-		for (int k = 0; k < zLen; k++) {
-			zSplineXY[k] = bsi.interpolate(xval, yval, fvalXY[k]);
+		final BicubicSplineInterpolatingFunction[] zSplineXY = new BicubicSplineInterpolatingFunction[xLen];
+		for (int k = 0; k < xLen; k++) {
+			zSplineXY[k] = bsi.interpolate(zzval, yval, fvalXY[k]);
 		}
 
 		// Partial derivatives wrt x and wrt y
-		final double[][][] dFdX = new double[xLen][yLen][zLen];
-		final double[][][] dFdY = new double[xLen][yLen][zLen];
-		final double[][][] d2FdXdY = new double[xLen][yLen][zLen];
-		for (int k = 0; k < zLen; k++) {
+		final double[][][] dFdX = new double[zLen][yLen][xLen];
+		final double[][][] dFdY = new double[zLen][yLen][xLen];
+		final double[][][] d2FdXdY = new double[zLen][yLen][xLen];
+		for (int k = 0; k < xLen; k++) {
 			final BicubicSplineInterpolatingFunction f = zSplineXY[k];
-			for (int i = 0; i < xLen; i++) {
-				final double x = xval[i];
+			for (int i = 0; i < zLen; i++) {
+				final double x = zzval[i];
 				for (int j = 0; j < yLen; j++) {
 					final double y = yval[j];
 					dFdX[i][j][k] = f.partialDerivativeX(x, y);
@@ -294,14 +317,14 @@ public class TricubicSplineInterpolator implements TrivariateGridInterpolator {
 		}
 
 		// Partial derivatives wrt y and wrt z
-		final double[][][] dFdZ = new double[xLen][yLen][zLen];
-		final double[][][] d2FdYdZ = new double[xLen][yLen][zLen];
-		for (int i = 0; i < xLen; i++) {
+		final double[][][] dFdZ = new double[zLen][yLen][xLen];
+		final double[][][] d2FdYdZ = new double[zLen][yLen][xLen];
+		for (int i = 0; i < zLen; i++) {
 			final BicubicSplineInterpolatingFunction f = xSplineYZ[i];
 			for (int j = 0; j < yLen; j++) {
 				final double y = yval[j];
-				for (int k = 0; k < zLen; k++) {
-					final double z = zval[k];
+				for (int k = 0; k < xLen; k++) {
+					final double z = xval[k];
 					dFdZ[i][j][k] = f.partialDerivativeY(y, z);
 					d2FdYdZ[i][j][k] = f.partialDerivativeXY(y, z);
 				}
@@ -309,42 +332,42 @@ public class TricubicSplineInterpolator implements TrivariateGridInterpolator {
 		}
 
 		// Partial derivatives wrt x and wrt z
-		final double[][][] d2FdZdX = new double[xLen][yLen][zLen];
+		final double[][][] d2FdZdX = new double[zLen][yLen][xLen];
 		for (int j = 0; j < yLen; j++) {
 			final BicubicSplineInterpolatingFunction f = ySplineZX[j];
-			for (int k = 0; k < zLen; k++) {
-				final double z = zval[k];
-				for (int i = 0; i < xLen; i++) {
-					final double x = xval[i];
+			for (int k = 0; k < xLen; k++) {
+				final double z = xval[k];
+				for (int i = 0; i < zLen; i++) {
+					final double x = zzval[i];
 					d2FdZdX[i][j][k] = f.partialDerivativeXY(z, x);
 				}
 			}
 		}
 
 		// Third partial cross-derivatives
-		final double[][][] d3FdXdYdZ = new double[xLen][yLen][zLen];
-		for (int i = 0; i < xLen; i++) {
-			final int nI = nextIndex(i, xLen);
+		final double[][][] d3FdXdYdZ = new double[zLen][yLen][xLen];
+		for (int i = 0; i < zLen; i++) {
+			final int nI = nextIndex(i, zLen);
 			final int pI = previousIndex(i);
 			for (int j = 0; j < yLen; j++) {
 				final int nJ = nextIndex(j, yLen);
 				final int pJ = previousIndex(j);
-				for (int k = 0; k < zLen; k++) {
-					final int nK = nextIndex(k, zLen);
+				for (int k = 0; k < xLen; k++) {
+					final int nK = nextIndex(k, xLen);
 					final int pK = previousIndex(k);
 
 					// XXX Not sure about this formula
-					d3FdXdYdZ[i][j][k] = (fval[nI][nJ][nK] - fval[nI][pJ][nK]
-							- fval[pI][nJ][nK] + fval[pI][pJ][nK]
-							- fval[nI][nJ][pK] + fval[nI][pJ][pK]
-							+ fval[pI][nJ][pK] - fval[pI][pJ][pK])
-							/ ((xval[nI] - xval[pI]) * (yval[nJ] - yval[pJ]) * (zval[nK] - zval[pK]));
+					d3FdXdYdZ[i][j][k] = (ffval[nI][nJ][nK] - ffval[nI][pJ][nK]
+							- ffval[pI][nJ][nK] + ffval[pI][pJ][nK]
+							- ffval[nI][nJ][pK] + ffval[nI][pJ][pK]
+							+ ffval[pI][nJ][pK] - ffval[pI][pJ][pK])
+							/ ((zzval[nI] - zzval[pI]) * (yval[nJ] - yval[pJ]) * (xval[nK] - xval[pK]));
 				}
 			}
 		}
 
 		// Create the interpolating splines
-		return new TricubicSplineInterpolatingFunction(xval, yval, zval, fval,
+		return new TricubicSplineInterpolatingFunction(zzval, yval, xval, ffval,
 				dFdX, dFdY, dFdZ, d2FdXdY, d2FdZdX, d2FdYdZ, d3FdXdYdZ);
 	}
 
