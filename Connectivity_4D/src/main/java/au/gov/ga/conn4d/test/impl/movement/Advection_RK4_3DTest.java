@@ -35,6 +35,7 @@
 
 package au.gov.ga.conn4d.test.impl.movement;
 
+import static org.junit.Assert.*;
 import junit.framework.Assert;
 
 import org.junit.Before;
@@ -42,6 +43,7 @@ import org.junit.Test;
 
 import au.gov.ga.conn4d.Particle;
 import au.gov.ga.conn4d.impl.movement.Advection_RK4_3D;
+//import au.gov.ga.conn4d.impl.movement.Advection_RK4_3Dv2;
 import au.gov.ga.conn4d.impl.readers.VelocityReader_NetCDF_4D;
 
 /**
@@ -51,7 +53,9 @@ import au.gov.ga.conn4d.impl.readers.VelocityReader_NetCDF_4D;
 public class Advection_RK4_3DTest {
 
 	Advection_RK4_3D rk3d = new Advection_RK4_3D();
+	Advection_RK4_3D rk3d_inc = new Advection_RK4_3D();
 	VelocityReader_NetCDF_4D v3 = new VelocityReader_NetCDF_4D();
+	VelocityReader_TestPlug v3t = new VelocityReader_TestPlug();
 	Particle p;
 	
 	@Before
@@ -65,15 +69,15 @@ public class Advection_RK4_3DTest {
 		v3.setTLookup("Time");
 		v3.setTimeOffset(0);
 		rk3d.setVr(v3);
+		rk3d_inc.setVr(v3t);
 		rk3d.setH(1); // Integration interval of one millisecond
+		rk3d_inc.setH(200f);
 		p = new Particle();
 		p.setT(0);
 		p.setX(-1);
 		p.setY(-1);
 		p.setZ(0);
 	}
-
-	@Test
 	
 	/**
 	 * The position of the particle should change in a linear manner of
@@ -83,10 +87,36 @@ public class Advection_RK4_3DTest {
 	 * accounted for.
 	 */
 	
-	public void test() {
+	//@Test
+	public void testConstantVelocity() {
 		for(int i = 0; i < 100; i++){
 			rk3d.apply(p);
 			Assert.assertEquals((double) -(i+1)/1000, p.getZ(), 1E-4);
 		}
+	}
+	
+	/**
+	 * Test is based on using the function -t^2-1 which gives an analytical result of -tan(t), verified using
+	 * Wolfram Alpha www.wolframalpha.com
+	 */
+	@Test 
+	public void testIncreasingVelocity(){
+		Particle p = new Particle();
+		p.setX(0);
+		p.setY(0);
+		p.setZ(0);
+		rk3d_inc.apply(p);
+		assertEquals(p.getZ(),-Math.tan(0.2),1E-2);
+		rk3d_inc.apply(p);
+		assertEquals(p.getZ(),-Math.tan(0.4),1E-2);		
+		rk3d_inc.apply(p);
+		assertEquals(p.getZ(),-Math.tan(0.6),1E-2);
+		rk3d_inc.apply(p);
+		assertEquals(p.getZ(),-Math.tan(0.8),1E-2);
+		rk3d_inc.apply(p);
+		assertEquals(p.getZ(),-Math.tan(1.0),1E-2);
+		rk3d_inc.apply(p);
+		assertEquals(p.getZ(),-Math.tan(1.2),1E-2);
+		rk3d_inc.apply(p);
 	}
 }

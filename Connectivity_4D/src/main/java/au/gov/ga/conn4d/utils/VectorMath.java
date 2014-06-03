@@ -851,6 +851,78 @@ public class VectorMath {
 		}
 		return max;
 	}
+	
+	/**
+	 * Returns the index of the maximum value of an array of doubles.
+	 * 
+	 * @param da
+	 *            - the input array of doubles
+	 * @return - the index of the maximum value contained in the array
+	 */
+
+	public static int maxi(double[] da) {
+		int n = da.length;
+		int max = 0;
+		for (int i = 1; i < n; i++) {
+			if (da[i] > max)
+				max = i;
+		}
+		return max;
+	}
+	
+	/**
+	 * Returns the index of the maximum value of an array of floats.
+	 * 
+	 * @param fa
+	 *            - the input array of doubles
+	 * @return - the index of the maximum value contained in the array
+	 */
+
+	public static int maxi(float[] fa) {
+		int n = fa.length;
+		int max = 0;
+		for (int i = 1; i < n; i++) {
+			if (fa[i] > max)
+				max = i;
+		}
+		return max;
+	}
+	
+	/**
+	 * Returns the index of the maximum value of an array of ints.
+	 * 
+	 * @param ia
+	 *            - the input array of doubles
+	 * @return - the index of the maximum value contained in the array
+	 */
+
+	public static int maxi(int[] ia) {
+		int n = ia.length;
+		int max = 0;
+		for (int i = 1; i < n; i++) {
+			if (ia[i] > max)
+				max = i;
+		}
+		return max;
+	}
+	
+	/**
+	 * Returns the index of the maximum value of an array of doubles.
+	 * 
+	 * @param la
+	 *            - the input array of longs
+	 * @return - the index of the maximum value contained in the array
+	 */
+
+	public static int maxi(long[] la) {
+		int n = la.length;
+		int max = 0;
+		for (int i = 1; i < n; i++) {
+			if (la[i] > max)
+				max = i;
+		}
+		return max;
+	}
 
 	/**
 	 * Returns the minimum value of an array of doubles.

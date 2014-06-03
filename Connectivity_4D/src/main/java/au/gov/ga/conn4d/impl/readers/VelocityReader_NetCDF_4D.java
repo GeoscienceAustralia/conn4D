@@ -518,6 +518,7 @@ public class VelocityReader_NetCDF_4D implements VelocityReader, Cloneable {
 				averages = NODATA;
 				variances = NODATA;
 				return NODATA;
+				
 			} else if (Math.abs(v) > cutoff) {
 				u = 0.0f;
 				v = 0.0f;

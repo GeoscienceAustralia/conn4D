@@ -101,8 +101,6 @@ public class ReleaseTest {
 		r.setCollisionDetector(new CollisionDetector_None());
 		r.setDiffusion(new Diffusion_None());
 		r.setMortality(new NullPlug());
-		//r.setDistanceWriter(new NullPlug());
-		//r.setMatrixWriter(new NullPlug());
 		r.setMovement(rk3d);
 		r.setSettlement(new Settlement_None());
 		r.setTrajectoryWriter(new NullPlug());
