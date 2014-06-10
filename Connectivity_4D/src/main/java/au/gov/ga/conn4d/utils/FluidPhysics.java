@@ -6,16 +6,16 @@ public class FluidPhysics {
 
 	private final double g = 9.80665;
 	// private static double fluidDensity = 1;
-	private static double fluidDensity = 1.25;
+	private double fluidDensity = 1.25;
 	// private final double fluidDensity = 1.025;
-	private static final double F_1_3 = 1d / 3d;
-	private static final double F_1_5 = 1d / 5d;
-	private static final double F_1_7 = 1d / 7d;
-	private static final double F_1_9 = 1d / 9d;
-	private static final double F_1_11 = 1d / 11d;
-	private static final double F_1_13 = 1d / 13d;
-	private static final double F_1_15 = 1d / 15d;
-	private static final double F_1_17 = 1d / 17d;
+	private final double F_1_3 = 1d / 3d;
+	private final double F_1_5 = 1d / 5d;
+	private final double F_1_7 = 1d / 7d;
+	private final double F_1_9 = 1d / 9d;
+	private final double F_1_11 = 1d / 11d;
+	private final double F_1_13 = 1d / 13d;
+	private final double F_1_15 = 1d / 15d;
+	private final double F_1_17 = 1d / 17d;
 
 	public static void main(String[] args) {
 		FluidPhysics fp = new FluidPhysics();
@@ -47,13 +47,12 @@ public class FluidPhysics {
 		if(p.getDensity()==fluidDensity){return 0;}
 		
 		double multiplier = Math.signum(time)*Math.signum(p.getDensity()-fluidDensity);
+		double t1_1 = 2 * p.getMass() * Math.abs(p.getDensity() - fluidDensity) * g;
+		double t1_2 = p.getDragCoefficient() * p.getxArea() * fluidDensity;
+		double t2_1 = g * Math.abs(p.getDensity() - fluidDensity)* p.getDragCoefficient() * p.getxArea() * fluidDensity;
+		double t2_2 = 2 * p.getMass();
 		
-		return multiplier*(-Math.sqrt(2 * p.getMass() * Math.abs(p.getDensity() - fluidDensity) * g
-				/ (p.getDragCoefficient() * p.getxArea() * fluidDensity))
-				* Math.tanh(Math.sqrt(g * Math.abs(p.getDensity() - fluidDensity)
-						* p.getDragCoefficient() * p.getxArea() * fluidDensity
-						/ (2 * p.getMass()))
-						* time));
+		return multiplier*(-Math.sqrt(t1_1/t1_2)*Math.tanh(Math.sqrt(t2_1/t2_2)));
 	}
 
 	public double calcVelocityChange(Particle p, double v0, double time) {
@@ -111,5 +110,13 @@ public class FluidPhysics {
 		}
 
 		return negative ? -absAtanh : absAtanh;
+	}
+	
+	public void setFluidDensity(double fluidDensity){
+		this.fluidDensity = fluidDensity;
+	}
+	
+	public double getFluidDensity(){
+		return fluidDensity;
 	}
 }

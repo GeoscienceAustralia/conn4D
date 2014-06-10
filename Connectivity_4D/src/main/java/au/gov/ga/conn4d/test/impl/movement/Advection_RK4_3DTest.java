@@ -87,7 +87,7 @@ public class Advection_RK4_3DTest {
 	 * accounted for.
 	 */
 	
-	//@Test
+	@Test
 	public void testConstantVelocity() {
 		for(int i = 0; i < 100; i++){
 			rk3d.apply(p);

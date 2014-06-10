@@ -17,12 +17,11 @@ public class VelocityReader_TestPlug implements VelocityReader, Cloneable {
 
 	@Override
 	public double[][] getBounds() {
-		return new double[][]{{0,1000},{-100000,100000},{-90,90},{0,360}};
+		return new double[][]{{0,1000},{-100000,100000},{-90,90},{-360,360}};
 	}
 
 	@Override
 	public int[][] getShape() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -31,10 +30,15 @@ public class VelocityReader_TestPlug implements VelocityReader, Cloneable {
 		return "milliseconds";
 	}
 
+	/**
+	 * Returns -1-z^2 for the w velocity value for testing [analytic solution is -tan(z)].  
+	 * Velocities for u and v are 0 since x and y values are autoconverted to latitude and 
+	 * longitude, but the calculations are otherwise identical.
+	 */
 	@Override
 	public double[] getVelocities(long time, double z, double lon, double lat) {
 		
-		return new double[]{0,0,0-1-(z*z)};
+		return new double[]{0,0,-1-(z*z)};
 	}
 
 	@Override
