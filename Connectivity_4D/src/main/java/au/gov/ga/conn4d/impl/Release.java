@@ -157,10 +157,10 @@ public class Release implements Runnable {
 	public VerticalMigration getVerticalMigration() {
 		return vm;
 	}
-	
+
 	/**
-	 * Flags whether the release will be killed before effective
-	 * activity (pre-processing mortality to save on computation)
+	 * Flags whether the release will be killed before effective activity
+	 * (pre-processing mortality to save on computation)
 	 */
 
 	public boolean preKill() {
@@ -259,7 +259,7 @@ public class Release implements Runnable {
 						}
 					}
 
-				// Or, go about it the traditional way.
+					// Or, go about it the traditional way.
 
 				} else {
 					mort.apply(p);
@@ -316,7 +316,8 @@ public class Release implements Runnable {
 				sm.apply(p);
 
 				// Update the Particle's time reference after processes are
-				// complete so that the time reflects state upon completion of the
+				// complete so that the time reflects state upon completion of
+				// the
 				// processes.
 
 				p.setT(p.getT() + prm.getH());
@@ -349,16 +350,11 @@ public class Release implements Runnable {
 
 			// end of time step
 
-		} catch (NullPointerException npe){
-			System.out.println(
-			"Null Pointer Error - \n" +
-			"mort: " + mort + "\n" +
-			"sm: " + sm + "\n" +
-			"mv: " + mv + "\n" +
-			"df: " + df + "\n" +
-			"collisionDetect: " + collisionDetector + "\n" +
-			"tw: " + tw + "\n" +
-			p.toString() + "\n");
+		} catch (NullPointerException npe) {
+			System.out.println("Null Pointer Error - \n" + "mort: " + mort
+					+ "\n" + "sm: " + sm + "\n" + "mv: " + mv + "\n" + "df: "
+					+ df + "\n" + "collisionDetect: " + collisionDetector
+					+ "\n" + "tw: " + tw + "\n" + p.toString() + "\n");
 			npe.printStackTrace();
 		} catch (Exception e) {
 			p.setError(true);
@@ -382,7 +378,7 @@ public class Release implements Runnable {
 	 * @param collisionDetector
 	 *            - The CollisionDetector object
 	 */
-	
+
 	public void setCollisionDetector(CollisionDetector collisionDetector) {
 		this.collisionDetector = collisionDetector;
 	}
@@ -455,23 +451,23 @@ public class Release implements Runnable {
 	}
 
 	/**
-	 * Sets whether negative coordinates are being used by the
-	 * geographic frame of reference
+	 * Sets whether negative coordinates are being used by the geographic frame
+	 * of reference
 	 * 
 	 * @param negCoord
 	 */
-	
+
 	public void setNegativeCoordinates(boolean negCoord) {
 		this.negCoord = negCoord;
 	}
 
 	/**
-	 * Sets whether negative coordinates are being used by the
-	 * oceanographic data
+	 * Sets whether negative coordinates are being used by the oceanographic
+	 * data
 	 * 
 	 * @param negOceanCoord
 	 */
-	
+
 	public void setNegativeOceanCoordinates(boolean negOceanCoord) {
 		this.negOceanCoord = negOceanCoord;
 	}

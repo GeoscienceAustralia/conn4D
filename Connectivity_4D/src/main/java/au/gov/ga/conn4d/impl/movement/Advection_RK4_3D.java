@@ -1,38 +1,3 @@
-/*******************************************************************************
- * Copyright 2014 Geoscience Australia (www.ga.gov.au)
- * @author - Johnathan Kool (Geoscience Australia)
- * 
- * Licensed under the BSD-3 License
- * 
- * http://opensource.org/licenses/BSD-3-Clause
- *  
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions are met:
- *  
- * 1. Redistributions of source code must retain the above copyright notice, 
- *    this list of conditions and the following disclaimer.
- * 
- * 2. Redistributions in binary form must reproduce the above copyright notice, 
- *    this list of conditions and the following disclaimer in the documentation 
- *    and/or other materials provided with the distribution.
- * 
- * 3. Neither the name of the copyright holder nor the names of its contributors 
- *     may be used to endorse or promote products derived from this software 
- *     without specific prior written permission.
- *  
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
- * POSSIBILITY OF SUCH DAMAGE.
- ******************************************************************************/
-
 package au.gov.ga.conn4d.impl.movement;
 
 /**
@@ -48,22 +13,17 @@ import au.gov.ga.conn4d.impl.readers.VelocityReader_NetCDF_4D;
 import au.gov.ga.conn4d.utils.GeometryUtils;
 
 /**
- * 3D Movement implementation using a Cash-Karp Runge-Kutta solver to perform
+ * 3D Movement implementation using a Cash-Karp Runge-Kutte solver to perform
  * integration across horizontal velocity fields.
  * 
- * Cash-Karp Runge-Kutta solver:
+ * Cash-Karp Runge-Kutte solver:
  * http://en.wikipedia.org/wiki/Cash%E2%80%93Karp_method
  */
 
 public class Advection_RK4_3D implements Advector, Movement, Cloneable {
 
 	private float h;
-	private float max_h;
-	private float min_h;
 	private VelocityReader vr = new VelocityReader_NetCDF_4D();
-	private double[] absTol = new double[]{1,1,0.1};
-	private double[] relTol = new double[]{0.01,0.01,0.01};
-	private static final double SAFETY=0.9D;
 
 	// Cash-Karp Butcher tableau
 
@@ -75,8 +35,7 @@ public class Advection_RK4_3D implements Advector, Movement, Cloneable {
 			B61 = 1631.0f / 55296.0f, B62 = 175.0f / 512.0f,
 			B63 = 575.0f / 13824.0f, B64 = 44275.0f / 110592.0f,
 			B65 = 253.0f / 4096.0f, C1 = 37.0f / 378.0f, C3 = 250.0f / 621.0f,
-			C4 = 125.0f / 594.0f, C6 = 512.0f / 1771.0f, D1 = 37.0f/378.0f,
-			D3 = 250.0f/621.0f, D4 = 125.0f/594.0f, D6 = 512.0f/1771.0f;
+			C4 = 125.0f / 594.0f, C6 = 512.0f / 1771.0f;
 
 	/**
 	 * Moves a particle through advection, integrating along the velocity field
@@ -156,8 +115,6 @@ public class Advection_RK4_3D implements Advector, Movement, Cloneable {
 				p.setNodata(false);
 			}
 
-			// Step 1
-			
 			dx = B21 * h * aku1;
 			dy = B21 * h * akv1;
 			dz = B21 * h * akw1;
@@ -197,8 +154,6 @@ public class Advection_RK4_3D implements Advector, Movement, Cloneable {
 				p.setNodata(false);
 			}
 
-			// Step 2
-			
 			dx = h * (B31 * aku1 + B32 * aku2);
 			dy = h * (B31 * akv1 + B32 * akv2);
 			dz = h * (B31 * akw1 + B32 * akw2);
@@ -233,8 +188,6 @@ public class Advection_RK4_3D implements Advector, Movement, Cloneable {
 				p.setNodata(false);
 			}
 
-			// Step 3
-			
 			dx = h * (B41 * aku1 + B42 * aku2 + B43 * aku3);
 			dy = h * (B41 * akv1 + B42 * akv2 + B43 * akv3);
 			dz = h * (B41 * akw1 + B42 * akw2 + B43 * akw3);
@@ -268,9 +221,6 @@ public class Advection_RK4_3D implements Advector, Movement, Cloneable {
 				akw4 = ctmp[2];
 				p.setNodata(false);
 			}
-			
-			// Step 4
-			
 			dx = h * (B51 * aku1 + B52 * aku2 + B53 * aku3 + B54 * aku4);
 			dy = h * (B51 * akv1 + B52 * akv2 + B53 * akv3 + B54 * akv4);
 			dz = h * (B51 * akw1 + B52 * akw2 + B53 * akw3 + B54 * akw4);
@@ -305,8 +255,6 @@ public class Advection_RK4_3D implements Advector, Movement, Cloneable {
 				p.setNodata(false);
 			}
 
-			// Step 5
-			
 			dx = h
 					* (B61 * aku1 + B62 * aku2 + B63 * aku3 + B64 * aku4 + B65
 							* aku5);
@@ -347,58 +295,10 @@ public class Advection_RK4_3D implements Advector, Movement, Cloneable {
 				p.setNodata(false);
 			}
 
-			//Step 6
-			
 			dx = h * (C1 * aku1 + C3 * aku3 + C4 * aku4 + C6 * aku6);
 			dy = h * (C1 * akv1 + C3 * akv3 + C4 * akv4 + C6 * akv6);
 			dz = h * (C1 * akw1 + C3 * akw3 + C4 * akw4 + C6 * akw6);
-			
-			double dx2 = h * (D1 * aku1 + D3 * aku3 + D4 * aku4 + D6 * aku6);
-			double dy2 = h * (D1 * akv1 + D3 * akv3 + D4 * akv4 + D6 * akv6);
-			double dz2 = h * (D1 * akw1 + D3 * akw3 + D4 * akw4 + D6 * akw6);
-			
-			double ex = Math.abs(dx-dx2);
-			double ey = Math.abs(dy-dy2);
-			double ez = Math.abs(dz-dz2);
 
-			double tolx = Math.abs(dx*relTol[0] + absTol[0]);
-			double toly = Math.abs(dx*relTol[1] + absTol[1]);
-			double tolz = Math.abs(dx*relTol[2] + absTol[2]);
-			
-			double max_err = Math.max(ex/tolx,Math.max(ey/toly,ez/tolz));
-			
-			double delta = 0;
-			
-			// If error is within tolerance levels
-			if(max_err<=1.0D){
-				x+=h;
-				delta = SAFETY*Math.pow(tolz,  -0.2);
-				
-				// If we're doing well, increase the step size (for next time)
-				if(delta>4.0){
-					h*=4.0;
-				}
-				//else if(delta >1.0){
-				//	h*=delta
-				//}
-				//if(x+h > xn){
-				//	h = xn-x;
-				//}
-				//y = y5;
-			}
-			
-			// Otherwise, reduce the step size and try again.
-			
-			else{
-				//delta = SAFETY*Math.pow(tol, -0.25);
-				if(delta<0.1){
-					h*=0.1;
-				}
-				else{
-					h*= delta;
-				}
-			}		
-			
 			tmpcoord = GeometryUtils.latLon(new double[] { y, x }, dy, dx);
 			ctmp = vr.getVelocities(t, Math.min(
 					Math.max(vr.getBounds()[1][0], vr.getBounds()[1][1]), z + dz),
@@ -431,8 +331,7 @@ public class Advection_RK4_3D implements Advector, Movement, Cloneable {
 		// **IMPORTANT!!!** Accepts h in milliseconds, uses h in seconds because
 		// that is how velocity is delivered in the oceanographic data files.
 		// i.e. we avoid repeatedly converting time when reading velocity values.
-		this.max_h = h / 1000;
-		this.h = this.max_h;
+		this.h = h / 1000;
 	}
 
 	/**
@@ -464,21 +363,5 @@ public class Advection_RK4_3D implements Advector, Movement, Cloneable {
 	@Override
 	public void close() {
 		vr.close();
-	}
-	
-	public double[] getAbsoluteTolerances(){
-		return absTol;
-	}
-	
-	public double[] getRelativeTolerances(){
-		return absTol;
-	}
-	
-	public void setAbsoluteTolerances(double[] absoluteTolerances){
-		this.absTol=absoluteTolerances;
-	}
-	
-	public void setRelativeTolerances(double[] relativeTolerances){
-		this.relTol=relativeTolerances;
 	}
 }
