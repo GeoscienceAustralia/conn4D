@@ -16,31 +16,50 @@ public class FluidPhysics {
 	private final double F_1_13 = 1d / 13d;
 	private final double F_1_15 = 1d / 15d;
 	private final double F_1_17 = 1d / 17d;
-
-	public static void main(String[] args) {
-		FluidPhysics fp = new FluidPhysics();
-		double v0 = 0;
-		double h = 1;
-		Particle p = new Particle();
-		System.out.println(fp.calcTimeEquivalent(p, v0));
-		System.out.println(fp.calcVelocity(p, fp.calcTimeEquivalent(p, v0)));
-		System.out.println(fp.calcVelocityChange(p, v0, h));
-	}
+	
+	/**
+	 * Given an initial velocity, calculates the time equivalent
+	 * required for a particle to reach that velocity.  If the particle
+	 * is at or beyond terminal velocity (e.g. through a change in fluid
+	 * density), then a value of positive infinity is returned.
+	 * 
+	 * @param p
+	 * @param v0
+	 * @return
+	 */
 
 	public double calcTimeEquivalent(Particle p, double v0) {
 		
-		return -Math.sqrt(2
+		double t1 = -Math.sqrt(2
 				* p.getMass()
 				/ (Math.abs(p.getDensity() - fluidDensity) * g * p.getDragCoefficient()
-						* p.getxArea() * fluidDensity))
-				* atanh(Math
-						.sqrt(p.getDragCoefficient()
-								* p.getxArea()
-								* fluidDensity
-								/ (2 * p.getMass()
-										* Math.abs(p.getDensity() - fluidDensity) * g))
-						* v0);
+						* p.getxArea() * fluidDensity));
+		
+		double inner = Math
+				.sqrt(p.getDragCoefficient()
+						* p.getxArea()
+						* fluidDensity
+						/ (2 * p.getMass()
+								* Math.abs(p.getDensity() - fluidDensity) * g))
+				* v0;
+
+		if(Math.abs(inner)>1){
+			return Double.POSITIVE_INFINITY;
+		}
+		
+		double t2 = atanh(inner);
+		
+		return t1*t2;
 	}
+	
+	/**
+	 * Calculates the sinking/buoyant velocity of a particle 
+	 * in a fluid over time.
+	 * 
+	 * @param p
+	 * @param time
+	 * @return
+	 */
 
 	public double calcVelocity(Particle p, double time) {
 		
@@ -52,8 +71,10 @@ public class FluidPhysics {
 		double t2_1 = g * Math.abs(p.getDensity() - fluidDensity)* p.getDragCoefficient() * p.getxArea() * fluidDensity;
 		double t2_2 = 2 * p.getMass();
 		
-		return multiplier*(-Math.sqrt(t1_1/t1_2)*Math.tanh(Math.sqrt(t2_1/t2_2)));
+		return multiplier*(-Math.sqrt(t1_1/t1_2)*Math.tanh(Math.sqrt(t2_1/t2_2)*time));
 	}
+	
+	
 
 	public double calcVelocityChange(Particle p, double v0, double time) {
 		double teq = calcTimeEquivalent(p,v0);
@@ -61,8 +82,26 @@ public class FluidPhysics {
 	}
 	
 	public double calcVelocityChange(Particle p, double ambient, double v0, double time){
+		
+		if(fluidDensity==0){return (-g * time) + ambient +v0;}
+		
 		double teq = calcTimeEquivalent(p,v0-ambient);
-		return calcVelocity(p, teq + time) - (v0-ambient);
+		if(teq==Double.POSITIVE_INFINITY){
+			return terminalVelocity(p) + ambient -v0;
+		}
+		
+		return calcVelocity(p, teq + time) + ambient;
+	}
+
+	/**
+	 * Returns the terminal velocity of the particle in fluid.
+	 * 
+	 * @param p - The particle traveling through the fluid medium.
+	 * @return
+	 */
+	
+	public double terminalVelocity(Particle p){
+		return -Math.sqrt(2*p.getMass()*g/(p.getDragCoefficient()*p.getxArea()*(p.getDensity() - fluidDensity)));
 	}
 
 	// Copied from Apache Commons Math v3.0
@@ -112,9 +151,21 @@ public class FluidPhysics {
 		return negative ? -absAtanh : absAtanh;
 	}
 	
+	/**
+	 * Sets the density of the fluid medium.
+	 * 
+	 * @param fluidDensity
+	 */
+	
 	public void setFluidDensity(double fluidDensity){
 		this.fluidDensity = fluidDensity;
 	}
+	
+	/**
+	 * Retrieves the density of the fluid medium.
+	 * 
+	 * @return
+	 */
 	
 	public double getFluidDensity(){
 		return fluidDensity;

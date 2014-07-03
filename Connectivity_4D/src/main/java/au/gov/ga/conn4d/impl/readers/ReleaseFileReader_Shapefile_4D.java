@@ -144,4 +144,14 @@ public class ReleaseFileReader_Shapefile_4D extends ReleaseFileReader_Shapefile{
 	public double getMaxDepth(){
 		return maxDepth;
 	}
+	
+	/**
+	 * Closes associated resources
+	 */
+	
+	public void close(){
+		iterator.close();
+		collection = null;
+		dataStore.dispose();
+	}
 }

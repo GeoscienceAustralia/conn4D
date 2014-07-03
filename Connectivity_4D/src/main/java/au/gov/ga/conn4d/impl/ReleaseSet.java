@@ -209,7 +209,9 @@ public class ReleaseSet {
 									.currentTimeMillis() - (double) reltimer) / 1000d)
 							+ "s)\n");
 		}
+		tb.flush();
 		tb.close();
+		rf_reader.close();
 	}
 
 	/**
@@ -217,8 +219,8 @@ public class ReleaseSet {
 	 */
 	
 	public void close(){
+		
 		rr.close();
-
 	}
 	
 	// Getters and setters

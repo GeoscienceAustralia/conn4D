@@ -57,7 +57,6 @@ import au.gov.ga.conn4d.utils.TimeConvert;
 public class TrajectoryWriter_Text implements TrajectoryWriter {
 
 	private ThreadWriter tw;
-	//private ThreadWriter stl;
 	private String filename;
 	private String timeUnits = "Date";
 	private String durationUnits = "Days";
@@ -81,19 +80,11 @@ public class TrajectoryWriter_Text implements TrajectoryWriter {
 
 			tw = new ThreadWriter(outputFile);
 			tw.open();
-			
-			// The second ThreadWriter is for the .set files
-			// We write both at once to avoid duplicate processing.
-
-			//stl = new ThreadWriter(outputFile.substring(0, outputFile
-					//.lastIndexOf("."))+ ".set");
-			//stl.open();
-			
+					
 			// Write column headers
 
 			tw
 					.write("ID\tTIME\tDURATION\tDEPTH\tLON\tLAT\tDIST\tSTATUS\tNODATA\n");
-			//stl.write("ID\tTIME\tDURATION\tDEPTH\tLON\tLAT\tDIST\tLOCATION\n");
 
 		} catch (IOException e) {
 			throw new IllegalArgumentException("\n\nCould not create/access trajectory output file: "
@@ -135,7 +126,6 @@ public class TrajectoryWriter_Text implements TrajectoryWriter {
 		sb.append(p.getY() + "\t");
 		sb.append(p.getDistance() + "\t");
 		if (p.canSettle() == true) {
-				//stl.write(sb.toString() + p.getDestination() + "\n");
 			sb.append("\"S" + p.getDestination() + "\"\t");
 
 		} else if (p.isLost() == true) {
@@ -159,6 +149,10 @@ public class TrajectoryWriter_Text implements TrajectoryWriter {
 		}
 	}
 
+	public void flush(){
+		tw.flush();
+	}
+	
 	/**
 	 * Closes and cleans up the output file
 	 */
@@ -171,8 +165,6 @@ public class TrajectoryWriter_Text implements TrajectoryWriter {
 		tw.close();
 
 		// Close and flush the settlement file
-
-		//stl.close();
 		
 		if(emptyFile){
 			File file = new File(filename);

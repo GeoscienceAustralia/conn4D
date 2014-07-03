@@ -55,6 +55,12 @@ public interface TrajectoryWriter {
 	public void apply(Particle p);
 	
 	/**
+	 * Flushes the output
+	 */
+	
+	public void flush();
+	
+	/**
 	 * Release resources associated with the class
 	 */
 	

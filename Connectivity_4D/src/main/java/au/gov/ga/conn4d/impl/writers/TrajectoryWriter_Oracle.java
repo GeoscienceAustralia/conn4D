@@ -252,6 +252,8 @@ public class TrajectoryWriter_Oracle implements TrajectoryWriter {
 			e.printStackTrace();
 		}
 	}
+	
+	public void flush(){}
 
 	private boolean tableExists(String name) throws SQLException {
 		DatabaseMetaData md = conn.getMetaData();

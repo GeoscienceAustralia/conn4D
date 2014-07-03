@@ -81,6 +81,18 @@ public class ReleaseFileReader_Text implements ReleaseFileReader {
 	}
 
 	/**
+	 * Closes associated resources
+	 */
+	
+	public void close(){
+		try {
+			br.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * Retrieves the depth of the initial release.
 	 * 
 	 * @return - the depth of the initial release.

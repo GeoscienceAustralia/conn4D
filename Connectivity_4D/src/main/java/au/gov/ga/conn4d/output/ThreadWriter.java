@@ -119,6 +119,14 @@ public class ThreadWriter implements Runnable {
 		this.stopped = true;
 	}
 
+	public void flush(){
+		try {
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Starts the class running in its own Thread.
 	 */

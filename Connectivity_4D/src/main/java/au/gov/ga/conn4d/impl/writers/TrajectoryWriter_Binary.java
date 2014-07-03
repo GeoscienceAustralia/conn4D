@@ -222,6 +222,14 @@ public class TrajectoryWriter_Binary implements Runnable,TrajectoryWriter {
 		
 		this.stopped = true;
 	}
+	
+	public void flush(){
+		try {
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Starts the class running in its own Thread.

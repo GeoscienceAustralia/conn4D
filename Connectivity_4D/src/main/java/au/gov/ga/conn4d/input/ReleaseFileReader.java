@@ -51,6 +51,12 @@ import com.vividsolutions.jts.geom.Geometry;
 public interface ReleaseFileReader {
 	
 	/**
+	 * Closes resources associated with the class.
+	 */
+	
+	public void close();
+	
+	/**
 	 * Retrieves the depth value from a single line/source in the ReleaseFile
 	 * 
 	 * @return float - depth value

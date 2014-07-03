@@ -112,6 +112,16 @@ public class ReleaseFileReader_Shapefile implements ReleaseFileReader {
 	}
 
 	/**
+	 * Closes associated resources
+	 */
+	
+	public void close(){
+		iterator.close();
+		collection = null;
+		dataStore.dispose();
+	}
+	
+	/**
 	 * Retrieves the depth of the initial release point as a double value.
 	 */
 
