@@ -43,7 +43,7 @@ package au.gov.ga.conn4d.input;
  * @author Johnathan Kool
  */
 
-public class ConfigurationOverride extends ParameterReader {
+public class EnvironmentParameters extends ParameterReader {
 
 	public String uname = "uvel"; // Name of the u parameter in the velocity files (e.g. "UVEL")
 	public String vname = "vvel"; // Name of the v parameter in the velocity files (e.g. "VVEL")
@@ -74,7 +74,7 @@ public class ConfigurationOverride extends ParameterReader {
 	 * No argument constructor.
 	 */
 	
-	public ConfigurationOverride(){}
+	public EnvironmentParameters(){}
 	
 	/**
 	 * Constructor that accepts a file name.
@@ -82,7 +82,7 @@ public class ConfigurationOverride extends ParameterReader {
 	 * @param str - name of the file to be read
 	 */
 	
-	public ConfigurationOverride(String str) {
+	public EnvironmentParameters(String str) {
 		readFile(str);
 	}	
 }

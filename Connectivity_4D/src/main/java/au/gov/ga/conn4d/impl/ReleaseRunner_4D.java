@@ -41,7 +41,7 @@ import java.util.concurrent.Executors;
 
 import au.gov.ga.conn4d.Parameters;
 import au.gov.ga.conn4d.ReleaseRunner;
-import au.gov.ga.conn4d.input.ConfigurationOverride;
+import au.gov.ga.conn4d.input.EnvironmentParameters;
 import au.gov.ga.conn4d.output.TrajectoryWriter;
 
 /**
@@ -65,7 +65,7 @@ public class ReleaseRunner_4D implements ReleaseRunner {
 	 *            : Location-specific configuration parameters (filename)
 	 */
 
-	public ReleaseRunner_4D(ConfigurationOverride config) {
+	public ReleaseRunner_4D(EnvironmentParameters config) {
 		relFactory = new ReleaseFactory_4D(config);
 	}
 

@@ -63,7 +63,6 @@ public class ParameterReader {
 	private BufferedReader br;
 	private String parse, tk;
 
-
 	/**
 	 * Sets and reads a Global parameter file.
 	 * 
@@ -221,7 +220,6 @@ public class ParameterReader {
 
 			f.set(this, da);
 			parse = br.readLine();
-
 		}
 
 		// If the identified field is of type String:

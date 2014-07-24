@@ -41,12 +41,12 @@ import static org.junit.Assert.assertFalse;
 import org.junit.Test;
 
 import au.gov.ga.conn4d.Parameters;
-import au.gov.ga.conn4d.input.ParameterOverride;
+import au.gov.ga.conn4d.input.ModelParameters;
 import au.gov.ga.conn4d.parameters.Parameters_Test;
 
 public class ParameterOverrideTest {
 	
-	ParameterOverride po = new ParameterOverride(); 
+	ModelParameters po = new ModelParameters(); 
 	
 	@Test
 	public void testReadFile() {

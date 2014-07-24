@@ -41,8 +41,8 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import au.gov.ga.conn4d.impl.ReleaseSet;
-import au.gov.ga.conn4d.input.ConfigurationOverride;
-import au.gov.ga.conn4d.input.ParameterOverride;
+import au.gov.ga.conn4d.input.EnvironmentParameters;
+import au.gov.ga.conn4d.input.ModelParameters;
 import au.gov.ga.conn4d.input.ReleaseFileReader;
 import au.gov.ga.conn4d.utils.TimeConvert;
 
@@ -51,8 +51,8 @@ import au.gov.ga.conn4d.utils.TimeConvert;
 */
 
 public class Conn4D {
-	private static ParameterOverride prm_override = new ParameterOverride();
-	private static ConfigurationOverride cfg_override = new ConfigurationOverride();
+	private static ModelParameters prm_override = new ModelParameters();
+	private static EnvironmentParameters cfg_override = new EnvironmentParameters();
 	private static ReleaseFileReader rf_reader;
 	private DateFormat outerformat = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss zzz");

@@ -50,7 +50,7 @@ import au.gov.ga.conn4d.impl.movement.Advection_RK4_3D;
 import au.gov.ga.conn4d.impl.movement.Diffusion_None;
 import au.gov.ga.conn4d.impl.readers.VelocityReader_NetCDF_4D;
 import au.gov.ga.conn4d.impl.writers.TrajectoryWriter_Text;
-import au.gov.ga.conn4d.input.ConfigurationOverride;
+import au.gov.ga.conn4d.input.EnvironmentParameters;
 import au.gov.ga.conn4d.parameters.Parameters_Test;
 //import au.gov.ga.conn4d.test.NullPlug;
 
@@ -72,7 +72,7 @@ public class ReleaseFactoryTest {
 		// Rather than bottlenecking at the source (the requester), we create copies
 		// of the values that can then be distributed to the client machines.
 		
-		ConfigurationOverride lp = new ConfigurationOverride();
+		EnvironmentParameters lp = new EnvironmentParameters();
 		lp.ufile = "C:/Temp/Ones.nc";
 		lp.uname = "Variable X";
 		lp.vfile = "C:/Temp/Ones.nc";
@@ -105,7 +105,7 @@ public class ReleaseFactoryTest {
 		//rf.setMatrixWriter(new NullPlug());
 		rf.setSettlement(new Settlement_None());
 		rf.setTrajectoryWriter(new TrajectoryWriter_Text("C:/Temp/testme.txt"));
-		rf.setLocalParameters(new ConfigurationOverride());
+		rf.setLocalParameters(new EnvironmentParameters());
 	}
 	
 	@Test

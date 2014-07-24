@@ -50,8 +50,8 @@ import au.gov.ga.conn4d.ReleaseRunner;
 import au.gov.ga.conn4d.impl.readers.ReleaseFileReader_Shapefile_4D;
 import au.gov.ga.conn4d.impl.readers.ReleaseFileReader_Text;
 import au.gov.ga.conn4d.impl.writers.TrajectoryWriter_Binary;
-import au.gov.ga.conn4d.input.ConfigurationOverride;
-import au.gov.ga.conn4d.input.ParameterOverride;
+import au.gov.ga.conn4d.input.EnvironmentParameters;
+import au.gov.ga.conn4d.input.ModelParameters;
 import au.gov.ga.conn4d.input.ReleaseFileReader;
 import au.gov.ga.conn4d.parameters.Parameters_Zonal_4D;
 import au.gov.ga.conn4d.utils.TimeConvert;
@@ -72,8 +72,8 @@ public class ReleaseSet {
 	private SimpleDateFormat fullFormat = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss zzz");
 	private NumberFormat deltaformat = new DecimalFormat("#.000");
-	private ParameterOverride prm_override;
-	private ConfigurationOverride cfg_override;
+	private ModelParameters prm_override;
+	private EnvironmentParameters cfg_override;
 	private long time;
 	private String restartAt;
 	private TrajectoryWriter_Binary tb = null;
@@ -87,7 +87,7 @@ public class ReleaseSet {
 	 * @param cfg_override
 	 */
 	
-	public ReleaseSet(ParameterOverride prm_override, ConfigurationOverride cfg_override){
+	public ReleaseSet(ModelParameters prm_override, EnvironmentParameters cfg_override){
 		this.prm_override = prm_override;
 		this.cfg_override = cfg_override;
 		this.rr = new ReleaseRunner_4D(cfg_override);
@@ -225,11 +225,11 @@ public class ReleaseSet {
 	
 	// Getters and setters
 
-	public ParameterOverride getPrm_override() {
+	public ModelParameters getPrm_override() {
 		return prm_override;
 	}
 
-	public void setPrm_override(ParameterOverride prm_override) {
+	public void setPrm_override(ModelParameters prm_override) {
 		this.prm_override = prm_override;
 	}
 

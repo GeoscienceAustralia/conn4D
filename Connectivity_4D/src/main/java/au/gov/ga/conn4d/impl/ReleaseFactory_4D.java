@@ -64,7 +64,7 @@ import au.gov.ga.conn4d.impl.readers.VelocityReader_HYCOMList_4D;
 import au.gov.ga.conn4d.impl.readers.VelocityReader_NetCDFDir_4D;
 import au.gov.ga.conn4d.impl.readers.VelocityReader_NetCDF_4D;
 
-import au.gov.ga.conn4d.input.ConfigurationOverride;
+import au.gov.ga.conn4d.input.EnvironmentParameters;
 import au.gov.ga.conn4d.output.TrajectoryWriter;
 import au.gov.ga.conn4d.utils.TimeConvert;
 import au.gov.ga.conn4d.utils.VectorUtils;
@@ -79,7 +79,7 @@ import au.gov.ga.conn4d.utils.VectorUtils;
 
 public class ReleaseFactory_4D {
 
-	private ConfigurationOverride lp;
+	private EnvironmentParameters lp;
 	private VelocityReader vr;
 	private TrajectoryWriter tw;
 	private Mortality mort;
@@ -108,7 +108,7 @@ public class ReleaseFactory_4D {
 	 * @param local_config
 	 */
 	
-	public ReleaseFactory_4D(ConfigurationOverride local_config) {
+	public ReleaseFactory_4D(EnvironmentParameters local_config) {
 		initialize(local_config);
 	}
 
@@ -163,7 +163,7 @@ public class ReleaseFactory_4D {
 	 *            - String pathname of the LocalParameters file/object.
 	 */
 
-	private void initialize(ConfigurationOverride local_config) {
+	private void initialize(EnvironmentParameters local_config) {
 		lp = local_config;
 		boolean err = false;
 		
@@ -430,7 +430,7 @@ public class ReleaseFactory_4D {
 	 * @return - The LocalParameters object
 	 */
 
-	public ConfigurationOverride getLocalParameters() {
+	public EnvironmentParameters getLocalParameters() {
 		return lp;
 	}
 
@@ -545,7 +545,7 @@ public class ReleaseFactory_4D {
 	 *            - The LocalParameters object
 	 */
 
-	public void setLocalParameters(ConfigurationOverride lp) {
+	public void setLocalParameters(EnvironmentParameters lp) {
 		this.lp = lp;
 	}
 

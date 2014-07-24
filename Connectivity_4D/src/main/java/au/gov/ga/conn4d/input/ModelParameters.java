@@ -45,7 +45,7 @@ import au.gov.ga.conn4d.utils.TimeConvert;
  * @author Johnathan Kool
  */
 
-public class ParameterOverride extends ParameterReader {
+public class ModelParameters extends ParameterReader {
 
 	public boolean centroid = true;
 	public String competencyStart = "30"; // Competency threshold (days)
