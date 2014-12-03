@@ -32,7 +32,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
- 
+
 package au.gov.ga.conn4d;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -79,6 +79,12 @@ public interface Parameters {
 	 */
 
 	public long getH();
+	
+	/**
+	 * Retrieves the scalar coefficient of diffusivity
+	 */
+	
+	public float[] getK();
 
 	/**
 	 * Retrieves the location name of the release set.
@@ -133,9 +139,9 @@ public interface Parameters {
 	/**
 	 * Gets the thread pool size used by the ReleaseRunner
 	 */
-	
+
 	public int getPoolSize();
-	
+
 	/**
 	 * Retrieves an initial release position as a Geometry
 	 */
@@ -174,7 +180,15 @@ public interface Parameters {
 
 	public String getInitialPositionType();
 
+	/**
+	 * @return the starting time of the simulation as a long value.
+	 */
+
 	public long getStime();
+
+	/**
+	 * @return the current time of the simulation as a long value.
+	 */
 
 	public long getTime();
 
@@ -195,17 +209,15 @@ public interface Parameters {
 	public void setCompetencyStart(long competencyStart);
 
 	/**
-	 * Sets the units of the competency onset duration
-	 * 
 	 * @param competencyStartUnits
+	 *            - the units of the competency onset duration
 	 */
 
 	public void setCompetencyStartUnits(String competencyStartUnits);
 
 	/**
-	 * Sets the initial release depth as a single value.
-	 * 
 	 * @param depth
+	 *            - the initial release depth as a single value.
 	 */
 
 	public void setDepth(double depth);
@@ -242,52 +254,164 @@ public interface Parameters {
 
 	public void setEffectiveMigration(boolean effectiveMigration);
 
+	/**
+	 * @param etime
+	 *            - the end time of the simulation as a long value.
+	 */
+
 	public void setEtime(long etime);
 
 	/**
-	 * 
 	 * @param h
+	 *            - the minimum integration time step interval as a long value.
 	 */
-	
+
 	public void setH(long h);
+
+	/**
+	 * @param k
+	 *            - the scalar coefficient of turbulent eddy diffusivity as a double.
+	 */
+
+	public void setK(float[] k);
+	
+	/**
+	 * @param initialPositionType
+	 *            - the initial positioning type - e.g. centroid or random
+	 *            placement
+	 */
 
 	public void setInitialPositionType(String initialPositionType);
 
+	/**
+	 * @param locName
+	 *            - the location designation of the release area.
+	 */
+
 	public void setLocName(String locName);
+
+	/**
+	 * @param mortalityParameters
+	 *            - an array of mortality parameters for more complex types.
+	 */
 
 	public void setMortalityParameters(double[] mortalityParameters);
 
+	/**
+	 * @param mortalityRate
+	 *            - sets the exponential mortality rate as a double.
+	 */
+
 	public void setMortalityRate(double mortalityRate);
+
+	/**
+	 * @param mortalityType
+	 *            - sets the type of mortality to be used.
+	 */
 
 	public void setMortalityType(String mortalityType);
 
+	/**
+	 * @param mUnits
+	 *            - sets the units over which the mortality is applied (e.g.
+	 *            Days).
+	 */
+
 	public void setMortalityUnits(String mUnits);
 
-	public void setNPart(int part);
+	/**
+	 * @param part
+	 *            - the number of Particles to be released from the area.
+	 */
+
+	public void setNPart(int nPart);
+
+	/**
+	 * @param outputFolder
+	 *            - the directory where output data will be written.
+	 */
 
 	public void setOutputFolder(String outputFolder);
 
+	/**
+	 * @param outputFreq
+	 *            - the frequency (in model time) with which output will be
+	 *            written.
+	 */
+
 	public void setOutputFreq(long outputFreq);
-	
+
+	/**
+	 * @param poolSize
+	 *            - the limit for the number of simultaneous Release threads.
+	 */
+
 	public void setPoolSize(int poolSize);
+
+	/**
+	 * @param position
+	 *            - the Geometry of the area Particles will be released from.
+	 */
 
 	public void setPosition(Geometry position);
 
+	/**
+	 * @param relDuration
+	 *            - the length of time a Release will span (e.g. 60 days)
+	 */
+
 	public void setRelDuration(long relDuration);
+
+	/**
+	 * @param relSp
+	 *            - the spacing between Release events as a long.
+	 */
 
 	public void setRelSp(long relSp);
 
+	/**
+	 * @param settlementType
+	 *            - the type of Settlement to be used (e.g. FloatOver).
+	 */
+
 	public void setSettlementType(String settlementType);
+
+	/**
+	 * @param stime
+	 *            - sets the start time of the Release.
+	 */
 
 	public void setStime(long stime);
 
+	/**
+	 * @param stime
+	 *            - sets the current time of the Release.
+	 */
+
 	public void setTime(long time);
+
+	/**
+	 * @param verticalMigration
+	 *            - indicates whether vertical migration operations should
+	 *            occur.
+	 */
 
 	public void setVerticalMigration(boolean verticalMigration);
 
 	public void setWriteFolder(String writeFolder);
 
+	/**
+	 * @return - indicates whether effective migration should be used - i.e.
+	 *         pre-kill Particles that would not make it to settlement.
+	 */
+
 	public boolean usesEffectiveMigration();
+
+	/**
+	 * @param verticalMigration
+	 *            - indicates whether vertical migration operations are being
+	 *            used.
+	 */
 
 	public boolean usesVerticalMigration();
 }

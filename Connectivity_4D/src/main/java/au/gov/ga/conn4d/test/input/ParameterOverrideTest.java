@@ -38,6 +38,11 @@ package au.gov.ga.conn4d.test.input;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+
 import org.junit.Test;
 
 import au.gov.ga.conn4d.Parameters;
@@ -50,8 +55,11 @@ public class ParameterOverrideTest {
 	
 	@Test
 	public void testReadFile() {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(baos));
 		po.readFile("./files/test.prm");
-		
+		//assertEquals(baos.toString(),"Invalid parameter value provided for variable centroid, setting to false");
+		System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
 		assertFalse(po.centroid);
 		assertEquals(po.competencyStart,"31");
 		assertEquals(po.competencyStartUnits,"Seconds");

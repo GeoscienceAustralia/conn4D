@@ -390,7 +390,9 @@ public class ReleaseFactory_4D {
 		}
 		
 		else{
-			df = new Diffusion_Simple_3D(prm.getH());
+			Diffusion_Simple_3D dsf = new Diffusion_Simple_3D(prm.getH());
+			dsf.setK(prm.getK());
+			df = dsf;
 		}
 		
 		// Initialize vertical migration, if required.

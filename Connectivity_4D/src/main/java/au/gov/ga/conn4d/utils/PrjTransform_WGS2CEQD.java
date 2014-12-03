@@ -40,7 +40,7 @@ import com.vividsolutions.jts.geom.LineSegment;
 
 public class PrjTransform_WGS2CEQD implements PrjTransform{
 
-	private final static double R_EARTH = 6378137d;
+	private final static double R_EARTH = 6371009; // IUGG recommended value
 
 	@Override
 	public double[] project(double[] coords) {

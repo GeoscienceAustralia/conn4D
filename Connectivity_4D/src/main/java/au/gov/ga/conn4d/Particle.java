@@ -54,6 +54,7 @@ public class Particle implements Cloneable {
 	private double u = 0d, v = 0d, w = 0d;
 	private double pu = 0d, pv = 0d, pw = 0d;
 	private double mass = 1,volume = 1,density = 1, dragCoeff = 1;
+	private double xArea = 1;
 	private long t;
 	private long birthday = 0;
 	private long competencyStart = 0;
@@ -424,6 +425,14 @@ public class Particle implements Cloneable {
 	public double getX() {
 		return x;
 	}
+	
+	/**
+	 * Retrieve the cross-sectional area of the particle
+	 */
+	
+	public double getXArea(){
+		return xArea;
+	}
 
 	/**
 	 * Retrieve the Y coordinate of the particle
@@ -768,6 +777,16 @@ public class Particle implements Cloneable {
 
 	public void setX0(double x0) {
 		this.x0 = x0;
+	}
+	
+	/**
+	 * Sets the original X coordinate of the particle
+	 * 
+	 * @param x0
+	 */
+
+	public void setXArea(double xArea) {
+		this.xArea = xArea;
 	}
 
 	/**

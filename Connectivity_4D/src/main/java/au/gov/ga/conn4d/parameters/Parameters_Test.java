@@ -57,6 +57,7 @@ public class Parameters_Test implements Parameters{
 	private long relSp;
 	private long relDuration;
 	private long h = 7200000;
+	private float[] k = {2f,2f,1.0E-5f};
 	private long outputFreq;
 	private long competencyStart;
 	private String competencyStartUnits = "Days";
@@ -102,6 +103,10 @@ public class Parameters_Test implements Parameters{
 		return h;
 	}
 	
+	@Override
+	public float[] getK() {
+		return k;
+	}
 	@Override
 	public String getInitialPositionType(){
 		return initialPositionType;
@@ -217,6 +222,10 @@ public class Parameters_Test implements Parameters{
 	@Override
 	public void setH(long h) {
 		this.h = h;
+	}
+	@Override
+	public void setK(float[] k) {
+		this.k = k;
 	}
 	@Override
 	public void setInitialPositionType(String diffusionType){

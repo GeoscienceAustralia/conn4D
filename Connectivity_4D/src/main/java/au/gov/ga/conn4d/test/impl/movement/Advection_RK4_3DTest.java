@@ -36,6 +36,7 @@
 package au.gov.ga.conn4d.test.impl.movement;
 
 import static org.junit.Assert.*;
+
 import junit.framework.Assert;
 
 import org.junit.Before;
@@ -43,6 +44,7 @@ import org.junit.Test;
 
 import au.gov.ga.conn4d.Particle;
 import au.gov.ga.conn4d.impl.movement.Advection_RK4_3D;
+import au.gov.ga.conn4d.impl.readers.VelocityReader_Constant;
 //import au.gov.ga.conn4d.impl.movement.Advection_RK4_3Dv2;
 import au.gov.ga.conn4d.impl.readers.VelocityReader_NetCDF_4D;
 
@@ -54,8 +56,10 @@ public class Advection_RK4_3DTest {
 
 	Advection_RK4_3D rk3d = new Advection_RK4_3D();
 	Advection_RK4_3D rk3d_inc = new Advection_RK4_3D();
+	Advection_RK4_3D rk_con = new Advection_RK4_3D();
 	VelocityReader_NetCDF_4D v3 = new VelocityReader_NetCDF_4D();
 	VelocityReader_TestPlug v3t = new VelocityReader_TestPlug();
+	VelocityReader_Constant vcon = new VelocityReader_Constant();
 	Particle p;
 	
 	@Before
@@ -69,8 +73,10 @@ public class Advection_RK4_3DTest {
 		v3.setTLookup("Time");
 		v3.setTimeOffset(0);
 		rk3d.setVr(v3);
+		rk_con.setVr(vcon);
 		rk3d_inc.setVr(v3t);
 		rk3d.setH(1); // Integration interval of one millisecond
+		rk_con.setH(1000);
 		rk3d_inc.setH(200f);
 		p = new Particle();
 		p.setT(0);
@@ -93,6 +99,47 @@ public class Advection_RK4_3DTest {
 			rk3d.apply(p);
 			Assert.assertEquals((double) -(i+1)/1000, p.getZ(), 1E-4);
 		}
+	}
+	
+	/**
+	 * Test distance travelled using 1m/s velocity at different lons and lats.
+	 */
+	
+	@Test
+	public void testDistance() {
+
+		Particle p = new Particle();
+		p.setX(0);
+		p.setY(0);
+		p.setZ(0);
+
+		vcon.setVelocities(new double[]{1,0,0});
+		rk_con.apply(p);
+		Assert.assertEquals(8.99280575E-6, p.getX(), 1E-9);
+
+		p.setX(0);
+		p.setY(0);
+		p.setZ(0);
+		
+		vcon.setVelocities(new double[]{0,1,0});
+		rk_con.apply(p);
+		Assert.assertEquals(8.99280575E-6, p.getY(), 1E-9);
+		
+		p.setX(0);
+		p.setY(0);
+		p.setZ(0);
+		
+		vcon.setVelocities(new double[]{1,1,0});
+		rk_con.apply(p);
+		Assert.assertEquals(8.99280575E-6, p.getX(), 1E-9);
+		Assert.assertEquals(8.99280575E-6, p.getY(), 1E-9);
+			
+		p.setX(0);
+		p.setY(60);
+		p.setZ(0);
+		vcon.setVelocities(new double[]{1,0,0});
+		rk_con.apply(p);
+		Assert.assertEquals(1.7986406E-5, p.getX(), 1E-9);	
 	}
 	
 	/**

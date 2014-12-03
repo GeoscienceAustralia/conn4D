@@ -42,7 +42,7 @@ import au.gov.ga.conn4d.output.MatrixWriter;
 import au.gov.ga.conn4d.output.TrajectoryWriter;
 
 public class NullPlug implements MatrixWriter, TrajectoryWriter,
-		DistanceWriter, Cloneable,Mortality {
+		DistanceWriter, Cloneable, Mortality {
 	
 	@Override
 	public void apply(Particle p){}

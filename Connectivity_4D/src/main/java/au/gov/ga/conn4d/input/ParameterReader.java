@@ -206,6 +206,24 @@ public class ParameterReader {
 		
 		// If the identified field is of type double[]:
 		
+		else if (t.toString().equalsIgnoreCase("class [F")) {
+
+			float[] fa = new float[stk.countTokens()];
+			int i = 0;
+
+			while (stk.hasMoreTokens()) {
+
+				fa[i] = Integer.parseInt(stk.nextToken());
+				i++;
+
+			}
+
+			f.set(this, fa);
+			parse = br.readLine();
+		}
+		
+		// If the identified field is of type double[]:
+		
 		else if (t.toString().equalsIgnoreCase("class [D")) {
 
 			double[] da = new double[stk.countTokens()];

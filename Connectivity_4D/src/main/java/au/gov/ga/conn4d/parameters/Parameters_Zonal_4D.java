@@ -68,6 +68,7 @@ public class Parameters_Zonal_4D implements Parameters {
 	private long relSp = 1;
 	private long relDuration = 1;
 	private long h = 7200;
+	private float[] k = {2f,2f,1.0E-5f};
 	private long outputFreq = 1;
 	private long competencyStart = 0;
 	private String competencyStartUnits = "Days";
@@ -159,6 +160,16 @@ public class Parameters_Zonal_4D implements Parameters {
 	@Override
 	public long getH() {
 		return h;
+	}
+	
+	/**
+	 * Retrieves the scalar coefficient of turbulent eddy diffusivity used 
+	 * by the model.
+	 */
+
+	@Override
+	public float[] getK() {
+		return k;
 	}
 
 	/**
@@ -417,6 +428,15 @@ public class Parameters_Zonal_4D implements Parameters {
 		this.h = h;
 	}
 
+	/**
+	 * Sets the coefficient of eddy diffusivity used by the model
+	 */
+	
+	@Override
+	public void setK(float[] k) {
+		this.k = k;
+	}
+	
 	/**
 	 * Sets the initial positioning type being used by the model (e.g. Centroid
 	 * vs. Random)

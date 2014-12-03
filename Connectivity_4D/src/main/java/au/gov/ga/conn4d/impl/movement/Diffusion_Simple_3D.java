@@ -59,8 +59,8 @@ public class Diffusion_Simple_3D implements Diffuser, Cloneable {
 	//private float TL = 21600f;
 	//private float uK = (float) Math.sqrt(2 * 0.03f / TL); // The magic number in distance/seconds.  .03 is the variance in u, 21600 is 6 hours.
 	//private float vK = (float) Math.sqrt(2 * 0.03f / TL); // The magic number in distance/seconds.  .03 is the variance in v, 21600 is 6 hours.
-	private float uK = 2f;  // Open-ocean vertical eddy diffusivity coefficient in m/s from http://oceanworld.tamu.edu/resources/ocng_textbook/chapter08/chapter08_05.htm (Ledwell, Watson and Law 1991)
-	private float vK = 2f;  // Open-ocean vertical eddy diffusivity coefficient in m/s from http://oceanworld.tamu.edu/resources/ocng_textbook/chapter08/chapter08_05.htm (Ledwell, Watson and Law 1991)
+	private float uK = 2f;  // Open-ocean vertical eddy diffusivity coefficient in m/s from http://oceanworld.tamu.edu/resources/ocng_textbook/chapter08/chapter08_05.htm (Ledwell, Watson and Law 1991) -> Change to Polovina J.J. Kleiber. P and Kobayashi D.R.- Fishery Bulletin 97 Issue 1 1999 132-143
+	private float vK = 2f;  // Open-ocean vertical eddy diffusivity coefficient in m/s from http://oceanworld.tamu.edu/resources/ocng_textbook/chapter08/chapter08_05.htm (Ledwell, Watson and Law 1991) -> Change to Polovina
 	private float wK = 1.0E-5f; // Open-ocean vertical eddy diffusivity coefficient in m/s from http://oceanworld.tamu.edu/resources/ocng_textbook/chapter08/chapter08_05.htm (Munk, 1966)
 	
 	private float h = 7200; // Minimum integration time step (default=2hrs)
@@ -131,6 +131,19 @@ public class Diffusion_Simple_3D implements Diffuser, Cloneable {
 
 	public void setH(float h) {
 		this.h = h / 1000;
+	}
+	
+	/**
+	 * Sets the values of K using an array (x,y,z)
+	 * @param k
+	 */
+	
+	public void setK(float[] k){
+		uK = k[0];
+		vK = k[1];
+		if(k.length>=3){
+			wK = k[2];
+		}
 	}
 	
 	/**

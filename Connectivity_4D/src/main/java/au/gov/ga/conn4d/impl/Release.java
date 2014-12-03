@@ -63,7 +63,7 @@ public class Release implements Runnable {
 
 	private Parameters prm;
 	private Mortality mort;
-	private VerticalMigration vm;
+	private VerticalMigration vm;// = new Vertical_BET();
 	private Settlement sm;
 	private Movement mv;
 	private Diffuser df;

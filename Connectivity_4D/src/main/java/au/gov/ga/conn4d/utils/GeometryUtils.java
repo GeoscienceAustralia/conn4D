@@ -44,9 +44,8 @@ package au.gov.ga.conn4d.utils;
 
 public class GeometryUtils {
 
-	private final static double R_EARTH = 6378137d; 
-	//final static double R_EARTH = 6372795.477598f; // Quadratic mean radius of
-												   // the earth (meters)
+	//private final static double R_EARTH = 6378137d; //WGS84 radius (max value)
+	private final static double R_EARTH = 6371009; // IUGG recommended value
 	private final static double REINV = 1d / R_EARTH;// Inverse Radius of the Earth
 
 	/**
@@ -86,8 +85,8 @@ public class GeometryUtils {
 		// rounding - from Wikipedia http://en.wikipedia.org/wiki/Great-circle_distance
 
 		double n1 = Math.pow(Math.cos(rlt2) * Math.sin(d_lambda), 2);
-		double n2 = Math.pow(Math.cos(rlt1) * Math.sin(rlt2) - Math.sin(rlt1)
-				* Math.cos(rlt2) * Math.cos(d_lambda), 2);
+		double n2 = Math.pow(Math.cos(rlt1) * Math.sin(rlt2) - (Math.sin(rlt1)
+				* Math.cos(rlt2) * Math.cos(d_lambda)), 2);
 		double numerator = Math.sqrt(n1 + n2);
 		double denominator = Math.sin(rlt1) * Math.sin(rlt2) + Math.cos(rlt1)
 				* Math.cos(rlt2) * Math.cos(d_lambda);
@@ -113,34 +112,7 @@ public class GeometryUtils {
 	public static double distance_Sphere(float rlon1, float rlat1, float rlon2,
 			float rlat2) {
 
-		double rln1, rlt1, rln2, rlt2;
-		double dist;
-
-		rln1 = Math.toRadians(rlon1);
-		rlt1 = Math.toRadians(rlat1);
-		rln2 = Math.toRadians(rlon2);
-		rlt2 = Math.toRadians(rlat2);
-
-		double d_lambda = Math.abs(rln1 - rln2);
-
-		// Simple great circle distance
-
-		// dist = Math.acos(Math.cos(rlt1) * Math.cos(rlt2) * Math.cos(rln2 -
-		// rln1)
-		// + Math.sin(rlt1) * Math.sin(rlt2));
-
-		// More complex great circle distance formula to reduce error due to
-		// rounding. - from Wikipedia http://en.wikipedia.org/wiki/Great-circle_distance
-
-		double n1 = Math.pow(Math.cos(rlt2) * Math.sin(d_lambda), 2);
-		double n2 = Math.pow(Math.cos(rlt1) * Math.sin(rlt2) - Math.sin(rlt1)
-				* Math.cos(rlt2) * Math.cos(d_lambda), 2);
-		double numerator = Math.sqrt(n1 + n2);
-		double denominator = Math.sin(rlt1) * Math.sin(rlt2) + Math.cos(rlt1)
-				* Math.cos(rlt2) * Math.cos(d_lambda);
-		dist = Math.atan2(numerator, denominator);
-
-		return R_EARTH * Math.toDegrees(dist) / 360;
+		return distance_Sphere((double) rlon1, (double) rlat1,(double) rlon2, (double) rlat2);
 	}
 
 	/**

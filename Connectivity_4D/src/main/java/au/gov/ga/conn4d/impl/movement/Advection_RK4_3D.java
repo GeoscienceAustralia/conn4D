@@ -2,7 +2,7 @@ package au.gov.ga.conn4d.impl.movement;
 
 /**
  *  @author Johnathan Kool based on FORTRAN code developed by Claire B. Paris,
- * 		    Ashwanth Srinivasan, and Robert K. Cowen.
+ * 		    Ashwanth Srinivasan, and Robert K. Cowen at the University of Miami.
  */
 
 import au.gov.ga.conn4d.Advector;
@@ -14,7 +14,8 @@ import au.gov.ga.conn4d.utils.GeometryUtils;
 
 /**
  * 3D Movement implementation using a Cash-Karp Runge-Kutte solver to perform
- * integration across horizontal velocity fields.
+ * integration across horizontal velocity fields. In this implementation, only
+ * the 6th order solution is used and the result is not iteratively improved.
  * 
  * Cash-Karp Runge-Kutte solver:
  * http://en.wikipedia.org/wiki/Cash%E2%80%93Karp_method
@@ -75,247 +76,241 @@ public class Advection_RK4_3D implements Advector, Movement, Cloneable {
 		// Retrieve velocity values - check for bottom? if NaN... check
 		// neighbors... then check bottom.
 
-		try {
-			ctmp = vr.getVelocities(t, z, x, y);
+		ctmp = vr.getVelocities(t, z, x, y);
 
-			if (vr.isNearNoData()) {
-				p.setNearNoData(true);
-			}
-
-			// If the velocity values are null, we are outside the boundary domain
-
-			if (ctmp == null) {
-				p.setLost(true);
-				return;
-			}
-
-			// If we have velocity values, but their values are NODATA, check to see
-			// if the particle is on land. If not, then handle accordingly (decay
-			// function)
-
-			if (ctmp == vr.getNODATA()) {
-
-				// This is to prevent calculating stationary particles over and
-				// over.
-
-				if (Math.abs(p.getU()) < 0.0001 && Math.abs(p.getV()) < 0.0001) {
-					return;
-				}
-
-				aku1 = p.getU();
-				akv1 = p.getV();
-				akw1 = p.getW();
-				p.setNodata(true);
-				p.setNearNoData(true);
-
-			} else {
-				aku1 = ctmp[0];
-				akv1 = ctmp[1];
-				akw1 = ctmp[2];
-				p.setNodata(false);
-			}
-
-			dx = B21 * h * aku1;
-			dy = B21 * h * akv1;
-			dz = B21 * h * akw1;
-
-			// Automatic conversion of coordinate system
-
-			tmpcoord = GeometryUtils.latLon(new double[] { y, x }, dy, dx);
-
-			// Get the velocities at the updated position
-
-			ctmp = vr.getVelocities(t, Math.min(
-					Math.max(vr.getBounds()[1][0], vr.getBounds()[1][1]), z + dz),
-					tmpcoord[1], tmpcoord[0]);
-
-			if (vr.isNearNoData()) {
-				p.setNearNoData(true);
-			}
-
-			if (ctmp == null) {
-				p.setLost(true);
-				return;
-			}
-
-			if (ctmp == vr.getNODATA()) {
-
-				aku2 = aku1;
-				akv2 = akv1;
-				akw2 = akw1;
-				p.setNodata(true);
-				p.setNearNoData(true);
-
-			} else {
-
-				aku2 = ctmp[0];
-				akv2 = ctmp[1];
-				akw2 = ctmp[2];
-				p.setNodata(false);
-			}
-
-			dx = h * (B31 * aku1 + B32 * aku2);
-			dy = h * (B31 * akv1 + B32 * akv2);
-			dz = h * (B31 * akw1 + B32 * akw2);
-
-			tmpcoord = GeometryUtils.latLonZ(new double[] { y, x, z }, dy, dx, dz);
-			ctmp = vr.getVelocities(t, Math.min(
-					Math.max(vr.getBounds()[1][0], vr.getBounds()[1][1]), z + dz),
-					tmpcoord[1], tmpcoord[0]);
-
-			if (vr.isNearNoData()) {
-				p.setNearNoData(true);
-			}
-
-			if (ctmp == null) {
-				p.setLost(true);
-				return;
-			}
-
-			if (ctmp == vr.getNODATA()) {
-
-				aku3 = aku2;
-				akv3 = akv2;
-				akw3 = akw2;
-				p.setNodata(true);
-				p.setNearNoData(true);
-
-			} else {
-
-				aku3 = ctmp[0];
-				akv3 = ctmp[1];
-				akw3 = ctmp[2];
-				p.setNodata(false);
-			}
-
-			dx = h * (B41 * aku1 + B42 * aku2 + B43 * aku3);
-			dy = h * (B41 * akv1 + B42 * akv2 + B43 * akv3);
-			dz = h * (B41 * akw1 + B42 * akw2 + B43 * akw3);
-
-			tmpcoord = GeometryUtils.latLonZ(new double[] { y, x, z }, dy, dx, dz);
-			ctmp = vr.getVelocities(t, Math.min(
-					Math.max(vr.getBounds()[1][0], vr.getBounds()[1][1]), z + dz),
-					tmpcoord[1], tmpcoord[0]);
-
-			if (vr.isNearNoData()) {
-				p.setNearNoData(true);
-			}
-
-			if (ctmp == null) {
-				p.setLost(true);
-				return;
-			}
-
-			if (ctmp == vr.getNODATA()) {
-
-				aku4 = aku3;
-				akv4 = akv3;
-				akw4 = akw3;
-				p.setNodata(true);
-				p.setNearNoData(true);
-
-			} else {
-
-				aku4 = ctmp[0];
-				akv4 = ctmp[1];
-				akw4 = ctmp[2];
-				p.setNodata(false);
-			}
-			dx = h * (B51 * aku1 + B52 * aku2 + B53 * aku3 + B54 * aku4);
-			dy = h * (B51 * akv1 + B52 * akv2 + B53 * akv3 + B54 * akv4);
-			dz = h * (B51 * akw1 + B52 * akw2 + B53 * akw3 + B54 * akw4);
-
-			tmpcoord = GeometryUtils.latLonZ(new double[] { y, x, z }, dy, dx, dz);
-			ctmp = vr.getVelocities(t, Math.min(
-					Math.max(vr.getBounds()[1][0], vr.getBounds()[1][1]), z + dz),
-					tmpcoord[1], tmpcoord[0]);
-
-			if (vr.isNearNoData()) {
-				p.setNearNoData(true);
-			}
-
-			if (ctmp == null) {
-				p.setLost(true);
-				return;
-			}
-
-			if (ctmp == vr.getNODATA()) {
-
-				aku5 = aku4;
-				akv5 = akv4;
-				akw5 = akw4;
-				p.setNodata(true);
-				p.setNearNoData(true);
-
-			} else {
-
-				aku5 = ctmp[0];
-				akv5 = ctmp[1];
-				akw5 = ctmp[2];
-				p.setNodata(false);
-			}
-
-			dx = h
-					* (B61 * aku1 + B62 * aku2 + B63 * aku3 + B64 * aku4 + B65
-							* aku5);
-			dy = h
-					* (B61 * akv1 + B62 * akv2 + B63 * akv3 + B64 * akv4 + B65
-							* akv5);
-			dz = h
-					* (B61 * akw1 + B62 * akw2 + B63 * akw3 + B64 * akw4 + B65
-							* akw5);
-
-			tmpcoord = GeometryUtils.latLonZ(new double[] { y, x, z }, dy, dx, dz);
-			ctmp = vr.getVelocities(t, Math.min(
-					Math.max(vr.getBounds()[1][0], vr.getBounds()[1][1]), z + dz),
-					tmpcoord[1], tmpcoord[0]);
-
-			if (vr.isNearNoData()) {
-				p.setNearNoData(true);
-			}
-
-			if (ctmp == null) {
-				p.setLost(true);
-				return;
-			}
-
-			if (ctmp == vr.getNODATA()) {
-
-				aku6 = aku5;
-				akv6 = akv5;
-				akw6 = akw5;
-				p.setNodata(true);
-				p.setNearNoData(true);
-
-			} else {
-
-				aku6 = ctmp[0];
-				akv6 = ctmp[1];
-				akw6 = ctmp[2];
-				p.setNodata(false);
-			}
-
-			dx = h * (C1 * aku1 + C3 * aku3 + C4 * aku4 + C6 * aku6);
-			dy = h * (C1 * akv1 + C3 * akv3 + C4 * akv4 + C6 * akv6);
-			dz = h * (C1 * akw1 + C3 * akw3 + C4 * akw4 + C6 * akw6);
-
-			tmpcoord = GeometryUtils.latLon(new double[] { y, x }, dy, dx);
-			ctmp = vr.getVelocities(t, Math.min(
-					Math.max(vr.getBounds()[1][0], vr.getBounds()[1][1]), z + dz),
-					tmpcoord[1], tmpcoord[0]);
-
-			p.setPX(p.getX());
-			p.setPY(p.getY());
-			p.setPZ(p.getZ());
-			p.setY(tmpcoord[0]);
-			p.setX(tmpcoord[1]);
-			p.setZ(Math.min(0, z + dz));
-			p.setU(aku6);
-			p.setV(akv6);
-			p.setW(akw6);
-		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
-			e.printStackTrace();
+		if (vr.isNearNoData()) {
+			p.setNearNoData(true);
 		}
+
+		// If the velocity values are null, we are outside the boundary domain
+
+		if (ctmp == null) {
+			p.setLost(true);
+			return;
+		}
+
+		// If we have velocity values, but their values are NODATA, check to see
+		// if the particle is on land.
+
+		if (ctmp == vr.getNODATA()) {
+
+			// This is to prevent repeatedly calculating stationary particles.
+
+			if (Math.abs(p.getU()) < 0.0001 && Math.abs(p.getV()) < 0.0001) {
+				return;
+			}
+
+			aku1 = p.getU();
+			akv1 = p.getV();
+			akw1 = p.getW();
+			p.setNodata(true);
+			p.setNearNoData(true);
+
+		} else {
+			aku1 = ctmp[0];
+			akv1 = ctmp[1];
+			akw1 = ctmp[2];
+			p.setNodata(false);
+		}
+
+		dx = B21 * h * aku1;
+		dy = B21 * h * akv1;
+		dz = B21 * h * akw1;
+
+		// Automatic conversion of coordinate system
+
+		tmpcoord = GeometryUtils.latLon(new double[] { y, x }, dy, dx);
+
+		// Get the velocities at the updated position
+
+		ctmp = vr.getVelocities(t, Math.min(
+				Math.max(vr.getBounds()[1][0], vr.getBounds()[1][1]), z + dz),
+				tmpcoord[1], tmpcoord[0]);
+
+		if (vr.isNearNoData()) {
+			p.setNearNoData(true);
+		}
+
+		if (ctmp == null) {
+			p.setLost(true);
+			return;
+		}
+
+		if (ctmp == vr.getNODATA()) {
+
+			aku2 = aku1;
+			akv2 = akv1;
+			akw2 = akw1;
+			p.setNodata(true);
+			p.setNearNoData(true);
+
+		} else {
+
+			aku2 = ctmp[0];
+			akv2 = ctmp[1];
+			akw2 = ctmp[2];
+			p.setNodata(false);
+		}
+
+		dx = h * (B31 * aku1 + B32 * aku2);
+		dy = h * (B31 * akv1 + B32 * akv2);
+		dz = h * (B31 * akw1 + B32 * akw2);
+
+		tmpcoord = GeometryUtils.latLonZ(new double[] { y, x, z }, dy, dx, dz);
+		ctmp = vr.getVelocities(t, Math.min(
+				Math.max(vr.getBounds()[1][0], vr.getBounds()[1][1]), z + dz),
+				tmpcoord[1], tmpcoord[0]);
+
+		if (vr.isNearNoData()) {
+			p.setNearNoData(true);
+		}
+
+		if (ctmp == null) {
+			p.setLost(true);
+			return;
+		}
+
+		if (ctmp == vr.getNODATA()) {
+
+			aku3 = aku2;
+			akv3 = akv2;
+			akw3 = akw2;
+			p.setNodata(true);
+			p.setNearNoData(true);
+
+		} else {
+
+			aku3 = ctmp[0];
+			akv3 = ctmp[1];
+			akw3 = ctmp[2];
+			p.setNodata(false);
+		}
+
+		dx = h * (B41 * aku1 + B42 * aku2 + B43 * aku3);
+		dy = h * (B41 * akv1 + B42 * akv2 + B43 * akv3);
+		dz = h * (B41 * akw1 + B42 * akw2 + B43 * akw3);
+
+		tmpcoord = GeometryUtils.latLonZ(new double[] { y, x, z }, dy, dx, dz);
+		ctmp = vr.getVelocities(t, Math.min(
+				Math.max(vr.getBounds()[1][0], vr.getBounds()[1][1]), z + dz),
+				tmpcoord[1], tmpcoord[0]);
+
+		if (vr.isNearNoData()) {
+			p.setNearNoData(true);
+		}
+
+		if (ctmp == null) {
+			p.setLost(true);
+			return;
+		}
+
+		if (ctmp == vr.getNODATA()) {
+
+			aku4 = aku3;
+			akv4 = akv3;
+			akw4 = akw3;
+			p.setNodata(true);
+			p.setNearNoData(true);
+
+		} else {
+
+			aku4 = ctmp[0];
+			akv4 = ctmp[1];
+			akw4 = ctmp[2];
+			p.setNodata(false);
+		}
+		dx = h * (B51 * aku1 + B52 * aku2 + B53 * aku3 + B54 * aku4);
+		dy = h * (B51 * akv1 + B52 * akv2 + B53 * akv3 + B54 * akv4);
+		dz = h * (B51 * akw1 + B52 * akw2 + B53 * akw3 + B54 * akw4);
+
+		tmpcoord = GeometryUtils.latLonZ(new double[] { y, x, z }, dy, dx, dz);
+		ctmp = vr.getVelocities(t, Math.min(
+				Math.max(vr.getBounds()[1][0], vr.getBounds()[1][1]), z + dz),
+				tmpcoord[1], tmpcoord[0]);
+
+		if (vr.isNearNoData()) {
+			p.setNearNoData(true);
+		}
+
+		if (ctmp == null) {
+			p.setLost(true);
+			return;
+		}
+
+		if (ctmp == vr.getNODATA()) {
+
+			aku5 = aku4;
+			akv5 = akv4;
+			akw5 = akw4;
+			p.setNodata(true);
+			p.setNearNoData(true);
+
+		} else {
+
+			aku5 = ctmp[0];
+			akv5 = ctmp[1];
+			akw5 = ctmp[2];
+			p.setNodata(false);
+		}
+
+		dx = h
+				* (B61 * aku1 + B62 * aku2 + B63 * aku3 + B64 * aku4 + B65
+						* aku5);
+		dy = h
+				* (B61 * akv1 + B62 * akv2 + B63 * akv3 + B64 * akv4 + B65
+						* akv5);
+		dz = h
+				* (B61 * akw1 + B62 * akw2 + B63 * akw3 + B64 * akw4 + B65
+						* akw5);
+
+		tmpcoord = GeometryUtils.latLonZ(new double[] { y, x, z }, dy, dx, dz);
+		ctmp = vr.getVelocities(t, Math.min(
+				Math.max(vr.getBounds()[1][0], vr.getBounds()[1][1]), z + dz),
+				tmpcoord[1], tmpcoord[0]);
+
+		if (vr.isNearNoData()) {
+			p.setNearNoData(true);
+		}
+
+		if (ctmp == null) {
+			p.setLost(true);
+			return;
+		}
+
+		if (ctmp == vr.getNODATA()) {
+
+			aku6 = aku5;
+			akv6 = akv5;
+			akw6 = akw5;
+			p.setNodata(true);
+			p.setNearNoData(true);
+
+		} else {
+
+			aku6 = ctmp[0];
+			akv6 = ctmp[1];
+			akw6 = ctmp[2];
+			p.setNodata(false);
+		}
+
+		dx = h * (C1 * aku1 + C3 * aku3 + C4 * aku4 + C6 * aku6);
+		dy = h * (C1 * akv1 + C3 * akv3 + C4 * akv4 + C6 * akv6);
+		dz = h * (C1 * akw1 + C3 * akw3 + C4 * akw4 + C6 * akw6);
+
+		tmpcoord = GeometryUtils.latLon(new double[] { y, x }, dy, dx);
+		ctmp = vr.getVelocities(t, Math.min(
+				Math.max(vr.getBounds()[1][0], vr.getBounds()[1][1]), z + dz),
+				tmpcoord[1], tmpcoord[0]);
+
+		p.setPX(p.getX());
+		p.setPY(p.getY());
+		p.setPZ(p.getZ());
+		p.setY(tmpcoord[0]);
+		p.setX(tmpcoord[1]);
+		p.setZ(Math.min(0, z + dz));
+		p.setU(aku6);
+		p.setV(akv6);
+		p.setW(akw6);
 	}
 
 	/**
@@ -330,7 +325,8 @@ public class Advection_RK4_3D implements Advector, Movement, Cloneable {
 	public void setH(float h) {
 		// **IMPORTANT!!!** Accepts h in milliseconds, uses h in seconds because
 		// that is how velocity is delivered in the oceanographic data files.
-		// i.e. we avoid repeatedly converting time when reading velocity values.
+		// i.e. we avoid repeatedly converting time when reading velocity
+		// values.
 		this.h = h / 1000;
 	}
 
