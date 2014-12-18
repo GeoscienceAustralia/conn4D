@@ -47,12 +47,13 @@ import au.gov.ga.conn4d.input.ReleaseFileReader;
 import au.gov.ga.conn4d.utils.TimeConvert;
 
 /**
-* Conn4D:  Lagrangian particle tracking program
-*/
+ * Conn4D: Lagrangian particle tracking program
+ */
 
 public class Conn4D {
-	private static ModelParameters prm_override = new ModelParameters();
-	private static EnvironmentParameters cfg_override = new EnvironmentParameters();
+
+	private static ModelParameters modelParameters = new ModelParameters();
+	private static EnvironmentParameters environmentParameters = new EnvironmentParameters();
 	private static ReleaseFileReader rf_reader;
 	private DateFormat outerformat = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss zzz");
@@ -75,9 +76,9 @@ public class Conn4D {
 
 	public Conn4D(String prmfile, String cfgfile) {
 
-		prm_override.readFile(prmfile);
-		cfg_override.readFile(cfgfile);
-		TimeZone.setDefault(TimeZone.getTimeZone(prm_override.timezone));
+		modelParameters.readFile(prmfile);
+		environmentParameters.readFile(cfgfile);
+		TimeZone.setDefault(TimeZone.getTimeZone(modelParameters.timezone));
 	}
 
 	/**
@@ -90,13 +91,17 @@ public class Conn4D {
 		System.out.println("\nSimulation started "
 				+ outerformat.format(new Date(outertimer)) + "\n");
 
-		long start = TimeConvert.convertToMillis(prm_override.minTimeUnits,
-				prm_override.minTime);
-		long end = TimeConvert.convertToMillis(prm_override.maxTimeUnits,
-				prm_override.maxTime);
-		long relsp = prm_override.relSp.equalsIgnoreCase("-1") ? Long.MAX_VALUE
-				: TimeConvert.convertToMillis(prm_override.relSpUnits,
-						prm_override.relSp);
+		// Convert the model start, end and release spacing to milliseconds.
+		// If the release spacing is -1 then the release spacing is the maximum
+		// value of a Long.
+
+		long start = TimeConvert.convertToMillis(modelParameters.minTimeUnits,
+				modelParameters.minTime);
+		long end = TimeConvert.convertToMillis(modelParameters.maxTimeUnits,
+				modelParameters.maxTime);
+		long relsp = modelParameters.relSp.equalsIgnoreCase("-1") ? Long.MAX_VALUE
+				: TimeConvert.convertToMillis(modelParameters.relSpUnits,
+						modelParameters.relSp);
 
 		// 'Hard' end (simulation terminates such that releases stop
 		// in advance of end date
@@ -106,7 +111,7 @@ public class Conn4D {
 		// 'Soft' end (simulation carries past end date until release
 		// duration is complete)
 
-		ReleaseSet rs = new ReleaseSet(prm_override, cfg_override);
+		ReleaseSet rs = new ReleaseSet(modelParameters, environmentParameters);
 
 		for (long time = start; time < end; time += relsp) {
 			rs.setTime(time);
@@ -115,10 +120,13 @@ public class Conn4D {
 				System.out
 						.println("\n"
 								+ restartAt
-								+ " was set as the restart target, but was not found (must be an exact match).  Exiting.");
+								+ " was set as the restart target, but was not found"
+								+ " (must be an exact match).  Exiting.");
 				break;
 			}
 		}
+		
+		// Perform cleanup operations
 
 		rs.close();
 

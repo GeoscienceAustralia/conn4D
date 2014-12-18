@@ -43,7 +43,7 @@ import com.vividsolutions.jts.geom.Coordinate;
  *                   to methods associated with raster-based data sources.
  */
 
-public interface Boundary_Raster extends Boundary {
+public interface BoundaryRaster extends Boundary {
 
 	/**
 	 * Returns the cell size (assumed to be square) of the grid

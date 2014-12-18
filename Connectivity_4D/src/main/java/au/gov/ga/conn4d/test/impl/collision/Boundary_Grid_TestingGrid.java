@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import au.gov.ga.conn4d.Boundary_Raster;
+import au.gov.ga.conn4d.BoundaryRaster;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
@@ -51,7 +51,7 @@ import com.vividsolutions.jts.geom.Coordinate;
  * @author Johnathan Kool
  */
 
-public class Boundary_Grid_TestingGrid implements Boundary_Raster, Cloneable {
+public class Boundary_Grid_TestingGrid implements BoundaryRaster, Cloneable {
 
 	private double minx = -1;
 	private double miny = -1;

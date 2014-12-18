@@ -44,7 +44,7 @@ import ucar.ma2.Array;
 import ucar.ma2.Index;
 import ucar.nc2.NetcdfFile;
 import ucar.nc2.Variable;
-import au.gov.ga.conn4d.Boundary_Raster;
+import au.gov.ga.conn4d.BoundaryRaster;
 import au.gov.ga.conn4d.impl.collision.Intersector_3D_Poly;
 import au.gov.ga.conn4d.utils.CoordinateMath;
 import au.gov.ga.conn4d.utils.IndexLookup_Nearest;
@@ -59,7 +59,7 @@ import com.vividsolutions.jts.geom.LineSegment;
  * @author Johnathan Kool
  */
 
-public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
+public class Boundary_Raster_NetCDF implements BoundaryRaster, Cloneable {
 
 	private NetcdfFile boundary;
 	private Variable boundaryVar;
@@ -129,7 +129,6 @@ public class Boundary_Raster_NetCDF implements Boundary_Raster, Cloneable {
 	public Boundary_Raster_NetCDF clone() {
 		Boundary_Raster_NetCDF ncb;
 		ncb = new Boundary_Raster_NetCDF(boundary.getLocation());
-		// TODO FIX THIS UP!!!!
 		ncb.neglon = neglon;
 		return ncb;
 	}

@@ -105,11 +105,11 @@ public class ReleaseFactory_4D {
 	 * Constructor accepting a String containing the path of
 	 * a configuration text file.
 	 * 
-	 * @param local_config
+	 * @param environmentParameters
 	 */
 	
-	public ReleaseFactory_4D(EnvironmentParameters local_config) {
-		initialize(local_config);
+	public ReleaseFactory_4D(EnvironmentParameters environmentParameters) {
+		initialize(environmentParameters);
 	}
 
 	/**

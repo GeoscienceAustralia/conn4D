@@ -1,4 +1,5 @@
 /*******************************************************************************
+ /*******************************************************************************
  * Copyright 2014 Geoscience Australia (www.ga.gov.au)
  * @author - Johnathan Kool (Geoscience Australia)
  * 
@@ -51,6 +52,7 @@ import ucar.ma2.Array;
 import ucar.ma2.InvalidRangeException;
 import ucar.nc2.NetcdfFile;
 import ucar.nc2.Variable;
+
 import au.gov.ga.conn4d.VelocityReader;
 import au.gov.ga.conn4d.utils.FilenamePatternFilter;
 import au.gov.ga.conn4d.utils.IndexLookup_Nearest;
@@ -816,11 +818,16 @@ public class VelocityReader_HYCOMList_4D implements VelocityReader, Cloneable {
 			TricubicSplineInterpolator tci = new TricubicSplineInterpolator();
 			TricubicSplineInterpolatingFunction tsf = tci.interpolate(zja, latja, lonja, autmp);		
 			
+			//u = tcs.interpolate(z, lat, lon);
 			u = tsf.value(z,lat,lon);
+			//tcs.setValues(avtmp);
+			//v = tcs.interpolate(z, lat, lon);
 			tsf = tci.interpolate(zja, latja, lonja, avtmp);
 			v = tsf.value(z,lat,lon);
 
 				if (zloc.isIn_Bounds() >= 0) {
+					//tcs.setValues(awtmp);
+					//w = tcs.interpolate(z, lat, lon);
 					tsf = tci.interpolate(zja, latja, lonja, awtmp);
 					w = tsf.value(z,lat,lon);
 				} else {

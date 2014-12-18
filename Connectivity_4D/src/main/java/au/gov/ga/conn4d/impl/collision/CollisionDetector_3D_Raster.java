@@ -39,7 +39,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import au.gov.ga.conn4d.Boundary;
-import au.gov.ga.conn4d.Boundary_Raster;
+import au.gov.ga.conn4d.BoundaryRaster;
 import au.gov.ga.conn4d.CollisionDetector;
 import au.gov.ga.conn4d.Particle;
 import au.gov.ga.conn4d.utils.CoordinateMath;
@@ -60,7 +60,7 @@ import com.vividsolutions.jts.geom.LineSegment;
 
 public class CollisionDetector_3D_Raster implements CollisionDetector, Cloneable {
 
-	private Boundary_Raster bnd;
+	private BoundaryRaster bnd;
 	private Intersector_3D_Raster i3d = new Intersector_3D_Raster();
 	private double surfaceLevel = 0;
 	private PrjTransform pt = new PrjTransform_WGS2CEQD();
@@ -68,7 +68,7 @@ public class CollisionDetector_3D_Raster implements CollisionDetector, Cloneable
 	private final int bounceLimit = 50;
 
 	public CollisionDetector_3D_Raster(Boundary bathym) {
-		this.bnd = (Boundary_Raster) bathym;
+		this.bnd = (BoundaryRaster) bathym;
 	}
 
 	/**
@@ -337,7 +337,7 @@ public class CollisionDetector_3D_Raster implements CollisionDetector, Cloneable
 	 */
 
 	public void setBoundary(Boundary bnd) {
-		this.bnd = (Boundary_Raster) bnd;
+		this.bnd = (BoundaryRaster) bnd;
 	}
 
 	/**

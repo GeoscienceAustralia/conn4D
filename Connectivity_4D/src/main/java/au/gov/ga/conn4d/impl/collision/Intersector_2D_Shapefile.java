@@ -79,7 +79,7 @@ public class Intersector_2D_Shapefile implements Intersector {
 	@SuppressWarnings("unchecked")
 	public long intersect(double x, double y) {
 
-		if (sh.isNegLon()) {
+		if (sh.hasNegLon()) {
 			x = cvt(x);
 		}
 
@@ -125,7 +125,7 @@ public class Intersector_2D_Shapefile implements Intersector {
 	@SuppressWarnings("unchecked")
 	public long intersect(double x1, double y1, double x2, double y2) {
 
-		if (sh.isNegLon()) {
+		if (sh.hasNegLon()) {
 			x1 = cvt(x1);
 			x2 = cvt(x2);
 		}
@@ -159,7 +159,7 @@ public class Intersector_2D_Shapefile implements Intersector {
 	@SuppressWarnings("unchecked")
 	public boolean intersects(double x, double y) {
 
-		if (sh.isNegLon()) {
+		if (sh.hasNegLon()) {
 			x = ((180 + x) % 360) - 180;
 		}
 		Point p = gf.createPoint(new Coordinate(x, y));

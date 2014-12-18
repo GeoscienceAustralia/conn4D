@@ -96,26 +96,6 @@ public class GeometryUtils {
 	}
 	
 	/**
-	 * Calculates the distance traveled along a sphere (great circle distance)
-	 * 
-	 * @param rlon1 -
-	 *            The longitude of origin
-	 * @param rlat1 -
-	 *            The latitude of origin
-	 * @param rlon2 -
-	 *            The destination longitude
-	 * @param rlat2 -
-	 *            The destination latitude.
-	 * @return - Distance traveled in meters.
-	 */
-
-	public static double distance_Sphere(float rlon1, float rlat1, float rlon2,
-			float rlat2) {
-
-		return distance_Sphere((double) rlon1, (double) rlat1,(double) rlon2, (double) rlat2);
-	}
-
-	/**
 	 * Executes a change in position within a spherical coordinate system.
 	 * 
 	 * @param coords -

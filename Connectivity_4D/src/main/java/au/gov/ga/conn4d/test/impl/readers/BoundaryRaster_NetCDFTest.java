@@ -37,19 +37,29 @@ package au.gov.ga.conn4d.test.impl.readers;
 
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
 import au.gov.ga.conn4d.impl.readers.Boundary_Raster_NetCDF;
 
-public class Boundary_NetCDF_GridTest {
+public class BoundaryRaster_NetCDFTest {
 
 	Boundary_Raster_NetCDF bng = null;
+	
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
 	
 	@Before
 	public void setUp(){
@@ -58,6 +68,20 @@ public class Boundary_NetCDF_GridTest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Test
+	public void testConstructor1(){
+		new Boundary_Raster_NetCDF("./files/bath_index.nc");
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		System.setErr(new PrintStream(baos));
+		new Boundary_Raster_NetCDF("");
+		assertTrue(baos.toString().substring(0, 29).equalsIgnoreCase("java.io.FileNotFoundException"));
+		try {
+			baos.close();
+		} catch (IOException e) {
+		}
+		System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.out)));
 	}
 
 	@Test

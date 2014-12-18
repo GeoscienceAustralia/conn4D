@@ -170,7 +170,11 @@ public class Shapefile implements Habitat{
 	}
 	
 	/**
-	 * Identifies whether the data set uses negative longitude values.
+	 * Indicates whether the shapefile has the designated field
+	 * 
+	 * @param field - the field to be tested regarding whether it
+	 *                exists within the shapefile.
+	 * @return
 	 */
 	
 	public boolean hasField(String field){
@@ -184,7 +188,11 @@ public class Shapefile implements Habitat{
 		return false;
 	}
 	
-	public boolean isNegLon(){
+	/**
+	 * Identifies whether the data set uses negative longitude values.
+	 */
+	
+	public boolean hasNegLon(){
 		return negLon;
 	}
 	

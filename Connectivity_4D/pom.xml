@@ -3,7 +3,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>au.gov.ga.conn4d</groupId>
 	<artifactId>Conn4D</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
+	<distributionManagement>
+		<repository>
+			<id>nexus-site</id>
+			<url>http://maven-int.ga.gov.au/nexus</url>
+		</repository>
+	</distributionManagement>
 	<build>
 		<!-- <sourceDirectory>src</sourceDirectory> -->
 		<plugins>
@@ -11,8 +17,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.0</version>
 				<configuration>
-					<source />
-					<target />
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
 			<plugin>

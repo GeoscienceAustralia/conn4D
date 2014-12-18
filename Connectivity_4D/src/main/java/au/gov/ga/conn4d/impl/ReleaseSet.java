@@ -72,25 +72,25 @@ public class ReleaseSet {
 	private SimpleDateFormat fullFormat = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss zzz");
 	private NumberFormat deltaformat = new DecimalFormat("#.000");
-	private ModelParameters prm_override;
-	private EnvironmentParameters cfg_override;
+	private ModelParameters modelParameters;
+	private EnvironmentParameters environmentParameters;
 	private long time;
 	private String restartAt;
 	private TrajectoryWriter_Binary tb = null;
 
 	/**
-	 * Two-argument constructor accepting a ParameterOverride and a ConfigurationOverride.
+	 * Two-argument constructor accepting ModelParameters and EnvironmentParameters.
 	 * The Constructor is set up this way so that the code can operate in a client-server
 	 * type relationship with the client submitting a job to a machine with a local configuration.
 	 * 
-	 * @param prm_override
-	 * @param cfg_override
+	 * @param modelParameters
+	 * @param environmentParameters
 	 */
 	
-	public ReleaseSet(ModelParameters prm_override, EnvironmentParameters cfg_override){
-		this.prm_override = prm_override;
-		this.cfg_override = cfg_override;
-		this.rr = new ReleaseRunner_4D(cfg_override);
+	public ReleaseSet(ModelParameters modelParameters, EnvironmentParameters environmentParameters){
+		this.modelParameters = modelParameters;
+		this.environmentParameters = environmentParameters;
+		this.rr = new ReleaseRunner_4D(environmentParameters);
 		this.outerFormat.setTimeZone(TimeZone.getTimeZone(System.getProperty("user.timezone")));
 	}
 	
@@ -101,29 +101,34 @@ public class ReleaseSet {
 	public void runSet(){
 		
 		long reltimer = System.currentTimeMillis();
-		if (prm_override.minTimeUnits.equalsIgnoreCase("Date")) {
+		
+		if (modelParameters.minTimeUnits.equalsIgnoreCase("Date")) {
 			System.out.println("Release date "
 					+ fullFormat.format(time) + ":");
 		} else {
 			System.out.println("Release " + (time + 1) + ":");
 		}
+		
+		// Set the output path
 
-		String outputFolder = cfg_override.trajOutputDir;
-		int bufferSize = cfg_override.bufferSize;
+		String outputFolder = environmentParameters.trajOutputDir;
+		int bufferSize = environmentParameters.bufferSize;
 		
 		if(outputFolder.equalsIgnoreCase("jobfs")){
 			outputFolder = System.getenv("PBS_JOBFS");
 		}
 
-		File outputDir = new File(outputFolder + File.separator + prm_override.outputFolder);
+		File outputDir = new File(outputFolder + File.separator + modelParameters.outputFolder);
 		
 		if(!outputDir.exists()){
 			outputDir.mkdir();
 		}
 		
-		String outputPath = outputFolder + File.separator + prm_override.outputFolder+File.separator+innerFormat.format(new Date(time))+".dat";
+		String outputPath = outputFolder + File.separator + modelParameters.outputFolder+File.separator+innerFormat.format(new Date(time))+".dat";
 		
 		System.out.println("Writing to " + outputPath + "...");
+		
+		// Writing to binary files is currently hard-coded.
 		
 		try {
 			tb = new TrajectoryWriter_Binary(outputPath, bufferSize);
@@ -138,11 +143,12 @@ public class ReleaseSet {
 		// quit).
 
 		try {
-			if (prm_override.relFileName.endsWith(".shp")) {
-				rf_reader = new ReleaseFileReader_Shapefile_4D(prm_override.relFileName);
+			if (modelParameters.relFileName.endsWith(".shp")) {
+				rf_reader = new ReleaseFileReader_Shapefile_4D(modelParameters.relFileName);
 			} else {
-				rf_reader = new ReleaseFileReader_Text(prm_override.relFileName);
+				rf_reader = new ReleaseFileReader_Text(modelParameters.relFileName);
 			}
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (MalformedURLException e) {
@@ -162,19 +168,21 @@ public class ReleaseSet {
 			// as well as the 'global' parameters
 
 			rf_reader.setParameters(prm);
-			prm_override.setParameters(prm);
+			modelParameters.setParameters(prm);
 
 			// Produce a single run.
 			// if time units are dates, name folders by date
+			
 			String folder = "";
-			if (prm_override.minTimeUnits.equalsIgnoreCase("Date")) {
+			if (modelParameters.minTimeUnits.equalsIgnoreCase("Date")) {
 				folder = innerFormat.format(new Date(time));
 			}
 
 			// otherwise name according to the time value
+			
 			else {
 				folder = "T_"
-						+ TimeConvert.convertToMillis(prm_override.minTimeUnits,
+						+ TimeConvert.convertToMillis(modelParameters.minTimeUnits,
 								time);
 			}
 
@@ -194,7 +202,7 @@ public class ReleaseSet {
 			System.gc();
 		}
 		
-		if (prm_override.minTimeUnits.equalsIgnoreCase("Date")) {
+		if (modelParameters.minTimeUnits.equalsIgnoreCase("Date")) {
 			System.out.println("Release date "
 					+ fullFormat.format(time)
 					+ " complete. ("
@@ -209,6 +217,7 @@ public class ReleaseSet {
 									.currentTimeMillis() - (double) reltimer) / 1000d)
 							+ "s)\n");
 		}
+		
 		tb.flush();
 		tb.close();
 		rf_reader.close();
@@ -225,12 +234,12 @@ public class ReleaseSet {
 	
 	// Getters and setters
 
-	public ModelParameters getPrm_override() {
-		return prm_override;
+	public ModelParameters getModelParameters() {
+		return modelParameters;
 	}
 
-	public void setPrm_override(ModelParameters prm_override) {
-		this.prm_override = prm_override;
+	public void setsetModelParameters(ModelParameters modelParameters) {
+		this.modelParameters = modelParameters;
 	}
 
 	public long getTime() {

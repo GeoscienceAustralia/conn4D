@@ -48,8 +48,9 @@ import au.gov.ga.conn4d.test.impl.collision.CollisionDetection_3D_RasterTest;
 import au.gov.ga.conn4d.test.impl.collision.Intersector_3D_PolyTest;
 import au.gov.ga.conn4d.test.impl.movement.Advection_RK4_3DTest;
 import au.gov.ga.conn4d.test.impl.readers.BathymetryReader_GridTest;
-import au.gov.ga.conn4d.test.impl.readers.Boundary_NetCDF_GridTest;
+import au.gov.ga.conn4d.test.impl.readers.BoundaryRaster_NetCDFTest;
 import au.gov.ga.conn4d.test.impl.readers.Reader_NetCDF_4DTest;
+import au.gov.ga.conn4d.test.impl.readers.ShapefileTest;
 import au.gov.ga.conn4d.test.impl.readers.VelocityReader_HYCOMList_4DTest;
 import au.gov.ga.conn4d.test.impl.readers.VelocityReader_NetCDF_4DTest;
 import au.gov.ga.conn4d.test.impl.writers.TrajectoryWriter_TextTest;
@@ -71,13 +72,14 @@ import au.gov.ga.conn4d.test.utils.VectorUtilsTest;
 		Mortality_ExponentialTest.class, Mortality_NoneTest.class, Mortality_WeibullTest.class,
 		CollisionDetection_3D_RasterTest.class, Intersector_3D_PolyTest.class,
 		Advection_RK4_3DTest.class, BathymetryReader_GridTest.class,
-		Boundary_NetCDF_GridTest.class, Reader_NetCDF_4DTest.class,
+		BoundaryRaster_NetCDFTest.class, Reader_NetCDF_4DTest.class,
 		VelocityReader_HYCOMList_4DTest.class,
 		VelocityReader_NetCDF_4DTest.class, TrajectoryWriter_TextTest.class,
 		ParameterOverrideTest.class, ArraySearchTest.class,
 		CoordinateMathTest.class, FileExtensionFilterTest.class,
 		FilenamePatternFilterTest.class, GeometryUtilsTest.class, IndexLookup_CellTest.class,
 		IndexLookup_NearestTest.class, ReferenceGridTest.class,
-		TimeConvertTest.class, VectorMathTest.class, VectorUtilsTest.class })
+		ShapefileTest.class, TimeConvertTest.class, 
+		VectorMathTest.class, VectorUtilsTest.class })
 public class AllTests {
 }

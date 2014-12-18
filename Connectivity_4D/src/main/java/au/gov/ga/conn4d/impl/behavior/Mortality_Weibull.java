@@ -110,6 +110,35 @@ public class Mortality_Weibull implements Mortality, Cloneable {
 		}
 		this.notifyAll();
 	}
+	
+	@Override
+	public synchronized void apply(Particle p, double cycles) {
+
+		// We are working with a discrete time window, therefore we don't want
+		// to use the straight pdf. Instead we subtract cdfs. The difference is
+		// the change from the previous checkpoint to the current one.
+
+		double t1 = TimeConvert.convertFromMillis(units, p.getAge());
+		double t0 = t1 - TimeConvert.convertFromMillis(units, cycles*delta_t);
+
+		double p1 = Math.exp(-Math.pow((t1 / lambda), k));
+		double p0 = Math.exp(-Math.pow((t0 / lambda), k));
+
+		// Because we're working with survivorship and cdfs, the earlier time
+		// step will always be greater than the later - hence p0 - p1.
+
+		// We subtract to get the probability over the time interval, and then
+		// divide by 1-p0 to scale appropriately. e.g. If it hasn't happened
+		// yet, it *must* at some point (unless the p is in the tail, which is
+		// handled through scaling using the remainder).
+
+		double value = (p0 - p1) / (p0);
+
+		if (uni.nextDouble() < value) {
+			p.setDead(true);
+		}
+		this.notifyAll();
+	}
 
 	/**
 	 * Returns a copy of the class instance
