@@ -439,7 +439,7 @@ Convenience field, indicating the length of time (typically converted to days) t
 
 ####*Depth*
 
-The depth (z) of the Particle.  This value should stay constant unless using vertical migration or full 3D movement (not implemented yet).
+The depth (z) of the Particle.  This value should stay constant unless using vertical migration or full 3D movement.
 
 ####*Lon/Lat*
 
